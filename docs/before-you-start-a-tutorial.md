@@ -19,10 +19,10 @@ You might want to open the links in separate brower tabs before you start instal
 long-term support (LTS version of the operating system).
 * The following software on your development system:
     * [Git](https://docs.github.com/en/get-started/quickstart/set-up-git) (for the command line)
-    * [GitHub Desktop](https://desktop.github.com) (optional)
+    * [GitHub Desktop](https://desktop.github.com) (optional, but recommended)
     * A fork of the [To-Do-Service repo](https://github.com/UWC2-APIDOC/to-do-service-sp25)
     * A current/LTS version of `node.js`
-    * A current version of [json-server](https://www.npmjs.com/package/json-server)
+    * Version 0.17.4 of [json-server](https://www.npmjs.com/package/json-server)
     * A current copy of the database file. You can get this by syncing your fork.
     * **TIP**: If you're using a fork of the repo, create a working branch in which to do your tutorials. Create a new branch for each tutorial to prevent a mistake in one from affecting your work in another.
     * The [Postman desktop app](https://www.postman.com/downloads/). Because you run the **To-Do service** on your development system with an `http://localhost` hostname, the web-version of Postman can't perform the exercises.
