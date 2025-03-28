@@ -15,7 +15,7 @@ Make sure you've completed the [Before you start a tutorial](../before-you-start
 
 ## Add a new task
 
-Adding a new task to the service requires that you add (`POST`) the details of a new [`task`](../api/task.md) resource to the service.
+Adding a new task to the service requires that you use the `POST` method to store the details of the new [`task`](../api/task.md) resource in the service.
 
 To add a new task:
 

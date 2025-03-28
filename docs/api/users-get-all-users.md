@@ -13,7 +13,7 @@ Returns an array of [`user`](user.md) objects that contains all users that have 
 {server_url}/users
 ```
 
-## Params
+## Parameters
 
 None
 

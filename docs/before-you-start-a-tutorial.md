@@ -12,29 +12,35 @@ Expect this preparation to take about 20 minutes to complete.
 ## Preparing for the tutorials
 
 To complete the tutorials in this section, you need the following.
-You might want to open the links in separate brower tabs before you start installing the software.
+You might want to open the links in separate browser tabs before you start installing the software.
+
+<!-- vale Google.Acronyms = NO -->
 
 * A [GitHub account](https://github.com)
-* A development system (PC, Mac, or Linux) running a current or
-long-term support (LTS version of the operating system).
+* A development system running a current version or a
+long-term support, also known as _LTS_, version of the Windows, MacOS, or Linux operating system.
 * The following software on your development system:
-    * [Git](https://docs.github.com/en/get-started/quickstart/set-up-git) (for the command line)
-    * [GitHub Desktop](https://desktop.github.com) (optional, but recommended)
-    * A fork of the [To-Do-Service repo](https://github.com/UWC2-APIDOC/to-do-service-sp25)
-    * A current/LTS version of `node.js`
-    * Version 0.17.4 of [json-server](https://www.npmjs.com/package/json-server)
-    * A current copy of the database file. You can get this by syncing your fork.
-    * **TIP**: If you're using a fork of the repo, create a working branch in which to do your tutorials. Create a new branch for each tutorial to prevent a mistake in one from affecting your work in another.
-    * The [Postman desktop app](https://www.postman.com/downloads/). Because you run the **To-Do service** on your development system with an `http://localhost` hostname, the web-version of Postman can't perform the exercises.
+  * [Git, command line](https://docs.github.com/en/get-started/quickstart/set-up-git)
+  * [GitHub Desktop](https://desktop.github.com). This is optional, but recommended.
+  * A fork of the [To-Do-Service repository](https://github.com/UWC2-APIDOC/to-do-service-sp25)
+  * A current or LTS version of `node.js`
+  * Version 0.17.4 of [json-server](https://www.npmjs.com/package/json-server)
+  * A current copy of the database file. You can get this by syncing your fork.
+  
+    **Tip**: if you're using a fork of the repository, create a working branch in which to do your tutorials. Create a new branch for each tutorial to prevent a mistake in one from affecting your work in another.
+  * The [Postman desktop app](https://www.postman.com/downloads/). Because you run the **To-Do service** on your development system with an `http://localhost` host name, the web-version of Postman can't perform the exercises.
+  * The [Postman desktop app](https://www.postman.com/downloads/). Because you run the **To-Do service** on your development system with an `http://localhost` host name, the web-version of Postman can't perform the exercises.
+
+<!-- vale Google.Acronyms = YES -->
 
 ## Test your development system
 
 To test your development system:.
 
-1. Create and checkout a test branch of your fork of the To-Do-service repo. Your `GitHub repo workspace` is the directory that contains your fork of the `to-do-service-sp25` repo.
+1. Create and checkout a test branch of your fork of the To-Do-service repository. Your `GitHub repository workspace` is the directory that contains your fork of the `to-do-service-sp25` repository.
 
     ```shell
-    cd <your GitHub repo workspace>
+    cd <your GitHub repository workspace>
     ls
     # (see the to-do-service directory in the list)
     cd to-do-service-sp25
@@ -43,7 +49,7 @@ To test your development system:.
     json-server -w to-do-db-source.json
     ```
 
-    If your development system is installed correctly, you should see
+    If you installed the software correctly, you should see
     the service start and display the URL of the service: `http://localhost:3000`.
 
 2. Make a test call to the service.
@@ -71,8 +77,8 @@ To test your development system:.
         ...
     ```
 
-If you don't see the list of users, or receive an error in any step
-of the procedure, investigate and correct the error before continuing.
+You should see the list of users.
+If you receive an error in any step of the procedure, investigate, and correct the error before continuing.
 Some common situations that cause errors include:
 
 1. You mistyped a command.
