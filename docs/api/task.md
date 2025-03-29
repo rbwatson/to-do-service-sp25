@@ -26,7 +26,7 @@ Sample `task` resource
     "user_id": 1,
     "title": "Grocery shopping",
     "description": "eggs, bacon, gummy bears",
-    "due_date": "2024-02-20T17:00",
+    "due_date": "2025-02-20T17:00",
     "warning": "-10",
     "id": 1
 }
