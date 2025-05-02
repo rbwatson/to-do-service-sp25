@@ -15,7 +15,7 @@
 5. Extensibility
 •	Advantage: Can be extended with plugins or custom syntax.
 •	Use Case: Enables customized formatting for code samples, diagrams, or tables.
-Disadvantages of Using Markdown
+# Disadvantages of Using Markdown
 1. Limited Semantic Structure
 •	Disadvantage: Markdown lacks semantic richness compared to XML or reStructuredText. It’s not ideal for large-scale or complex doc sets.
 •	Impact: Difficult to enforce structure, reuse content, or support conditional logic in larger documentation systems.
