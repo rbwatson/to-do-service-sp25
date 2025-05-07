@@ -24,7 +24,7 @@ remote_theme: just-the-docs/just-the-docs
 title: To-Do Service
 description: Documentation of the To-Do service API
 #   !!! CHANGE THIS TO MATCH THE URL OF YOUR PUBLISHED DOCS
-url: https://uwc2-apidoc.github.io/to-do-service-sp25
+url: https://rbwatson.github.io/to-do-service-sp25
 #
 #   +++ REMOVE IF YOU DON'T WANT THE AUX LINKS AT THE TOP OF THE PAGE
 #       OR ADD MORE LINKS AS SUPPORTED BY THE THEME
