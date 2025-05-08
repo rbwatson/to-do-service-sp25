@@ -22,9 +22,13 @@ remote_theme: just-the-docs/just-the-docs
 #     and the description of your the documentation.
 #   !!! CHANGE THESE TO MATCH YOUR INSTALLATION OR ADAPTATION
 title: To-Do Service
-description: Documentation of the To-Do service API
+description: This is a mock API to simulate the REST interface of an
+  imaginary service. The To-Do service provides a cloud-hosted task
+  list through which subscribers can post tasks and receive
+  reminders of those tasks.
 #   !!! CHANGE THIS TO MATCH THE URL OF YOUR PUBLISHED DOCS
 url: https://rbwatson.github.io/to-do-service-sp25
+baseurl: "/to-do-service-sp25"
 #
 #   +++ REMOVE IF YOU DON'T WANT THE AUX LINKS AT THE TOP OF THE PAGE
 #       OR ADD MORE LINKS AS SUPPORTED BY THE THEME
