@@ -3,6 +3,19 @@ layout: default
 nav_order: 4
 has_children: true
 has_toc: false
+# tags used by AI files
+title: `task` resource
+description: Information about the `task` resource
+tags: [api]
+categories: [api-reference]
+ai_relevance: high
+importance: 8
+prerequisites: []
+related_pages: [/tutorials/add-a-new-task]
+examples: []
+api_endpoints: [/tasks]
+version: "v1.0"
+last_updated: "2025-05-08"
 ---
 
 # `task` resource
