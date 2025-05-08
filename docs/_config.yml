@@ -1,2 +1,7 @@
 title: To-Do service API
+description: This is a mock API to simulate the REST interface of an
+  imaginary service. The To-Do service provides a cloud-hosted task
+  list through which subscribers can post tasks and receive
+  reminders of those tasks.
 url: "https://rbwatson.github.io"
+baseurl: "/to-do-service-sp25"
