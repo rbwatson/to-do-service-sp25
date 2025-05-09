@@ -8,21 +8,78 @@ permalink: /llms.txt
 
 ## About This Repository
 
-This documentation repository contains information about {{ site.github.project_title }}. This file is designed to help AI assistants better understand the structure and purpose of this documentation.
+This documentation repository contains information about {% if site.github.project_title %}{{ site.github.project_title }}{% else %}{{ site.title }}{% endif %}. This file is designed to help AI assistants better understand the structure and purpose of this documentation.
+
+## Table of Contents
+
+1. [Main Documentation Sections](#main-documentation-sections)
+2. [Key Topics](#key-topics)
+3. [API Endpoints](#api-endpoints)
+4. [Recommended Starting Points](#recommended-starting-points)
+5. [Additional Resources](#additional-resources)
 
 ## Main Documentation Sections
 
+### API Reference
 {% for page in site.pages %}
-{% if page.title and page.url != "/llms.txt" and page.url != "/sitemap.xml" %}
+{% if page.categories contains 'api-reference' and page.title and page.url != "/llms.txt" and page.url != "/llms-full.txt" and page.url != "/sitemap.xml" %}
 - [{{ page.title }}]({{ site.url }}{{ site.baseurl }}{{ page.url }}){% if page.description %}: {{ page.description }}{% endif %}
 {% endif %}
 {% endfor %}
 
+### Tutorials
+{% for page in site.pages %}
+{% if page.categories contains 'tutorial' and page.title and page.url != "/llms.txt" and page.url != "/llms-full.txt" and page.url != "/sitemap.xml" %}
+- [{{ page.title }}]({{ site.url }}{{ site.baseurl }}{{ page.url }}){% if page.description %}: {{ page.description }}{% endif %}
+{% endif %}
+{% endfor %}
+
+### Introduction Pages
+{% for page in site.pages %}
+{% if page.tags contains 'introduction' and page.title and page.url != "/llms.txt" and page.url != "/llms-full.txt" and page.url != "/sitemap.xml" %}
+- [{{ page.title }}]({{ site.url }}{{ site.baseurl }}{{ page.url }}){% if page.description %}: {{ page.description }}{% endif %}
+{% endif %}
+{% endfor %}
+
+## Key Topics
+{% assign all_tags = '' | split: '' %}
+{% for page in site.pages %}
+  {% if page.tags %}
+    {% assign page_tags = page.tags %}
+    {% for tag in page_tags %}
+      {% assign all_tags = all_tags | push: tag %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+{% assign unique_tags = all_tags | uniq | sort %}
+{% if unique_tags.size > 0 %}
+{% for tag in unique_tags %}
+- **{{ tag }}**
+{% endfor %}
+{% endif %}
+
+## API Endpoints
+{% assign api_endpoints = '' | split: '' %}
+{% for page in site.pages %}
+  {% if page.api_endpoints %}
+    {% for endpoint in page.api_endpoints %}
+      {% assign api_endpoints = api_endpoints | push: endpoint %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+{% assign unique_endpoints = api_endpoints | uniq | sort %}
+{% for endpoint in unique_endpoints %}
+- `{{ endpoint }}`
+{% endfor %}
+
 ## Recommended Starting Points
 
-- Documentation Home: {{ site.url }}{{ site.baseurl }}/
+- **Overview**: [Documentation Home]({{ site.url }}{{ site.baseurl }}/)
+- **Setup**: {% assign setup_page = site.pages | where_exp: "item", "item.url contains 'before-you-start'" | first %}[{{ setup_page.title }}]({{ site.url }}{{ site.baseurl }}{{ setup_page.url }})
 {% if site.github.repository_url %}
-- Source Code: {{ site.github.repository_url }}
+- **Source Code**: [{{ site.github.repository_name }}]({{ site.github.repository_url }})
 {% endif %}
 
 ## Additional Resources
