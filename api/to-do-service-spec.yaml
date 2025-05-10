@@ -14,9 +14,9 @@ servers:
 
 tags:
   - name: Users
-    description: User management endpoints.  Provides operations for managing user accounts.
+    description: User management endpoints that provide operations for managing user accounts.
   - name: Tasks
-    description: Task management endpoints.  Provides operations for managing to-do tasks.
+    description: Task management endpoints that provide operations for managing to-do tasks.
 
 security:
   - bearerAuth: []
@@ -25,7 +25,7 @@ paths:
   /users:
     get:
       summary: Get all users
-      description: Retrieves a list of all users in the system. Supports pagination and sorting.
+      description: Returns a list of all users in the system. Supports pagination and sorting.
       tags:
         - Users
       operationId: getAllUsers
@@ -80,7 +80,7 @@ paths:
   /users/{userId}:
     get:
       summary: Get a user by ID
-      description: Retrieves a single user based on their unique user ID.
+      description: Returns a single user based on their unique `userId`.
       tags:
         - Users
       operationId: getOneUser
@@ -104,7 +104,7 @@ paths:
 
     patch:
       summary: Update a user
-      description: Update one or more properties of an existing user.  Partial updates are supported.
+      description: Update one or more properties of an existing user. The API supports partial updates.
       tags:
         - Users
       operationId: patchOneUser
@@ -137,7 +137,7 @@ paths:
 
     delete:
       summary: Delete a user by ID
-      description: Deletes the specified user.
+      description: Removes the specified user.
       tags:
         - Users
       operationId: deleteOneUser
@@ -162,7 +162,7 @@ paths:
   /tasks:
     get:
       summary: Get all tasks
-      description: Retrieves a list of all tasks. Supports pagination and sorting.
+      description: Returns a list of all tasks. Supports pagination and sorting.
       tags:
         - Tasks
       operationId: getAllTasks
@@ -217,7 +217,7 @@ paths:
   /tasks/{taskId}:
     get:
       summary: Get a task by ID
-      description: Retrieves a single task based on its unique task ID.
+      description: Returns a single task based on its unique `taskId`.
       tags:
         - Tasks
       operationId: getOneTask
@@ -241,7 +241,7 @@ paths:
 
     patch:
       summary: Update a task
-      description: Update one or more properties of an existing task. Partial updates are supported.
+      description: Update one or more properties of an existing task. The API supports partial updates.
       tags:
         - Tasks
       operationId: patchOneTask
@@ -274,7 +274,7 @@ paths:
 
     delete:
       summary: Delete a task by ID
-      description: Deletes the specified task.
+      description: Removes the specified task.
       tags:
         - Tasks
       operationId: deleteOneTask
@@ -322,7 +322,7 @@ components:
     SortParam:
       name: _sort
       in: query
-      description: Field to sort by, prefixed with '-' for descending order.
+      description: Field to sort by, prefixed with `-` to indicate descending order.
       schema:
         type: string
       examples:
@@ -337,7 +337,7 @@ components:
       name: userId
       in: path
       required: true
-      description: The unique ID of the user to retrieve.
+      description: The unique `userId` of the `user` resource to retrieve.
       schema:
         type: integer
 
@@ -345,7 +345,7 @@ components:
       name: taskId
       in: path
       required: true
-      description: The unique ID of the task to retrieve.
+      description: The unique `taskId` of the `task` resource to retrieve.
       schema:
         type: integer
 
@@ -371,11 +371,9 @@ components:
         - lastName
         - firstName
         - contactEmail
-      description: Represents a user in the system.
-        Includes their unique ID, name, and contact email.
-        A user must have created a user resource before they can add task resources.
-        When a user registers with the service, they create a user resource.
-        The registration process is provided by the application that uses the To-Do service.
+      description: Represents a user in the system with unique ID, name, and contact email. 
+        Users must create a `user` resource before adding `task` resources.
+        The application using the To-Do service handles the registration process that would use this operation.
         Once registered, there is no limit to the number of tasks that a user can create.
 
     UserInput:
@@ -391,10 +389,9 @@ components:
         - lastName
         - firstName
         - contactEmail
-      description: The data required to create a new user.
-        This schema is used for the request body of the `POST /users` operation.
-        The `contactEmail` value must not already be used by another user in the Service.
-        The service creates a unique `userId` value for the new user.
+      description: Contains the data needed to create a new user.
+        The `POST /users` operation uses this schema for the request body.
+        The API ensures a unique `contactEmail` value and generates a unique `userId` for the new user.
 
     UserPatch:
       type: object
@@ -406,10 +403,10 @@ components:
         contactEmail:
           $ref: '#/components/schemas/ContactEmail'
       minProperties: 1
-      description: The data that can be updated for an existing user.
-        The request body of the `PATCH /users/{userId}` operation uses this schema.
-        It supports partial updates, meaning that not all fields need to be provided in a single request.
-        The `contactEmail` value must not already be used by another user in the Service.
+      description: Contains the data you can update for an existing user.
+        The `PATCH /users/{userId}` operation uses this schema for partial updates,
+        so you can provide only the fields that you want to change.
+        The API ensures `contactEmail` remains unique across all users.
 
     Task:
       type: object
@@ -432,9 +429,8 @@ components:
         - taskTitle
         - dueDate
         - warningOffset
-      description: Represents a task in the system.
-        Includes its unique ID, the ID of the user who created it,
-        a title and description, due date, and warning offset.
+      description: Represents a task with unique ID, creator's user ID, 
+        title, description, due date, and warning offset.
 
     TaskInput:
       type: object
@@ -454,14 +450,11 @@ components:
         - taskTitle
         - dueDate
         - warningOffset
-      description: The data required to create a new task.
-        This schema is used for the request body of the `POST /tasks` operation.
-        Note that this object is not checked against existing resources.
-        Duplicate resources could be created.
-        A unique `taskId` value is created by the service for the new task resource.
-        Each task must be associated to a valid `userId` value.
-        The `dueDate` of a new task cannot be in the past.
-        A `warningOffset` cannot be negative, which would occur after the `dueDate`.
+      description: Contains the data needed to create a new task.
+        The `POST /tasks` operation uses this schema for the request body.
+        The API doesn't check for duplicates, so similar tasks may exist.
+        The API generates a unique `taskId`, requires a valid `userId`,
+        ensures `dueDate` is in the future, and requires a positive `warningOffset`.
 
     TaskPatch:
       type: object
@@ -477,9 +470,8 @@ components:
         warningOffset:
           $ref: '#/components/schemas/WarningOffset'
       minProperties: 1
-      description: The data that can be updated for an existing task.
-        This schema is used for the request body of the `PATCH /tasks/{taskId}` operation.
-        It supports partial updates.
+      description: Contains the data you can update for an existing task.
+        The `PATCH /tasks/{taskId}` operation uses this schema to support partial updates.
 
     Error:
       type: object
@@ -530,8 +522,8 @@ components:
       type: string
       description: Human-readable error message.
       examples:
-        - value: "The field 'email' must be a valid email address."
-        - value: "The 'lastName' field is required."
+        - value: "The field `contactEmail` must be a valid email address."
+        - value: "The `lastName` field is required."
         - value: "The requested resource could not be found."
 
     RequestId:
@@ -593,7 +585,7 @@ components:
 
   responses:
     SuccessGetAllUsers:
-      description: Successful response containing a list of users.
+      description: Successful response that returns a list of users.
       content:
         application/json:
           schema:
@@ -608,7 +600,7 @@ components:
               $ref: '#/components/examples/UsersList'
 
     SuccessGetOneUser:
-      description: Successful response containing a single user.
+      description: Successful response that returns a single user.
       content:
         application/json:
           schema:
@@ -618,7 +610,7 @@ components:
               $ref: '#/components/examples/SingleUser'
 
     SuccessPostOneUser:
-      description: User created successfully.  The response contains the newly created user.
+      description: Successful response that returns the newly created user.
       content:
         application/json:
           schema:
@@ -628,7 +620,7 @@ components:
               $ref: '#/components/examples/CreatedUser'
 
     SuccessPatchOneUser:
-      description: User updated successfully. The response contains the updated user.
+      description: Successful response that returns the updated user.
       content:
         application/json:
           schema:
@@ -638,10 +630,10 @@ components:
               $ref: '#/components/examples/UpdatedUser'
 
     SuccessDeleteOneUser:
-      description: User deleted successfully.  The server successfully processed the request and no content is returned.
+      description: Confirms successful user deletion. Returns no content.
 
     SuccessGetAllTasks:
-      description: Successful response containing a list of tasks.
+      description: Successful response that returns a list of tasks.
       content:
         application/json:
           schema:
@@ -656,7 +648,7 @@ components:
               $ref: '#/components/examples/TasksList'
 
     SuccessGetOneTask:
-      description: Successful response containing a single task.
+      description: Successful response that returns a single task.
       content:
         application/json:
           schema:
@@ -666,7 +658,7 @@ components:
               $ref: '#/components/examples/SingleTask'
 
     SuccessPostOneTask:
-      description: Task created successfully. The response contains the newly created task.
+      description: Successful response that returns the newly created task.
       content:
         application/json:
           schema:
@@ -676,7 +668,7 @@ components:
               $ref: '#/components/examples/CreatedTask'
 
     SuccessPatchOneTask:
-      description: Task updated successfully. The response contains the updated task.
+      description: Successful response that returns the updated task.
       content:
         application/json:
           schema:
@@ -686,7 +678,7 @@ components:
               $ref: '#/components/examples/UpdatedTask'
 
     SuccessDeleteOneTask:
-      description: Task deleted successfully. The server successfully processed the request and no content is returned.
+      description: Confirms successful task deletion. Returns no content.
 
     BadRequest:
       description: The request was malformed or contains invalid parameters.
@@ -697,13 +689,11 @@ components:
           examples:
             invalidParameter:
               summary: Invalid parameter
-              description: An invalid parameter could be a value that is not
-                correctly formatted or does not pass validation.
-                For example, a `contactEmail` value that is incorrectly formatted, 
-                or a `userId` value that does not correspond to a user registered in the service.
+              description: The request contains values that fail validation,
+                such as an incorrectly formatted `contactEmail` or a non-existent `userId`.
               value:
                 code: "INVALID_FIELD"
-                message: "The field 'email' must be a valid email address"
+                message: "The field `contactEmail` must be a valid email address"
                 details:
                   - field: "email"
                     reason: "Invalid format"
@@ -713,7 +703,7 @@ components:
               summary: Missing required field
               value:
                 code: "MISSING_REQUIRED_FIELD"
-                message: "The 'lastName' field is required."
+                message: "The `lastName` field is required."
                 details:
                   - field: "lastName"
                     reason: "Is required"

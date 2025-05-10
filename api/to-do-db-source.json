@@ -1,62 +1,62 @@
 {
   "users": [
     {
-      "LastName": "Smith",
-      "FirstName": "Ferdinand",
-      "ContactEmail": "f.smith@example.com",
-      "Id": 1
+      "userId": 1,
+      "lastName": "Smith",
+      "firstName": "Ferdinand",
+      "contactEmail": "f.smith@example.com"
     },
     {
-      "LastName": "Jones",
-      "FirstName": "Jill",
-      "ContactEmail": "j.jones@example.com",
-      "Id": 2
+      "userId": 2,
+      "lastName": "Jones",
+      "firstName": "Jill",
+      "contactEmail": "j.jones@example.com"
     },
     {
-      "LastName": "Martinez",
-      "FirstName": "Marty",
-      "ContactEmail": "m.martinez@example.com",
-      "Id": 3
+      "userId": 3,
+      "lastName": "Martinez",
+      "firstName": "Marty",
+      "contactEmail": "m.martinez@example.com"
     },
     {
-      "LastName": "Bailey",
-      "FirstName": "Bill",
-      "ContactEmail": "b.bailey@example.com",
-      "Id": 4
+      "userId": 4,
+      "lastName": "Bailey",
+      "firstName": "Bill",
+      "contactEmail": "b.bailey@example.com"
     }
   ],
   "tasks": [
     {
-      "UserId": 1,
-      "TaskTitle": "Grocery shopping",
-      "TaskDescription": "eggs, bacon, gummy bears",
-      "DueDate": "2025-02-20T17:00",
-      "WarningOffset": "10",
-      "Id": 1
+      "taskId": 1,
+      "userId": 1,
+      "taskTitle": "Grocery shopping",
+      "taskDescription": "eggs, bacon, gummy bears",
+      "dueDate": "2025-02-20T17:00:00-05:00",
+      "warningOffset": 10
     },
     {
-      "UserId": 1,
-      "TaskTitle": "Piano recital",
-      "TaskDescription": "Daughter's first concert appearance",
-      "DueDate": "2025-04-02T15:00",
-      "WarningOffset": "30",
-      "Id": 2
+      "taskId": 2,
+      "userId": 1,
+      "taskTitle": "Piano recital",
+      "taskDescription": "Daughter's first concert appearance",
+      "dueDate": "2025-04-02T15:00:00-05:00",
+      "warningOffset": 30
     },
     {
-      "UserId": 2,
-      "TaskTitle": "Oil change",
-      "TaskDescription": "5K auto service",
-      "DueDate": "2025-03-10T09:00",
-      "WarningOffset": "60",
-      "Id": 3
+      "taskId": 3,
+      "userId": 2,
+      "taskTitle": "Oil change",
+      "taskDescription": "5K auto service",
+      "dueDate": "2025-03-10T09:00:00-05:00",
+      "warningOffset": 60
     },
     {
-      "UserId": 3,
-      "TaskTitle": "Get shots for dog",
-      "TaskDescription": "Annual vaccinations for poochy",
-      "DueDate": "2025-05-11T14:00",
-      "WarningOffset": "20",
-      "Id": 4
+      "taskId": 4,
+      "userId": 3,
+      "taskTitle": "Get shots for dog",
+      "taskDescription": "Annual vaccinations for poochy",
+      "dueDate": "2025-05-11T14:00:00-05:00",
+      "warningOffset": 20
     }
   ]
 }
