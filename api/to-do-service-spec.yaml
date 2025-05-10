@@ -170,6 +170,7 @@ paths:
         - $ref: '#/components/parameters/PaginationPageParam'
         - $ref: '#/components/parameters/PaginationPerPageParam'
         - $ref: '#/components/parameters/SortParam'
+        - $ref: '#/components/parameters/TaskStatusFilterParam'
       responses:
         '200':
           $ref: '#/components/responses/SuccessGetAllTasks'
@@ -332,6 +333,26 @@ components:
         descendingByDate:
           value: "-dueDate"
           summary: Sort by due date descending
+        byStatus:
+          value: "taskStatus"
+          summary: Sort by task status ascending
+
+    TaskStatusFilterParam:
+      name: taskStatus
+      in: query
+      description: Filter tasks by their status. Returns only tasks with the specified status.
+      schema:
+        $ref: '#/components/schemas/TaskStatus'
+      examples:
+        notStarted:
+          value: "NOT_STARTED"
+          summary: Filter for tasks not yet started
+        inProgress:
+          value: "IN_PROGRESS"
+          summary: Filter for tasks currently in progress
+        completed:
+          value: "COMPLETED"
+          summary: Filter for completed tasks
 
     UserIdPathParam:
       name: userId
@@ -419,6 +440,8 @@ components:
           $ref: '#/components/schemas/TaskTitle'
         taskDescription:
           $ref: '#/components/schemas/TaskDescription'
+        taskStatus:
+          $ref: '#/components/schemas/TaskStatus'
         dueDate:
           $ref: '#/components/schemas/DueDate'
         warningOffset:
@@ -427,10 +450,11 @@ components:
         - taskId
         - userId
         - taskTitle
+        - taskStatus
         - dueDate
         - warningOffset
       description: Represents a task with unique ID, creator's user ID, 
-        title, description, due date, and warning offset.
+        title, description, status, due date, and warning offset.
 
     TaskInput:
       type: object
@@ -441,6 +465,8 @@ components:
           $ref: '#/components/schemas/TaskTitle'
         taskDescription:
           $ref: '#/components/schemas/TaskDescription'
+        taskStatus:
+          $ref: '#/components/schemas/TaskStatus'
         dueDate:
           $ref: '#/components/schemas/DueDate'
         warningOffset:
@@ -455,6 +481,7 @@ components:
         The API doesn't check for duplicates, so similar tasks may exist.
         The API generates a unique `taskId`, requires a valid `userId`,
         ensures `dueDate` is in the future, and requires a positive `warningOffset`.
+        If `taskStatus` is not provided, it defaults to `NOT_STARTED`.
 
     TaskPatch:
       type: object
@@ -465,6 +492,8 @@ components:
           $ref: '#/components/schemas/TaskTitle'
         taskDescription:
           $ref: '#/components/schemas/TaskDescription'
+        taskStatus:
+          $ref: '#/components/schemas/TaskStatus'
         dueDate:
           $ref: '#/components/schemas/DueDate'
         warningOffset:
@@ -472,6 +501,8 @@ components:
       minProperties: 1
       description: Contains the data you can update for an existing task.
         The `PATCH /tasks/{taskId}` operation uses this schema to support partial updates.
+        Use this to update the `taskStatus` when task progress changes.
+        To mark a task as completed, use this to update the `taskStatus` to `COMPLETED`.
 
     Error:
       type: object
@@ -571,6 +602,22 @@ components:
       type: string
       minLength: 1
       maxLength: 255
+
+    TaskStatus:
+      description: The current status of the task in its lifecycle.
+      type: string
+      enum:
+        - NOT_STARTED
+        - IN_PROGRESS
+        - BLOCKED
+        - DEFERRED
+        - COMPLETED
+        - CANCELLED
+      default: NOT_STARTED
+      examples:
+        - value: "NOT_STARTED"
+        - value: "IN_PROGRESS"
+        - value: "COMPLETED"
 
     DueDate:
       description: The date and time that the task should be performed.
@@ -709,6 +756,16 @@ components:
                     reason: "Is required"
                     location: "body"
                 requestId: "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+            invalidStatus:
+              summary: Invalid task status
+              value:
+                code: "INVALID_FIELD"
+                message: "The `taskStatus` value 'DONE' is not valid."
+                details:
+                  - field: "taskStatus"
+                    reason: "Invalid value"
+                    location: "body"
+                requestId: "req-f8d31a62-e789-4856-9452-5efa50223c7a"
 
     Unauthorized:
       description: Authentication is required or the provided credentials are invalid.
@@ -835,24 +892,28 @@ components:
           - userId: 1
             taskTitle: "Grocery shopping"
             taskDescription: "eggs, bacon, gummy bears"
+            taskStatus: "NOT_STARTED"
             dueDate: "2024-02-20T17:00:00.000-05:00"
             warningOffset: 60
             taskId: 1
           - userId: 1
             taskTitle: "Piano recital"
             taskDescription: "Daughter's first concert appearance"
+            taskStatus: "IN_PROGRESS"
             dueDate: "2024-04-02T15:00:00-05:00"
             warningOffset: 30
             taskId: 2
           - userId: 2
             taskTitle: "Oil change"
             taskDescription: "5K auto service"
+            taskStatus: "COMPLETED"
             dueDate: "2024-03-10T09:00:00-05:00"
             warningOffset: 60
             taskId: 3
           - userId: 3
             taskTitle: "Get shots for dog"
             taskDescription: "Annual vaccinations for poochy"
+            taskStatus: "DEFERRED"
             dueDate: "2024-05-11T14:00:00-05:00"
             warningOffset: 20
             taskId: 4
@@ -863,6 +924,7 @@ components:
         userId: 1
         taskTitle: "New Task"
         taskDescription: "Description of the new task"
+        taskStatus: "NOT_STARTED"
         dueDate: "2024-06-01T12:00:00-05:00"
         warningOffset: 5
 
@@ -873,6 +935,7 @@ components:
         userId: 1
         taskTitle: "New Task"
         taskDescription: "Description of the new task"
+        taskStatus: "NOT_STARTED"
         dueDate: "2024-06-01T12:00:00-05:00"
         warningOffset: 5
 
@@ -882,14 +945,15 @@ components:
         userId: 1
         taskTitle: "Grocery shopping"
         taskDescription: "eggs, bacon, gummy bears"
+        taskStatus: "NOT_STARTED"
         dueDate: "2024-02-20T17:00:00-05:00"
         warningOffset: 10
         taskId: 1
 
     TaskPatch:
-      summary: Example of task patch data
+      summary: Example of task patch data for updating status
       value:
-        taskDescription: "Updated description"
+        taskStatus: "COMPLETED"
 
     UpdatedTask:
       summary: Example of updated task
@@ -897,6 +961,7 @@ components:
         userId: 1
         taskTitle: "Grocery shopping"
         taskDescription: "Updated description"
+        taskStatus: "COMPLETED"
         dueDate: "2024-02-20T17:00:00-05:00"
         warningOffset: 10
         taskId: 1
