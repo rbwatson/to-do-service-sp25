@@ -2,7 +2,7 @@ openapi: 3.1.0
 
 info:
   title: Task Management API
-  description: A comprehensive API for managing to-do tasks and users
+  description: A comprehensive API for managing to-do tasks and users.
   version: 1.0.0
   contact:
     name: To-Do Service Support
@@ -10,13 +10,13 @@ info:
 
 servers:
   - url: http://localhost:3000
-    description: Local server for testing.
+    description: Local server for testing. Often, this is the development server.
 
 tags:
   - name: Users
-    description: User management endpoints
+    description: User management endpoints.  Provides operations for managing user accounts.
   - name: Tasks
-    description: Task management endpoints
+    description: Task management endpoints.  Provides operations for managing to-do tasks.
 
 security:
   - bearerAuth: []
@@ -25,21 +25,13 @@ paths:
   /users:
     get:
       summary: Get all users
-      description: >
-        Returns all users in the to-do service's database.
-        This description is very long and takes up several
-        lines of YAML in the OAS document.
-
-
-        This operation has no path or query parameters.
-        It takes two newlines in the text to create one new line
-        in the documentation.
+      description: Retrieves a list of all users in the system. Supports pagination and sorting.
       tags:
         - Users
       operationId: getAllUsers
       parameters:
-        - $ref: '#/components/parameters/PageParam'
-        - $ref: '#/components/parameters/PerPageParam'
+        - $ref: '#/components/parameters/PaginationPageParam'
+        - $ref: '#/components/parameters/PaginationPerPageParam'
         - $ref: '#/components/parameters/SortParam'
       responses:
         '200':
@@ -58,7 +50,7 @@ paths:
           $ref: '#/components/responses/ServerError'
 
     post:
-      summary: Add a user
+      summary: Create a new user
       tags:
         - Users
       operationId: postNewUser
@@ -85,19 +77,15 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 
-  /users/{Id}:
+  /users/{userId}:
     get:
       summary: Get a user by ID
+      description: Retrieves a single user based on their unique user ID.
       tags:
         - Users
       operationId: getOneUser
       parameters:
-        - name: Id
-          in: path
-          required: true
-          description: ID of the user
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/UserIdPathParam'
       responses:
         '200':
           $ref: '#/components/responses/SuccessGetOneUser'
@@ -115,17 +103,13 @@ paths:
           $ref: '#/components/responses/ServerError'
 
     patch:
-      summary: Update a property of a user (excluding ID)
+      summary: Update a user
+      description: Update one or more properties of an existing user.  Partial updates are supported.
       tags:
         - Users
       operationId: patchOneUser
       parameters:
-        - name: Id
-          in: path
-          required: true
-          description: ID of the user
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/UserIdPathParam'
       requestBody:
         required: true
         content:
@@ -153,16 +137,12 @@ paths:
 
     delete:
       summary: Delete a user by ID
+      description: Deletes the specified user.
       tags:
         - Users
       operationId: deleteOneUser
       parameters:
-        - name: Id
-          in: path
-          required: true
-          description: ID of the user
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/UserIdPathParam'
       responses:
         '204':
           $ref: '#/components/responses/SuccessDeleteOneUser'
@@ -182,12 +162,13 @@ paths:
   /tasks:
     get:
       summary: Get all tasks
+      description: Retrieves a list of all tasks. Supports pagination and sorting.
       tags:
         - Tasks
       operationId: getAllTasks
       parameters:
-        - $ref: '#/components/parameters/PageParam'
-        - $ref: '#/components/parameters/PerPageParam'
+        - $ref: '#/components/parameters/PaginationPageParam'
+        - $ref: '#/components/parameters/PaginationPerPageParam'
         - $ref: '#/components/parameters/SortParam'
       responses:
         '200':
@@ -206,7 +187,7 @@ paths:
           $ref: '#/components/responses/ServerError'
 
     post:
-      summary: Add a task
+      summary: Create a new task
       tags:
         - Tasks
       operationId: postOneTask
@@ -221,7 +202,7 @@ paths:
                 $ref: '#/components/examples/NewTask'
       responses:
         '201':
-          $ref: '#/components/responses/SuccessPostOneTask'  
+          $ref: '#/components/responses/SuccessPostOneTask'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -233,19 +214,15 @@ paths:
         '500':
           $ref: '#/components/responses/ServerError'
 
-  /tasks/{TaskId}:
+  /tasks/{taskId}:
     get:
       summary: Get a task by ID
+      description: Retrieves a single task based on its unique task ID.
       tags:
         - Tasks
       operationId: getOneTask
       parameters:
-        - name: TaskId
-          in: path
-          required: true
-          description: ID of the task
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/TaskIdPathParam'
       responses:
         '200':
           $ref: '#/components/responses/SuccessGetOneTask'
@@ -263,17 +240,13 @@ paths:
           $ref: '#/components/responses/ServerError'
 
     patch:
-      summary: Update a property of a task (excluding ID)
+      summary: Update a task
+      description: Update one or more properties of an existing task. Partial updates are supported.
       tags:
         - Tasks
       operationId: patchOneTask
       parameters:
-        - name: TaskId
-          in: path
-          required: true
-          description: ID of the task
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/TaskIdPathParam'
       requestBody:
         required: true
         content:
@@ -301,16 +274,12 @@ paths:
 
     delete:
       summary: Delete a task by ID
+      description: Deletes the specified task.
       tags:
         - Tasks
       operationId: deleteOneTask
       parameters:
-        - name: TaskId
-          in: path
-          required: true
-          description: ID of the task
-          schema:
-            type: integer
+        - $ref: '#/components/parameters/TaskIdPathParam'
       responses:
         '204':
           $ref: '#/components/responses/SuccessDeleteOneTask'
@@ -329,222 +298,188 @@ paths:
 
 components:
   parameters:
-    PageParam:
+    PaginationPageParam:
       name: _page
       in: query
-      description: Page number for paginated results (zero-indexed)
+      description: Page number for paginated results (zero-indexed).
       schema:
         type: integer
         minimum: 0
         default: 0
       example: 0
-    
-    PerPageParam:
+
+    PaginationPerPageParam:
       name: _perPage
       in: query
-      description: Number of items per page (max 100)
+      description: Number of items per page (maximum 100).
       schema:
         type: integer
         minimum: 1
         maximum: 100
         default: 20
       example: 20
-    
+
     SortParam:
       name: _sort
       in: query
-      description: Field to sort by, prefixed with '-' for descending order
+      description: Field to sort by, prefixed with '-' for descending order.
       schema:
         type: string
       examples:
         ascendingByName:
-          value: "FirstName"
+          value: "firstName"
           summary: Sort by first name ascending
         descendingByDate:
-          value: "-DueDate"
+          value: "-dueDate"
           summary: Sort by due date descending
-    
+
+    UserIdPathParam:
+      name: userId
+      in: path
+      required: true
+      description: The unique ID of the user to retrieve.
+      schema:
+        type: integer
+
+    TaskIdPathParam:
+      name: taskId
+      in: path
+      required: true
+      description: The unique ID of the task to retrieve.
+      schema:
+        type: integer
+
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
-  
+
   schemas:
     User:
       type: object
       properties:
-        Id:
-          description: The unique ID of the user's account in the service
-          type: integer
-        LastName:
-          description: The user's last name
-          type: string
-          minLength: 1
-          maxLength: 100
-        FirstName:
-          description: The user's first name
-          type: string
-          minLength: 1
-          maxLength: 100
-        ContactEmail:
-          description: The user's email address
-          type: string
-          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
-          maxLength: 255
-          minLength: 3
-          format: email
+        userId:
+          $ref: '#/components/schemas/UserId'
+        lastName:
+          $ref: '#/components/schemas/LastName'
+        firstName:
+          $ref: '#/components/schemas/FirstName'
+        contactEmail:
+          $ref: '#/components/schemas/ContactEmail'
       required:
-        - Id
-        - LastName
-        - FirstName
-        - ContactEmail
-    
+        - userId
+        - lastName
+        - firstName
+        - contactEmail
+      description: Represents a user in the system.
+        Includes their unique ID, name, and contact email.
+        A user must have created a user resource before they can add task resources.
+        When a user registers with the service, they create a user resource.
+        The registration process is provided by the application that uses the To-Do service.
+        Once registered, there is no limit to the number of tasks that a user can create.
+
     UserInput:
       type: object
       properties:
-        LastName:
-          description: The user's last name
-          type: string
-          minLength: 1
-          maxLength: 100
-        FirstName:
-          description: The user's first name
-          type: string
-          minLength: 1
-          maxLength: 100
-        ContactEmail:
-          description: The user's email address
-          type: string
-          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
-          maxLength: 255
-          minLength: 3
-          format: email
+        lastName:
+          $ref: '#/components/schemas/LastName'
+        firstName:
+          $ref: '#/components/schemas/FirstName'
+        contactEmail:
+          $ref: '#/components/schemas/ContactEmail'
       required:
-        - LastName
-        - FirstName
-        - ContactEmail
-    
+        - lastName
+        - firstName
+        - contactEmail
+      description: The data required to create a new user.
+        This schema is used for the request body of the `POST /users` operation.
+        The `contactEmail` value must not already be used by another user in the Service.
+        The service creates a unique `userId` value for the new user.
+
     UserPatch:
       type: object
       properties:
-        LastName:
-          description: The user's last name
-          type: string
-          minLength: 1
-          maxLength: 100
-        FirstName:
-          description: The user's first name
-          type: string
-          minLength: 1
-          maxLength: 100
-        ContactEmail:
-          description: The user's email address
-          type: string
-          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
-          maxLength: 255
-          minLength: 3
-          format: email
+        lastName:
+          $ref: '#/components/schemas/LastName'
+        firstName:
+          $ref: '#/components/schemas/FirstName'
+        contactEmail:
+          $ref: '#/components/schemas/ContactEmail'
       minProperties: 1
-    
+      description: The data that can be updated for an existing user.
+        The request body of the `PATCH /users/{userId}` operation uses this schema.
+        It supports partial updates, meaning that not all fields need to be provided in a single request.
+        The `contactEmail` value must not already be used by another user in the Service.
+
     Task:
       type: object
       properties:
-        Id:
-          description: The system-defined, unique ID that identifies the task
-          type: integer
-        UserId:
-          description: The ID of the user who created this task
-          type: integer
-        TaskTitle:
-          description: The short description of the task, used as the title in lists and headings.
-          type: string
-          minLength: 1
-          maxLength: 80
-        TaskDescription:
-          description: The detailed description of the task.
-          type: string
-          minLength: 1
-          maxLength: 255
-        DueDate:
-          description: The date and time that the task should be performed.
-          type: string
-          format: date-time
-        WarningOffset:
-          description: The number of minutes before the due date and time to send the reminder.
-          type: integer
-          minimum: 0
-          maximum: 64000
+        taskId:
+          $ref: '#/components/schemas/TaskId'
+        userId:
+          $ref: '#/components/schemas/UserId'
+        taskTitle:
+          $ref: '#/components/schemas/TaskTitle'
+        taskDescription:
+          $ref: '#/components/schemas/TaskDescription'
+        dueDate:
+          $ref: '#/components/schemas/DueDate'
+        warningOffset:
+          $ref: '#/components/schemas/WarningOffset'
       required:
-        - Id
-        - UserId
-        - TaskTitle
-        - DueDate
-        - WarningOffset
-    
+        - taskId
+        - userId
+        - taskTitle
+        - dueDate
+        - warningOffset
+      description: Represents a task in the system.
+        Includes its unique ID, the ID of the user who created it,
+        a title and description, due date, and warning offset.
+
     TaskInput:
       type: object
       properties:
-        UserId:
-          description: The ID of the user who created this task
-          type: integer
-        TaskTitle:
-          description: The short description of the task, used as the title in lists and headings.
-          type: string
-          minLength: 1
-          maxLength: 80
-        TaskDescription:
-          description: The detailed description of the task.
-          type: string
-          minLength: 1
-          maxLength: 255
-        DueDate:
-          description: The date and time that the task should be performed.
-          type: string
-          format: date-time
-        WarningOffset:
-          description: The number of minutes before the due date and time to send the reminder.
-          type: integer
-          minimum: 0
-          maximum: 64000
+        userId:
+          $ref: '#/components/schemas/UserId'
+        taskTitle:
+          $ref: '#/components/schemas/TaskTitle'
+        taskDescription:
+          $ref: '#/components/schemas/TaskDescription'
+        dueDate:
+          $ref: '#/components/schemas/DueDate'
+        warningOffset:
+          $ref: '#/components/schemas/WarningOffset'
       required:
-        - UserId
-        - TaskTitle
-        - DueDate
-        - WarningOffset
-    
+        - userId
+        - taskTitle
+        - dueDate
+        - warningOffset
+      description: The data required to create a new task.
+        This schema is used for the request body of the `POST /tasks` operation.
+        Note that this object is not checked against existing resources.
+        Duplicate resources could be created.
+        A unique `taskId` value is created by the service for the new task resource.
+        Each task must be associated to a valid `userId` value.
+        The `dueDate` of a new task cannot be in the past.
+        A `warningOffset` cannot be negative, which would occur after the `dueDate`.
+
     TaskPatch:
       type: object
       properties:
-        UserId:
-          description: The ID of the user who created this task
-          type: integer
-        TaskTitle:
-          description: The short description of the task, used as the title in lists and headings.
-          type: string
-          minLength: 1
-          maxLength: 80
-        TaskDescription:
-          description: The detailed description of the task.
-          type: string
-          minLength: 1
-          maxLength: 255
-        DueDate:
-          description: The date and time that the task should be performed.
-          type: string
-          format: date-time
-        WarningOffset:
-          description: The number of minutes before the due date and time to send the reminder.
-          type: integer
-          minimum: 0
-          maximum: 64000
+        userId:
+          $ref: '#/components/schemas/UserId'
+        taskTitle:
+          $ref: '#/components/schemas/TaskTitle'
+        taskDescription:
+          $ref: '#/components/schemas/TaskDescription'
+        dueDate:
+          $ref: '#/components/schemas/DueDate'
+        warningOffset:
+          $ref: '#/components/schemas/WarningOffset'
       minProperties: 1
-
-    ErrorNotFound:
-      description: "Returns an empty object {}"
-      type: object
-      properties: {}
-      additionalProperties: false
-      maxProperties: 0
+      description: The data that can be updated for an existing task.
+        This schema is used for the request body of the `PATCH /tasks/{taskId}` operation.
+        It supports partial updates.
 
     Error:
       type: object
@@ -553,45 +488,112 @@ components:
         - message
       properties:
         code:
-          type: string
-          description: Error code that identifies the type of error
-          examples:
-            - value: "INVALID_FIELD"
+          $ref: '#/components/schemas/ErrorCode'
         message:
-          type: string
-          description: Human-readable error message
-          examples:
-            - value: "The field 'email' must be a valid email address"
+          $ref: '#/components/schemas/ErrorMessage'
         details:
           type: array
-          description: Additional error details when available
+          description: Additional error details when available.
           items:
             type: object
             properties:
               field:
                 type: string
-                description: The field that caused the error
+                description: The field that caused the error.
                 examples:
-                  - value: "ContactEmail"
+                  - value: "contactEmail"
               reason:
                 type: string
-                description: Specific reason for the error
+                description: Specific reason for the error.
                 examples:
                   - value: "Invalid format"
+                  - value: "Is required"
               location:
                 type: string
-                description: Where the error occurred (query, path, body)
+                description: Where the error occurred (query, path, body).
                 examples:
                   - value: "body"
         requestId:
-          type: string
-          description: Request identifier for troubleshooting
-          examples:
-            - value: "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+          $ref: '#/components/schemas/RequestId'
+      description: Describes the structure of an error response,
+        including the error code, message, and optional details.
+
+    ErrorCode:
+      type: string
+      description: Error code that identifies the type of error.
+      examples:
+        - value: "INVALID_FIELD"
+        - value: "MISSING_REQUIRED_FIELD"
+        - value: "RESOURCE_NOT_FOUND"
+
+    ErrorMessage:
+      type: string
+      description: Human-readable error message.
+      examples:
+        - value: "The field 'email' must be a valid email address."
+        - value: "The 'lastName' field is required."
+        - value: "The requested resource could not be found."
+
+    RequestId:
+      type: string
+      description: Request identifier for troubleshooting.
+      examples:
+        - value: "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+
+    UserId:
+      description: The unique ID of the user's account in the service.
+      type: integer
+
+    LastName:
+      description: The user's last name.
+      type: string
+      minLength: 1
+      maxLength: 100
+
+    FirstName:
+      description: The user's first name.
+      type: string
+      minLength: 1
+      maxLength: 100
+
+    ContactEmail:
+      description: The user's email address.
+      type: string
+      pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+      maxLength: 255
+      minLength: 3
+      format: email
+
+    TaskId:
+      description: The system-defined, unique ID that identifies the task.
+      type: integer
+
+    TaskTitle:
+      description: The short description of the task, used as the title in lists and headings.
+      type: string
+      minLength: 1
+      maxLength: 80
+
+    TaskDescription:
+      description: The detailed description of the task.
+      type: string
+      minLength: 1
+      maxLength: 255
+
+    DueDate:
+      description: The date and time that the task should be performed.
+      type: string
+      format: date-time
+
+    WarningOffset:
+      description: The number of minutes before the due date and time to send the reminder.
+      type: integer
+      minimum: 0
+      maximum: 64000
 
   responses:
     SuccessGetAllUsers:
-      description: Successful GET all users response
+      description: Successful response containing a list of users.
       content:
         application/json:
           schema:
@@ -606,7 +608,7 @@ components:
               $ref: '#/components/examples/UsersList'
 
     SuccessGetOneUser:
-      description: Successful response
+      description: Successful response containing a single user.
       content:
         application/json:
           schema:
@@ -616,7 +618,7 @@ components:
               $ref: '#/components/examples/SingleUser'
 
     SuccessPostOneUser:
-      description: User added successfully
+      description: User created successfully.  The response contains the newly created user.
       content:
         application/json:
           schema:
@@ -626,7 +628,7 @@ components:
               $ref: '#/components/examples/CreatedUser'
 
     SuccessPatchOneUser:
-      description: User updated successfully
+      description: User updated successfully. The response contains the updated user.
       content:
         application/json:
           schema:
@@ -635,11 +637,11 @@ components:
             updatedUser:
               $ref: '#/components/examples/UpdatedUser'
 
-    SuccessDeleteOneUser:    
-      description: User deleted successfully
+    SuccessDeleteOneUser:
+      description: User deleted successfully.  The server successfully processed the request and no content is returned.
 
     SuccessGetAllTasks:
-      description: Successful response
+      description: Successful response containing a list of tasks.
       content:
         application/json:
           schema:
@@ -654,7 +656,7 @@ components:
               $ref: '#/components/examples/TasksList'
 
     SuccessGetOneTask:
-      description: Successful response
+      description: Successful response containing a single task.
       content:
         application/json:
           schema:
@@ -664,7 +666,7 @@ components:
               $ref: '#/components/examples/SingleTask'
 
     SuccessPostOneTask:
-      description: Task added successfully
+      description: Task created successfully. The response contains the newly created task.
       content:
         application/json:
           schema:
@@ -674,7 +676,7 @@ components:
               $ref: '#/components/examples/CreatedTask'
 
     SuccessPatchOneTask:
-      description: Task updated successfully
+      description: Task updated successfully. The response contains the updated task.
       content:
         application/json:
           schema:
@@ -684,25 +686,42 @@ components:
               $ref: '#/components/examples/UpdatedTask'
 
     SuccessDeleteOneTask:
-      description: Task deleted successfully
+      description: Task deleted successfully. The server successfully processed the request and no content is returned.
 
     BadRequest:
-      description: The request was malformed or contains invalid parameters
+      description: The request was malformed or contains invalid parameters.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-          example:
-            code: "BAD_REQUEST"
-            message: "The request contains invalid parameters"
-            details:
-              - field: "WarningOffset"
-                reason: "Must be a negative integer"
-                location: "body"
-            requestId: "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-    
+          examples:
+            invalidParameter:
+              summary: Invalid parameter
+              description: An invalid parameter could be a value that is not
+                correctly formatted or does not pass validation.
+                For example, a `contactEmail` value that is incorrectly formatted, 
+                or a `userId` value that does not correspond to a user registered in the service.
+              value:
+                code: "INVALID_FIELD"
+                message: "The field 'email' must be a valid email address"
+                details:
+                  - field: "email"
+                    reason: "Invalid format"
+                    location: "body"
+                requestId: "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+            missingRequired:
+              summary: Missing required field
+              value:
+                code: "MISSING_REQUIRED_FIELD"
+                message: "The 'lastName' field is required."
+                details:
+                  - field: "lastName"
+                    reason: "Is required"
+                    location: "body"
+                requestId: "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+
     Unauthorized:
-      description: Authentication is required or the provided credentials are invalid
+      description: Authentication is required or the provided credentials are invalid.
       content:
         application/json:
           schema:
@@ -711,9 +730,9 @@ components:
             code: "UNAUTHORIZED"
             message: "Authentication is required to access this resource"
             requestId: "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-    
+
     Forbidden:
-      description: The authenticated user does not have permission to access the requested resource
+      description: The authenticated user does not have permission to access the requested resource.
       content:
         application/json:
           schema:
@@ -722,25 +741,25 @@ components:
             code: "FORBIDDEN"
             message: "You do not have permission to access this resource"
             requestId: "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-    
+
     NotFound:
-      description: The requested resource was not found
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            code: "NOT_FOUND"
+            code: "RESOURCE_NOT_FOUND"
             message: "The requested resource could not be found"
             requestId: "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-    
+
     TooManyRequests:
-      description: The client has sent too many requests in a given amount of time
+      description: The client has sent too many requests in a given amount of time.
       headers:
         Retry-After:
           schema:
             type: integer
-          description: Number of seconds to wait before making a new request
+          description: Number of seconds to wait before making a new request.
       content:
         application/json:
           schema:
@@ -749,9 +768,9 @@ components:
             code: "RATE_LIMIT_EXCEEDED"
             message: "Rate limit exceeded. Try again in 30 seconds"
             requestId: "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-    
+
     ServerError:
-      description: An unexpected server error occurred
+      description: An unexpected server error occurred.
       content:
         application/json:
           schema:
@@ -759,135 +778,135 @@ components:
           example:
             code: "SERVER_ERROR"
             message: "An unexpected error occurred. Please try again later"
-            requestId: "req-f8d31a62-e789-4856-9452-5efa50223c7a"  
-  
+            requestId: "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+
   examples:
     UsersList:
       summary: List of users
       value:
         users:
-          - LastName: "Smith"
-            FirstName: "Ferdinand"
-            ContactEmail: "f.smith@example.com"
-            Id: 1
-          - LastName: "Jones"
-            FirstName: "Jill"
-            ContactEmail: "j.jones@example.com"
-            Id: 2
-          - LastName: "Martinez"
-            FirstName: "Marty"
-            ContactEmail: "m.martinez@example.com"
-            Id: 3
-          - LastName: "Bailey"
-            FirstName: "Bill"
-            ContactEmail: "b.bailey@example.com"
-            Id: 4
-    
+          - userId: 1
+            lastName: "Smith"
+            firstName: "Ferdinand"
+            contactEmail: "f.smith@example.com"
+          - userId: 2
+            lastName: "Jones"
+            firstName: "Jill"
+            contactEmail: "j.jones@example.com"
+          - userId: 3
+            lastName: "Martinez"
+            firstName: "Marty"
+            contactEmail: "m.martinez@example.com"
+          - userId: 4
+            lastName: "Bailey"
+            firstName: "Bill"
+            contactEmail: "b.bailey@example.com"
+
     NewUser:
       summary: Example of new user data
       value:
-        LastName: "Doe"
-        FirstName: "John"
-        ContactEmail: "j.doe@example.com"
-    
+        lastName: "Doe"
+        firstName: "John"
+        contactEmail: "j.doe@example.com"
+
     CreatedUser:
       summary: Example of newly created user
       value:
-        Id: 5
-        LastName: "Doe"
-        FirstName: "John"
-        ContactEmail: "j.doe@example.com"
-    
+        userId: 5
+        lastName: "Doe"
+        firstName: "John"
+        contactEmail: "j.doe@example.com"
+
     SingleUser:
       summary: Example of a single user
       value:
-        LastName: "Smith"
-        FirstName: "Ferdinand"
-        ContactEmail: "f.smith@example.com"
-        Id: 1
-    
+        userId: 1
+        lastName: "Smith"
+        firstName: "Ferdinand"
+        contactEmail: "f.smith@example.com"
+
     UserPatch:
       summary: Example of user patch data
       value:
-        ContactEmail: "new.email@example.com"
-    
+        contactEmail: "new.email@example.com"
+
     UpdatedUser:
       summary: Example of updated user
       value:
-        LastName: "Smith"
-        FirstName: "Ferdinand"
-        ContactEmail: "new.email@example.com"
-        Id: 1
-    
+        userId: 1
+        lastName: "Smith"
+        firstName: "Ferdinand"
+        contactEmail: "new.email@example.com"
+
     TasksList:
       summary: List of tasks
       value:
         tasks:
-          - UserId: 1
-            TaskTitle: "Grocery shopping"
-            TaskDescription: "eggs, bacon, gummy bears"
-            DueDate: "2024-02-20T17:00:00.000-05:00"
-            WarningOffset: 60
-            Id: 1
-          - UserId: 1
-            TaskTitle: "Piano recital"
-            TaskDescription: "Daughter's first concert appearance"
-            DueDate: "2024-04-02T15:00:00-05:00"
-            WarningOffset: 30
-            Id: 2
-          - UserId: 2
-            TaskTitle: "Oil change"
-            TaskDescription: "5K auto service"
-            DueDate: "2024-03-10T09:00:00-05:00"
-            WarningOffset: 60
-            Id: 3
-          - UserId: 3
-            TaskTitle: "Get shots for dog"
-            TaskDescription: "Annual vaccinations for poochy"
-            DueDate: "2024-05-11T14:00:00-05:00"
-            WarningOffset: 20
-            Id: 4
-    
+          - userId: 1
+            taskTitle: "Grocery shopping"
+            taskDescription: "eggs, bacon, gummy bears"
+            dueDate: "2024-02-20T17:00:00.000-05:00"
+            warningOffset: 60
+            taskId: 1
+          - userId: 1
+            taskTitle: "Piano recital"
+            taskDescription: "Daughter's first concert appearance"
+            dueDate: "2024-04-02T15:00:00-05:00"
+            warningOffset: 30
+            taskId: 2
+          - userId: 2
+            taskTitle: "Oil change"
+            taskDescription: "5K auto service"
+            dueDate: "2024-03-10T09:00:00-05:00"
+            warningOffset: 60
+            taskId: 3
+          - userId: 3
+            taskTitle: "Get shots for dog"
+            taskDescription: "Annual vaccinations for poochy"
+            dueDate: "2024-05-11T14:00:00-05:00"
+            warningOffset: 20
+            taskId: 4
+
     NewTask:
       summary: Example of new task data
       value:
-        UserId: 1
-        TaskTitle: "New Task"
-        TaskDescription: "Description of the new task"
-        DueDate: "2024-06-01T12:00:00-05:00"
-        WarningOffset: 5
-    
+        userId: 1
+        taskTitle: "New Task"
+        taskDescription: "Description of the new task"
+        dueDate: "2024-06-01T12:00:00-05:00"
+        warningOffset: 5
+
     CreatedTask:
       summary: Example of newly created task
       value:
-        Id: 5
-        UserId: 1
-        TaskTitle: "New Task"
-        TaskDescription: "Description of the new task"
-        DueDate: "2024-06-01T12:00:00-05:00"
-        WarningOffset: 5
-    
+        taskId: 5
+        userId: 1
+        taskTitle: "New Task"
+        taskDescription: "Description of the new task"
+        dueDate: "2024-06-01T12:00:00-05:00"
+        warningOffset: 5
+
     SingleTask:
       summary: Example of a single task
       value:
-        UserId: 1
-        TaskTitle: "Grocery shopping"
-        TaskDescription: "eggs, bacon, gummy bears"
-        DueDate: "2024-02-20T17:00:00-05:00"
-        WarningOffset: 10
-        Id: 1
-    
+        userId: 1
+        taskTitle: "Grocery shopping"
+        taskDescription: "eggs, bacon, gummy bears"
+        dueDate: "2024-02-20T17:00:00-05:00"
+        warningOffset: 10
+        taskId: 1
+
     TaskPatch:
       summary: Example of task patch data
       value:
-        TaskDescription: "Updated description"
-    
+        taskDescription: "Updated description"
+
     UpdatedTask:
       summary: Example of updated task
       value:
-        UserId: 1
-        TaskTitle: "Grocery shopping"
-        TaskDescription: "Updated description"
-        DueDate: "2024-02-20T17:00:00-05:00"
-        WarningOffset: 10
-        Id: 1
+        userId: 1
+        taskTitle: "Grocery shopping"
+        taskDescription: "Updated description"
+        dueDate: "2024-02-20T17:00:00-05:00"
+        warningOffset: 10
+        taskId: 1
