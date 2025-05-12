@@ -36,8 +36,8 @@ fi
 # Process the file and extract documentation
 echo "Extracting documentation files..."
 
-# Use awk to parse the file and extract individual documentation files
-awk -v BASE_DIR="$BASE_DIR" '
+# Use gawk to parse the file and extract individual documentation files
+gawk -v BASE_DIR="$BASE_DIR" '
 BEGIN {
     in_file = 0
     current_file = ""
