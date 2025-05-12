@@ -2,15 +2,17 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://github.com/rbwatson/to-do-service-sp25/api-doc-set.json",
     "title": "API Documentation description schema",
-    "description": "Schema to describe API documenation sets for automation",
+    "description": "Schema to describe API documentation sets for automation",
     "$defs": {
         "section": {
             "type": "object",
             "properties": {
-                "title":  {
+                "title": {
+                    "required": true,
                     "type": "string"
                 },
                 "directory": {
+                    "required": true,
                     "type": "string"
                 },
                 "topics": {
@@ -22,13 +24,81 @@
         "topic": {
             "type": "object",
             "properties": {
-                "filename": {"type": "string"},
+                "filename": { "type": "string" },
                 "frontMatter": {
                     "type": "object",
                     "properties": {
-                        "title": {"type": "string"},
-                        "navOrder": {"type": "string","default": "$pos"}
-                    }
+                        "title": {
+                            "required": true,
+                            "type": "string"
+                        },
+                        "description": {
+                            "required": true,
+                            "type": "string"
+                        },
+                        "tags": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        },
+                        "categories": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        },
+                        "ai_relevance": {
+                            "type": "string",
+                            "enum": ["low", "medium", "high"]
+                        },
+                        "importance": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 10
+                        },
+                        "prerequisites": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        },
+                        "related_pages": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        },
+                        "examples": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        },
+                        "api_endpoints": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        },
+                        "version": {
+                            "type": "string",
+                            "default": "v1.0"
+                        },
+                        "last_updated": {
+                            "$comment": "Replace a value of $today with the current date", 
+                            "type": "string",
+                            "default": "$today"
+                        },
+                        "ai-generated": {
+                            "type": "boolean",
+                            "default": false,
+                            "required": true
+                        },
+                        "ai-generated-by": {
+                            "type": "string",
+                            "default": "none"
+                        },
+                        "ai-generated-date": {
+                            "$comment": "Replace a value of $today with the current date", 
+                            "type": "string",
+                            "default": "$today"
+                        },
+                        "navOrder": {
+                            "$comment": "Replace a value of $pos with the current position in the array, starting from 1.", 
+                            "type": "string",
+                            "default": "$pos"
+                        }
+                    },
+                    "required": ["title"]
                 }
             }
         }
@@ -42,6 +112,7 @@
                     "type": "string"
                 },
                 "frontMatter": {
+                    "$comment": "Add global front matter to every topic unless the topic defines that property.", 
                     "type": "object",
                     "properties": {
                         "layout": {
@@ -65,11 +136,11 @@
             "properties": {
                 "topics": {
                     "type": "array",
-                    "items": { "$ref": "#/$defs/topic"}
+                    "items": { "$ref": "#/$defs/topic" }
                 },
                 "sections": {
                     "type": "array",
-                    "items": { "$ref": "#/$defs/section"}
+                    "items": { "$ref": "#/$defs/section" }
                 }
             }
         }
