@@ -6284,6 +6284,7 @@ function TaskProvider({ children }) {
     }
   };
   
+  {% raw %}
   return (
     <TaskContext.Provider value={{ 
       tasks, 
@@ -6294,6 +6295,7 @@ function TaskProvider({ children }) {
       {children}
     </TaskContext.Provider>
   );
+  {% endraw %}
 }
 ```
 
