@@ -147,6 +147,10 @@
                 "name": {
                     "type": "string"
                 },
+                "exampleLanguages": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                },
                 "frontMatter": {
                     "$comment": "Add global front matter to every topic unless the topic defines that property.", 
                     "type": "object",

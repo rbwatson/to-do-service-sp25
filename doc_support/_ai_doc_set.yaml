@@ -1,5 +1,9 @@
 global:
   name: "Task Management API Documentation"
+  exampleLanguages:
+    - "JavaScript"
+    - "Python"
+    - "cURL"
   frontMatter:
     layout: "default"
     version: "v1.0.0"
@@ -7,6 +11,18 @@ global:
 
 content:
   topics:
+    - filename: "index.md"
+      frontMatter:
+        title: "Task Management API Documentation"
+        description: "Comprehensive guide to the Task Management API, including usage, endpoints, and best practices."
+        tags: ["API", "documentation", "task management"]
+        categories: ["overview"]
+        importance: 10
+        ai-generated: true
+        ai-generated-by: "Claude 3.7 Sonnet"
+        ai-generated-date: "$today"
+        navOrder: "1"
+
     - filename: "getting-started.md"
       frontMatter:
         title: "Getting Started with the Task Management API"
@@ -19,7 +35,7 @@ content:
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "1"
+        navOrder: "2"
         
     - filename: "core-concepts.md"
       frontMatter:
@@ -33,7 +49,7 @@ content:
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "2"
+        navOrder: "3"
         
     - filename: "resources.md"
       frontMatter:
@@ -47,7 +63,7 @@ content:
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "3"
+        navOrder: "4"
         
     - filename: "api-reference.md"
       frontMatter:
@@ -61,7 +77,7 @@ content:
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "4"
+        navOrder: "5"
         
     - filename: "tutorials.md"
       frontMatter:
@@ -75,7 +91,7 @@ content:
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "5"
+        navOrder: "6"
         
     - filename: "advanced.md"
       frontMatter:
@@ -89,7 +105,7 @@ content:
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "6"
+        navOrder: "7"
         
     - filename: "developer-resources.md"
       frontMatter:
@@ -103,7 +119,7 @@ content:
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "7"
+        navOrder: "8"
         
     - filename: "support.md"
       frontMatter:
@@ -117,7 +133,7 @@ content:
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "8"
+        navOrder: "9"
 
   sections:
     - title: "Getting started"
