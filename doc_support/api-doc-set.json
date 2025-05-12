@@ -15,6 +15,11 @@
                     "required": true,
                     "type": "string"
                 },
+                "overviewTopic": {
+                    "type": "string",
+                    "$comment": "The filename of the overview topic for this section.",
+                    "required": true
+                },
                 "topics": {
                     "type": "array",
                     "items": { "$ref": "#/$defs/topic" }
@@ -74,7 +79,7 @@
                             "default": "v1.0"
                         },
                         "last_updated": {
-                            "$comment": "Replace a value of $today with the current date", 
+                            "$comment": "When generating content, replace a value of $today with the current date", 
                             "type": "string",
                             "default": "$today"
                         },
@@ -88,17 +93,48 @@
                             "default": "none"
                         },
                         "ai-generated-date": {
-                            "$comment": "Replace a value of $today with the current date", 
+                            "$comment": "When generating content, replace a value of $today with the current date", 
                             "type": "string",
                             "default": "$today"
                         },
+                        "parent": {
+                            "$comment": "When generating definitions, if value is $sectionTopic, assign the filename of the section's overview topic.", 
+                            "type": "string",
+                            "default": "$sectionTopic"
+                        },
+                        "hasChildren": {
+                            "$comment": "Set to true if the topic has child topics.", 
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "hasToc": {
+                            "$comment": "Set to true if the topic has child topics.", 
+                            "type": "boolean",
+                            "default": false
+                        },
                         "navOrder": {
-                            "$comment": "Replace a value of $pos with the current position in the array, starting from 1.", 
+                            "$comment": "When generating definitions, replace a value of $pos with the current position in the array, starting from 1.", 
                             "type": "string",
                             "default": "$pos"
-                        }
+                        },
+                        
                     },
-                    "required": ["title"]
+                    "required": ["title", "description", "ai-generated"],
+                    "dependentRequired": {
+                        "ai-generated": ["ai-generated-by", "ai-generated-date"]
+                    },
+                    "allOf": [
+                        {
+                            "if": {
+                                "properties": { "ai-generated": { "const": false } }
+                            },
+                            "then": {
+                                "not": {
+                                    "required": ["ai-generated-by", "ai-generated-date"]
+                                }
+                            }
+                        }
+                    ]
                 }
             }
         }

@@ -6,6 +6,119 @@ global:
     lastUpdated: "$today"
 
 content:
+  topics:
+    - filename: "getting-started.md"
+      frontMatter:
+        title: "Getting Started with the Task Management API"
+        description: "Introduction to getting started with the Task Management API, including setup, authentication, and basic concepts."
+        tags: ["introduction", "overview", "getting-started"]
+        categories: ["getting-started"]
+        importance: 10
+        hasChildren: true
+        hasToc: false
+        ai-generated: true
+        ai-generated-by: "Claude 3.7 Sonnet"
+        ai-generated-date: "$today"
+        navOrder: "1"
+        
+    - filename: "core-concepts.md"
+      frontMatter:
+        title: "Core Concepts"
+        description: "Overview of fundamental concepts in the Task Management API, including data model, pagination, sorting, error handling, and task statuses."
+        tags: ["concepts", "overview"]
+        categories: ["core-concepts"]
+        importance: 9
+        hasChildren: true
+        hasToc: false
+        ai-generated: true
+        ai-generated-by: "Claude 3.7 Sonnet"
+        ai-generated-date: "$today"
+        navOrder: "2"
+        
+    - filename: "resources.md"
+      frontMatter:
+        title: "API Resources"
+        description: "Detailed information about the core resources available in the Task Management API."
+        tags: ["resources", "overview"]
+        categories: ["resources"]
+        importance: 9
+        hasChildren: true
+        hasToc: false
+        ai-generated: true
+        ai-generated-by: "Claude 3.7 Sonnet"
+        ai-generated-date: "$today"
+        navOrder: "3"
+        
+    - filename: "api-reference.md"
+      frontMatter:
+        title: "API Reference"
+        description: "Comprehensive reference documentation for all endpoints in the Task Management API."
+        tags: ["reference", "endpoints", "api"]
+        categories: ["api-reference"]
+        importance: 8
+        hasChildren: true
+        hasToc: false
+        ai-generated: true
+        ai-generated-by: "Claude 3.7 Sonnet"
+        ai-generated-date: "$today"
+        navOrder: "4"
+        
+    - filename: "tutorials.md"
+      frontMatter:
+        title: "Tutorials & Guides"
+        description: "Step-by-step tutorials and practical guides for working with the Task Management API."
+        tags: ["tutorials", "guides", "how-to"]
+        categories: ["tutorials"]
+        importance: 7
+        hasChildren: true
+        hasToc: false
+        ai-generated: true
+        ai-generated-by: "Claude 3.7 Sonnet"
+        ai-generated-date: "$today"
+        navOrder: "5"
+        
+    - filename: "advanced.md"
+      frontMatter:
+        title: "Advanced Topics"
+        description: "Advanced considerations for working with the Task Management API, including optimization, security, and data consistency."
+        tags: ["advanced", "optimization", "security"]
+        categories: ["advanced"]
+        importance: 6
+        hasChildren: true
+        hasToc: false
+        ai-generated: true
+        ai-generated-by: "Claude 3.7 Sonnet"
+        ai-generated-date: "$today"
+        navOrder: "6"
+        
+    - filename: "developer-resources.md"
+      frontMatter:
+        title: "Developer Resources"
+        description: "Additional resources for developers working with the Task Management API, including changelogs, tooling, and code examples."
+        tags: ["resources", "developers", "tools"]
+        categories: ["developer-resources"]
+        importance: 5
+        hasChildren: true
+        hasToc: false
+        ai-generated: true
+        ai-generated-by: "Claude 3.7 Sonnet"
+        ai-generated-date: "$today"
+        navOrder: "7"
+        
+    - filename: "support.md"
+      frontMatter:
+        title: "Support & FAQ"
+        description: "Support resources, frequently asked questions, and troubleshooting information for the Task Management API."
+        tags: ["support", "faq", "help", "troubleshooting"]
+        categories: ["support"]
+        importance: 4
+        hasChildren: true
+        hasToc: false
+        ai-generated: true
+        ai-generated-by: "Claude 3.7 Sonnet"
+        ai-generated-date: "$today"
+        navOrder: "8"
+
   sections:
     - title: "Getting started"
       directory: "getting-started"
@@ -17,6 +130,8 @@ content:
             tags: ["introduction", "overview"]
             categories: ["getting-started"]
             importance: 10
+            parent: "getting-started"
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -29,6 +144,8 @@ content:
             tags: ["quick start", "tutorial"]
             categories: ["getting-started"]
             importance: 9
+            parent: "getting-started"
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -41,6 +158,8 @@ content:
             tags: ["authentication", "security", "bearer token"]
             categories: ["getting-started"]
             importance: 8
+            parent: "getting-started"
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -53,6 +172,8 @@ content:
             tags: ["rate limiting", "throttling"]
             categories: ["getting-started"]
             importance: 7
+            parent: "getting-started"
+            hasChildren: false
             ai-generated: false
             navOrder: "$pos"
             
@@ -66,6 +187,8 @@ content:
             tags: ["data model", "resources", "schema"]
             categories: ["core-concepts"]
             importance: 9
+            parent: "core-concepts"
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -78,6 +201,8 @@ content:
             tags: ["pagination", "collection"]
             categories: ["core-concepts"]
             importance: 7
+            parent: "core-concepts"
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -90,6 +215,8 @@ content:
             tags: ["sorting", "collection"]
             categories: ["core-concepts"]
             importance: 6
+            parent: "core-concepts"
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -102,6 +229,8 @@ content:
             tags: ["errors", "troubleshooting"]
             categories: ["core-concepts"]
             importance: 8
+            parent: "core-concepts"
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -114,6 +243,8 @@ content:
             tags: ["task status", "workflow"]
             categories: ["core-concepts"]
             importance: 7
+            parent: "core-concepts"
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -129,6 +260,8 @@ content:
             tags: ["user", "resource"]
             categories: ["resources"]
             importance: 9
+            parent: "resources"
+            hasChildren: false
             related_pages: ["get-all-users", "create-user", "get-user-by-id", "update-user", "delete-user"]
             api_endpoints: ["/users", "/users/{userId}"]
             ai-generated: true
@@ -143,6 +276,8 @@ content:
             tags: ["task", "resource"]
             categories: ["resources"]
             importance: 9
+            parent: "resources"
+            hasChildren: false
             related_pages: ["get-all-tasks", "create-task", "get-task-by-id", "update-task", "delete-task"]
             api_endpoints: ["/tasks", "/tasks/{taskId}"]
             ai-generated: true
@@ -160,6 +295,8 @@ content:
             tags: ["errors", "reference"]
             categories: ["api-reference"]
             importance: 8
+            parent: "api-reference" 
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -174,6 +311,8 @@ content:
             importance: 7
             api_endpoints: ["/users"]
             related_pages: ["user-resource", "pagination", "sorting"]
+            parent: "api-reference" 
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -188,6 +327,8 @@ content:
             importance: 7
             api_endpoints: ["/users"]
             related_pages: ["user-resource"]
+            parent: "api-reference" 
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -202,6 +343,8 @@ content:
             importance: 7
             api_endpoints: ["/users/{userId}"]
             related_pages: ["user-resource"]
+            parent: "api-reference" 
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -216,6 +359,8 @@ content:
             importance: 7
             api_endpoints: ["/users/{userId}"]
             related_pages: ["user-resource"]
+            parent: "api-reference" 
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -230,6 +375,8 @@ content:
             importance: 7
             api_endpoints: ["/users/{userId}"]
             related_pages: ["user-resource"]
+            parent: "api-reference" 
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -244,6 +391,8 @@ content:
             importance: 7
             api_endpoints: ["/tasks"]
             related_pages: ["task-resource", "pagination", "sorting", "task-status-lifecycle"]
+            parent: "api-reference" 
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -258,6 +407,8 @@ content:
             importance: 7
             api_endpoints: ["/tasks"]
             related_pages: ["task-resource", "task-status-lifecycle"]
+            parent: "api-reference" 
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -272,6 +423,8 @@ content:
             importance: 7
             api_endpoints: ["/tasks/{taskId}"]
             related_pages: ["task-resource"]
+            parent: "api-reference" 
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -286,6 +439,8 @@ content:
             importance: 7
             api_endpoints: ["/tasks/{taskId}"]
             related_pages: ["task-resource", "task-status-lifecycle"]
+            parent: "api-reference" 
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -300,6 +455,8 @@ content:
             importance: 7
             api_endpoints: ["/tasks/{taskId}"]
             related_pages: ["task-resource"]
+            parent: "api-reference" 
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -315,6 +472,8 @@ content:
             tags: ["tutorial", "users"]
             categories: ["tutorials"]
             importance: 6
+            parent: "tutorials" 
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -327,6 +486,8 @@ content:
             tags: ["tutorial", "tasks", "workflow"]
             categories: ["tutorials"]
             importance: 6
+            parent: "tutorials" 
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -339,6 +500,8 @@ content:
             tags: ["tutorial", "reminders"]
             categories: ["tutorials"]
             importance: 5
+            parent: "tutorials" 
+            hasChildren: false
             ai-generated: false
             navOrder: "$pos"
             
@@ -349,6 +512,8 @@ content:
             tags: ["integration", "architecture"]
             categories: ["tutorials"]
             importance: 6
+            parent: "tutorials" 
+            hasChildren: false
             ai-generated: false
             navOrder: "$pos"
             
@@ -362,6 +527,8 @@ content:
             tags: ["optimization", "performance"]
             categories: ["advanced"]
             importance: 5
+            parent: "advanced" 
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -374,6 +541,8 @@ content:
             tags: ["security", "best practices"]
             categories: ["advanced"]
             importance: 6
+            parent: "advanced" 
+            hasChildren: false
             ai-generated: false
             navOrder: "$pos"
             
@@ -384,6 +553,8 @@ content:
             tags: ["data consistency", "concurrency"]
             categories: ["advanced"]
             importance: 4
+            parent: "advanced" 
+            hasChildren: false
             ai-generated: false
             navOrder: "$pos"
             
@@ -397,6 +568,8 @@ content:
             tags: ["changelog", "versions"]
             categories: ["developer-resources"]
             importance: 3
+            parent: "developer-resources"
+            hasChildren: false
             ai-generated: false
             navOrder: "$pos"
             
@@ -407,6 +580,8 @@ content:
             tags: ["tools", "postman"]
             categories: ["developer-resources"]
             importance: 4
+            parent: "developer-resources"
+            hasChildren: false
             ai-generated: false
             navOrder: "$pos"
             
@@ -417,6 +592,8 @@ content:
             tags: ["code", "examples"]
             categories: ["developer-resources"]
             importance: 7
+            parent: "developer-resources"
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -432,6 +609,8 @@ content:
             tags: ["faq", "help"]
             categories: ["support"]
             importance: 4
+            parent: "support"
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -444,6 +623,8 @@ content:
             tags: ["troubleshooting", "errors"]
             categories: ["support"]
             importance: 5
+            parent: "support"
+            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -456,5 +637,7 @@ content:
             tags: ["support", "help"]
             categories: ["support"]
             importance: 3
+            parent: "support"
+            hasChildren: false
             ai-generated: false
             navOrder: "$pos"
