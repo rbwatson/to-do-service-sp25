@@ -1,0 +1,77 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/rbwatson/to-do-service-sp25/api-doc-set.json",
+    "title": "API Documentation description schema",
+    "description": "Schema to describe API documenation sets for automation",
+    "$defs": {
+        "section": {
+            "type": "object",
+            "properties": {
+                "title":  {
+                    "type": "string"
+                },
+                "directory": {
+                    "type": "string"
+                },
+                "topics": {
+                    "type": "array",
+                    "items": { "$ref": "#/$defs/topic" }
+                }
+            }
+        },
+        "topic": {
+            "type": "object",
+            "properties": {
+                "filename": {"type": "string"},
+                "frontMatter": {
+                    "type": "object",
+                    "properties": {
+                        "title": {"type": "string"},
+                        "navOrder": {"type": "string","default": "$pos"}
+                    }
+                }
+            }
+        }
+    },
+    "type": "object",
+    "properties": {
+        "global": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "frontMatter": {
+                    "type": "object",
+                    "properties": {
+                        "layout": {
+                            "type": "string",
+                            "default": "default"
+                        },
+                        "version": {
+                            "type": "string",
+                            "default": "v1.0.0"
+                        },
+                        "lastUpdated": {
+                            "type": "string",
+                            "default": "$today"
+                        }
+                    }
+                }
+            }
+        },
+        "content": {
+            "type": "object",
+            "properties": {
+                "topics": {
+                    "type": "array",
+                    "items": { "$ref": "#/$defs/topic"}
+                },
+                "sections": {
+                    "type": "array",
+                    "items": { "$ref": "#/$defs/section"}
+                }
+            }
+        }
+    }
+}
