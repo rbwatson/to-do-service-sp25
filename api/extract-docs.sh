@@ -37,7 +37,7 @@ fi
 echo "Extracting documentation files..."
 
 # Use awk to parse the file and extract individual documentation files
-awk '
+awk -v BASE_DIR="$BASE_DIR" '
 BEGIN {
     in_file = 0
     current_file = ""
@@ -54,7 +54,8 @@ BEGIN {
     }
     
     # Extract the new filename
-    current_file = "docs/" substr($0, 10)
+    match($0, /^--- FILE: (.+)$/, arr)
+    current_file = BASE_DIR "/" arr[1]
     in_file = 1
     next
 }
@@ -73,7 +74,12 @@ END {
         close(current_file)
     }
 }
-' "all-docs.md"
+' "../ai-files/all-docs.md"
+
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to process all-docs.md"
+    exit 1
+fi
 
 echo "Documentation extraction complete!"
 echo "Files have been placed in the $BASE_DIR directory structure."
