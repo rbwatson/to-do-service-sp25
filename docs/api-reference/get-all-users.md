@@ -6,12 +6,11 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/users"]
 related_pages: ["user-resource", "pagination", "sorting"]
-parent: "api-reference"
-hasChildren: false
+parent: "API Reference"
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "2"
+nav_order: "2"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"

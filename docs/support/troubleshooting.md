@@ -4,369 +4,711 @@ description: "Solutions to common issues encountered when using the Task Managem
 tags: ["troubleshooting", "errors"]
 categories: ["support"]
 importance: 5
+parent: "Support & FAQ"
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 2
+ai-generated-date: "2025-05-13"
+nav_order: "2"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
 # Troubleshooting
 
-This document provides solutions to common issues you might encounter when using the Task Management API. It includes step-by-step diagnostics and recommended actions for resolving problems.
+This guide helps you diagnose and resolve common issues when working with the Task Management API. If you encounter problems not covered here, please check our [FAQ](/support/faq.md) or contact our [support team](/support/support-resources.md).
 
-## Authentication issues
+## Authentication Issues
 
-### Issue: 401 Unauthorized responses
+### Problem: "Unauthorized" or "Invalid API key" error
 
-**Symptom**: The API returns a `401 Unauthorized` status code with an error message like:
+**Symptoms:**
+- You receive a `401 Unauthorized` error response
+- Error message mentions "Invalid API key" or "Missing authorization"
 
-```json
-{
-  "code": "UNAUTHORIZED",
-  "message": "Authentication is required to access this resource",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
+**Possible causes:**
+1. Missing or incorrect API key in the `Authorization` header
+2. Improperly formatted Authorization header
+3. API key has been revoked or expired
+4. Typos or extra spaces in the API key
 
-**Possible causes and solutions**:
+**Solutions:**
 
-1. **Missing authentication header**
-   - Ensure you're including the `Authorization` header in your request
-   - Example: `Authorization: Bearer YOUR_TOKEN`
+1. **Check your Authorization header format:**
+   - Ensure you're using the correct format: `Authorization: Bearer YOUR_API_KEY`
+   - Make sure "Bearer" is included and spelled correctly
+   - Check that there's a space between "Bearer" and your API key
 
-2. **Incorrect header format**
-   - Verify the header format includes "Bearer " followed by your token
-   - Check for typos in the word "Bearer" or extra spaces
+2. **Verify your API key:**
+   - Log in to your account dashboard to verify the API key is active
+   - If in doubt, generate a new API key and update your application
+   - Make sure you're not using a revoked or expired key
 
-3. **Invalid or expired token**
-   - Request a new token if yours may have expired
-   - Verify the token is valid and correctly copied
-
-4. **Network issues**
-   - Check that the authentication header isn't being stripped by a proxy or middleware
-
-**Code example for correct authentication**:
-
-```javascript
-// JavaScript example
-fetch('http://localhost:3000/tasks', {
-  method: 'GET',
-  headers: {
-    'Authorization': 'Bearer YOUR_TOKEN'
-  }
-})
-.then(response => {
-  if (!response.ok) {
-    throw new Error(`Error ${response.status}: ${response.statusText}`);
-  }
-  return response.json();
-})
-.then(data => console.log(data))
-.catch(error => console.error('Error:', error));
-```
-
-## Resource not found errors
-
-### Issue: 404 Not Found responses
-
-**Symptom**: The API returns a `404 Not Found` status code with an error message like:
-
-```json
-{
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "User with ID 123 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-**Possible causes and solutions**:
-
-1. **Incorrect resource ID**
-   - Double-check the ID in your request URL
-   - Verify the resource exists using a GET request to the collection endpoint
-
-2. **Resource has been deleted**
-   - If the resource previously existed, it may have been deleted
-   - Check if your application has cached IDs that are no longer valid
-
-3. **Incorrect URL or endpoint**
-   - Verify the endpoint path is correct (e.g., `/users/{userId}` or `/tasks/{taskId}`)
-   - Check for typos in the URL
-
-4. **Base URL issues**
-   - Ensure the base URL is correct (e.g., `http://localhost:3000`)
-
-**Diagnostic steps**:
-
-1. Try retrieving all resources to see what's available:
-   ```
-   GET /users
-   GET /tasks
+3. **Check for typos or whitespace:**
+   ```javascript
+   // Incorrect - has extra whitespace
+   const apiKey = "  YOUR_API_KEY  ";
+   
+   // Correct - trim whitespace
+   const apiKey = "YOUR_API_KEY".trim();
    ```
 
-2. Check for appropriate IDs in the response and use them in your requests
+4. **Debug the request headers:**
+   ```javascript
+   // Log the Authorization header (but hide most of the key)
+   const authHeader = `Bearer ${apiKey}`;
+   console.log(
+     "Authorization header:",
+     `Bearer ${apiKey.substring(0, 3)}...${apiKey.substring(apiKey.length - 3)}`
+   );
+   ```
 
-## Validation errors
+### Problem: "Forbidden" or "Permission denied" error
 
-### Issue: 400 Bad Request responses
+**Symptoms:**
+- You receive a `403 Forbidden` error response
+- Error message mentions "Permission denied" or similar
 
-**Symptom**: The API returns a `400 Bad Request` status code with an error message like:
+**Possible causes:**
+1. Your user account doesn't have permission for the operation
+2. You're trying to access or modify a resource owned by another user
+3. Your API key has restricted permissions
 
-```json
-{
-  "code": "INVALID_FIELD",
-  "message": "The field `contactEmail` must be a valid email address",
-  "details": [
-    {
-      "field": "contactEmail",
-      "reason": "Invalid format",
-      "location": "body"
-    }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
+**Solutions:**
 
-**Possible causes and solutions**:
+1. **Check your user role:**
+   - `admin` users have full access to all resources
+   - `manager` users have some limitations on user management
+   - `member` users can only access their own resources
 
-1. **Invalid field values**
-   - Check the error details to identify which field has invalid values
-   - Correct the field value according to the validation requirements
+2. **Verify resource ownership:**
+   - Make sure you're only trying to access resources you own or have been assigned to
+   - Check if you're using the correct resource IDs
 
-2. **Missing required fields**
-   - Ensure all required fields are included in your request
-   - Reference the API documentation for each endpoint's required fields
+3. **Check API key permissions:**
+   - Some API keys might have restricted scopes
+   - If possible, generate a new API key with the necessary permissions
 
-3. **Incorrect data types**
-   - Verify the data types match the expected types (e.g., integer for `userId`)
-   - Check for string vs. number issues, especially in JSON formatting
+## Resource Not Found Errors
 
-4. **Value range violations**
-   - Some fields have allowed ranges (e.g., `warningOffset` must be between 0 and 64000)
-   - Adjust values to fit within allowed ranges
+### Problem: "Resource not found" error
 
-**Common validation requirements**:
+**Symptoms:**
+- You receive a `404 Not Found` error response
+- Error message mentions a specific resource ID that wasn't found
 
-| Field | Validation Requirements |
-|-------|--------------------------|
-| `firstName`, `lastName` | 1-100 characters |
-| `contactEmail` | Valid email format, unique |
-| `taskTitle` | 1-80 characters |
-| `taskDescription` | 1-255 characters |
-| `taskStatus` | One of: `NOT_STARTED`, `IN_PROGRESS`, `BLOCKED`, `DEFERRED`, `COMPLETED`, `CANCELLED` |
-| `dueDate` | ISO 8601 format (e.g., `2025-05-15T17:00:00-05:00`) |
-| `warningOffset` | Integer between 0 and 64000 |
+**Possible causes:**
+1. The resource ID doesn't exist
+2. The resource has been deleted
+3. There's a typo in the resource ID
+4. You're using the wrong endpoint
 
-## Rate limiting issues
+**Solutions:**
 
-### Issue: 429 Too Many Requests responses
+1. **Check the resource ID:**
+   - Verify that the ID exists and is spelled correctly
+   - If you're storing IDs, make sure they're updated when resources change
 
-**Symptom**: The API returns a `429 Too Many Requests` status code with an error message like:
+2. **Verify the resource still exists:**
+   - Resources might have been deleted by another user or process
+   - Try listing all resources of that type to see what's available
 
-```json
-{
-  "code": "RATE_LIMIT_EXCEEDED",
-  "message": "Rate limit exceeded. Try again in 30 seconds",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
+3. **Use error handling for missing resources:**
+   ```javascript
+   async function getTaskSafely(taskId) {
+     try {
+       const response = await fetch(`/tasks/${taskId}`, {
+         headers: { 'Authorization': `Bearer ${apiKey}` }
+       });
+       
+       if (response.status === 404) {
+         console.log(`Task ${taskId} not found`);
+         return null;
+       }
+       
+       if (!response.ok) {
+         throw new Error(`API error: ${response.status}`);
+       }
+       
+       return await response.json();
+     } catch (error) {
+       console.error('Error fetching task:', error);
+       throw error;
+     }
+   }
+   ```
 
-**Possible causes and solutions**:
+## Validation Errors
 
-1. **Exceeded request limit**
-   - Reduce the frequency of requests to the API
-   - Implement caching to avoid unnecessary requests
+### Problem: Validation errors when creating or updating resources
 
-2. **Inefficient implementation**
-   - Review your code for loops or patterns that might cause excessive API calls
-   - Batch operations where possible
+**Symptoms:**
+- You receive a `422 Unprocessable Entity` error response
+- Error message mentions "validation error" and provides details
 
-3. **Missing exponential backoff**
-   - Implement exponential backoff when retrying requests
-   - Use the `Retry-After` header to determine wait time
+**Possible causes:**
+1. Missing required fields
+2. Invalid field values (wrong format, out of range, etc.)
+3. Unique constraint violations (e.g., duplicate email)
 
-**Sample implementation with exponential backoff**:
+**Solutions:**
 
-```javascript
-async function fetchWithBackoff(url, options, maxRetries = 3) {
-  let retries = 0;
-  
-  while (true) {
-    try {
-      const response = await fetch(url, options);
-      
-      if (response.status !== 429) {
-        return response;
-      }
-      
-      if (retries >= maxRetries) {
-        return response; // Give up after max retries
-      }
-      
-      // Get retry-after header or use exponential backoff
-      const retryAfter = response.headers.get('Retry-After') || 
-                         Math.pow(2, retries) * 1000;
-                         
-      console.log(`Rate limited. Retrying in ${retryAfter} ms...`);
-      
-      // Wait before retrying
-      await new Promise(resolve => setTimeout(resolve, retryAfter));
-      
-      retries++;
-    } catch (error) {
-      throw error;
-    }
-  }
-}
-```
+1. **Check the error details:**
+   The API provides specific validation errors in the response:
+   ```json
+   {
+     "error": {
+       "code": "validation_error",
+       "message": "The request contains invalid data",
+       "details": {
+         "title": "Title is required",
+         "dueDate": "Due date must be in the future"
+       }
+     }
+   }
+   ```
 
-## Data consistency issues
+2. **Validate data before sending:**
+   ```javascript
+   function validateTask(task) {
+     const errors = {};
+     
+     if (!task.title) {
+       errors.title = "Title is required";
+     }
+     
+     if (task.dueDate) {
+       const dueDate = new Date(task.dueDate);
+       if (isNaN(dueDate.getTime())) {
+         errors.dueDate = "Invalid date format";
+       } else if (dueDate <= new Date()) {
+         errors.dueDate = "Due date must be in the future";
+       }
+     }
+     
+     return Object.keys(errors).length ? errors : null;
+   }
+   
+   // Usage
+   const task = {
+     title: "",
+     dueDate: "2020-01-01"
+   };
+   
+   const errors = validateTask(task);
+   if (errors) {
+     console.error("Validation errors:", errors);
+     // Handle errors instead of sending the request
+   } else {
+     // Proceed with API request
+   }
+   ```
 
-### Issue: Unexpected task or user data
+3. **Check for duplicate values:**
+   Before creating a user, you might want to check if the email is already in use:
+   ```javascript
+   async function isEmailInUse(email) {
+     try {
+       const response = await fetch(`/users?email=${encodeURIComponent(email)}`, {
+         headers: { 'Authorization': `Bearer ${apiKey}` }
+       });
+       
+       if (!response.ok) {
+         throw new Error(`API error: ${response.status}`);
+       }
+       
+       const result = await response.json();
+       return result.data.length > 0;
+     } catch (error) {
+       console.error('Error checking email:', error);
+       return false;
+     }
+   }
+   ```
 
-**Symptom**: Resource data doesn't match expectations or appears inconsistent.
+### Problem: Invalid status transition errors
 
-**Possible causes and solutions**:
+**Symptoms:**
+- You receive a `422 Unprocessable Entity` error
+- Error message mentions "invalid status transition"
 
-1. **Race conditions**
-   - Implement proper concurrency handling for updates
-   - Consider implementing optimistic concurrency control
+**Possible causes:**
+1. Attempting to change a task's status to a value that's not allowed for the current status
+2. Trying to change the status of a task that's in a terminal state (e.g., CANCELED)
 
-2. **Cached data**
-   - Ensure your application is not using outdated cached data
-   - Implement proper cache invalidation when resources change
+**Solutions:**
 
-3. **Multiple clients updating same resource**
-   - Consider implementing a locking mechanism
-   - Use optimistic updates with proper error handling
+1. **Follow the task status lifecycle:**
+   The API enforces a specific task status workflow:
+   - From `TODO`: Can transition to `IN_PROGRESS` or `CANCELED`
+   - From `IN_PROGRESS`: Can transition to `REVIEW` or `CANCELED`
+   - From `REVIEW`: Can transition to `DONE`, `IN_PROGRESS`, or `CANCELED`
+   - From `DONE`: Can transition to `CANCELED`
+   - From `CANCELED`: Cannot transition to any other status
 
-**Best practices**:
+2. **Check current status before updating:**
+   ```javascript
+   async function updateTaskStatus(taskId, newStatus) {
+     // First, get the current task
+     const task = await getTask(taskId);
+     
+     // Define valid transitions
+     const validTransitions = {
+       TODO: ['IN_PROGRESS', 'CANCELED'],
+       IN_PROGRESS: ['REVIEW', 'CANCELED'],
+       REVIEW: ['DONE', 'IN_PROGRESS', 'CANCELED'],
+       DONE: ['CANCELED'],
+       CANCELED: []
+     };
+     
+     // Check if the transition is valid
+     if (!validTransitions[task.status].includes(newStatus)) {
+       console.error(
+         `Invalid status transition from ${task.status} to ${newStatus}. ` +
+         `Valid transitions are: ${validTransitions[task.status].join(', ')}`
+       );
+       return null;
+     }
+     
+     // Proceed with the update
+     return updateTask(taskId, { status: newStatus });
+   }
+   ```
 
-- Always fetch the latest resource before updating it
-- Implement retry logic for failed updates
-- Use proper error handling to recover from conflicts
+## Rate Limiting Issues
 
-For more information, see [Handling data consistency](../advanced/handling-data-consistency.html).
+### Problem: "Rate limit exceeded" errors
 
-## Connection and timeout issues
+**Symptoms:**
+- You receive a `429 Too Many Requests` error
+- Error message mentions "rate limit exceeded"
 
-### Issue: Request timeouts or connection errors
+**Possible causes:**
+1. Sending too many requests in a short period
+2. Multiple applications sharing the same API key
+3. Inefficient code making redundant API calls
 
-**Symptom**: Requests fail with network timeouts or connection errors.
+**Solutions:**
 
-**Possible causes and solutions**:
+1. **Implement exponential backoff:**
+   ```javascript
+   async function fetchWithBackoff(url, options, maxRetries = 3) {
+     let retries = 0;
+     
+     while (true) {
+       try {
+         const response = await fetch(url, options);
+         
+         if (response.status === 429) {
+           // Get retry time from header or use exponential backoff
+           const retryAfter = response.headers.get('Retry-After') || 
+             Math.pow(2, retries);
+           console.log(`Rate limited, waiting ${retryAfter} seconds...`);
+           await new Promise(resolve => setTimeout(resolve, retryAfter * 1000));
+           retries++;
+           continue;
+         }
+         
+         return response;
+       } catch (error) {
+         if (retries >= maxRetries) {
+           throw error;
+         }
+         
+         retries++;
+         // Add exponential delay with jitter
+         const delay = Math.pow(2, retries) * 1000 + Math.random() * 1000;
+         await new Promise(resolve => setTimeout(resolve, delay));
+       }
+     }
+   }
+   ```
 
-1. **Server is unavailable**
-   - Check if the API server is running
-   - Verify network connectivity to the server
+2. **Optimize API usage:**
+   - Cache responses when appropriate
+   - Batch operations instead of making many separate requests
+   - Use filtering on the server side instead of fetching all data
+   - Implement pagination correctly
 
-2. **Request timeout too short**
-   - Increase the timeout for your HTTP client
-   - Implement retry logic for timeout errors
+3. **Monitor your rate limit status:**
+   The API includes rate limit information in response headers:
+   ```
+   X-RateLimit-Limit: 60
+   X-RateLimit-Remaining: 45
+   X-RateLimit-Reset: 1620000000
+   ```
+   You can track these values to avoid hitting limits:
+   ```javascript
+   function handleRateLimits(response) {
+     const limit = response.headers.get('X-RateLimit-Limit');
+     const remaining = response.headers.get('X-RateLimit-Remaining');
+     const reset = response.headers.get('X-RateLimit-Reset');
+     
+     if (remaining && parseInt(remaining) < 10) {
+       console.warn(
+         `Warning: Only ${remaining} requests remaining out of ${limit}. ` +
+         `Limit resets at ${new Date(reset * 1000).toLocaleTimeString()}`
+       );
+     }
+   }
+   ```
 
-3. **Network issues**
-   - Check for firewall or proxy settings that might block requests
-   - Verify VPN connections if using a private network
+## Network and Timeout Issues
 
-4. **Server overload**
-   - Implement exponential backoff and retry logic
-   - Consider reducing request frequency
+### Problem: API requests timeout or fail with network errors
 
-**Sample implementation with timeout and retry**:
+**Symptoms:**
+- Requests hang for a long time before failing
+- You get network-related errors (connection refused, timeout, etc.)
+- Intermittent failures, especially on mobile networks
 
-```javascript
-async function fetchWithTimeout(url, options, timeout = 10000) {
-  // Create abort controller for timeout
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeout);
-  
-  try {
-    const response = await fetch(url, {
-      ...options,
-      signal: controller.signal
-    });
-    
-    clearTimeout(timeoutId);
-    return response;
-  } catch (error) {
-    clearTimeout(timeoutId);
-    if (error.name === 'AbortError') {
-      throw new Error('Request timed out');
-    }
-    throw error;
-  }
-}
-```
+**Possible causes:**
+1. Poor network connectivity
+2. Server-side issues
+3. Request timeout configuration too short
+4. Large request or response payloads
 
-## Common error codes and solutions
+**Solutions:**
 
-| Error Code | Description | Common Solutions |
-|------------|-------------|------------------|
-| `UNAUTHORIZED` | Authentication required | Provide or refresh authentication token |
-| `FORBIDDEN` | Permission denied | Check user permissions and access rights |
-| `RESOURCE_NOT_FOUND` | Resource doesn't exist | Verify resource ID and existence |
-| `INVALID_FIELD` | Field validation failed | Fix the specified field according to validation rules |
-| `MISSING_REQUIRED_FIELD` | Required field is missing | Add the missing field to the request |
-| `DUPLICATE_EMAIL` | Email already in use | Use a different email address |
-| `INVALID_USER_ID` | Referenced user doesn't exist | Create the user first or use a valid user ID |
-| `RATE_LIMIT_EXCEEDED` | Too many requests | Implement rate limiting handling and backoff |
-| `SERVER_ERROR` | Server-side error | Try again later or contact support |
+1. **Implement request timeouts:**
+   ```javascript
+   async function fetchWithTimeout(url, options, timeout = 10000) {
+     const controller = new AbortController();
+     const id = setTimeout(() => controller.abort(), timeout);
+     
+     try {
+       const response = await fetch(url, {
+         ...options,
+         signal: controller.signal
+       });
+       clearTimeout(id);
+       return response;
+     } catch (error) {
+       clearTimeout(id);
+       if (error.name === 'AbortError') {
+         throw new Error(`Request timed out after ${timeout}ms`);
+       }
+       throw error;
+     }
+   }
+   ```
 
-## Debugging techniques
+2. **Add retry logic for transient failures:**
+   ```javascript
+   async function fetchWithRetry(url, options, maxRetries = 3) {
+     let lastError;
+     
+     for (let i = 0; i < maxRetries; i++) {
+       try {
+         return await fetch(url, options);
+       } catch (error) {
+         lastError = error;
+         
+         // Only retry on network errors, not HTTP errors
+         if (!error.message.includes('network')) {
+           throw error;
+         }
+         
+         // Add delay before retrying
+         const delay = Math.pow(2, i) * 1000;
+         console.log(`Network error, retrying in ${delay}ms...`);
+         await new Promise(resolve => setTimeout(resolve, delay));
+       }
+     }
+     
+     throw lastError;
+   }
+   ```
 
-### Request and response logging
+3. **Optimize request/response size:**
+   - Use pagination with reasonable page sizes
+   - Apply server-side filtering to reduce response size
+   - Consider compressing large payloads
 
-Implement logging for API requests and responses to help diagnose issues:
+## Debugging and Monitoring
 
-```javascript
-async function loggedFetch(url, options) {
-  console.log(`API Request: ${options.method} ${url}`, {
-    headers: options.headers,
-    body: options.body
-  });
-  
-  try {
-    const startTime = Date.now();
-    const response = await fetch(url, options);
-    const duration = Date.now() - startTime;
-    
-    const responseData = response.status !== 204 ? 
-                         await response.clone().json() : 
-                         null;
-    
-    console.log(`API Response (${duration}ms): ${response.status}`, responseData);
-    
-    return response;
-  } catch (error) {
-    console.error(`API Error: ${error.message}`);
-    throw error;
-  }
-}
-```
+### How to debug API requests
 
-### Using request IDs for support
+1. **Log request details:**
+   ```javascript
+   async function debugApiRequest(method, url, data) {
+     console.log(`${method} ${url}`);
+     if (data) {
+       console.log('Request body:', JSON.stringify(data, null, 2));
+     }
+     
+     try {
+       const response = await fetch(url, {
+         method,
+         headers: {
+           'Authorization': `Bearer ${apiKey}`,
+           'Content-Type': 'application/json'
+         },
+         body: data ? JSON.stringify(data) : undefined
+       });
+       
+       const responseBody = await response.text();
+       let responseData;
+       try {
+         responseData = JSON.parse(responseBody);
+       } catch {
+         responseData = responseBody;
+       }
+       
+       console.log(`Response (${response.status}):`, responseData);
+       
+       if (!response.ok) {
+         throw new Error(`API error: ${response.status}`);
+       }
+       
+       return responseData;
+     } catch (error) {
+       console.error('API request failed:', error);
+       throw error;
+     }
+   }
+   ```
 
-Every error response includes a `requestId` that can help with troubleshooting:
+2. **Use browser developer tools:**
+   - Check the Network tab to see request details
+   - Look for failed requests in red
+   - Examine request and response headers
+   - Check for CORS errors in the Console tab
 
-```json
-{
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "User with ID 123 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
+3. **Use API testing tools:**
+   - Postman, Insomnia, or similar tools can help debug API requests
+   - These tools allow saving and sharing request configurations
+   - They provide detailed response information and timing data
 
-When contacting support, always include:
-- The complete error response, including the `requestId`
-- The request details (endpoint, method, headers, body)
-- Steps to reproduce the issue
+### Monitoring API usage
 
-## Still having issues?
+1. **Track API calls and errors:**
+   ```javascript
+   class ApiMetrics {
+     constructor() {
+       this.metrics = {
+         totalRequests: 0,
+         successfulRequests: 0,
+         failedRequests: 0,
+         rateLimitHits: 0,
+         endpoints: {}
+       };
+     }
+     
+     recordRequest(endpoint, statusCode, duration) {
+       this.metrics.totalRequests++;
+       
+       if (statusCode >= 200 && statusCode < 300) {
+         this.metrics.successfulRequests++;
+       } else {
+         this.metrics.failedRequests++;
+         if (statusCode === 429) {
+           this.metrics.rateLimitHits++;
+         }
+       }
+       
+       if (!this.metrics.endpoints[endpoint]) {
+         this.metrics.endpoints[endpoint] = {
+           count: 0,
+           errors: 0,
+           totalDuration: 0
+         };
+       }
+       
+       this.metrics.endpoints[endpoint].count++;
+       if (statusCode >= 400) {
+         this.metrics.endpoints[endpoint].errors++;
+       }
+       this.metrics.endpoints[endpoint].totalDuration += duration;
+     }
+     
+     getAverageResponseTime(endpoint) {
+       const data = this.metrics.endpoints[endpoint];
+       if (!data || data.count === 0) return 0;
+       return data.totalDuration / data.count;
+     }
+     
+     getErrorRate(endpoint) {
+       const data = this.metrics.endpoints[endpoint];
+       if (!data || data.count === 0) return 0;
+       return (data.errors / data.count) * 100;
+     }
+     
+     getMetrics() {
+       return {
+         ...this.metrics,
+         successRate: this.metrics.totalRequests ? 
+           (this.metrics.successfulRequests / this.metrics.totalRequests) * 100 : 0
+       };
+     }
+   }
+   
+   // Usage
+   const apiMetrics = new ApiMetrics();
+   
+   async function trackedFetch(endpoint, options) {
+     const start = Date.now();
+     let statusCode;
+     
+     try {
+       const response = await fetch(`https://api.taskmanagement.example.com/v1${endpoint}`, {
+         ...options,
+         headers: {
+           'Authorization': `Bearer ${apiKey}`,
+           'Content-Type': 'application/json',
+           ...options?.headers
+         }
+       });
+       
+       statusCode = response.status;
+       return response;
+     } finally {
+       const duration = Date.now() - start;
+       apiMetrics.recordRequest(endpoint, statusCode, duration);
+     }
+   }
+   ```
 
-If you're still experiencing problems after trying the troubleshooting steps above:
+2. **Set up alerts for error thresholds:**
+   ```javascript
+   function checkApiHealth() {
+     const metrics = apiMetrics.getMetrics();
+     
+     // Alert if error rate exceeds 10%
+     if (metrics.totalRequests > 10 && 
+         metrics.failedRequests / metrics.totalRequests > 0.1) {
+       sendAlert(
+         `High API error rate: ${(metrics.failedRequests / metrics.totalRequests * 100).toFixed(1)}%`
+       );
+     }
+     
+     // Alert on rate limit hits
+     if (metrics.rateLimitHits > 0) {
+       sendAlert(`Rate limit hit ${metrics.rateLimitHits} times`);
+     }
+     
+     // Check slow endpoints
+     for (const [endpoint, data] of Object.entries(metrics.endpoints)) {
+       const avgTime = data.totalDuration / data.count;
+       if (data.count > 5 && avgTime > 1000) {
+         sendAlert(`Slow endpoint: ${endpoint} averaging ${avgTime.toFixed(0)}ms`);
+       }
+     }
+   }
+   ```
 
-1. Check the [API reference](../api-reference/error-responses.html) for detailed documentation on error responses
-2. Review the [FAQ](faq.html) for answers to common questions
-3. Refer to [Support resources](support-resources.html) for additional help options
+## Common HTTP Status Code Issues
+
+### 400 Bad Request
+
+**Possible causes:**
+- Malformed JSON in request body
+- Missing required parameters
+- Invalid parameters
+
+**Solutions:**
+- Validate your JSON before sending
+- Check that all required parameters are included
+- Verify parameter types and formats
+
+### 401 Unauthorized
+
+**Possible causes:**
+- Missing or invalid API key
+- Expired API key
+- Malformed Authorization header
+
+**Solutions:**
+- Check your API key is valid and active
+- Make sure your Authorization header uses the correct format
+- Regenerate your API key if necessary
+
+### 403 Forbidden
+
+**Possible causes:**
+- Insufficient permissions
+- Attempting to access resources owned by another user
+- Account restrictions
+
+**Solutions:**
+- Check your account permissions and role
+- Only access resources you own or have permission to access
+- Upgrade your account if you need additional permissions
+
+### 404 Not Found
+
+**Possible causes:**
+- Resource doesn't exist
+- Resource has been deleted
+- Typo in resource ID
+- Wrong API endpoint URL
+
+**Solutions:**
+- Verify the resource ID is correct
+- Check if the resource still exists
+- Double-check the API endpoint URL
+
+### 409 Conflict
+
+**Possible causes:**
+- Duplicate unique values (e.g., email address)
+- Concurrent update conflicts
+- Resource state doesn't allow the operation
+
+**Solutions:**
+- Check for existing resources before creating new ones
+- Implement proper concurrency handling
+- Verify the current state of resources before updating
+
+### 422 Unprocessable Entity
+
+**Possible causes:**
+- Validation errors on input data
+- Invalid status transitions
+- Business logic violations
+
+**Solutions:**
+- Validate input data before sending
+- Check allowed status transitions
+- Review business rules and constraints
+
+### 429 Too Many Requests
+
+**Possible causes:**
+- Exceeding rate limits
+- Too many concurrent requests
+- Inefficient API usage
+
+**Solutions:**
+- Implement rate limit handling
+- Add retry logic with backoff
+- Optimize your API usage
+
+### 500 Internal Server Error
+
+**Possible causes:**
+- Server-side issue
+- Unexpected error in processing your request
+- API bug
+
+**Solutions:**
+- Retry the request after a delay
+- Check API status page for known issues
+- Report the error if it persists
+
+## Still Having Issues?
+
+If you're still experiencing problems after trying these solutions:
+
+1. **Check API status**: Visit our [status page](https://status.taskmanagement.example.com) to see if there are any ongoing issues.
+
+2. **Get detailed logs**: Enable detailed logging in your application to gather more information about the issue.
+
+3. **Contact support**: Reach out to our [support team](/support/support-resources.md) with:
+   - A description of the issue
+   - Steps to reproduce the problem
+   - Any error messages or codes
+   - Your client code (if possible)
+   - Timestamps of when the issue occurred
 
 

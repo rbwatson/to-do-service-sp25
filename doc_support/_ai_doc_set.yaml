@@ -222,7 +222,7 @@ content:
         nav_order: "9"
 
   sections:
-    - title: "Getting started"
+    - title: "Getting Started"
       directory: "getting-started"
       purpose: "Introduction to the Task Management API, including setup, authentication, and basic concepts."
       audience: "Business decision makers and developers who are new to the Task Management API."
@@ -278,7 +278,7 @@ content:
             ai-generated: false
             nav_order: "$pos"
             
-    - title: "Core concepts"
+    - title: "Core Concepts"
       directory: "core-concepts"
       purpose: "Overview of fundamental concepts in the Task Management API, including data model, pagination, sorting, error handling, and task statuses."
       audience: "Developers and technical users who need to understand the core concepts of the API."
@@ -362,7 +362,7 @@ content:
             tags: ["user", "resource"]
             categories: ["resources"]
             importance: 9
-            parent: "resources"
+            parent: "API Resources"
             related_pages: ["get-all-users", "create-user", "get-user-by-id", "update-user", "delete-user"]
             api_endpoints: ["/users", "/users/{userId}"]
             ai-generated: true
@@ -377,7 +377,7 @@ content:
             tags: ["task", "resource"]
             categories: ["resources"]
             importance: 9
-            parent: "resources"
+            parent: "API Resources"
             related_pages: ["get-all-tasks", "create-task", "get-task-by-id", "update-task", "delete-task"]
             api_endpoints: ["/tasks", "/tasks/{taskId}"]
             ai-generated: true
@@ -385,7 +385,7 @@ content:
             ai-generated-date: "$today"
             nav_order: "$pos"
             
-    - title: "API reference"
+    - title: "API Reference"
       directory: "api-reference"
       purpose: "Comprehensive reference documentation for all endpoints in the Task Management API."
       audience: "Developers and technical users who are using the API endpoints in their applications."
@@ -411,7 +411,7 @@ content:
             tags: ["errors", "reference"]
             categories: ["api-reference"]
             importance: 8
-            parent: "api-reference" 
+            parent: "API Reference" 
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -426,7 +426,7 @@ content:
             importance: 7
             api_endpoints: ["/users"]
             related_pages: ["user-resource", "pagination", "sorting"]
-            parent: "api-reference" 
+            parent: "API Reference" 
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -441,7 +441,7 @@ content:
             importance: 7
             api_endpoints: ["/users"]
             related_pages: ["user-resource"]
-            parent: "api-reference" 
+            parent: "API Reference" 
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -456,7 +456,7 @@ content:
             importance: 7
             api_endpoints: ["/users/{userId}"]
             related_pages: ["user-resource"]
-            parent: "api-reference" 
+            parent: "API Reference" 
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -471,7 +471,7 @@ content:
             importance: 7
             api_endpoints: ["/users/{userId}"]
             related_pages: ["user-resource"]
-            parent: "api-reference" 
+            parent: "API Reference" 
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -486,7 +486,7 @@ content:
             importance: 7
             api_endpoints: ["/users/{userId}"]
             related_pages: ["user-resource"]
-            parent: "api-reference" 
+            parent: "API Reference" 
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -501,7 +501,7 @@ content:
             importance: 7
             api_endpoints: ["/tasks"]
             related_pages: ["task-resource", "pagination", "sorting", "task-status-lifecycle"]
-            parent: "api-reference" 
+            parent: "API Reference" 
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -516,7 +516,7 @@ content:
             importance: 7
             api_endpoints: ["/tasks"]
             related_pages: ["task-resource", "task-status-lifecycle"]
-            parent: "api-reference" 
+            parent: "API Reference" 
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -531,7 +531,7 @@ content:
             importance: 7
             api_endpoints: ["/tasks/{taskId}"]
             related_pages: ["task-resource"]
-            parent: "api-reference" 
+            parent: "API Reference" 
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -546,7 +546,7 @@ content:
             importance: 7
             api_endpoints: ["/tasks/{taskId}"]
             related_pages: ["task-resource", "task-status-lifecycle"]
-            parent: "api-reference" 
+            parent: "API Reference" 
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -561,13 +561,13 @@ content:
             importance: 7
             api_endpoints: ["/tasks/{taskId}"]
             related_pages: ["task-resource"]
-            parent: "api-reference" 
+            parent: "API Reference" 
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
             nav_order: "$pos"
             
-    - title: "Tutorials & guides"
+    - title: "Tutorials & Guides"
       directory: "tutorials"
       purpose: "Step-by-step tutorials and practical guides for working with the Task Management API."
       audience: "Developers and technical users who want to learn how to use the API effectively."
@@ -580,7 +580,7 @@ content:
             tags: ["tutorial", "users"]
             categories: ["tutorials"]
             importance: 6
-            parent: "tutorials" 
+            parent: "Tutorials & Guides" 
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -593,7 +593,7 @@ content:
             tags: ["tutorial", "tasks", "workflow"]
             categories: ["tutorials"]
             importance: 6
-            parent: "tutorials" 
+            parent: "Tutorials & Guides" 
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -606,7 +606,7 @@ content:
             tags: ["tutorial", "reminders"]
             categories: ["tutorials"]
             importance: 5
-            parent: "tutorials" 
+            parent: "Tutorials & Guides" 
             ai-generated: false
             nav_order: "$pos"
             
@@ -617,11 +617,11 @@ content:
             tags: ["integration", "architecture"]
             categories: ["tutorials"]
             importance: 6
-            parent: "tutorials" 
+            parent: "Tutorials & Guides" 
             ai-generated: false
             nav_order: "$pos"
             
-    - title: "Advanced topics"
+    - title: "Advanced Topics"
       directory: "advanced"
       purpose: "Advanced considerations for working with the Task Management API, including optimization, security, and data consistency."
       audience: "Developers and technical users who are experienced with the API and want to explore advanced topics."
@@ -662,7 +662,7 @@ content:
             ai-generated: false
             nav_order: "$pos"
             
-    - title: "Developer resources"
+    - title: "Developer Resources"
       directory: "developer-resources"
       purpose: "Additional resources for developers working with the Task Management API, including changelogs, tooling, and code examples."
       audience: "Developers and technical users who are using the API and looking for additional resources and tools to use with the API."
@@ -675,7 +675,7 @@ content:
             tags: ["changelog", "versions"]
             categories: ["developer-resources"]
             importance: 3
-            parent: "developer-resources"
+            parent: "Developer Resources"
             ai-generated: false
             nav_order: "$pos"
             
@@ -686,7 +686,7 @@ content:
             tags: ["tools", "postman"]
             categories: ["developer-resources"]
             importance: 4
-            parent: "developer-resources"
+            parent: "Developer Resources"
             ai-generated: false
             nav_order: "$pos"
             
@@ -697,7 +697,7 @@ content:
             tags: ["code", "examples"]
             categories: ["developer-resources"]
             importance: 7
-            parent: "developer-resources"
+            parent: "Developer Resources"
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"

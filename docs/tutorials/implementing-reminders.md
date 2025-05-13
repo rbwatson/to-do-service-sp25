@@ -5,9 +5,8 @@ tags: ["tutorial", "reminders"]
 categories: ["tutorials"]
 importance: 5
 parent: "tutorials"
-hasChildren: false
 ai-generated: false
-navOrder: "3"
+nav_order: "3"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"

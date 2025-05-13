@@ -5,9 +5,8 @@ tags: ["integration", "architecture"]
 categories: ["tutorials"]
 importance: 6
 parent: "tutorials"
-hasChildren: false
 ai-generated: false
-navOrder: "4"
+nav_order: "4"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"

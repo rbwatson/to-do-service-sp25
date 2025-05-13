@@ -4,10 +4,9 @@ description: "Understand the API's rate limits and how to handle rate limiting r
 tags: ["rate limiting", "throttling"]
 categories: ["getting-started"]
 importance: 7
-parent: "getting-started"
-hasChildren: false
+parent: "Getting Started with the Task Management API"
 ai-generated: false
-navOrder: "4"
+nav_order: "4"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"

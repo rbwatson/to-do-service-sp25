@@ -4,12 +4,11 @@ description: "Get up and running with the Task Management API in minutes."
 tags: ["quick start", "tutorial"]
 categories: ["getting-started"]
 importance: 9
-parent: "getting-started"
-hasChildren: false
+parent: "Getting Started with the Task Management API"
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "2"
+nav_order: "2"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"

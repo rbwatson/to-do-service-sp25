@@ -4,12 +4,11 @@ description: "Comprehensive reference documentation for all endpoints in the Tas
 tags: ["reference", "endpoints", "api"]
 categories: ["api-reference"]
 importance: 8
-hasChildren: true
-hasToc: false
+has_toc: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "5"
+nav_order: "5"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"

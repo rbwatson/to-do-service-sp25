@@ -4,10 +4,9 @@ description: "Advanced security considerations when working with the Task Manage
 tags: ["security", "best practices"]
 categories: ["advanced"]
 importance: 6
-parent: "advanced"
-hasChildren: false
+parent: "Advanced Topics"
 ai-generated: false
-navOrder: "2"
+nav_order: "2"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"

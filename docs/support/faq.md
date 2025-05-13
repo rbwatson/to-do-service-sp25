@@ -4,316 +4,284 @@ description: "Common questions and answers about using the Task Management API."
 tags: ["faq", "help"]
 categories: ["support"]
 importance: 4
+parent: "Support & FAQ"
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 1
+ai-generated-date: "2025-05-13"
+nav_order: "1"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Frequently asked questions
+# Frequently Asked Questions
 
-This document addresses common questions about using the Task Management API.
+This page answers common questions about the Task Management API to help you get the most out of the service.
 
-## General questions
+## General Questions
 
 ### What is the Task Management API?
 
-The Task Management API is a RESTful service that allows applications to create, retrieve, update, and delete tasks and users. It provides a complete solution for implementing task management functionality in your applications.
+The Task Management API is a RESTful web service that lets you manage tasks and users programmatically. You can create, read, update, and delete tasks and users, assign tasks to specific users, and track the status of tasks throughout their lifecycle.
 
-### What can I build with the Task Management API?
+### What can I do with the Task Management API?
 
-The API can be used to build a variety of applications, including:
+With the Task Management API, you can:
+- Create and manage users
+- Create, update, and delete tasks
+- Assign tasks to specific users
+- Track task status (TODO, IN_PROGRESS, REVIEW, DONE, CANCELED)
+- Set priorities for tasks
+- Set due dates and reminders
+- Add tags to tasks for better organization
+- Retrieve and filter tasks based on various criteria
 
-- Personal to-do list applications
-- Team task management tools
-- Project management systems
-- Reminder and calendar applications
-- Productivity trackers
-- Any application that needs task management functionality
+### What format does the API use for requests and responses?
 
-### What technologies does the API use?
+The API uses JSON (JavaScript Object Notation) for both request bodies and responses. All requests should include the header `Content-Type: application/json` when sending data.
 
-The Task Management API is built on REST principles using standard HTTP methods and JSON data formats. It can be accessed from any programming language or platform that supports HTTP requests.
+### Is there a rate limit for the API?
 
-## Authentication and security
+Yes, the API has rate limits to ensure fair usage. The specific limits depend on your account tier. If you exceed the rate limit, the API will return a `429 Too Many Requests` status code. You can find more details in the [Rate Limiting](/getting-started/rate-limiting.md) documentation.
+
+## Authentication
 
 ### How do I authenticate with the API?
 
-The API uses bearer token authentication. Include the token in the `Authorization` header of your requests:
+The API uses bearer token authentication. Include your API key in the `Authorization` header of each request:
 
 ```
-Authorization: Bearer YOUR_TOKEN
+Authorization: Bearer YOUR_API_KEY
 ```
 
-For more details, see the [Authentication](../getting-started/authentication.html) documentation.
+### Where do I get an API key?
 
-### How do I get an authentication token?
+You can get an API key by:
+1. Creating an account on our platform
+2. Navigating to the Developer Settings in your account dashboard
+3. Generating a new API key
 
-Authentication tokens are managed externally to the API. Contact your API administrator or follow your organization's process for requesting API access.
+### Can I use the same API key for development and production?
 
-### How long are authentication tokens valid?
+We recommend using separate API keys for development and production environments. This allows you to:
+- Revoke access independently if a key is compromised
+- Apply different rate limits for development and production
+- Monitor usage separately for each environment
 
-Token lifetime depends on your organization's security policy. Contact your API administrator for information about token expiration and renewal.
+### What happens if my API key is exposed?
 
-### Is the API secure?
+If your API key is exposed:
+1. Revoke the compromised key immediately in your account dashboard
+2. Generate a new API key
+3. Update your applications with the new key
 
-Yes, the API implements several security measures:
+## Tasks
 
-- HTTPS encryption for all communication
-- Token-based authentication
-- Rate limiting to prevent abuse
-- Input validation to protect against malicious data
+### What are the possible task statuses?
 
-For more information, see the [Security best practices](../advanced/security-best-practices.html) document.
+Tasks can have the following statuses:
+- `TODO`: Task has been created but work hasn't started
+- `IN_PROGRESS`: Work on the task has begun but is not yet complete
+- `REVIEW`: Task is completed and awaiting review
+- `DONE`: Task has been completed and approved
+- `CANCELED`: Task has been canceled and won't be completed
 
-## Users and tasks
+### Can I create custom task statuses?
 
-### How do I create a user?
+No, the API uses a fixed set of task statuses to ensure consistency. However, you can use tags to categorize tasks according to your own system.
 
-Send a POST request to the `/users` endpoint with the required user information:
+### Are there restrictions on changing task status?
 
-```http
-POST /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
+Yes, there are rules for valid status transitions:
+- From `TODO`: Can move to `IN_PROGRESS` or `CANCELED`
+- From `IN_PROGRESS`: Can move to `REVIEW` or `CANCELED`
+- From `REVIEW`: Can move to `DONE`, `IN_PROGRESS`, or `CANCELED`
+- From `DONE`: Can move to `CANCELED`
+- From `CANCELED`: Cannot transition to any other status
 
-{
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
-}
+See the [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md) page for details.
+
+### Can a task be assigned to multiple users?
+
+No, a task can only be assigned to one user at a time. If you need to assign a task to multiple people, you'll need to create separate tasks for each user.
+
+### What formats are accepted for due dates?
+
+Task due dates should be provided in ISO 8601 format:
+```
+YYYY-MM-DDTHH:MM:SSZ
 ```
 
-For more details, see the [Create a user](../api-reference/create-user.html) documentation.
+For example: `2025-06-15T14:30:00Z` for June 15, 2025, at 2:30 PM UTC.
 
-### How do I create a task?
+## Users
 
-First, you need to have a user in the system. Then, send a POST request to the `/tasks` endpoint with the task details:
+### What user roles are available?
 
-```http
-POST /tasks HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
+The API supports three user roles:
+- `admin`: Has full access to all resources
+- `manager`: Can manage tasks and has limited user management capabilities
+- `member`: Can manage their own tasks and view assigned tasks
 
-{
-  "userId": 1,
-  "taskTitle": "Complete API documentation",
-  "taskDescription": "Finish the task management API documentation",
-  "dueDate": "2025-06-01T12:00:00-05:00",
-  "warningOffset": 60
-}
-```
+### Can I change a user's email address?
 
-For more details, see the [Create a task](../api-reference/create-task.html) documentation.
+Yes, you can update a user's email address using the PATCH method on the user resource. Note that email addresses must be unique across all users.
 
-### What task statuses are available?
+### What happens to a user's tasks if I delete the user?
 
-The API supports the following task statuses:
+By default, you cannot delete a user who has assigned tasks. You have two options:
+1. Reassign the tasks to other users before deleting the user
+2. Use the `force=true` query parameter, which will unassign all tasks from the user before deletion
 
-- `NOT_STARTED` - Default status for new tasks
-- `IN_PROGRESS` - Task is actively being worked on
-- `BLOCKED` - Task cannot proceed due to an obstacle
-- `DEFERRED` - Task is postponed until a later time
-- `COMPLETED` - Task has been finished successfully
-- `CANCELLED` - Task has been abandoned
+## API Usage
 
-For more information, see the [Task status lifecycle](../core-concepts/task-status-lifecycle.html) document.
+### How do I filter tasks by status?
 
-### Can I assign a task to multiple users?
-
-No, each task can only be assigned to one user at a time. If you need to track tasks for multiple users, you would need to create separate tasks for each user.
-
-### How do task reminders work?
-
-Reminders are determined by the `dueDate` and `warningOffset` properties:
-
-- `dueDate`: When the task is due
-- `warningOffset`: Minutes before the due date to send a reminder
-
-The reminder time is calculated as: `Reminder time = dueDate - warningOffset minutes`
-
-The API does not send reminders directly; your application is responsible for checking tasks and generating notifications. For details, see the [Implementing reminders](../tutorials/implementing-reminders.html) tutorial.
-
-## API functionality
-
-### Does the API support filtering tasks?
-
-Yes, you can filter tasks by their status using the `taskStatus` query parameter:
+To filter tasks by status, use the `status` query parameter when calling the `GET /tasks` endpoint:
 
 ```
-GET /tasks?taskStatus=IN_PROGRESS
+GET /tasks?status=TODO,IN_PROGRESS
 ```
 
-### Does the API support pagination?
+This will return all tasks with a status of either "TODO" or "IN_PROGRESS".
 
-Yes, the API supports pagination with the `_page` and `_perPage` query parameters:
+### How can I search for specific tasks?
 
+You can use various query parameters to filter tasks:
+- `status`: Filter by task status
+- `priority`: Filter by priority level
+- `assigneeId`: Filter by assigned user
+- `createdBy`: Filter by creator
+- `tags`: Filter by tags
+- `dueDate[lt]` and `dueDate[gt]`: Filter by due date range
+
+For example:
 ```
-GET /tasks?_page=0&_perPage=10
+GET /tasks?status=TODO&priority=HIGH&assigneeId=user123
 ```
 
-The `_page` parameter is zero-indexed (the first page is 0), and `_perPage` specifies how many items to return per page (maximum 100).
+### How do I paginate through large result sets?
 
-For more details, see the [Pagination](../core-concepts/pagination.html) documentation.
+Use the `limit` and `offset` parameters to control pagination:
+```
+GET /tasks?limit=10&offset=20
+```
+
+This will return 10 tasks, starting from the 21st result.
 
 ### Can I sort the results?
 
-Yes, you can sort results using the `_sort` query parameter:
-
+Yes, use the `sort` parameter followed by the field name. Prefix with `-` for descending order or `+` for ascending (default is ascending):
 ```
-GET /tasks?_sort=dueDate
-```
-
-To sort in descending order, prefix the field name with a minus sign:
-
-```
-GET /tasks?_sort=-dueDate
+GET /tasks?sort=-dueDate
 ```
 
-For more details, see the [Sorting](../core-concepts/sorting.html) documentation.
+This sorts tasks by due date in descending order (newest first).
 
-### Are there limits on API usage?
+### What's the maximum number of items I can retrieve in a single request?
 
-Yes, the API implements rate limiting to ensure fair usage. For details, see the [Rate limiting](../getting-started/rate-limiting.html) documentation.
+The maximum limit for pagination is 100 items per request. If you need to retrieve more items, you'll need to make multiple requests with appropriate offset values.
 
-### Does the API support bulk operations?
-
-The current version does not support bulk create, update, or delete operations. You need to make individual API calls for each resource.
-
-## Error handling
+## Error Handling
 
 ### What HTTP status codes does the API use?
 
 The API uses standard HTTP status codes:
+- 2xx: Success (200 OK, 201 Created, 204 No Content)
+- 4xx: Client errors (400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found)
+- 5xx: Server errors (500 Internal Server Error)
 
-- `200 OK`: Successful GET or PATCH request
-- `201 Created`: Successful POST request
-- `204 No Content`: Successful DELETE request
-- `400 Bad Request`: Invalid request format or validation error
-- `401 Unauthorized`: Missing or invalid authentication
-- `403 Forbidden`: Authentication succeeded but permission denied
-- `404 Not Found`: Resource not found
-- `429 Too Many Requests`: Rate limit exceeded
-- `500 Internal Server Error`: Server-side error
+### How are errors returned?
 
-### How do error responses look?
-
-Error responses include a standardized JSON structure:
+All error responses follow a consistent format:
 
 ```json
 {
-  "code": "INVALID_FIELD",
-  "message": "The field `contactEmail` must be a valid email address",
-  "details": [
-    {
-      "field": "contactEmail",
-      "reason": "Invalid format",
-      "location": "body"
+  "error": {
+    "code": "error_code",
+    "message": "A human-readable error message",
+    "details": {
+      // Additional error details if available
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  }
 }
 ```
-
-For more details, see the [Error responses](../api-reference/error-responses.html) documentation.
 
 ### How should I handle rate limiting?
 
-When you exceed the rate limit, the API returns a `429 Too Many Requests` status code with a `Retry-After` header indicating how many seconds to wait before retrying. Implement exponential backoff in your application to handle rate limits gracefully.
+When you exceed the rate limit, you'll receive a `429 Too Many Requests` response with headers that indicate the limit and when it resets. Implement exponential backoff with jitter for the best results:
 
-## Integration and development
-
-### What programming languages can I use with the API?
-
-You can use any programming language that supports HTTP requests, including but not limited to:
-
-- JavaScript/TypeScript
-- Python
-- Java
-- C#
-- Ruby
-- Go
-- PHP
-
-For code examples in various languages, see the [Code examples](../developer-resources/code-examples.html) document.
-
-### Is there a client library for the API?
-
-The API does not provide official client libraries, but you can use standard HTTP client libraries in your preferred language. See the [Code examples](../developer-resources/code-examples.html) document for implementation examples.
-
-### How do I test the API?
-
-You can test the API using tools like:
-
-- Postman
-- cURL
-- API testing frameworks (e.g., REST Assured, Supertest)
-- Custom scripts in your preferred language
-
-We provide a [Postman collection](../developer-resources/postman-collection.html) to help you get started.
-
-### Is there a sandbox environment for testing?
-
-Contact your API administrator for information about testing environments.
-
-## Troubleshooting
-
-### Why am I getting authentication errors?
-
-Authentication errors (`401 Unauthorized`) can occur for several reasons:
-
-1. Missing the `Authorization` header
-2. Incorrect format of the authorization header
-3. Invalid or expired token
-4. Token not prefixed with "Bearer "
-
-Make sure you're including the token correctly:
-
-```
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Why am I getting "Resource not found" errors?
-
-This error (`404 Not Found`) occurs when the requested resource doesn't exist. Common causes:
-
-1. Incorrect URL or endpoint
-2. Incorrect resource ID
-3. The resource has been deleted
-
-Double-check the resource ID and make sure it exists in the system.
-
-### How do I resolve validation errors?
-
-Validation errors (`400 Bad Request`) occur when the request data doesn't meet the API's requirements. The error response includes details about what's wrong:
-
-```json
-{
-  "code": "INVALID_FIELD",
-  "message": "The field `warningOffset` must be between 0 and 64000",
-  "details": [
-    {
-      "field": "warningOffset",
-      "reason": "Invalid range",
-      "location": "body"
+```javascript
+async function fetchWithBackoff(url, options, maxRetries = 3) {
+  let retries = 0;
+  
+  while (true) {
+    try {
+      return await fetch(url, options);
+    } catch (error) {
+      if (retries >= maxRetries) {
+        throw error;
+      }
+      
+      // Exponential backoff with jitter
+      const delay = Math.min(
+        1000 * Math.pow(2, retries) + Math.random() * 1000,
+        30000 // Max 30 seconds
+      );
+      
+      await new Promise(resolve => setTimeout(resolve, delay));
+      retries++;
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  }
 }
 ```
 
-Check the error details and modify your request accordingly.
+## Technical Support
 
-For more troubleshooting help, see the [Troubleshooting](troubleshooting.html) document.
+### Where can I get help if I'm having issues?
 
-## Additional help
+If you're having trouble with the API, you can:
+1. Check the [Troubleshooting](/support/troubleshooting.md) guide for common issues
+2. Visit our [developer forum](https://community.taskmanagement.example.com) to connect with other developers
+3. Contact our support team at [support@taskmanagement.example.com](mailto:support@taskmanagement.example.com)
 
-If you didn't find the answer to your question, please:
+### Is there any sample code available?
 
-1. Check the [API reference](../api-reference/error-responses.html) for detailed documentation
-2. Consult the [Troubleshooting](troubleshooting.html) guide
-3. Contact support using the resources listed in [Support resources](support-resources.html)
+Yes, we provide code examples in several languages. See the [Code Examples](/developer-resources/code-examples.md) page for ready-to-use snippets.
+
+### Do you offer client libraries for the API?
+
+We don't currently provide official client libraries, but the [Code Examples](/developer-resources/code-examples.md) page includes full client implementations in JavaScript and Python that you can use as a starting point.
+
+### How do I report a bug or request a feature?
+
+You can report bugs or request features by:
+- Emailing [api-feedback@taskmanagement.example.com](mailto:api-feedback@taskmanagement.example.com)
+- Submitting an issue on our [GitHub repository](https://github.com/taskmanagement/api/issues)
+- Using the feedback form in your account dashboard
+
+## Account and Billing
+
+### Is there a free tier available?
+
+Yes, we offer a free tier with limited API calls that's suitable for testing and small projects. Check our [pricing page](https://taskmanagement.example.com/pricing) for details.
+
+### How can I upgrade my account?
+
+To upgrade your account:
+1. Log in to your account dashboard
+2. Navigate to the Billing section
+3. Select your desired plan
+4. Complete the payment process
+
+### What happens if I exceed my plan's limits?
+
+If you exceed your plan's rate limits, additional requests will be rejected with a `429 Too Many Requests` status code until the rate limit period resets.
+
+If you consistently hit your limits, we recommend upgrading to a higher-tier plan with increased limits.
+
+## Still Have Questions?
+
+If your question isn't answered here, please check our [Troubleshooting](/support/troubleshooting.md) guide or contact our [support team](/support/support-resources.md) for assistance.
 
 
