@@ -1,10 +1,103 @@
 global:
   name: "Task Management API Documentation"
-  exampleLanguages:
+  # AI-HINT apiSpec value is a link to the OpenAPI that is the authoritative source of truth for the API.
+  apiSpec: "https://raw.githubusercontent.com/rbwatson/to-do-service-sp25/refs/heads/AI-test/api/to-do-service-spec.yaml"
+  # AI-HINT apiPrompt contains the prompt to use to generate the API documentation.
+  aiPrompt: |
+    You are a technical writer for the Task Management API.
+
+    For content creation:
+    - For topics with "ai-generated: true": Create comprehensive documentation including
+      usage instructions, endpoint references, and best practices.
+    - For topics with "ai-generated: false": Create the correct front-matter and a detailed
+      outline with suggestions for content, images, or tables that would be helpful.
+
+    Sources and style:
+    - Use the OpenAPI specification in 'apiSpec' as the authoritative source for all API details.
+    - Write at approximately 8th grade reading level following style guidelines in 'styleGuideFiles'.
+
+    Structure and relationships:
+    - Follow the section structure in 'topicSections' for API reference topics.
+    - Implement relationships between topics according to 'topicRelationships' guidelines.
+    - Adjust content depth based on 'importance', 'audience', and 'readerLevel' properties.
+    - Use 'codeExampleScope' and 'errorExampleScope' to determine appropriate detail level for examples.
+
+    Formatting requirements:
+    - Place topics from content:topics: in the root documentation directory.
+    - Replace navOrder: "$pos" with the 1-based index in the array.
+    - Replace $today with the current date.
+    - Write all content in one file named "all-docs.md".
+    - Start each topic with "--- FILE: directory/filename.md ---".
+    - Use markdown for content and YAML for Jekyll front matter.
+
+    If you have a
+  aiModel: "Claude 3.7 Sonnet"
+  aiModelVersion: "3.7"
+  styleGuideFiles:
+    # AI-HINT styleGuideFiles is a list of files that contain hints on language and vocabulary to use in the documentation.
+    - "https://raw.githubusercontent.com/rbwatson/to-do-service-vale/refs/heads/ai-styles/.github/valeStyleSummaries/Google.txt"
+  codeExampleLanguages:
+    # AI-HINT exampleLanguages describes the languages to create code examples for.
     - "JavaScript"
     - "Python"
     - "cURL"
+  codeExampleScope: basic
+    # AI-HINT   codeExampleScope is the default code example scope and detail to use in all topics, unless overridden.
+  errorExampleScope: basic
+    # AI-HINT   errorExampleScope is the default error example scope and detail to use in all topics, unless overridden.
+  contentDetails:
+    # AI-HINT contentDetails describe how to write the content for each topic.
+    importanceDetail:
+      # AI-HINT importanceDetail relates to the frontMatter property: importance.
+      10: "Critical information that all users should know. Provide comprehensive details including edge cases and extended examples."
+      9: "Important information that most users should know."
+      8: "Useful information that some users may find helpful."
+      7: "Additional information that may be helpful to some users."
+      6: "Optional information that may be helpful to some users."
+      5: "Informational content that is not critical to the user experience."
+      4: "Informational content that is not critical to the user experience."
+      3: "Informational content that is not critical to the user experience."
+      2: "Informational content that is not critical to the user experience."
+      1: "Informational content that is not critical to the user experience."
+    audienceDetail:
+      # AI-HINT audienceDetail relates to the section property: audience.
+      NewUser: "New users who are just getting started with the API."
+      ExperiencedUser: "Experienced users who are familiar with the API and want to learn more."
+      BusinessDecisionMaker: "Business decision makers who are evaluating the API for their organization."
+    readerLevelDetail:
+      # AI-HINT readerLevel relates to the section property: readerLevel.
+      Introductory: "Introductory level content for new users."
+      NewUser: "New user level content for users who are just getting started."
+      ExperiencedUser: "Experienced user level content for users who are familiar with the API."
+      AdvancedUser: "Advanced user level content for users with considerable experienced with the API."
+    codeExampleScopeDetail:
+      # AI-HINT codeExampleScopeDetail relates to the global property: codeExampleScope.
+      basic: "Show simplest working example of endpoint usage"
+      standard: "Include error handling and common options"
+      advanced: "Demonstrate integration with related endpoints in practical workflows"
+    errorExampleScopeDetail:
+      # AI-HINT errorExampleScopeDetail relates to the global property: errorExampleScope.
+      basic: "Show simplest working example of most common errors"
+      standard: "Show examples of all error codes listed in the OpenAPI spec"
+      advanced: "Show edge cases and integration with related endpoints in practical workflows" 
+  topicRelationships:
+    # AI-HINT topicRelationships describes how to relate topics to each other.
+    parentPages:
+      # AI-HINT parentPages describes how to relate child topics to their parent pages.
+      purpose: "Provide concise overview of child topics with clear navigation"
+      implementation: "Include a table or list of all child pages with brief, 1 or 2 sentence descriptions"      
+    crossReferences:
+      # AI-HINT crossReferences describes how to relate topics to each other.
+      purpose: "Connect related concepts throughout documentation"
+      implementation: "Use 'See also' sections and inline links to reference related topics"
+    conceptRepetition:
+      # AI-HINT conceptRepetition describes how to relate topics to each other based on their audience
+      Introductory: "Introduce concepts in a simple way, with links to more detailed explanations" 
+      NewUser: "Introduce essential concepts briefly where needed, with links to full explanation"
+      ExperiencedUser: "Assume familiarity with core concepts, but provide links to detailed explanations"
+      AdvancedUser: "Assume familiarity with all concepts, but provide links to detailed explanations"
   frontMatter:
+    # AI-HINT Add these proprties to the front matter of each topic, unless overridden in the topic.
     layout: "default"
     version: "v1.0.0"
     lastUpdated: "$today"
@@ -138,6 +231,9 @@ content:
   sections:
     - title: "Getting started"
       directory: "getting-started"
+      purpose: "Introduction to the Task Management API, including setup, authentication, and basic concepts."
+      audience: "Business decision makers and developers who are new to the Task Management API."
+      readerLevel: Introductory
       topics:
         - filename: "introduction.md"
           frontMatter:
@@ -195,6 +291,9 @@ content:
             
     - title: "Core concepts"
       directory: "core-concepts"
+      purpose: "Overview of fundamental concepts in the Task Management API, including data model, pagination, sorting, error handling, and task statuses."
+      audience: "Developers and technical users who need to understand the core concepts of the API."
+      readerLevel: NewUser
       topics:
         - filename: "data-model.md"
           frontMatter:
@@ -268,6 +367,9 @@ content:
     
     - title: "Resources"
       directory: "resources"
+      purpose: "An overview of the core resources available in the Task Management API."
+      audience: "Developers and technical users who want to use the resources available in the API."
+      readerLevel: NewUser
       topics:
         - filename: "user-resource.md"
           frontMatter:
@@ -303,6 +405,22 @@ content:
             
     - title: "API reference"
       directory: "api-reference"
+      purpose: "Comprehensive reference documentation for all endpoints in the Task Management API."
+      audience: "Developers and technical users who are using the API endpoints in their applications."
+      readerLevel: NewUser
+      topicSections:
+        # AI-HINT Generate the topic sections in the order they are listed in topicSections.
+        - Endpoint
+        - Path parameters
+        - Request example
+        - Response
+        - Authentication
+        - Important considerations
+        - Best practices
+        - Code examples
+        - Related resources
+        - See also
+
       topics:
         - filename: "error-responses.md"
           frontMatter:
@@ -480,6 +598,9 @@ content:
             
     - title: "Tutorials & guides"
       directory: "tutorials"
+      purpose: "Step-by-step tutorials and practical guides for working with the Task Management API."
+      audience: "Developers and technical users who want to learn how to use the API effectively."
+      readerLevel: NewUser
       topics:
         - filename: "getting-started-with-users.md"
           frontMatter:
@@ -535,6 +656,9 @@ content:
             
     - title: "Advanced topics"
       directory: "advanced"
+      purpose: "Advanced considerations for working with the Task Management API, including optimization, security, and data consistency."
+      audience: "Developers and technical users who are experienced with the API and want to explore advanced topics."
+      readerLevel: ExperiencedUser
       topics:
         - filename: "optimizing-api-usage.md"
           frontMatter:
@@ -576,6 +700,9 @@ content:
             
     - title: "Developer resources"
       directory: "developer-resources"
+      purpose: "Additional resources for developers working with the Task Management API, including changelogs, tooling, and code examples."
+      audience: "Developers and technical users who are using the API and looking for additional resources and tools to use with the API."
+      readerLevel: ExperiencedUser
       topics:
         - filename: "api-changelog.md"
           frontMatter:
@@ -617,6 +744,9 @@ content:
             
     - title: "Support & FAQ"
       directory: "support"
+      purpose: "Support resources, frequently asked questions, and troubleshooting information for the Task Management API."
+      audience: "Developers and technical users who need help with the API."
+      readerLevel: NewUser
       topics:
         - filename: "faq.md"
           frontMatter:
