@@ -4,106 +4,143 @@ description: "Learn how to authenticate your requests to the Task Management API
 tags: ["authentication", "security", "bearer token"]
 categories: ["getting-started"]
 importance: 8
+parent: "getting-started"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 3
+ai-generated-date: "2025-05-13"
+navOrder: "3"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
 # Authentication
 
-The Task Management API uses bearer token authentication to secure endpoints. This page explains how to authenticate your requests and manage tokens for the API.
+All requests to the Task Management API must be authenticated using bearer token authentication. This guide explains how to authenticate your requests and manage your API keys.
 
-## Bearer token authentication
+## Bearer Token Authentication
 
-All API requests must include an `Authorization` header with a valid bearer token. The format is:
+The Task Management API uses bearer token authentication. To authenticate your requests, include your API key in the `Authorization` header of each request:
 
 ```
-Authorization: Bearer YOUR_TOKEN
+Authorization: Bearer YOUR_API_KEY
 ```
 
-Replace `YOUR_TOKEN` with the actual authentication token provided to you.
+## Getting an API Key
 
-## Obtaining a token
+To get an API key:
 
-To obtain a bearer token, contact the API administrator or follow your organization's process for requesting API access. The Task Management API does not provide an endpoint for token generation as token management is handled externally.
+1. [Create an account](https://taskmanagement.example.com/signup) on the Task Management platform
+2. Navigate to the Developer Settings or API section in your account dashboard
+3. Generate a new API key
 
-## Token security
+## API Key Security Best Practices
 
-Follow these security best practices when working with authentication tokens:
+Follow these best practices to keep your API key secure:
 
-- Store tokens securely and never expose them in client-side code
-- Rotate tokens periodically according to your organization's security policy
-- Do not share tokens across different applications or environments
-- Revoke tokens immediately if they are compromised
+- **Keep it secret**: Never share your API key in public repositories, client-side code, or public forums
+- **Use environment variables**: Store your API key in environment variables instead of hardcoding it
+- **Restrict permissions**: Use the principle of least privilege when assigning permissions to API keys
+- **Rotate regularly**: Rotate your API keys periodically, especially after team member changes
+- **Monitor usage**: Regularly check the usage logs for any suspicious activity
 
-## Authentication errors
+## Authentication Errors
 
-If authentication fails, the API returns a `401 Unauthorized` status code with an error response:
+If your authentication is invalid, you'll receive a `401 Unauthorized` response:
 
 ```json
 {
-  "code": "UNAUTHORIZED",
-  "message": "Authentication is required to access this resource",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  "error": {
+    "code": "unauthorized",
+    "message": "Invalid or missing API key"
+  }
 }
 ```
 
 Common authentication errors include:
 
 - Missing the `Authorization` header
-- Invalid token format
-- Expired token
-- Revoked token
+- Incorrect format of the `Authorization` header
+- Invalid or expired API key
+- API key without sufficient permissions for the requested operation
 
-## Permission errors
+## Authentication in Code Examples
 
-Even with valid authentication, a user might not have permission to access certain resources. In these cases, the API returns a `403 Forbidden` status code:
+### cURL
 
-```json
-{
-  "code": "FORBIDDEN",
-  "message": "You do not have permission to access this resource",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+```bash
+curl -X GET https://api.taskmanagement.example.com/v1/tasks \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+### JavaScript
+
+```javascript
+const axios = require('axios');
+
+const apiKey = 'YOUR_API_KEY';
+const baseUrl = 'https://api.taskmanagement.example.com/v1';
+
+async function getTasks() {
+  try {
+    const response = await axios.get(`${baseUrl}/tasks`, {
+      headers: {
+        'Authorization': `Bearer ${apiKey}`
+      }
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error('Authentication error:', error.response.data);
+  }
 }
 ```
 
-## Token lifespan
+### Python
 
-Bearer tokens have a finite lifespan. Once a token expires, you need to request a new one. The expiration policy depends on your organization's security requirements.
+```python
+import requests
 
-## Implementation example
+api_key = 'YOUR_API_KEY'
+base_url = 'https://api.taskmanagement.example.com/v1'
 
-Here's an example of how to include the bearer token in a request using cURL:
-
-```shell
-curl -X GET \
-  http://localhost:3000/tasks \
-  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' \
-  -H 'Content-Type: application/json'
+def get_tasks():
+    headers = {
+        'Authorization': f'Bearer {api_key}'
+    }
+    
+    response = requests.get(f'{base_url}/tasks', headers=headers)
+    
+    if response.status_code == 401:
+        print('Authentication error:', response.json())
+        return None
+    
+    response.raise_for_status()
+    return response.json()
 ```
 
-And using JavaScript/Fetch API:
+## API Key Management
 
-```javascript
-fetch('http://localhost:3000/tasks', {
-  method: 'GET',
-  headers: {
-    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
-    'Content-Type': 'application/json'
-  }
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error('Error:', error));
-```
+The Task Management platform provides several features for managing your API keys:
 
-## Next steps
+- **Key rotation**: Generate new keys and deprecate old ones
+- **Permission scopes**: Limit what each key can access
+- **Usage monitoring**: Track how and when your keys are being used
+- **IP restrictions**: Limit API access to specific IP addresses
 
-After authenticating your requests, you can proceed to:
+## Next Steps
 
-- [Rate limiting](rate-limiting.html) to understand API usage constraints
-- [Quick start guide](quickstart.html) to create your first API resources
-- [Error handling](../core-concepts/error-handling.html) to handle authentication and other errors
+Now that you understand authentication, you can:
+
+- Continue to [Rate Limiting](/getting-started/rate-limiting.md) to learn about API request limits
+- Explore the [API Reference](/api-reference.md) for details on available endpoints
+- Check out [Security Best Practices](/advanced/security-best-practices.md) for more advanced security considerations
+
+## See Also
+
+- [Quick Start Guide](/getting-started/quickstart.md)
+- [Error Handling](/core-concepts/error-handling.md)
+- [Security Best Practices](/advanced/security-best-practices.md)
 
 

@@ -6,15 +6,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/users/{userId}"]
 related_pages: ["user-resource"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 6
+ai-generated-date: "2025-05-13"
+navOrder: "6"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Delete a user
-
-The `DELETE /users/{userId}` endpoint removes a specific user from the system. This endpoint permanently deletes the user and all associated tasks.
+# Delete a User
 
 ## Endpoint
 
@@ -22,101 +25,150 @@ The `DELETE /users/{userId}` endpoint removes a specific user from the system. T
 DELETE /users/{userId}
 ```
 
-## Authentication
+This endpoint deletes a specific user from the system. Once deleted, the user can no longer log in, be assigned tasks, or be referenced in new API calls.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Path Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `userId` | String | Unique identifier of the user to delete |
 
-## Path parameters
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `userId` | integer | Yes | The unique identifier of the user to delete |
-
-## Request example
+## Request Example
 
 ```http
-DELETE /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+DELETE /users/user123
+Authorization: Bearer YOUR_API_KEY
 ```
 
 ## Response
 
-### Success response (204 No Content)
+### Success Response (204 No Content)
 
-If the user is deleted successfully, the API returns a `204 No Content` status code with no response body.
+A successful deletion returns a `204 No Content` status code with no response body, indicating that the user has been successfully deleted.
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | Invalid `userId` format |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 404 | `RESOURCE_NOT_FOUND` | User not found |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions to delete this user) |
+| 404 | Not Found (user with the specified ID does not exist) |
+| 409 | Conflict (e.g., user has assigned tasks) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
-
-#### User not found example (404)
+#### Example Error Response (409 Conflict)
 
 ```json
 {
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "User with ID 999 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  "error": {
+    "code": "resource_conflict",
+    "message": "Cannot delete user with assigned tasks",
+    "details": {
+      "assignedTaskCount": 5
+    }
+  }
 }
 ```
 
-## Cascade delete behavior
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-When a user is deleted, all tasks associated with that user are also deleted. This cascade delete behavior ensures that no orphaned tasks remain in the system.
+## Authentication
 
-## Important considerations
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
 
-- This operation cannot be undone
-- All tasks owned by the user will be permanently deleted
-- The `userId` cannot be reused for new users
-
-## Code examples
-
-### cURL
-
-```bash
-curl -X DELETE \
-  http://localhost:3000/users/1 \
-  -H 'Authorization: Bearer YOUR_TOKEN'
 ```
+Authorization: Bearer YOUR_API_KEY
+```
+
+The authenticated user must have appropriate permissions to delete the requested user:
+- `admin` users can delete any user except themselves
+- `manager` users can delete users with "member" role
+- `member` users cannot delete any users
+
+## Important Considerations
+
+- **Permanent Operation**: Deletion is permanent and cannot be undone. Consider deactivating users instead of deleting them if you may need to restore access later.
+
+- **Assigned Tasks**: By default, you cannot delete a user who has assigned tasks. You have two options:
+  1. First reassign all tasks to other users
+  2. Use the `force=true` query parameter to delete the user and unassign their tasks
+
+- **Created Tasks**: Tasks created by the deleted user will remain in the system, but the `createdBy` field will be set to null.
+
+- **Last Admin**: The system prevents deletion of the last admin user to ensure there's always at least one user with administrative privileges.
+
+## Best Practices
+
+- Before deleting a user, retrieve and reassign any tasks assigned to them
+- Confirm the deletion with the user or administrator to prevent accidental data loss
+- Consider implementing a "soft delete" in your application by deactivating users instead of deleting them
+- Maintain an audit log of user deletions for security and compliance purposes
+- Handle deletion errors gracefully in your application UI
+
+## Code Examples
 
 ### JavaScript
 
 ```javascript
-async function deleteUser(userId) {
-  const response = await fetch(`http://localhost:3000/users/${userId}`, {
-    method: 'DELETE',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN'
+async function deleteUser(userId, forceDelete = false) {
+  try {
+    const url = forceDelete
+      ? `https://api.taskmanagement.example.com/v1/users/${userId}?force=true`
+      : `https://api.taskmanagement.example.com/v1/users/${userId}`;
+    
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    if (response.status === 204) {
+      return true; // Successful deletion
     }
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+    
+    if (response.status === 409) {
+      // Conflict - user has assigned tasks
+      const errorData = await response.json();
+      const taskCount = errorData.error.details?.assignedTaskCount || 'unknown';
+      throw new Error(`User has ${taskCount} assigned tasks. Use forceDelete=true to delete anyway.`);
+    }
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to delete user: ${errorData.error.message}`);
+    }
+    
+    return false; // Should not reach here if properly handled above
+  } catch (error) {
+    console.error(`Error deleting user ${userId}:`, error);
+    throw error;
   }
-  
-  // Success response has no content
-  return true;
 }
 
 // Example usage
-deleteUser(1)
-  .then(() => console.log('User deleted successfully'))
-  .catch(error => console.error('Failed to delete user:', error));
+try {
+  // Try to delete without force first
+  await deleteUser('user123');
+  console.log('User successfully deleted');
+} catch (error) {
+  if (error.message.includes('assigned tasks')) {
+    console.warn(error.message);
+    
+    // Ask for confirmation before force deletion
+    const confirmForce = confirm('User has assigned tasks. Delete anyway and unassign tasks?');
+    
+    if (confirmForce) {
+      try {
+        await deleteUser('user123', true);
+        console.log('User successfully deleted with force option');
+      } catch (forceError) {
+        console.error('Force deletion failed:', forceError);
+      }
+    }
+  } else {
+    console.error('Failed to delete user:', error);
+  }
+}
 ```
 
 ### Python
@@ -124,57 +176,94 @@ deleteUser(1)
 ```python
 import requests
 
-def delete_user(user_id):
-    url = f'http://localhost:3000/users/{user_id}'
+def delete_user(api_key, user_id, force=False):
+    """
+    Delete a user from the system.
     
+    Args:
+        api_key (str): API key for authentication
+        user_id (str): The unique identifier of the user to delete
+        force (bool, optional): Whether to force deletion even if user has assigned tasks. Defaults to False.
+    
+    Returns:
+        bool: True if user was successfully deleted
+        
+    Raises:
+        Exception: If the API request fails
+    """
+    url = f'https://api.taskmanagement.example.com/v1/users/{user_id}'
+    
+    if force:
+        url += '?force=true'
+        
     headers = {
-        'Authorization': 'Bearer YOUR_TOKEN'
+        'Authorization': f'Bearer {api_key}'
     }
     
     response = requests.delete(url, headers=headers)
     
-    if response.status_code != 204:
-        error = response.json()
-        raise Exception(error['message'])
-    
-    # Success response has no content
-    return True
+    if response.status_code == 204:
+        return True
+    elif response.status_code == 409:
+        error_data = response.json()
+        task_count = error_data['error']['details'].get('assignedTaskCount', 'unknown')
+        raise Exception(f"User has {task_count} assigned tasks. Set force=True to delete anyway.")
+    elif response.status_code == 404:
+        raise Exception(f"User with ID {user_id} not found")
+    elif response.status_code == 403:
+        raise Exception("You don't have permission to delete this user")
+    else:
+        error_data = response.json()
+        raise Exception(f"API error: {error_data['error']['message']}")
 
 # Example usage
 try:
-    delete_user(1)
-    print('User deleted successfully')
+    # First try without force
+    success = delete_user('YOUR_API_KEY', 'user123')
+    
+    if success:
+        print("User successfully deleted")
+        
 except Exception as e:
-    print('Failed to delete user:', str(e))
+    if "assigned tasks" in str(e):
+        print(str(e))
+        
+        # Ask for confirmation
+        force_delete = input("User has assigned tasks. Type 'yes' to delete anyway: ")
+        
+        if force_delete.lower() == 'yes':
+            try:
+                success = delete_user('YOUR_API_KEY', 'user123', force=True)
+                print("User successfully deleted with force option")
+            except Exception as force_error:
+                print(f"Force deletion failed: {force_error}")
+    else:
+        print(f"Error deleting user: {e}")
 ```
 
-## Common use cases
+### cURL
 
-### Account removal
+```bash
+# Delete a user
+curl -X DELETE "https://api.taskmanagement.example.com/v1/users/user123" \
+  -H "Authorization: Bearer YOUR_API_KEY"
 
-When a user wants to remove their account from the system, along with all their tasks.
+# Force delete a user with assigned tasks
+curl -X DELETE "https://api.taskmanagement.example.com/v1/users/user123?force=true" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
 
-### Administrative cleanup
+## Related Resources
 
-When administrators need to remove inactive or problematic user accounts.
+- [User Resource](/resources/user-resource.md) - Detailed information about the User resource
+- [Get All Users](/api-reference/get-all-users.md) - Retrieve a list of all users
+- [Create a User](/api-reference/create-user.md) - Create a new user
+- [Get User by ID](/api-reference/get-user-by-id.md) - Retrieve a specific user by ID
 
-## Best practices
+## See Also
 
-- Confirm the deletion with the user before making this request, as it cannot be undone
-- Consider implementing a "soft delete" in your application logic if you need to preserve user data
-- Handle the 404 error gracefully if the user has already been deleted
-
-## Related resources
-
-- [User resource](../resources/user-resource.html) - Detailed information about the user resource
-- [Get all users](get-all-users.html) - Retrieve a list of all users
-- [Get user by ID](get-user-by-id.html) - Retrieve a specific user
-- [Create a user](create-user.html) - Create a new user
-- [Update a user](update-user.html) - Update an existing user
-
-## See also
-
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
-- [Getting started with users](../tutorials/getting-started-with-users.html) - Tutorial on user management
+- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Update a Task](/api-reference/update-task.md) - Reassign tasks to another user
+- [Getting Started with Users](/tutorials/getting-started-with-users.md) - Guide to working with users
 
 

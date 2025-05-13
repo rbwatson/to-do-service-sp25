@@ -4,213 +4,299 @@ description: "Reference documentation for all error responses returned by the AP
 tags: ["errors", "reference"]
 categories: ["api-reference"]
 importance: 8
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 1
+ai-generated-date: "2025-05-13"
+navOrder: "1"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Error responses
+# Error Responses
 
-This document provides reference information for all error responses that can be returned by the Task Management API. Understanding these error structures will help you implement robust error handling in your applications.
+The Task Management API returns consistent error responses across all endpoints. This page documents the error response format, common error codes, and provides examples for each type of error.
 
-## Error response format
+## Error Response Format
 
-All API errors follow a standard JSON format:
+All error responses follow this standard format:
 
 ```json
 {
-  "code": "ERROR_CODE",
-  "message": "Human-readable error message",
-  "details": [
-    {
-      "field": "fieldName",
-      "reason": "specific reason",
-      "location": "body"
+  "error": {
+    "code": "error_code",
+    "message": "A human-readable error message",
+    "details": {
+      // Additional error details (optional)
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  }
 }
 ```
 
-### Error response properties
+* `code`: A string identifier for the type of error
+* `message`: A human-readable description of the error
+* `details`: An optional object with additional information about the error
 
-| Property | Type | Description | Always present |
-|----------|------|-------------|----------------|
-| `code` | string | Error code identifying the type of error | Yes |
-| `message` | string | Human-readable description of the error | Yes |
-| `details` | array | Array of objects with specific validation errors | No |
-| `requestId` | string | Unique identifier for the request (for support) | Yes |
+## HTTP Status Codes
 
-The `details` array is included for validation errors and provides information about specific fields that failed validation.
+The API uses standard HTTP status codes to indicate the general category of error:
 
-## HTTP status codes
+| Status Code | Category | Description |
+|-------------|----------|-------------|
+| 400 | Bad Request | The request is malformed or contains invalid parameters |
+| 401 | Unauthorized | Authentication is missing or invalid |
+| 403 | Forbidden | The authenticated user lacks permission for this operation |
+| 404 | Not Found | The requested resource does not exist |
+| 409 | Conflict | The request conflicts with the current state of the resource |
+| 422 | Unprocessable Entity | The request is well-formed but contains semantic errors |
+| 429 | Too Many Requests | The client has sent too many requests in a given time |
+| 500 | Internal Server Error | An unexpected error occurred on the server |
 
-| Status code | Name | Description |
-|-------------|------|-------------|
-| 400 | Bad Request | The request was malformed or contains invalid parameters |
-| 401 | Unauthorized | Authentication is required or the provided credentials are invalid |
-| 403 | Forbidden | The authenticated user does not have permission to access the requested resource |
-| 404 | Not Found | The requested resource was not found |
-| 429 | Too Many Requests | The client has sent too many requests in a given amount of time |
-| 500 | Internal Server Error | An unexpected server error occurred |
+## Common Error Codes
 
-## Error codes
+### Authentication Errors
 
-The following error codes can be returned in the `code` field of the error response:
+| Error Code | HTTP Status | Description |
+|------------|-------------|-------------|
+| `missing_authentication` | 401 | No authentication credentials were provided |
+| `invalid_authentication` | 401 | The provided authentication credentials are invalid |
+| `expired_token` | 401 | The authentication token has expired |
 
-### Validation errors (400)
+### Permission Errors
 
-| Error code | Description | Example message |
-|------------|-------------|-----------------|
-| `INVALID_FIELD` | A field value is invalid | "The field `contactEmail` must be a valid email address" |
-| `MISSING_REQUIRED_FIELD` | A required field is missing | "The `lastName` field is required" |
-| `INVALID_FORMAT` | A field value has an invalid format | "The `dueDate` field must be in ISO 8601 format" |
-| `INVALID_LENGTH` | A field value exceeds length limits | "The `taskTitle` field must be between 1 and 80 characters" |
-| `DUPLICATE_EMAIL` | Email address is already in use | "The email address is already in use by another user" |
-| `INVALID_STATUS` | Invalid task status value | "The `taskStatus` value 'DONE' is not valid" |
-| `INVALID_RANGE` | Value outside allowed range | "The `warningOffset` must be between 0 and 64000" |
-| `INVALID_USER_ID` | Referenced user does not exist | "The specified `userId` does not exist" |
-| `INVALID_TASK_ID` | Referenced task does not exist | "The specified `taskId` does not exist" |
+| Error Code | HTTP Status | Description |
+|------------|-------------|-------------|
+| `permission_denied` | 403 | The authenticated user does not have permission for this action |
+| `insufficient_scope` | 403 | The token does not have the required scope for this action |
 
-### Authentication errors (401)
+### Resource Errors
 
-| Error code | Description | Example message |
-|------------|-------------|-----------------|
-| `UNAUTHORIZED` | Authentication is required | "Authentication is required to access this resource" |
-| `INVALID_TOKEN` | Token is invalid or malformed | "The provided authentication token is invalid" |
-| `EXPIRED_TOKEN` | Token has expired | "The authentication token has expired" |
+| Error Code | HTTP Status | Description |
+|------------|-------------|-------------|
+| `resource_not_found` | 404 | The requested resource does not exist |
+| `resource_conflict` | 409 | The request conflicts with the current state of the resource |
+| `resource_gone` | 410 | The resource existed previously but has been removed |
 
-### Permission errors (403)
+### Validation Errors
 
-| Error code | Description | Example message |
-|------------|-------------|-----------------|
-| `FORBIDDEN` | Operation not permitted | "You do not have permission to access this resource" |
-| `READ_ONLY_ACCESS` | Write operation not permitted | "You have read-only access to this resource" |
+| Error Code | HTTP Status | Description |
+|------------|-------------|-------------|
+| `validation_error` | 422 | The request contains invalid data |
+| `invalid_parameters` | 400 | One or more query parameters are invalid |
+| `invalid_format` | 400 | The request body format is invalid (e.g., malformed JSON) |
+| `missing_required_field` | 422 | A required field is missing from the request |
+| `invalid_field_value` | 422 | A field value is invalid (e.g., wrong type or out of range) |
+| `invalid_status_transition` | 422 | The requested status transition is not allowed |
 
-### Resource errors (404)
+### Rate Limiting Errors
 
-| Error code | Description | Example message |
-|------------|-------------|-----------------|
-| `RESOURCE_NOT_FOUND` | Resource does not exist | "The requested resource could not be found" |
-| `USER_NOT_FOUND` | User does not exist | "User with ID 123 could not be found" |
-| `TASK_NOT_FOUND` | Task does not exist | "Task with ID 456 could not be found" |
+| Error Code | HTTP Status | Description |
+|------------|-------------|-------------|
+| `rate_limit_exceeded` | 429 | The client has exceeded their rate limit |
+| `daily_limit_exceeded` | 429 | The client has exceeded their daily request limit |
 
-### Rate limit errors (429)
+### Server Errors
 
-| Error code | Description | Example message |
-|------------|-------------|-----------------|
-| `RATE_LIMIT_EXCEEDED` | Too many requests | "Rate limit exceeded. Try again in 30 seconds" |
+| Error Code | HTTP Status | Description |
+|------------|-------------|-------------|
+| `server_error` | 500 | An unexpected error occurred on the server |
+| `service_unavailable` | 503 | The service is temporarily unavailable |
+| `database_error` | 500 | An error occurred while accessing the database |
 
-### Server errors (500)
+## Error Examples
 
-| Error code | Description | Example message |
-|------------|-------------|-----------------|
-| `SERVER_ERROR` | Unexpected server error | "An unexpected error occurred. Please try again later" |
-| `SERVICE_UNAVAILABLE` | Service temporarily unavailable | "The service is temporarily unavailable. Please try again later" |
+### Authentication Error
 
-## Detailed validation error examples
+```http
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
 
-### Invalid email format
-
-```json
 {
-  "code": "INVALID_FIELD",
-  "message": "The field `contactEmail` must be a valid email address",
-  "details": [
-    {
-      "field": "contactEmail",
-      "reason": "Invalid format",
-      "location": "body"
+  "error": {
+    "code": "invalid_authentication",
+    "message": "The provided API key is invalid or has been revoked"
+  }
+}
+```
+
+### Resource Not Found Error
+
+```http
+HTTP/1.1 404 Not Found
+Content-Type: application/json
+
+{
+  "error": {
+    "code": "resource_not_found",
+    "message": "The requested task with ID 'task123' does not exist"
+  }
+}
+```
+
+### Validation Error
+
+```http
+HTTP/1.1 422 Unprocessable Entity
+Content-Type: application/json
+
+{
+  "error": {
+    "code": "validation_error",
+    "message": "The request contains invalid data",
+    "details": {
+      "title": "Title is required",
+      "dueDate": "Due date must be in the future",
+      "status": "Status must be one of: TODO, IN_PROGRESS, REVIEW, DONE, CANCELED"
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  }
 }
 ```
 
-### Missing required field
+### Rate Limit Error
 
-```json
+```http
+HTTP/1.1 429 Too Many Requests
+Content-Type: application/json
+Retry-After: 60
+
 {
-  "code": "MISSING_REQUIRED_FIELD",
-  "message": "The `lastName` field is required",
-  "details": [
-    {
-      "field": "lastName",
-      "reason": "Is required",
-      "location": "body"
+  "error": {
+    "code": "rate_limit_exceeded",
+    "message": "You have exceeded the rate limit of 100 requests per minute",
+    "details": {
+      "limit": 100,
+      "remaining": 0,
+      "resetAt": "2025-05-13T15:45:00Z"
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  }
 }
 ```
 
-### Invalid task status
+## Common Error Scenarios
 
-```json
-{
-  "code": "INVALID_STATUS",
-  "message": "The `taskStatus` value 'DONE' is not valid",
-  "details": [
-    {
-      "field": "taskStatus",
-      "reason": "Invalid value",
-      "location": "body"
+### Missing or Invalid Authentication
+
+If you receive a `401 Unauthorized` error, check that:
+- You are including the `Authorization` header with your requests
+- The format is correct: `Authorization: Bearer YOUR_API_KEY`
+- Your API key is valid and has not expired
+
+### Permission Denied
+
+If you receive a `403 Forbidden` error, check that:
+- The authenticated user has the necessary permissions for the action
+- The user's role has access to the requested resource
+- For task operations, the user may need to be the creator or assignee of the task
+
+### Resource Not Found
+
+If you receive a `404 Not Found` error, check that:
+- The resource ID is correct
+- The resource has not been deleted
+- You are using the correct endpoint URL
+
+### Validation Errors
+
+If you receive a `422 Unprocessable Entity` error:
+- Check the `details` field for specific validation errors
+- Ensure all required fields are provided
+- Verify that field values match the expected format and constraints
+- For status updates, ensure the transition is valid (see [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md))
+
+## Handling Errors in Code
+
+### JavaScript Example
+
+```javascript
+async function handleApiRequest(url, options) {
+  try {
+    const response = await fetch(url, options);
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      
+      // Handle specific error types
+      switch (errorData.error.code) {
+        case 'rate_limit_exceeded':
+          console.error('Rate limit exceeded. Try again later.');
+          // Maybe implement retry with backoff
+          break;
+        case 'validation_error':
+          console.error('Validation error:', errorData.error.details);
+          // Maybe highlight form fields with errors
+          break;
+        default:
+          console.error(`API Error (${response.status}):`, errorData.error.message);
+      }
+      
+      throw new Error(errorData.error.message);
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+    
+    return await response.json();
+  } catch (error) {
+    // Handle network errors or other exceptions
+    console.error('Request failed:', error);
+    throw error;
+  }
 }
 ```
 
-### Resource not found
+### Python Example
 
-```json
-{
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "User with ID 123 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
+```python
+import requests
+
+def handle_api_request(url, method="GET", data=None, headers=None):
+    try:
+        if method == "GET":
+            response = requests.get(url, headers=headers)
+        elif method == "POST":
+            response = requests.post(url, json=data, headers=headers)
+        elif method == "PATCH":
+            response = requests.patch(url, json=data, headers=headers)
+        elif method == "DELETE":
+            response = requests.delete(url, headers=headers)
+        else:
+            raise ValueError(f"Unsupported method: {method}")
+        
+        # Check if the request was successful
+        response.raise_for_status()
+        
+        # For non-204 responses, return the JSON data
+        if response.status_code != 204:
+            return response.json()
+        return None
+        
+    except requests.exceptions.HTTPError as e:
+        # Handle API errors
+        error_data = e.response.json()
+        error_code = error_data.get("error", {}).get("code", "unknown_error")
+        error_message = error_data.get("error", {}).get("message", "Unknown error")
+        error_details = error_data.get("error", {}).get("details", {})
+        
+        print(f"API Error ({e.response.status_code}): {error_message}")
+        
+        if error_code == "validation_error" and error_details:
+            print("Validation errors:")
+            for field, error in error_details.items():
+                print(f"  {field}: {error}")
+        
+        # Re-raise the exception with more context
+        raise Exception(f"{error_code}: {error_message}") from e
+        
+    except requests.exceptions.RequestException as e:
+        # Handle network errors
+        print(f"Request failed: {e}")
+        raise
 ```
 
-### Authentication required
+## See Also
 
-```json
-{
-  "code": "UNAUTHORIZED",
-  "message": "Authentication is required to access this resource",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-### Rate limit exceeded
-
-```json
-{
-  "code": "RATE_LIMIT_EXCEEDED",
-  "message": "Rate limit exceeded. Try again in 30 seconds",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-## Handling errors
-
-For guidance on handling these errors in your application, refer to the [Error handling](../core-concepts/error-handling.html) document.
-
-## Error response headers
-
-Some error responses include additional information in the headers:
-
-| Error type | Header | Description | Example |
-|------------|--------|-------------|---------|
-| Rate limiting | `Retry-After` | Seconds to wait before retrying | `Retry-After: 30` |
-
-## Next steps
-
-Now that you understand the error response format, explore these related topics:
-
-- [Error handling best practices](../core-concepts/error-handling.html)
-- [Troubleshooting common issues](../support/troubleshooting.html)
-- [Authentication](../getting-started/authentication.html)
-- [Rate limiting](../getting-started/rate-limiting.html)
+- [Core Concepts - Error Handling](/core-concepts/error-handling.md)
+- [Getting Started - Authentication](/getting-started/authentication.md)
+- [Rate Limiting](/getting-started/rate-limiting.md)
+- [Troubleshooting](/support/troubleshooting.md)
 
 

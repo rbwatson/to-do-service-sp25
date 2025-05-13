@@ -4,122 +4,128 @@ description: "Overview of the core resources in the Task Management API and thei
 tags: ["data model", "resources", "schema"]
 categories: ["core-concepts"]
 importance: 9
+parent: "core-concepts"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 1
+ai-generated-date: "2025-05-13"
+navOrder: "1"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Data model
+# Data Model
 
-The Task Management API is built around two primary resources: Users and Tasks. This document explains the core data model and the relationships between these resources.
+The Task Management API is built around two primary resources: Users and Tasks. This page explains these resources, their properties, and how they relate to each other.
 
-## Resource overview
+## Core Resources
 
-The API has two main resources:
+### Users
 
-1. **User** - Represents a person who can create and manage tasks
-2. **Task** - Represents a to-do item that needs to be completed
+Users represent individuals who can create and be assigned to tasks. Each user has the following properties:
 
-These resources are linked by the `userId` property, establishing a one-to-many relationship between users and tasks.
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | String | Unique identifier for the user |
+| `name` | String | Full name of the user |
+| `email` | String | Email address of the user (must be unique) |
+| `role` | String | Role of the user (default: "member") |
+| `createdAt` | Date | When the user was created |
+| `updatedAt` | Date | When the user was last updated |
 
-## User resource
+### Tasks
 
-The User resource contains information about individuals who use the task management system.
+Tasks represent work items that need to be completed. Each task has the following properties:
 
-### User properties
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | String | Unique identifier for the task |
+| `title` | String | Title of the task |
+| `description` | String | Detailed description of the task (optional) |
+| `status` | String | Current status of the task (e.g., "TODO", "IN_PROGRESS", "DONE") |
+| `priority` | String | Priority level (e.g., "LOW", "MEDIUM", "HIGH") |
+| `createdBy` | String | ID of the user who created the task |
+| `assigneeId` | String | ID of the user assigned to the task (optional) |
+| `dueDate` | Date | When the task is due (optional) |
+| `warningOffset` | Number | Hours before due date to send a reminder (optional) |
+| `tags` | Array | Array of string tags associated with the task (optional) |
+| `createdAt` | Date | When the task was created |
+| `updatedAt` | Date | When the task was last updated |
 
-| Property | Type | Description | Required |
-|----------|------|-------------|----------|
-| userId | integer | System-generated unique identifier | Yes |
-| firstName | string | User's first name (1-100 characters) | Yes |
-| lastName | string | User's last name (1-100 characters) | Yes |
-| contactEmail | string | Valid email address for the user (unique) | Yes |
+## Resource Relationships
 
-### User constraints
+The relationships between resources in the Task Management API are as follows:
 
-- Each user must have a unique `contactEmail`
-- The `userId` is automatically generated and immutable
-- `firstName` and `lastName` must be between 1 and 100 characters
-- `contactEmail` must follow standard email format
+1. **User to Tasks (Creation)**: A user can create multiple tasks. Each task has a `createdBy` field that references the user who created it.
 
-## Task resource
+2. **User to Tasks (Assignment)**: A user can be assigned to multiple tasks. Each task has an optional `assigneeId` field that references the assigned user.
 
-The Task resource represents individual to-do items that users create and manage.
+3. **Task to User**: A task can be assigned to at most one user at a time. The `assigneeId` field references the assigned user's ID.
 
-### Task properties
-
-| Property | Type | Description | Required |
-|----------|------|-------------|----------|
-| taskId | integer | System-generated unique identifier | Yes |
-| userId | integer | ID of the user who owns the task | Yes |
-| taskTitle | string | Short description (1-80 characters) | Yes |
-| taskDescription | string | Detailed description (1-255 characters) | No |
-| taskStatus | string enum | Current status of the task | Yes |
-| dueDate | string (date-time) | When the task should be completed | Yes |
-| warningOffset | integer | Minutes before due date to send reminder | Yes |
-
-### Task status values
-
-The `taskStatus` property can have one of the following values:
-
-- `NOT_STARTED` - Default status for new tasks
-- `IN_PROGRESS` - Task is actively being worked on
-- `BLOCKED` - Task cannot proceed due to an obstacle
-- `DEFERRED` - Task is postponed until a later time
-- `COMPLETED` - Task has been finished successfully
-- `CANCELLED` - Task has been abandoned
-
-For more details on task status transitions, see the [Task status lifecycle](task-status-lifecycle.html) document.
-
-### Task constraints
-
-- Each task must be associated with a valid user
-- The `taskId` is automatically generated and immutable
-- `taskTitle` must be between 1 and 80 characters
-- `taskDescription` must be between 1 and 255 characters, if provided
-- `dueDate` must be in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS.sssZ`)
-- `warningOffset` must be a non-negative integer (0-64000)
-
-## Resource relationships
+## Data Model Diagram
 
 ```
-    +--------+          +---------+
-    |        |          |         |
-    |  User  |<---------+  Task   |
-    |        |    1:n   |         |
-    +--------+          +---------+
+┌───────────────────┐        ┌───────────────────┐
+│      User         │        │       Task        │
+├───────────────────┤        ├───────────────────┤
+│ id                │        │ id                │
+│ name              │        │ title             │
+│ email             │        │ description       │
+│ role              │◄───────┤ createdBy         │
+│ createdAt         │        │ assigneeId        │◄─┐
+│ updatedAt         │        │ status            │  │
+└───────────────────┘        │ priority          │  │
+         ▲                   │ dueDate           │  │
+         │                   │ warningOffset     │  │
+         │                   │ tags              │  │
+         │                   │ createdAt         │  │
+         │                   │ updatedAt         │  │
+         └───────────────────────────────────────┘  │
+                             │                      │
+                             └──────────────────────┘
 ```
 
-- Each User can have multiple Tasks (one-to-many relationship)
-- Each Task belongs to exactly one User
-- When a User is deleted, all associated Tasks are also deleted
+## Enumerations
 
-## Data model diagram
+### Task Status
 
-The following entity-relationship diagram shows the relationships between the core resources:
+Task status represents the current state of a task in its lifecycle:
 
-```
-+-------------------+       +-------------------+
-| User              |       | Task              |
-+-------------------+       +-------------------+
-| userId (PK)       |<----->| taskId (PK)       |
-| firstName         |       | userId (FK)       |
-| lastName          |       | taskTitle         |
-| contactEmail      |       | taskDescription   |
-+-------------------+       | taskStatus        |
-                            | dueDate           |
-                            | warningOffset     |
-                            +-------------------+
-```
+- `TODO`: Task has been created but work hasn't started
+- `IN_PROGRESS`: Work on the task has begun
+- `REVIEW`: Task is completed and awaiting review
+- `DONE`: Task has been completed and approved
+- `CANCELED`: Task has been canceled and won't be completed
 
-## Next steps
+### Task Priority
 
-Now that you understand the data model, learn more about:
+Priority indicates the importance level of a task:
 
-- [User resource details](../resources/user-resource.html)
-- [Task resource details](../resources/task-resource.html)
-- [Task status lifecycle](task-status-lifecycle.html)
-- [Pagination](pagination.html) for retrieving multiple resources
+- `LOW`: Low priority task
+- `MEDIUM`: Medium priority task (default)
+- `HIGH`: High priority task
+- `URGENT`: Urgent task requiring immediate attention
+
+### User Role
+
+User roles determine the permissions a user has:
+
+- `admin`: Can perform all operations
+- `manager`: Can manage tasks and assign them to users
+- `member`: Can create and update their own tasks (default)
+
+## Important Notes
+
+- All IDs are automatically generated by the API and are guaranteed to be unique.
+- Timestamps (`createdAt` and `updatedAt`) are automatically managed by the API.
+- When creating a task, the `createdBy` field is automatically set to the authenticated user's ID.
+- The `email` field on the User resource must be unique across all users.
+
+## See Also
+
+- [User Resource](/resources/user-resource.md)
+- [Task Resource](/resources/task-resource.md)
+- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md)
 
 

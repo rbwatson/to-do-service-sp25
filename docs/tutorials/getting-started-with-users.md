@@ -4,41 +4,46 @@ description: "A practical guide to creating, listing, updating, and deleting use
 tags: ["tutorial", "users"]
 categories: ["tutorials"]
 importance: 6
+parent: "tutorials"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 1
+ai-generated-date: "2025-05-13"
+navOrder: "1"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Getting started with users
+# Getting Started with Users
 
-This tutorial guides you through common operations for managing users in the Task Management API. You'll learn how to create, list, retrieve, update, and delete user resources.
+This tutorial provides a step-by-step guide to performing common operations with users in the Task Management API. You'll learn how to create, list, update, and delete users through practical examples.
 
 ## Prerequisites
 
 Before you begin, make sure you have:
 
-- An API client (like cURL, Postman, or your own code)
-- A valid authentication token for the API
-- Understanding of basic HTTP request methods (GET, POST, PATCH, DELETE)
-- Familiarity with JSON data format
+- An API key for the Task Management API
+- Appropriate permissions to manage users
+- A tool for making HTTP requests (we'll use cURL, JavaScript, and Python examples)
 
-## Step 1: Create a user
+## 1. Creating a User
 
-Let's start by creating a new user. Send a POST request to the `/users` endpoint with the required user information.
+Let's start by creating a new user in the system.
 
 ### Request
 
+Use the `POST /users` endpoint to create a new user:
+
 ```http
-POST /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+POST /users
 Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
 
 {
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
+  "name": "Jane Smith",
+  "email": "jane.smith@example.com",
+  "role": "manager"
 }
 ```
 
@@ -46,404 +51,803 @@ Content-Type: application/json
 
 ```json
 {
-  "userId": 1,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
+  "id": "user123",
+  "name": "Jane Smith",
+  "email": "jane.smith@example.com",
+  "role": "manager",
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T10:30:00Z"
 }
 ```
 
-The API has assigned a unique `userId` to your new user. Make note of this ID as you'll need it for subsequent operations.
+### Code Example
 
-### Code example
+#### JavaScript
 
 ```javascript
-// Create a user
-async function createUser() {
-  const userData = {
-    firstName: "John",
-    lastName: "Doe",
-    contactEmail: "john.doe@example.com"
-  };
-  
-  const response = await fetch('http://localhost:3000/users', {
+async function createUser(name, email, role = 'member') {
+  const response = await fetch('https://api.taskmanagement.example.com/v1/users', {
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
+      'Authorization': `Bearer ${API_KEY}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(userData)
+    body: JSON.stringify({
+      name,
+      email,
+      role
+    })
   });
   
   if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
-  
-  const user = await response.json();
-  console.log('User created:', user);
-  return user;
-}
-```
-
-## Step 2: Retrieve all users
-
-Next, let's retrieve a list of all users in the system. Send a GET request to the `/users` endpoint.
-
-### Request
-
-```http
-GET /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Response
-
-```json
-{
-  "users": [
-    {
-      "userId": 1,
-      "firstName": "John",
-      "lastName": "Doe",
-      "contactEmail": "john.doe@example.com"
-    }
-  ]
-}
-```
-
-### With pagination
-
-For systems with many users, you can use pagination parameters to limit the results:
-
-```http
-GET /users?_page=0&_perPage=10 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Code example
-
-```javascript
-// Get all users
-async function getAllUsers(page = 0, perPage = 10) {
-  const response = await fetch(`http://localhost:3000/users?_page=${page}&_perPage=${perPage}`, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN'
-    }
-  });
-  
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
-  
-  const data = await response.json();
-  console.log('Users:', data.users);
-  return data.users;
-}
-```
-
-## Step 3: Retrieve a specific user
-
-To get details for a specific user, send a GET request to `/users/{userId}` with the user's ID.
-
-### Request
-
-```http
-GET /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Response
-
-```json
-{
-  "userId": 1,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
-}
-```
-
-### Code example
-
-```javascript
-// Get a specific user
-async function getUser(userId) {
-  const response = await fetch(`http://localhost:3000/users/${userId}`, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN'
-    }
-  });
-  
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
-  
-  const user = await response.json();
-  console.log('User details:', user);
-  return user;
-}
-```
-
-## Step 4: Update a user
-
-To update an existing user, send a PATCH request to `/users/{userId}` with the fields you want to change.
-
-### Request
-
-```http
-PATCH /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-
-{
-  "contactEmail": "new.email@example.com"
-}
-```
-
-### Response
-
-```json
-{
-  "userId": 1,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "new.email@example.com"
-}
-```
-
-The API returns the complete updated user object. Notice that only the `contactEmail` field was changed, while other fields remain the same.
-
-### Code example
-
-```javascript
-// Update a user
-async function updateUser(userId, updateData) {
-  const response = await fetch(`http://localhost:3000/users/${userId}`, {
-    method: 'PATCH',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(updateData)
-  });
-  
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
-  
-  const updatedUser = await response.json();
-  console.log('User updated:', updatedUser);
-  return updatedUser;
-}
-
-// Example usage
-updateUser(1, { contactEmail: "new.email@example.com" });
-```
-
-## Step 5: Delete a user
-
-To remove a user, send a DELETE request to `/users/{userId}`.
-
-### Request
-
-```http
-DELETE /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Response
-
-A successful deletion returns a `204 No Content` status code with no response body.
-
-### Code example
-
-```javascript
-// Delete a user
-async function deleteUser(userId) {
-  const response = await fetch(`http://localhost:3000/users/${userId}`, {
-    method: 'DELETE',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN'
-    }
-  });
-  
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
-  
-  console.log('User deleted successfully');
-  return true;
-}
-```
-
-## Handling errors
-
-The API returns appropriate error responses when operations fail. Always check for error responses in your code.
-
-### Common errors
-
-- `400 Bad Request`: Invalid input data (e.g., missing required fields)
-- `404 Not Found`: User not found
-- `401 Unauthorized`: Authentication token missing or invalid
-- `403 Forbidden`: Permission denied
-
-### Error response example
-
-```json
-{
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "User with ID 999 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-### Error handling example
-
-```javascript
-async function getUserSafely(userId) {
-  try {
-    const response = await fetch(`http://localhost:3000/users/${userId}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer YOUR_TOKEN'
-      }
-    });
-    
-    if (!response.ok) {
-      const error = await response.json();
-      console.error(`Error ${response.status}: ${error.message}`);
-      return null;
-    }
-    
-    return await response.json();
-  } catch (error) {
-    console.error('Failed to fetch user:', error);
-    return null;
-  }
-}
-```
-
-## Complete user management example
-
-Here's a complete example that demonstrates all the user management operations:
-
-```javascript
-// User management functions
-const API_BASE_URL = 'http://localhost:3000';
-const TOKEN = 'YOUR_TOKEN';
-
-async function apiRequest(endpoint, method, data = null) {
-  const options = {
-    method: method,
-    headers: {
-      'Authorization': `Bearer ${TOKEN}`,
-      'Content-Type': 'application/json'
-    }
-  };
-  
-  if (data && (method === 'POST' || method === 'PATCH')) {
-    options.body = JSON.stringify(data);
-  }
-  
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
-  
-  if (response.status === 204) {
-    return true; // No content but successful
-  }
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(`API Error: ${error.message}`);
+    const errorData = await response.json();
+    throw new Error(`Failed to create user: ${errorData.error.message}`);
   }
   
   return await response.json();
 }
 
-// User management operations
-async function createUser(userData) {
-  return apiRequest('/users', 'POST', userData);
+// Usage
+try {
+  const newUser = await createUser('Jane Smith', 'jane.smith@example.com', 'manager');
+  console.log('User created:', newUser);
+} catch (error) {
+  console.error(error);
+}
+```
+
+#### Python
+
+```python
+import requests
+
+def create_user(api_key, name, email, role='member'):
+    url = 'https://api.taskmanagement.example.com/v1/users'
+    headers = {
+        'Authorization': f'Bearer {api_key}',
+        'Content-Type': 'application/json'
+    }
+    data = {
+        'name': name,
+        'email': email,
+        'role': role
+    }
+    
+    response = requests.post(url, json=data, headers=headers)
+    
+    if response.status_code == 201:
+        return response.json()
+    else:
+        error_data = response.json()
+        raise Exception(f"Failed to create user: {error_data['error']['message']}")
+
+# Usage
+try:
+    api_key = 'YOUR_API_KEY'
+    new_user = create_user(api_key, 'Jane Smith', 'jane.smith@example.com', 'manager')
+    print('User created:')
+    print(f"ID: {new_user['id']}")
+    print(f"Name: {new_user['name']}")
+    print(f"Email: {new_user['email']}")
+    print(f"Role: {new_user['role']}")
+except Exception as e:
+    print(e)
+```
+
+## 2. Listing Users
+
+Now let's retrieve a list of users from the API.
+
+### Request
+
+Use the `GET /users` endpoint to list users:
+
+```http
+GET /users?limit=10&offset=0&sort=name
+Authorization: Bearer YOUR_API_KEY
+```
+
+### Response
+
+```json
+{
+  "data": [
+    {
+      "id": "user456",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "role": "admin",
+      "createdAt": "2025-04-10T08:15:00Z",
+      "updatedAt": "2025-05-01T13:45:00Z"
+    },
+    {
+      "id": "user123",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "role": "manager",
+      "createdAt": "2025-05-13T10:30:00Z",
+      "updatedAt": "2025-05-13T10:30:00Z"
+    },
+    // More users...
+  ],
+  "pagination": {
+    "total": 25,
+    "limit": 10,
+    "offset": 0,
+    "hasMore": true
+  }
+}
+```
+
+### Code Example
+
+#### JavaScript
+
+```javascript
+async function listUsers(options = {}) {
+  // Build query string from options
+  const params = new URLSearchParams();
+  
+  if (options.limit) params.append('limit', options.limit);
+  if (options.offset) params.append('offset', options.offset);
+  if (options.sort) params.append('sort', options.sort);
+  if (options.name) params.append('name', options.name);
+  if (options.role) params.append('role', options.role);
+  
+  const url = `https://api.taskmanagement.example.com/v1/users?${params}`;
+  
+  const response = await fetch(url, {
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`
+    }
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Failed to list users: ${errorData.error.message}`);
+  }
+  
+  return await response.json();
 }
 
-async function getAllUsers(page = 0, perPage = 10) {
-  const result = await apiRequest(`/users?_page=${page}&_perPage=${perPage}`, 'GET');
-  return result.users;
+// Usage: List users sorted by name
+try {
+  const result = await listUsers({
+    limit: 10,
+    offset: 0,
+    sort: 'name'
+  });
+  
+  console.log(`Found ${result.pagination.total} users`);
+  
+  result.data.forEach(user => {
+    console.log(`${user.name} (${user.email}) - ${user.role}`);
+  });
+  
+  if (result.pagination.hasMore) {
+    console.log('More users available. Increase limit or use pagination.');
+  }
+} catch (error) {
+  console.error(error);
 }
+```
 
+#### Python
+
+```python
+import requests
+
+def list_users(api_key, limit=10, offset=0, sort=None, name=None, role=None):
+    url = 'https://api.taskmanagement.example.com/v1/users'
+    headers = {
+        'Authorization': f'Bearer {api_key}'
+    }
+    
+    # Build query parameters
+    params = {
+        'limit': limit,
+        'offset': offset
+    }
+    
+    if sort:
+        params['sort'] = sort
+    if name:
+        params['name'] = name
+    if role:
+        params['role'] = role
+    
+    response = requests.get(url, params=params, headers=headers)
+    
+    if response.status_code == 200:
+        return response.json()
+    else:
+        error_data = response.json()
+        raise Exception(f"Failed to list users: {error_data['error']['message']}")
+
+# Usage: List manager users
+try:
+    api_key = 'YOUR_API_KEY'
+    result = list_users(api_key, role='manager', sort='name')
+    
+    print(f"Found {result['pagination']['total']} managers")
+    
+    for user in result['data']:
+        print(f"{user['name']} ({user['email']})")
+    
+    if result['pagination']['hasMore']:
+        print('More users available. Increase limit or use pagination.')
+except Exception as e:
+    print(e)
+```
+
+## 3. Getting a Specific User
+
+Let's retrieve details about a specific user using their ID.
+
+### Request
+
+Use the `GET /users/{userId}` endpoint:
+
+```http
+GET /users/user123
+Authorization: Bearer YOUR_API_KEY
+```
+
+### Response
+
+```json
+{
+  "id": "user123",
+  "name": "Jane Smith",
+  "email": "jane.smith@example.com",
+  "role": "manager",
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T10:30:00Z"
+}
+```
+
+### Code Example
+
+#### JavaScript
+
+```javascript
 async function getUserById(userId) {
-  return apiRequest(`/users/${userId}`, 'GET');
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/users/${userId}`, {
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`
+    }
+  });
+  
+  if (response.status === 404) {
+    return null; // User not found
+  }
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Failed to get user: ${errorData.error.message}`);
+  }
+  
+  return await response.json();
 }
 
-async function updateUser(userId, userData) {
-  return apiRequest(`/users/${userId}`, 'PATCH', userData);
+// Usage
+try {
+  const userId = 'user123';
+  const user = await getUserById(userId);
+  
+  if (user) {
+    console.log('User found:');
+    console.log(`Name: ${user.name}`);
+    console.log(`Email: ${user.email}`);
+    console.log(`Role: ${user.role}`);
+  } else {
+    console.log(`User with ID ${userId} not found`);
+  }
+} catch (error) {
+  console.error(error);
+}
+```
+
+#### Python
+
+```python
+import requests
+
+def get_user_by_id(api_key, user_id):
+    url = f'https://api.taskmanagement.example.com/v1/users/{user_id}'
+    headers = {
+        'Authorization': f'Bearer {api_key}'
+    }
+    
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code == 200:
+        return response.json()
+    elif response.status_code == 404:
+        return None
+    else:
+        error_data = response.json()
+        raise Exception(f"Failed to get user: {error_data['error']['message']}")
+
+# Usage
+try:
+    api_key = 'YOUR_API_KEY'
+    user_id = 'user123'
+    user = get_user_by_id(api_key, user_id)
+    
+    if user:
+        print('User found:')
+        print(f"Name: {user['name']}")
+        print(f"Email: {user['email']}")
+        print(f"Role: {user['role']}")
+    else:
+        print(f"User with ID {user_id} not found")
+except Exception as e:
+    print(e)
+```
+
+## 4. Updating a User
+
+Now let's update an existing user's information.
+
+### Request
+
+Use the `PATCH /users/{userId}` endpoint:
+
+```http
+PATCH /users/user123
+Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
+
+{
+  "name": "Jane Wilson",
+  "role": "admin"
+}
+```
+
+### Response
+
+```json
+{
+  "id": "user123",
+  "name": "Jane Wilson",
+  "email": "jane.smith@example.com",
+  "role": "admin",
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T11:45:00Z"
+}
+```
+
+### Code Example
+
+#### JavaScript
+
+```javascript
+async function updateUser(userId, updates) {
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/users/${userId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(updates)
+  });
+  
+  if (response.status === 404) {
+    throw new Error(`User with ID ${userId} not found`);
+  }
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Failed to update user: ${errorData.error.message}`);
+  }
+  
+  return await response.json();
 }
 
+// Usage
+try {
+  const userId = 'user123';
+  const updates = {
+    name: 'Jane Wilson',
+    role: 'admin'
+  };
+  
+  const updatedUser = await updateUser(userId, updates);
+  
+  console.log('User updated:');
+  console.log(`Name: ${updatedUser.name}`);
+  console.log(`Email: ${updatedUser.email}`);
+  console.log(`Role: ${updatedUser.role}`);
+} catch (error) {
+  console.error(error);
+}
+```
+
+#### Python
+
+```python
+import requests
+
+def update_user(api_key, user_id, **updates):
+    url = f'https://api.taskmanagement.example.com/v1/users/{user_id}'
+    headers = {
+        'Authorization': f'Bearer {api_key}',
+        'Content-Type': 'application/json'
+    }
+    
+    # Remove None values from updates
+    updates = {k: v for k, v in updates.items() if v is not None}
+    
+    response = requests.patch(url, json=updates, headers=headers)
+    
+    if response.status_code == 200:
+        return response.json()
+    elif response.status_code == 404:
+        raise Exception(f"User with ID {user_id} not found")
+    else:
+        error_data = response.json()
+        raise Exception(f"Failed to update user: {error_data['error']['message']}")
+
+# Usage
+try:
+    api_key = 'YOUR_API_KEY'
+    user_id = 'user123'
+    
+    updated_user = update_user(
+        api_key, 
+        user_id,
+        name='Jane Wilson',
+        role='admin'
+    )
+    
+    print('User updated:')
+    print(f"Name: {updated_user['name']}")
+    print(f"Email: {updated_user['email']}")
+    print(f"Role: {updated_user['role']}")
+except Exception as e:
+    print(e)
+```
+
+## 5. Deleting a User
+
+Finally, let's learn how to delete a user.
+
+### Request
+
+Use the `DELETE /users/{userId}` endpoint:
+
+```http
+DELETE /users/user123
+Authorization: Bearer YOUR_API_KEY
+```
+
+### Response
+
+A successful deletion returns a `204 No Content` status with no response body.
+
+### Code Example
+
+#### JavaScript
+
+```javascript
 async function deleteUser(userId) {
-  return apiRequest(`/users/${userId}`, 'DELETE');
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/users/${userId}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`
+    }
+  });
+  
+  if (response.status === 204) {
+    return true; // Successfully deleted
+  }
+  
+  if (response.status === 404) {
+    throw new Error(`User with ID ${userId} not found`);
+  }
+  
+  const errorData = await response.json();
+  throw new Error(`Failed to delete user: ${errorData.error.message}`);
 }
 
-// Example usage
-async function userManagementExample() {
-  try {
-    // Create a user
-    console.log('Creating a user...');
-    const newUser = await createUser({
-      firstName: "Jane",
-      lastName: "Smith",
-      contactEmail: "jane.smith@example.com"
+// Usage
+try {
+  const userId = 'user123';
+  
+  // Confirm before deleting
+  const confirmDelete = confirm(`Are you sure you want to delete the user with ID ${userId}?`);
+  
+  if (confirmDelete) {
+    await deleteUser(userId);
+    console.log(`User ${userId} has been deleted`);
+  } else {
+    console.log('Deletion cancelled');
+  }
+} catch (error) {
+  console.error(error);
+}
+```
+
+#### Python
+
+```python
+import requests
+
+def delete_user(api_key, user_id):
+    url = f'https://api.taskmanagement.example.com/v1/users/{user_id}'
+    headers = {
+        'Authorization': f'Bearer {api_key}'
+    }
+    
+    response = requests.delete(url, headers=headers)
+    
+    if response.status_code == 204:
+        return True  # Successfully deleted
+    elif response.status_code == 404:
+        raise Exception(f"User with ID {user_id} not found")
+    else:
+        error_data = response.json()
+        raise Exception(f"Failed to delete user: {error_data['error']['message']}")
+
+# Usage
+try:
+    api_key = 'YOUR_API_KEY'
+    user_id = 'user123'
+    
+    # Confirm before deleting
+    confirm = input(f"Are you sure you want to delete the user with ID {user_id}? (yes/no): ")
+    
+    if confirm.lower() == 'yes':
+        success = delete_user(api_key, user_id)
+        if success:
+            print(f"User {user_id} has been deleted")
+    else:
+        print('Deletion cancelled')
+except Exception as e:
+    print(e)
+```
+
+## 6. Putting It All Together
+
+Here's a complete example of a user management workflow in JavaScript:
+
+```javascript
+// User Management Module
+const userManagement = {
+  API_KEY: 'YOUR_API_KEY',
+  BASE_URL: 'https://api.taskmanagement.example.com/v1',
+  
+  async createUser(name, email, role = 'member') {
+    const response = await fetch(`${this.BASE_URL}/users`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${this.API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email, role })
     });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to create user: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  },
+  
+  async listUsers(options = {}) {
+    const params = new URLSearchParams();
+    
+    if (options.limit) params.append('limit', options.limit);
+    if (options.offset) params.append('offset', options.offset);
+    if (options.sort) params.append('sort', options.sort);
+    if (options.name) params.append('name', options.name);
+    if (options.role) params.append('role', options.role);
+    
+    const response = await fetch(`${this.BASE_URL}/users?${params}`, {
+      headers: {
+        'Authorization': `Bearer ${this.API_KEY}`
+      }
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to list users: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  },
+  
+  async getUserById(userId) {
+    const response = await fetch(`${this.BASE_URL}/users/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${this.API_KEY}`
+      }
+    });
+    
+    if (response.status === 404) {
+      return null;
+    }
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to get user: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  },
+  
+  async updateUser(userId, updates) {
+    const response = await fetch(`${this.BASE_URL}/users/${userId}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${this.API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updates)
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to update user: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  },
+  
+  async deleteUser(userId) {
+    const response = await fetch(`${this.BASE_URL}/users/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${this.API_KEY}`
+      }
+    });
+    
+    if (response.status === 204) {
+      return true;
+    }
+    
+    const errorData = await response.json();
+    throw new Error(`Failed to delete user: ${errorData.error.message}`);
+  }
+};
+
+// Example workflow
+async function userManagementWorkflow() {
+  try {
+    // 1. Create a new user
+    console.log('Creating a new user...');
+    const newUser = await userManagement.createUser(
+      'Alice Johnson',
+      'alice.johnson@example.com',
+      'member'
+    );
     console.log('User created:', newUser);
     
-    // Get all users
-    console.log('\nGetting all users...');
-    const users = await getAllUsers();
-    console.log('All users:', users);
-    
-    // Get user by ID
-    console.log(`\nGetting user ${newUser.userId}...`);
-    const user = await getUserById(newUser.userId);
-    console.log('User details:', user);
-    
-    // Update user
-    console.log(`\nUpdating user ${newUser.userId}...`);
-    const updatedUser = await updateUser(newUser.userId, {
-      firstName: "Janet"
+    // 2. List users
+    console.log('\nListing all users...');
+    const userList = await userManagement.listUsers({
+      limit: 10,
+      sort: 'name'
     });
-    console.log('Updated user:', updatedUser);
+    console.log(`Found ${userList.pagination.total} users:`);
+    userList.data.forEach(user => {
+      console.log(`- ${user.name} (${user.role})`);
+    });
     
-    // Delete user
-    console.log(`\nDeleting user ${newUser.userId}...`);
-    await deleteUser(newUser.userId);
-    console.log('User deleted successfully');
+    // 3. Update the user
+    console.log('\nUpdating user...');
+    const updatedUser = await userManagement.updateUser(
+      newUser.id,
+      { name: 'Alice Smith' }
+    );
+    console.log('User updated:', updatedUser);
+    
+    // 4. Get the updated user
+    console.log('\nRetrieving updated user...');
+    const retrievedUser = await userManagement.getUserById(newUser.id);
+    console.log('Retrieved user:', retrievedUser);
+    
+    // 5. Delete the user
+    console.log('\nDeleting user...');
+    await userManagement.deleteUser(newUser.id);
+    console.log('User deleted');
+    
+    // 6. Verify deletion
+    console.log('\nVerifying deletion...');
+    const deletedUser = await userManagement.getUserById(newUser.id);
+    if (deletedUser === null) {
+      console.log('User successfully deleted');
+    } else {
+      console.log('User was not deleted');
+    }
     
   } catch (error) {
-    console.error('Error:', error.message);
+    console.error('Workflow failed:', error);
   }
 }
 
-// Run the example
-userManagementExample();
+// Run the workflow
+userManagementWorkflow();
 ```
 
-## Next steps
+## Common Errors and Troubleshooting
 
-Now that you understand how to manage users, you can:
+Here are some common errors you might encounter when working with users:
 
-1. Create a user interface for user management
-2. Implement user authentication in your application
-3. Learn how to [create and manage tasks](task-management-workflow.html) for users
-4. Explore more advanced topics like [pagination](../core-concepts/pagination.html) and [sorting](../core-concepts/sorting.html)
+### Email Already In Use
 
-## Related resources
+If you try to create a user with an email that already exists:
 
-- [User resource](../resources/user-resource.html) - Detailed information about the user resource
-- [API reference](../api-reference/get-all-users.html) - Complete API reference for user endpoints
-- [Error handling](../core-concepts/error-handling.html) - In-depth guide to API error handling
+```json
+{
+  "error": {
+    "code": "resource_conflict",
+    "message": "Email address is already in use"
+  }
+}
+```
+
+**Solution**: Check if the user already exists before creating, or handle this error by suggesting a different email address.
+
+### Permission Denied
+
+If you try to perform an operation without sufficient permissions:
+
+```json
+{
+  "error": {
+    "code": "permission_denied",
+    "message": "You don't have permission to perform this action"
+  }
+}
+```
+
+**Solution**: Use an API key with appropriate permissions, or request elevated privileges.
+
+### User Not Found
+
+If you try to retrieve, update, or delete a non-existent user:
+
+```json
+{
+  "error": {
+    "code": "resource_not_found",
+    "message": "User with ID 'user123' not found"
+  }
+}
+```
+
+**Solution**: Verify the user ID is correct, and handle this error gracefully in your application.
+
+## Best Practices
+
+1. **Validate Input**: Validate user data before sending API requests to reduce errors.
+
+2. **Handle Errors Gracefully**: Implement proper error handling for all API requests.
+
+3. **Confirm Destructive Actions**: Always confirm with the user before performing destructive actions like deletion.
+
+4. **Pagination**: Use pagination when listing users to improve performance and user experience.
+
+5. **Role-Based Access Control**: Implement appropriate role checks in your application based on user roles.
+
+6. **Email Validation**: Validate email formats client-side before creating or updating users.
+
+7. **Consistent Error Handling**: Develop a consistent approach to handling and displaying API errors in your application.
+
+## Next Steps
+
+Now that you understand the basics of user management, you can:
+
+1. Explore how to [assign tasks to users](/tutorials/task-management-workflow.md)
+2. Learn about [task status transitions](/core-concepts/task-status-lifecycle.md)
+3. Implement more advanced [user filtering and sorting](/api-reference/get-all-users.md)
+4. Explore [security best practices](/advanced/security-best-practices.md) for your application
+
+## Conclusion
+
+In this tutorial, you've learned how to perform essential user management operations with the Task Management API. You now know how to create, list, retrieve, update, and delete users, which forms the foundation for building user management features in your application.
 
 

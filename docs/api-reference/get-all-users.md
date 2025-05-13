@@ -6,15 +6,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/users"]
 related_pages: ["user-resource", "pagination", "sorting"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 2
+ai-generated-date: "2025-05-13"
+navOrder: "2"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Get all users
-
-The `GET /users` endpoint retrieves a list of all users in the system. This endpoint supports pagination and sorting to help manage large collections of users.
+# Get All Users
 
 ## Endpoint
 
@@ -22,181 +25,172 @@ The `GET /users` endpoint retrieves a list of all users in the system. This endp
 GET /users
 ```
 
-## Authentication
+This endpoint retrieves a paginated list of users. It supports pagination, sorting, and filtering options to help you find specific users or navigate through large user collections.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Request Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+The following query parameters can be used to filter, sort, and paginate the results:
 
-## Request parameters
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `limit` | Integer | 10 | Number of items to return per page (max: 100) |
+| `offset` | Integer | 0 | Number of items to skip before starting to collect the result set |
+| `sort` | String | `createdAt` | Field to sort by, optionally prefixed with `+` (ascending) or `-` (descending) |
+| `email` | String | - | Filter by email (exact match) |
+| `name` | String | - | Filter by name (partial match) |
+| `role` | String | - | Filter by role (multiple roles can be separated by commas) |
 
-The following query parameters are supported:
+## Request Example
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `_page` | integer | No | Page number (zero-indexed). Default: 0 |
-| `_perPage` | integer | No | Number of items per page (1-100). Default: 20 |
-| `_sort` | string | No | Field to sort by. Prefix with `-` for descending order |
-
-### Pagination parameters
-
-- `_page`: Zero-indexed page number to retrieve
-- `_perPage`: Number of users to return per page (maximum 100)
-
-For more information on pagination, see the [Pagination](../core-concepts/pagination.html) document.
-
-### Sorting parameters
-
-- `_sort`: Field name to sort by
-  - Available fields: `userId`, `firstName`, `lastName`, `contactEmail`
-  - Prefix with `-` for descending order (e.g., `-lastName`)
-
-For more information on sorting, see the [Sorting](../core-concepts/sorting.html) document.
-
-## Request examples
-
-### Basic request
+### Basic Request
 
 ```http
-GET /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /users
+Authorization: Bearer YOUR_API_KEY
 ```
 
-### With pagination
+### Request with Pagination and Sorting
 
 ```http
-GET /users?_page=0&_perPage=10 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /users?limit=5&offset=10&sort=-createdAt
+Authorization: Bearer YOUR_API_KEY
 ```
 
-### With sorting
+This request will:
+- Return up to 5 users per page
+- Skip the first 10 users
+- Sort the results by creation date in descending order (newest first)
+
+### Request with Filtering
 
 ```http
-GET /users?_sort=lastName HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /users?role=admin,manager&name=Smith
+Authorization: Bearer YOUR_API_KEY
 ```
 
-### With pagination and sorting
-
-```http
-GET /users?_page=0&_perPage=10&_sort=-lastName HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
+This request will return users:
+- With roles "admin" or "manager"
+- Whose name contains "Smith"
 
 ## Response
 
-### Success response (200 OK)
+### Success Response (200 OK)
 
 ```json
 {
-  "users": [
+  "data": [
     {
-      "userId": 1,
-      "firstName": "Ferdinand",
-      "lastName": "Smith",
-      "contactEmail": "f.smith@example.com"
+      "id": "user123",
+      "name": "John Smith",
+      "email": "john.smith@example.com",
+      "role": "admin",
+      "createdAt": "2025-04-01T10:00:00Z",
+      "updatedAt": "2025-05-10T14:30:00Z"
     },
     {
-      "userId": 2,
-      "firstName": "Jill",
-      "lastName": "Jones",
-      "contactEmail": "j.jones@example.com"
+      "id": "user456",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "role": "manager",
+      "createdAt": "2025-04-15T09:30:00Z",
+      "updatedAt": "2025-05-09T11:45:00Z"
     },
-    {
-      "userId": 3,
-      "firstName": "Marty",
-      "lastName": "Martinez",
-      "contactEmail": "m.martinez@example.com"
-    },
-    {
-      "userId": 4,
-      "firstName": "Bill",
-      "lastName": "Bailey",
-      "contactEmail": "b.bailey@example.com"
-    }
-  ]
+    // More users...
+  ],
+  "pagination": {
+    "total": 42,    // Total number of users matching the filter
+    "limit": 5,     // Number of users per page
+    "offset": 10,   // Current offset
+    "hasMore": true // Whether there are more users to fetch
+  }
 }
 ```
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | Invalid query parameter |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 400 | Bad request (e.g., invalid parameters) |
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-## Response fields
+## Authentication
 
-The response contains an array of user objects, each with the following fields:
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `userId` | integer | Unique identifier for the user |
-| `firstName` | string | User's first name |
-| `lastName` | string | User's last name |
-| `contactEmail` | string | User's email address |
-
-For more information about the user resource, see the [User resource](../resources/user-resource.html) document.
-
-## Empty results
-
-If no users match the criteria or if the page is beyond available data, the API returns an empty array:
-
-```json
-{
-  "users": []
-}
+```
+Authorization: Bearer YOUR_API_KEY
 ```
 
-## Code examples
+The authenticated user must have appropriate permissions to view users based on their role:
+- `admin` users can see all users
+- `manager` users can see all users except admins
+- `member` users can only see their own user information
 
-### cURL
+## Important Considerations
 
-```bash
-curl -X GET \
-  'http://localhost:3000/users?_page=0&_perPage=10&_sort=lastName' \
-  -H 'Authorization: Bearer YOUR_TOKEN'
-```
+- The user list is paginated. By default, only 10 users are returned per request.
+- For large user collections, implement pagination to navigate through all users efficiently.
+- Email addresses are unique across all users. If you're searching by email, use exact matches.
+- Name searches are partial and case-insensitive (e.g., "smith" will match "John Smith").
+- Multiple roles can be specified as a comma-separated list (e.g., `role=admin,manager`).
+
+## Best Practices
+
+- Use pagination to avoid loading too many users at once, especially for large organizations.
+- Be specific with filtering to reduce the number of results and improve performance.
+- Consider caching user data that doesn't change frequently to reduce API calls.
+- When listing all users, sort by a relevant field (e.g., name for alphabetical listing, createdAt for newest users).
+- Use the user IDs returned by this endpoint when creating tasks or specifying assignees.
+
+## Code Examples
 
 ### JavaScript
 
 ```javascript
-async function getAllUsers(page = 0, perPage = 20, sort = null) {
-  const url = new URL('http://localhost:3000/users');
+async function getAllUsers(options = {}) {
+  // Default parameters
+  const queryParams = {
+    limit: options.limit || 10,
+    offset: options.offset || 0,
+    sort: options.sort || '-createdAt',
+    ...options.filters
+  };
   
-  url.searchParams.append('_page', page);
-  url.searchParams.append('_perPage', perPage);
+  // Build query string
+  const queryString = Object.entries(queryParams)
+    .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+    .join('&');
   
-  if (sort) {
-    url.searchParams.append('_sort', sort);
-  }
-  
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
+  try {
+    const response = await fetch(`https://api.taskmanagement.example.com/v1/users?${queryString}`, {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Error fetching users: ${errorData.error.message}`);
     }
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Failed to fetch users:', error);
+    throw error;
   }
-  
-  return await response.json();
 }
+
+// Example usage
+const adminUsers = await getAllUsers({
+  filters: { role: 'admin' },
+  limit: 20
+});
+
+console.log(`Found ${adminUsers.pagination.total} admin users`);
+adminUsers.data.forEach(user => console.log(`${user.name} (${user.email})`));
 ```
 
 ### Python
@@ -204,43 +198,82 @@ async function getAllUsers(page = 0, perPage = 20, sort = null) {
 ```python
 import requests
 
-def get_all_users(page=0, per_page=20, sort=None):
-    url = 'http://localhost:3000/users'
+def get_all_users(api_key, limit=10, offset=0, sort='-createdAt', **filters):
+    """
+    Retrieve a list of users with optional filtering, sorting, and pagination.
     
+    Args:
+        api_key (str): API key for authentication
+        limit (int): Number of users to return per page
+        offset (int): Number of users to skip
+        sort (str): Field to sort by (prefix with - for descending)
+        **filters: Additional filters (role, name, email)
+    
+    Returns:
+        dict: Response containing users and pagination info
+    """
     params = {
-        '_page': page,
-        '_perPage': per_page
+        'limit': limit,
+        'offset': offset,
+        'sort': sort,
+        **filters
     }
     
-    if sort:
-        params['_sort'] = sort
-    
-    headers = {
-        'Authorization': 'Bearer YOUR_TOKEN',
-        'Content-Type': 'application/json'
-    }
-    
-    response = requests.get(url, params=params, headers=headers)
+    response = requests.get(
+        'https://api.taskmanagement.example.com/v1/users',
+        params=params,
+        headers={
+            'Authorization': f'Bearer {api_key}'
+        }
+    )
     
     if response.status_code != 200:
-        error = response.json()
-        raise Exception(error['message'])
+        error_data = response.json()
+        raise Exception(f"Error fetching users: {error_data['error']['message']}")
     
     return response.json()
+
+# Example usage
+try:
+    # Get managers with "Johnson" in their name
+    managers = get_all_users(
+        api_key='YOUR_API_KEY',
+        role='manager',
+        name='Johnson',
+        limit=5
+    )
+    
+    print(f"Found {managers['pagination']['total']} managers matching the criteria")
+    
+    for user in managers['data']:
+        print(f"{user['name']} ({user['email']}) - {user['role']}")
+        
+except Exception as e:
+    print(f"Failed to retrieve users: {e}")
 ```
 
-## Related resources
+### cURL
 
-- [User resource](../resources/user-resource.html) - Detailed information about the user resource
-- [Create a user](create-user.html) - Create a new user
-- [Get user by ID](get-user-by-id.html) - Retrieve a specific user
-- [Update a user](update-user.html) - Update an existing user
-- [Delete a user](delete-user.html) - Remove a user
+```bash
+# Basic request to get all users (first page)
+curl -X GET "https://api.taskmanagement.example.com/v1/users" \
+  -H "Authorization: Bearer YOUR_API_KEY"
 
-## See also
+# Request with pagination, sorting, and filtering
+curl -X GET "https://api.taskmanagement.example.com/v1/users?limit=5&offset=10&sort=-createdAt&role=admin,manager&name=Smith" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
 
-- [Pagination](../core-concepts/pagination.html) - Detailed information about pagination
-- [Sorting](../core-concepts/sorting.html) - Detailed information about sorting
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
+## Related Resources
+
+- [User Resource](/resources/user-resource.md) - Detailed information about the User resource
+- [Create a User](/api-reference/create-user.md) - Create a new user
+- [Get User by ID](/api-reference/get-user-by-id.md) - Retrieve a specific user by ID
+
+## See Also
+
+- [Pagination](/core-concepts/pagination.md) - How to navigate through large collections of resources
+- [Sorting](/core-concepts/sorting.md) - How to sort API results using sort parameters
+- [Authentication](/getting-started/authentication.md) - How to authenticate your API requests
 
 

@@ -4,55 +4,58 @@ description: "A guide to implementing a complete task management workflow using 
 tags: ["tutorial", "tasks", "workflow"]
 categories: ["tutorials"]
 importance: 6
+parent: "tutorials"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 2
+ai-generated-date: "2025-05-13"
+navOrder: "2"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Task management workflow
+# Task Management Workflow
 
-This tutorial guides you through implementing a complete task management workflow using the Task Management API. You'll learn how to create, track, update, and complete tasks as part of a cohesive workflow.
+This tutorial guides you through implementing a complete task management workflow using the Task Management API. You'll learn how to create tasks, assign them to users, update their status through the full lifecycle, and track their completion.
 
 ## Overview
 
-A typical task management workflow includes these stages:
+A typical task management workflow involves these stages:
 
-1. Creating a new task
-2. Viewing and tracking tasks
-3. Starting work on a task
-4. Handling obstacles
-5. Completing or cancelling tasks
+1. **Task Creation**: Create a new task with title, description, and priority
+2. **Task Assignment**: Assign the task to a user
+3. **Task Progress Tracking**: Update the task's status as work progresses
+4. **Task Completion**: Mark the task as done when completed
+5. **Task Reporting**: Generate insights on task completion and performance
 
-We'll implement each stage using the appropriate API endpoints.
+This tutorial will walk you through each stage with practical code examples.
 
 ## Prerequisites
 
 Before you begin, make sure you have:
 
-- An API client (like cURL, Postman, or your own code)
-- A valid authentication token for the API
-- At least one user created in the system (see [Getting started with users](getting-started-with-users.html))
-- Understanding of the [task status lifecycle](../core-concepts/task-status-lifecycle.html)
+- An API key for the Task Management API
+- Appropriate permissions to work with tasks
+- A basic understanding of the [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md)
 
-## Stage 1: Creating a new task
+## 1. Task Creation
 
-The first step in any task workflow is creating the task. We'll create a task with the initial status `NOT_STARTED`.
+First, let's create a new task using the `POST /tasks` endpoint.
 
 ### Request
 
 ```http
-POST /tasks HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+POST /tasks
 Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
 
 {
-  "userId": 1,
-  "taskTitle": "Prepare quarterly report",
-  "taskDescription": "Gather data, create charts, write executive summary",
-  "dueDate": "2025-06-30T17:00:00-05:00",
-  "warningOffset": 1440
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application",
+  "priority": "HIGH",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"]
 }
 ```
 
@@ -60,157 +63,66 @@ Content-Type: application/json
 
 ```json
 {
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Prepare quarterly report",
-  "taskDescription": "Gather data, create charts, write executive summary",
-  "taskStatus": "NOT_STARTED",
-  "dueDate": "2025-06-30T17:00:00-05:00",
-  "warningOffset": 1440
+  "id": "task123",
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application",
+  "status": "TODO",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": null,
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"],
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T10:30:00Z"
 }
 ```
 
-The task is created with the default status `NOT_STARTED`. The `warningOffset` of 1440 minutes means you'll receive a reminder 24 hours before the due date.
-
-### Code example
+### Code Example
 
 ```javascript
 async function createTask(taskData) {
-  const response = await fetch('http://localhost:3000/tasks', {
+  const response = await fetch('https://api.taskmanagement.example.com/v1/tasks', {
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
+      'Authorization': `Bearer ${API_KEY}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(taskData)
   });
   
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+    const errorData = await response.json();
+    throw new Error(`Failed to create task: ${errorData.error.message}`);
   }
   
   return await response.json();
 }
 
 // Example usage
-const newTask = {
-  userId: 1,
-  taskTitle: "Prepare quarterly report",
-  taskDescription: "Gather data, create charts, write executive summary",
-  dueDate: "2025-06-30T17:00:00-05:00",
-  warningOffset: 1440
-};
+const newTask = await createTask({
+  title: 'Implement user authentication',
+  description: 'Add token-based authentication to the web application',
+  priority: 'HIGH',
+  dueDate: '2025-06-01T17:00:00Z',
+  tags: ['authentication', 'security']
+});
 
-createTask(newTask)
-  .then(task => console.log('Task created:', task))
-  .catch(error => console.error('Failed to create task:', error));
+console.log(`Task created with ID: ${newTask.id}`);
 ```
 
-## Stage 2: Viewing and tracking tasks
+## 2. Task Assignment
 
-After creating tasks, you'll need to view and track them. Let's retrieve all tasks for a specific status.
+Now that we have created a task, let's assign it to a specific user.
 
 ### Request
 
 ```http
-GET /tasks?taskStatus=NOT_STARTED HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Response
-
-```json
-{
-  "tasks": [
-    {
-      "taskId": 1,
-      "userId": 1,
-      "taskTitle": "Prepare quarterly report",
-      "taskDescription": "Gather data, create charts, write executive summary",
-      "taskStatus": "NOT_STARTED",
-      "dueDate": "2025-06-30T17:00:00-05:00",
-      "warningOffset": 1440
-    },
-    {
-      "taskId": 2,
-      "userId": 1,
-      "taskTitle": "Review marketing materials",
-      "taskDescription": "Check new brochures and website content",
-      "taskStatus": "NOT_STARTED",
-      "dueDate": "2025-06-15T12:00:00-05:00",
-      "warningOffset": 120
-    }
-  ]
-}
-```
-
-You can also retrieve tasks sorted by due date to prioritize your work:
-
-```http
-GET /tasks?_sort=dueDate HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Code example
-
-```javascript
-async function getTasks(status = null, sortBy = null) {
-  let url = 'http://localhost:3000/tasks';
-  const params = [];
-  
-  if (status) {
-    params.push(`taskStatus=${status}`);
-  }
-  
-  if (sortBy) {
-    params.push(`_sort=${sortBy}`);
-  }
-  
-  if (params.length > 0) {
-    url += '?' + params.join('&');
-  }
-  
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN'
-    }
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
-  }
-  
-  const data = await response.json();
-  return data.tasks;
-}
-
-// Example: Get not started tasks sorted by due date
-getTasks('NOT_STARTED', 'dueDate')
-  .then(tasks => {
-    console.log('Tasks to do (sorted by due date):', tasks);
-  })
-  .catch(error => console.error('Failed to get tasks:', error));
-```
-
-## Stage 3: Starting work on a task
-
-When you begin working on a task, update its status to `IN_PROGRESS`.
-
-### Request
-
-```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+PATCH /tasks/task123
 Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
 
 {
-  "taskStatus": "IN_PROGRESS"
+  "assigneeId": "user789"
 }
 ```
 
@@ -218,60 +130,61 @@ Content-Type: application/json
 
 ```json
 {
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Prepare quarterly report",
-  "taskDescription": "Gather data, create charts, write executive summary",
-  "taskStatus": "IN_PROGRESS",
-  "dueDate": "2025-06-30T17:00:00-05:00",
-  "warningOffset": 1440
+  "id": "task123",
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application",
+  "status": "TODO",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"],
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T10:45:00Z"
 }
 ```
 
-The task status is now updated to `IN_PROGRESS`, indicating that work has begun.
-
-### Code example
+### Code Example
 
 ```javascript
-async function updateTaskStatus(taskId, newStatus) {
-  const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+async function assignTask(taskId, userId) {
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
     method: 'PATCH',
     headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
+      'Authorization': `Bearer ${API_KEY}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ taskStatus: newStatus })
+    body: JSON.stringify({
+      assigneeId: userId
+    })
   });
   
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+    const errorData = await response.json();
+    throw new Error(`Failed to assign task: ${errorData.error.message}`);
   }
   
   return await response.json();
 }
 
-// Example: Start working on a task
-updateTaskStatus(1, 'IN_PROGRESS')
-  .then(task => console.log('Task updated:', task))
-  .catch(error => console.error('Failed to update task:', error));
+// Example usage
+const updatedTask = await assignTask('task123', 'user789');
+console.log(`Task assigned to user: ${updatedTask.assigneeId}`);
 ```
 
-## Stage 4: Handling obstacles
+## 3. Starting Work on a Task
 
-If you encounter an obstacle that prevents you from completing the task, update its status to `BLOCKED`.
+When the assigned user begins working on the task, update its status to "IN_PROGRESS".
 
 ### Request
 
 ```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+PATCH /tasks/task123
 Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
 
 {
-  "taskStatus": "BLOCKED",
-  "taskDescription": "Gather data, create charts, write executive summary. BLOCKED: Waiting for financial data from accounting team."
+  "status": "IN_PROGRESS"
 }
 ```
 
@@ -279,418 +192,531 @@ Content-Type: application/json
 
 ```json
 {
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Prepare quarterly report",
-  "taskDescription": "Gather data, create charts, write executive summary. BLOCKED: Waiting for financial data from accounting team.",
-  "taskStatus": "BLOCKED",
-  "dueDate": "2025-06-30T17:00:00-05:00",
-  "warningOffset": 1440
+  "id": "task123",
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application",
+  "status": "IN_PROGRESS",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"],
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T11:00:00Z"
 }
 ```
 
-Notice how we also updated the task description to include the reason for the blocked status. This is a good practice to provide context about the blocker.
-
-### Code example
+### Code Example
 
 ```javascript
-async function blockTask(taskId, reason) {
-  // Get the current task first
-  const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN'
-    }
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
-  }
-  
-  const task = await response.json();
-  
-  // Update the description to include the reason for blocking
-  const updatedDescription = task.taskDescription + ` BLOCKED: ${reason}`;
-  
-  // Update the task
-  const updateResponse = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+async function updateTaskStatus(taskId, status) {
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
     method: 'PATCH',
     headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
+      'Authorization': `Bearer ${API_KEY}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      taskStatus: 'BLOCKED',
-      taskDescription: updatedDescription
+      status: status
+    })
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Failed to update task status: ${errorData.error.message}`);
+  }
+  
+  return await response.json();
+}
+
+// Example usage
+const inProgressTask = await updateTaskStatus('task123', 'IN_PROGRESS');
+console.log(`Task status updated to: ${inProgressTask.status}`);
+```
+
+## 4. Submitting a Task for Review
+
+When the work is complete, the task can be moved to the "REVIEW" status to indicate it's ready for review.
+
+### Request
+
+```http
+PATCH /tasks/task123
+Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
+
+{
+  "status": "REVIEW"
+}
+```
+
+### Response
+
+```json
+{
+  "id": "task123",
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application",
+  "status": "REVIEW",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"],
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T14:30:00Z"
+}
+```
+
+### Code Example
+
+```javascript
+// Using the updateTaskStatus function from the previous step
+const reviewTask = await updateTaskStatus('task123', 'REVIEW');
+console.log(`Task has been submitted for review`);
+```
+
+## 5. Completing a Task
+
+Once the review is successful, mark the task as "DONE".
+
+### Request
+
+```http
+PATCH /tasks/task123
+Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
+
+{
+  "status": "DONE"
+}
+```
+
+### Response
+
+```json
+{
+  "id": "task123",
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application",
+  "status": "DONE",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"],
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T15:00:00Z"
+}
+```
+
+### Code Example
+
+```javascript
+// Using the updateTaskStatus function from the previous steps
+const completedTask = await updateTaskStatus('task123', 'DONE');
+console.log(`Task has been completed`);
+```
+
+## 6. Handling Rejected Tasks
+
+If a task fails review, it can be moved back to "IN_PROGRESS" with feedback.
+
+### Request
+
+```http
+PATCH /tasks/task123
+Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
+
+{
+  "status": "IN_PROGRESS",
+  "description": "Add token-based authentication to the web application. Feedback: Please add unit tests and improve error handling."
+}
+```
+
+### Response
+
+```json
+{
+  "id": "task123",
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application. Feedback: Please add unit tests and improve error handling.",
+  "status": "IN_PROGRESS",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"],
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T14:45:00Z"
+}
+```
+
+### Code Example
+
+```javascript
+async function rejectTask(taskId, feedback) {
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      status: 'IN_PROGRESS',
+      description: `${feedback.originalDescription}\nFeedback: ${feedback.comments}`
+    })
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Failed to reject task: ${errorData.error.message}`);
+  }
+  
+  return await response.json();
+}
+
+// Example usage
+const rejectedTask = await rejectTask('task123', {
+  originalDescription: 'Add token-based authentication to the web application',
+  comments: 'Please add unit tests and improve error handling'
+});
+
+console.log(`Task rejected and moved back to ${rejectedTask.status}`);
+```
+
+## 7. Canceling a Task
+
+If a task is no longer needed, it can be canceled.
+
+### Request
+
+```http
+PATCH /tasks/task123
+Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
+
+{
+  "status": "CANCELED",
+  "description": "Add token-based authentication to the web application. Canceled: Authentication will be handled by a third-party service instead."
+}
+```
+
+### Response
+
+```json
+{
+  "id": "task123",
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application. Canceled: Authentication will be handled by a third-party service instead.",
+  "status": "CANCELED",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"],
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T16:00:00Z"
+}
+```
+
+### Code Example
+
+```javascript
+async function cancelTask(taskId, reason) {
+  // First, get the current task details
+  const getResponse = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`
+    }
+  });
+  
+  if (!getResponse.ok) {
+    const errorData = await getResponse.json();
+    throw new Error(`Failed to get task: ${errorData.error.message}`);
+  }
+  
+  const task = await getResponse.json();
+  
+  // Update the task with canceled status and reason
+  const updateResponse = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      status: 'CANCELED',
+      description: `${task.description}\nCanceled: ${reason}`
     })
   });
   
   if (!updateResponse.ok) {
-    const error = await updateResponse.json();
-    throw new Error(error.message);
+    const errorData = await updateResponse.json();
+    throw new Error(`Failed to cancel task: ${errorData.error.message}`);
   }
   
   return await updateResponse.json();
 }
 
-// Example: Block a task
-blockTask(1, 'Waiting for financial data from accounting team.')
-  .then(task => console.log('Task blocked:', task))
-  .catch(error => console.error('Failed to block task:', error));
+// Example usage
+const canceledTask = await cancelTask('task123', 'Authentication will be handled by a third-party service instead');
+console.log(`Task has been canceled`);
 ```
 
-Once the blocker is resolved, you can resume work by updating the status back to `IN_PROGRESS`:
+## 8. Task Reporting
 
-```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-
-{
-  "taskStatus": "IN_PROGRESS",
-  "taskDescription": "Gather data, create charts, write executive summary. Received financial data from accounting team."
-}
-```
-
-## Stage 5: Completing or cancelling tasks
-
-When a task is finished, update its status to `COMPLETED`.
+Let's build a simple report of task statuses for a team.
 
 ### Request
 
 ```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-
-{
-  "taskStatus": "COMPLETED"
-}
+GET /tasks?assigneeId=user789&sort=-updatedAt&limit=100
+Authorization: Bearer YOUR_API_KEY
 ```
 
-### Response
-
-```json
-{
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Prepare quarterly report",
-  "taskDescription": "Gather data, create charts, write executive summary. Received financial data from accounting team.",
-  "taskStatus": "COMPLETED",
-  "dueDate": "2025-06-30T17:00:00-05:00",
-  "warningOffset": 1440
-}
-```
-
-Alternatively, if a task is no longer relevant or needed, you can cancel it:
-
-```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-
-{
-  "taskStatus": "CANCELLED",
-  "taskDescription": "Gather data, create charts, write executive summary. CANCELLED: Report format changed, using new template instead."
-}
-```
-
-### Code example
+### Code Example
 
 ```javascript
-async function completeTask(taskId) {
-  const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-    method: 'PATCH',
+async function generateTaskReport(assigneeId) {
+  // Get all tasks for this assignee
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks?assigneeId=${assigneeId}&limit=100`, {
     headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ taskStatus: 'COMPLETED' })
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
-  }
-  
-  return await response.json();
-}
-
-async function cancelTask(taskId, reason) {
-  // Get the current task first
-  const task = await getTaskById(taskId);
-  
-  // Update the description to include the cancellation reason
-  const updatedDescription = task.taskDescription + ` CANCELLED: ${reason}`;
-  
-  const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-    method: 'PATCH',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      taskStatus: 'CANCELLED',
-      taskDescription: updatedDescription
-    })
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
-  }
-  
-  return await response.json();
-}
-```
-
-## Deferring tasks
-
-If a task needs to be postponed, update its status to `DEFERRED` and possibly adjust the due date:
-
-```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-
-{
-  "taskStatus": "DEFERRED",
-  "dueDate": "2025-07-15T17:00:00-05:00",
-  "taskDescription": "Gather data, create charts, write executive summary. DEFERRED: Pushed to next month due to urgent project."
-}
-```
-
-## Complete workflow example
-
-Here's a complete example that demonstrates the entire task lifecycle:
-
-```javascript
-const API_BASE_URL = 'http://localhost:3000';
-const TOKEN = 'YOUR_TOKEN';
-
-// Helper function for API requests
-async function apiRequest(endpoint, method, data = null) {
-  const options = {
-    method: method,
-    headers: {
-      'Authorization': `Bearer ${TOKEN}`,
-      'Content-Type': 'application/json'
+      'Authorization': `Bearer ${API_KEY}`
     }
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Failed to generate report: ${errorData.error.message}`);
+  }
+  
+  const result = await response.json();
+  const tasks = result.data;
+  
+  // Count tasks by status
+  const statusCounts = {
+    'TODO': 0,
+    'IN_PROGRESS': 0,
+    'REVIEW': 0,
+    'DONE': 0,
+    'CANCELED': 0
   };
   
-  if (data && (method === 'POST' || method === 'PATCH')) {
-    options.body = JSON.stringify(data);
-  }
-  
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(`API Error: ${error.message}`);
-  }
-  
-  return await response.json();
-}
-
-// Task management functions
-async function createTask(taskData) {
-  return apiRequest('/tasks', 'POST', taskData);
-}
-
-async function getTaskById(taskId) {
-  return apiRequest(`/tasks/${taskId}`, 'GET');
-}
-
-async function getTasks(status = null, sortBy = null) {
-  let endpoint = '/tasks';
-  const params = [];
-  
-  if (status) {
-    params.push(`taskStatus=${status}`);
-  }
-  
-  if (sortBy) {
-    params.push(`_sort=${sortBy}`);
-  }
-  
-  if (params.length > 0) {
-    endpoint += '?' + params.join('&');
-  }
-  
-  const result = await apiRequest(endpoint, 'GET');
-  return result.tasks;
-}
-
-async function updateTask(taskId, taskData) {
-  return apiRequest(`/tasks/${taskId}`, 'PATCH', taskData);
-}
-
-// Workflow functions
-async function startTask(taskId) {
-  return updateTask(taskId, { taskStatus: 'IN_PROGRESS' });
-}
-
-async function blockTask(taskId, reason) {
-  const task = await getTaskById(taskId);
-  const updatedDescription = task.taskDescription + ` BLOCKED: ${reason}`;
-  
-  return updateTask(taskId, {
-    taskStatus: 'BLOCKED',
-    taskDescription: updatedDescription
+  tasks.forEach(task => {
+    statusCounts[task.status]++;
   });
-}
-
-async function resumeTask(taskId) {
-  return updateTask(taskId, { taskStatus: 'IN_PROGRESS' });
-}
-
-async function completeTask(taskId) {
-  return updateTask(taskId, { taskStatus: 'COMPLETED' });
-}
-
-async function cancelTask(taskId, reason) {
-  const task = await getTaskById(taskId);
-  const updatedDescription = task.taskDescription + ` CANCELLED: ${reason}`;
   
-  return updateTask(taskId, {
-    taskStatus: 'CANCELLED',
-    taskDescription: updatedDescription
-  });
-}
-
-async function deferTask(taskId, newDueDate, reason) {
-  const task = await getTaskById(taskId);
-  const updatedDescription = task.taskDescription + ` DEFERRED: ${reason}`;
+  // Count tasks by priority
+  const priorityCounts = {
+    'LOW': 0,
+    'MEDIUM': 0,
+    'HIGH': 0,
+    'URGENT': 0
+  };
   
-  return updateTask(taskId, {
-    taskStatus: 'DEFERRED',
-    dueDate: newDueDate,
-    taskDescription: updatedDescription
+  tasks.forEach(task => {
+    priorityCounts[task.priority]++;
   });
+  
+  // Check for overdue tasks
+  const now = new Date();
+  const overdueTasks = tasks.filter(task => {
+    const dueDate = new Date(task.dueDate);
+    return dueDate < now && task.status !== 'DONE' && task.status !== 'CANCELED';
+  });
+  
+  // Generate the report
+  const report = {
+    totalTasks: tasks.length,
+    byStatus: statusCounts,
+    byPriority: priorityCounts,
+    overdueTasks: overdueTasks.map(task => ({
+      id: task.id,
+      title: task.title,
+      dueDate: task.dueDate,
+      status: task.status
+    })),
+    completionRate: tasks.length > 0 ? (statusCounts.DONE / tasks.length * 100).toFixed(2) + '%' : '0%'
+  };
+  
+  return report;
 }
 
 // Example usage
-async function taskWorkflowExample() {
+const report = await generateTaskReport('user789');
+console.log('Task Report:', report);
+```
+
+## 9. Implementing a Complete Workflow
+
+Now, let's put everything together to implement a complete task management workflow:
+
+```javascript
+async function completeTaskWorkflow() {
   try {
-    // Step 1: Create a new task
-    console.log('\nCreating a new task...');
-    const task = await createTask({
-      userId: 1,
-      taskTitle: "Write API documentation",
-      taskDescription: "Create comprehensive documentation for the Task Management API",
-      dueDate: "2025-06-01T17:00:00-05:00",
-      warningOffset: 1440
+    // 1. Create a new task
+    console.log('Creating a new task...');
+    const newTask = await createTask({
+      title: 'Implement user authentication',
+      description: 'Add token-based authentication to the web application',
+      priority: 'HIGH',
+      dueDate: '2025-06-01T17:00:00Z',
+      tags: ['authentication', 'security']
     });
-    console.log('New task created:', task);
     
-    // Step 2: Start working on the task
+    console.log(`Task created with ID: ${newTask.id}`);
+    
+    // 2. Assign the task to a user
+    console.log('\nAssigning the task...');
+    const assignedTask = await assignTask(newTask.id, 'user789');
+    console.log(`Task assigned to user: ${assignedTask.assigneeId}`);
+    
+    // 3. Start working on the task
     console.log('\nStarting work on the task...');
-    const inProgressTask = await startTask(task.taskId);
-    console.log('Task updated to IN_PROGRESS:', inProgressTask);
+    const inProgressTask = await updateTaskStatus(newTask.id, 'IN_PROGRESS');
+    console.log(`Task status updated to: ${inProgressTask.status}`);
     
-    // Step 3: Block the task due to an obstacle
-    console.log('\nBlocking the task...');
-    const blockedTask = await blockTask(task.taskId, "Waiting for API spec review");
-    console.log('Task blocked:', blockedTask);
+    // 4. Submit the task for review
+    console.log('\nSubmitting the task for review...');
+    const reviewTask = await updateTaskStatus(newTask.id, 'REVIEW');
+    console.log(`Task submitted for review`);
     
-    // Step 4: Resume work after obstacle is resolved
-    console.log('\nResuming work on the task...');
-    const resumedTask = await resumeTask(task.taskId);
-    console.log('Task resumed:', resumedTask);
+    // 5. Simulate a review process
+    console.log('\nSimulating review process...');
+    const reviewPassed = Math.random() > 0.3; // 70% chance of passing review
     
-    // Step 5: Complete the task
-    console.log('\nCompleting the task...');
-    const completedTask = await completeTask(task.taskId);
-    console.log('Task completed:', completedTask);
+    if (reviewPassed) {
+      // 6a. Mark the task as done
+      console.log('Review passed. Completing the task...');
+      const completedTask = await updateTaskStatus(newTask.id, 'DONE');
+      console.log(`Task completed!`);
+    } else {
+      // 6b. Reject the task with feedback
+      console.log('Review failed. Sending back with feedback...');
+      const rejectedTask = await rejectTask(newTask.id, {
+        originalDescription: newTask.description,
+        comments: 'Please add unit tests and improve error handling'
+      });
+      console.log(`Task rejected and moved back to ${rejectedTask.status}`);
+      
+      // 7. Make improvements and resubmit
+      console.log('\nMaking improvements and resubmitting...');
+      await updateTaskStatus(newTask.id, 'REVIEW');
+      console.log('Task resubmitted for review');
+      
+      // 8. Pass the review this time
+      console.log('\nReview passed on second attempt. Completing the task...');
+      const completedTask = await updateTaskStatus(newTask.id, 'DONE');
+      console.log(`Task completed!`);
+    }
     
-    // Alternative flow: Create a task that will be deferred
-    console.log('\nCreating another task...');
-    const anotherTask = await createTask({
-      userId: 1,
-      taskTitle: "Update user interface",
-      taskDescription: "Redesign the task management dashboard",
-      dueDate: "2025-05-15T17:00:00-05:00",
-      warningOffset: 1440
-    });
-    
-    // Defer the task
-    console.log('\nDeferring the task...');
-    const deferredTask = await deferTask(
-      anotherTask.taskId,
-      "2025-06-15T17:00:00-05:00",
-      "Priorities changed, pushing to next month"
-    );
-    console.log('Task deferred:', deferredTask);
-    
-    // Alternative flow: Create a task that will be cancelled
-    console.log('\nCreating a task that will be cancelled...');
-    const taskToCancel = await createTask({
-      userId: 1,
-      taskTitle: "Prepare old report format",
-      taskDescription: "Use the previous quarter's report format",
-      dueDate: "2025-05-20T17:00:00-05:00",
-      warningOffset: 1440
-    });
-    
-    // Cancel the task
-    console.log('\nCancelling the task...');
-    const cancelledTask = await cancelTask(
-      taskToCancel.taskId,
-      "Format requirement changed, no longer needed"
-    );
-    console.log('Task cancelled:', cancelledTask);
-    
-    // Get all completed tasks
-    console.log('\nGetting all completed tasks...');
-    const completedTasks = await getTasks('COMPLETED');
-    console.log('Completed tasks:', completedTasks);
+    // 9. Generate a report
+    console.log('\nGenerating task report for user...');
+    const report = await generateTaskReport('user789');
+    console.log('Task Report:', report);
     
   } catch (error) {
-    console.error('Error:', error.message);
+    console.error('Workflow failed:', error);
   }
 }
 
-// Run the example
-taskWorkflowExample();
+// Run the complete workflow
+completeTaskWorkflow();
 ```
 
-## Building user interfaces for task management
+## Best Practices for Task Management
 
-When building a user interface for task management, consider these views:
+Here are some best practices to consider when implementing a task management workflow:
 
-1. **Task inbox**: Show all `NOT_STARTED` tasks, sorted by due date
-2. **In progress**: Show all `IN_PROGRESS` tasks
-3. **Blocked**: Show all `BLOCKED` tasks that need attention
-4. **Deferred**: Show all `DEFERRED` tasks for future planning
-5. **Completed**: Show all `COMPLETED` tasks for reference
-6. **Cancelled**: Show all `CANCELLED` tasks (or hide them)
+### 1. Clear Task Descriptions
 
-## Best practices
+Write clear and detailed task descriptions that specify:
+- What needs to be done
+- Any specific requirements or constraints
+- The expected outcome or deliverables
+- Links to relevant resources or documentation
 
-- Use task status transitions to track progress accurately
-- Include reasons in task descriptions when blocking, deferring, or cancelling
-- Regularly check for `BLOCKED` tasks to prevent them from being forgotten
-- Set appropriate reminder offsets based on task importance
-- Use sorting by due date to prioritize work
+### 2. Appropriate Priority Levels
 
-## Next steps
+Use priority levels consistently:
+- **LOW**: Tasks that are not time-sensitive
+- **MEDIUM**: Standard tasks (default)
+- **HIGH**: Important tasks that should be prioritized
+- **URGENT**: Critical tasks that require immediate attention
 
-Now that you understand the complete task management workflow, you can:
+### 3. Realistic Due Dates
 
-1. Implement a task management UI in your application
-2. Create dashboards to visualize task status distribution
-3. Learn about [implementing reminders](implementing-reminders.html) based on due dates
-4. Explore [data consistency](../advanced/handling-data-consistency.html) for robust task management
+Set realistic due dates that:
+- Allow sufficient time for completion
+- Account for dependencies on other tasks
+- Consider the assignee's workload
+- Include buffer time for reviews and revisions
 
-## Related resources
+### 4. Regular Status Updates
 
-- [Task resource](../resources/task-resource.html) - Detailed information about the task resource
-- [Task status lifecycle](../core-concepts/task-status-lifecycle.html) - Understanding task statuses
-- [API reference](../api-reference/get-all-tasks.html) - Complete API reference for task endpoints
+Encourage regular status updates by:
+- Updating task status as soon as work begins or changes
+- Adding comments or updates to the description when relevant
+- Notifying stakeholders of significant changes
+
+### 5. Proper Task Transitions
+
+Follow the proper task status lifecycle:
+- Only use valid status transitions
+- Don't skip intermediate statuses
+- Provide feedback when rejecting tasks
+
+### 6. Task Categorization
+
+Use tags effectively to categorize tasks:
+- Create a consistent tagging system
+- Use meaningful, descriptive tags
+- Limit the number of tags per task
+- Create task views filtered by relevant tags
+
+### 7. Actionable Task Titles
+
+Write task titles that are:
+- Action-oriented (start with a verb)
+- Specific and descriptive
+- Concise but informative
+- Unique and easily identifiable
+
+## Common Challenges and Solutions
+
+### Challenge: Tasks Getting Stuck in Review
+
+**Solution**: Implement a notification system that alerts reviewers when tasks are in the REVIEW status, and set a maximum time for review before escalation.
+
+### Challenge: Overdue Tasks Not Being Addressed
+
+**Solution**: Create an "Overdue Tasks" view that prominently displays tasks past their due date, and implement a regular review process for these tasks.
+
+### Challenge: Unclear Task Requirements
+
+**Solution**: Use a standardized template for task descriptions that includes sections for requirements, acceptance criteria, and resources.
+
+### Challenge: Difficulty Tracking Task Progress
+
+**Solution**: Add custom fields or use the description to track percentage complete or milestone achievements throughout the IN_PROGRESS status.
+
+### Challenge: Too Many Tasks in TODO Status
+
+**Solution**: Implement a work-in-progress limit that restricts the number of tasks in TODO status, encouraging prioritization.
+
+## Conclusion
+
+In this tutorial, you've learned how to implement a complete task management workflow using the Task Management API. You now know how to create tasks, assign them to users, track their progress through the status lifecycle, and generate reports on task completion.
+
+By following the best practices outlined in this guide, you can build a robust task management system that helps your team stay organized, focused, and productive.
+
+## Next Steps
+
+- Learn more about [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md)
+- Explore [Implementing Reminders](/tutorials/implementing-reminders.md) for upcoming tasks
+- Discover advanced [Task Filtering](/api-reference/get-all-tasks.md) techniques
+- Check out [Optimizing API Usage](/advanced/optimizing-api-usage.md) for performance tips
 
 

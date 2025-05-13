@@ -6,15 +6,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/users"]
 related_pages: ["user-resource"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 3
+ai-generated-date: "2025-05-13"
+navOrder: "3"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Create a user
-
-The `POST /users` endpoint creates a new user in the system. This endpoint allows you to add a user record that can then be associated with tasks.
+# Create a User
 
 ## Endpoint
 
@@ -22,223 +25,257 @@ The `POST /users` endpoint creates a new user in the system. This endpoint allow
 POST /users
 ```
 
-## Authentication
+This endpoint creates a new user in the system. The new user can be assigned tasks and will have permissions based on their assigned role.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Path Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+None.
 
-## Request body
+## Request Body
 
-The request body must be a JSON object with the following properties:
+The request body should be a JSON object with the following properties:
 
-| Property | Type | Required | Description | Constraints |
-|----------|------|----------|-------------|-------------|
-| `firstName` | string | Yes | User's first name | 1-100 characters |
-| `lastName` | string | Yes | User's last name | 1-100 characters |
-| `contactEmail` | string | Yes | User's email address | Valid email format, unique |
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `name` | String | Yes | Full name of the user |
+| `email` | String | Yes | Email address of the user (must be unique) |
+| `role` | String | No | Role of the user: "admin", "manager", or "member" (default: "member") |
 
-### Example request body
+### Example Request Body
 
 ```json
 {
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "j.doe@example.com"
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "role": "manager"
 }
 ```
 
-## Request example
+## Request Example
 
 ```http
-POST /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+POST /users
 Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
 
 {
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "j.doe@example.com"
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "role": "manager"
 }
 ```
 
 ## Response
 
-### Success response (201 Created)
-
-If the user is created successfully, the API returns a `201 Created` status code and the complete user object, including the system-generated `userId`:
+### Success Response (201 Created)
 
 ```json
 {
-  "userId": 5,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "j.doe@example.com"
+  "id": "user123",
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "role": "manager",
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T10:30:00Z"
 }
 ```
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | One or more fields have invalid values |
-| 400 | `MISSING_REQUIRED_FIELD` | A required field is missing |
-| 400 | `DUPLICATE_EMAIL` | The email address is already in use |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 400 | Bad request (e.g., malformed request body) |
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions to create users) |
+| 409 | Conflict (e.g., email already exists) |
+| 422 | Unprocessable entity (e.g., validation errors) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
-
-## Response fields
-
-The response contains the newly created user object with the following fields:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `userId` | integer | System-generated unique identifier for the user |
-| `firstName` | string | User's first name |
-| `lastName` | string | User's last name |
-| `contactEmail` | string | User's email address |
-
-For more information about the user resource, see the [User resource](../resources/user-resource.html) document.
-
-## Validation rules
-
-The API applies the following validation rules when creating a user:
-
-- `firstName` must be between 1 and 100 characters
-- `lastName` must be between 1 and 100 characters
-- `contactEmail` must be a valid email format
-- `contactEmail` must be unique across all users
-- All required fields must be provided
-
-If validation fails, the API returns a `400 Bad Request` response with details about the validation errors:
+#### Example Error Response
 
 ```json
 {
-  "code": "INVALID_FIELD",
-  "message": "The field `contactEmail` must be a valid email address",
-  "details": [
-    {
-      "field": "contactEmail",
-      "reason": "Invalid format",
-      "location": "body"
+  "error": {
+    "code": "validation_error",
+    "message": "The request contains invalid data",
+    "details": {
+      "email": "Email address is already in use"
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  }
 }
 ```
 
-## Code examples
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-### cURL
+## Authentication
 
-```bash
-curl -X POST \
-  http://localhost:3000/users \
-  -H 'Authorization: Bearer YOUR_TOKEN' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "firstName": "John",
-    "lastName": "Doe",
-    "contactEmail": "j.doe@example.com"
-  }'
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
+
 ```
+Authorization: Bearer YOUR_API_KEY
+```
+
+The authenticated user must have appropriate permissions to create users:
+- `admin` users can create users with any role
+- `manager` users can create users with "member" role only
+- `member` users cannot create new users
+
+## Important Considerations
+
+- **Email Uniqueness**: Each user must have a unique email address. Attempting to create a user with an email that's already in use will result in a `409 Conflict` error.
+
+- **User Roles**: Valid roles are "admin", "manager", and "member". If no role is specified, "member" is assigned by default.
+
+- **Permissions**: The newly created user's permissions will be based on their role:
+  - `admin`: Full access to all API endpoints
+  - `manager`: Can manage users and tasks but with some restrictions
+  - `member`: Limited access, primarily to their own resources
+
+- **Auto-Generated Fields**: The `id`, `createdAt`, and `updatedAt` fields are automatically generated and cannot be specified in the request.
+
+## Best Practices
+
+- Validate the email format client-side before making the API request
+- Use strong, unique passwords for each user (managed outside this API)
+- Assign the least privileged role necessary for the user's needs
+- Store the returned user ID for future operations involving this user
+- Implement proper error handling for duplicate email addresses
+
+## Code Examples
 
 ### JavaScript
 
 ```javascript
-async function createUser(userData) {
-  const response = await fetch('http://localhost:3000/users', {
-    method: 'POST',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(userData)
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+async function createUser(name, email, role = 'member') {
+  try {
+    const response = await fetch('https://api.taskmanagement.example.com/v1/users', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        role
+      })
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to create user: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error creating user:', error);
+    throw error;
   }
-  
-  return await response.json();
 }
 
 // Example usage
-const newUser = {
-  firstName: "John",
-  lastName: "Doe",
-  contactEmail: "j.doe@example.com"
-};
-
-createUser(newUser)
-  .then(user => console.log('User created:', user))
-  .catch(error => console.error('Failed to create user:', error));
+try {
+  const newUser = await createUser(
+    'Jane Smith',
+    'jane.smith@example.com',
+    'manager'
+  );
+  
+  console.log(`User created with ID: ${newUser.id}`);
+} catch (error) {
+  // Handle error
+  if (error.message.includes('already in use')) {
+    console.error('Email address is already registered');
+  } else {
+    console.error('Failed to create user:', error);
+  }
+}
 ```
 
 ### Python
 
 ```python
 import requests
-import json
 
-def create_user(user_data):
-    url = 'http://localhost:3000/users'
+def create_user(api_key, name, email, role='member'):
+    """
+    Create a new user in the system.
     
+    Args:
+        api_key (str): API key for authentication
+        name (str): Full name of the user
+        email (str): Email address of the user
+        role (str, optional): User role (admin, manager, or member). Defaults to 'member'.
+        
+    Returns:
+        dict: The created user object
+        
+    Raises:
+        Exception: If the API request fails
+    """
+    url = 'https://api.taskmanagement.example.com/v1/users'
     headers = {
-        'Authorization': 'Bearer YOUR_TOKEN',
+        'Authorization': f'Bearer {api_key}',
         'Content-Type': 'application/json'
     }
+    data = {
+        'name': name,
+        'email': email,
+        'role': role
+    }
     
-    response = requests.post(url, headers=headers, json=user_data)
+    response = requests.post(url, json=data, headers=headers)
     
-    if response.status_code != 201:
-        error = response.json()
-        raise Exception(error['message'])
-    
-    return response.json()
+    if response.status_code == 201:
+        return response.json()
+    elif response.status_code == 409:
+        error_data = response.json()
+        raise Exception(f"User creation failed: Email already exists")
+    else:
+        error_data = response.json()
+        raise Exception(f"User creation failed: {error_data['error']['message']}")
 
 # Example usage
-new_user = {
-    "firstName": "John",
-    "lastName": "Doe",
-    "contactEmail": "j.doe@example.com"
-}
-
 try:
-    user = create_user(new_user)
-    print('User created:', user)
+    user = create_user(
+        api_key='YOUR_API_KEY',
+        name='Alex Johnson',
+        email='alex.johnson@example.com',
+        role='member'
+    )
+    
+    print(f"User created successfully:")
+    print(f"ID: {user['id']}")
+    print(f"Name: {user['name']}")
+    print(f"Email: {user['email']}")
+    print(f"Role: {user['role']}")
+    
 except Exception as e:
-    print('Failed to create user:', str(e))
+    print(f"Error: {e}")
 ```
 
-## Next steps
+### cURL
 
-After creating a user, you can:
+```bash
+curl -X POST "https://api.taskmanagement.example.com/v1/users" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "role": "manager"
+  }'
+```
 
-- [Get user by ID](get-user-by-id.html) to retrieve the user
-- [Update a user](update-user.html) to modify the user
-- [Create a task](create-task.html) associated with the user
-- [Get all tasks](get-all-tasks.html) for the user
+## Related Resources
 
-## Related resources
+- [User Resource](/resources/user-resource.md) - Detailed information about the User resource
+- [Get All Users](/api-reference/get-all-users.md) - Retrieve a list of all users
+- [Get User by ID](/api-reference/get-user-by-id.md) - Retrieve a specific user by ID
 
-- [User resource](../resources/user-resource.html) - Detailed information about the user resource
-- [Get all users](get-all-users.html) - Retrieve a list of all users
-- [Get user by ID](get-user-by-id.html) - Retrieve a specific user
-- [Update a user](update-user.html) - Update an existing user
-- [Delete a user](delete-user.html) - Remove a user
+## See Also
 
-## See also
-
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
-- [Getting started with users](../tutorials/getting-started-with-users.html) - Tutorial on user management
+- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Authentication](/getting-started/authentication.md) - How to authenticate your API requests
+- [Getting Started with Users](/tutorials/getting-started-with-users.md) - Guide to working with users
 
 

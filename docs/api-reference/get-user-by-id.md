@@ -6,15 +6,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/users/{userId}"]
 related_pages: ["user-resource"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 4
+ai-generated-date: "2025-05-13"
+navOrder: "4"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Get user by ID
-
-The `GET /users/{userId}` endpoint retrieves a specific user by their unique identifier. This endpoint allows you to fetch detailed information about a single user.
+# Get User by ID
 
 ## Endpoint
 
@@ -22,127 +25,135 @@ The `GET /users/{userId}` endpoint retrieves a specific user by their unique ide
 GET /users/{userId}
 ```
 
-## Authentication
+This endpoint retrieves a specific user by their unique identifier.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Path Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `userId` | String | Unique identifier of the user to retrieve |
 
-## Path parameters
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `userId` | integer | Yes | The unique identifier of the user to retrieve |
-
-## Request example
+## Request Example
 
 ```http
-GET /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /users/user123
+Authorization: Bearer YOUR_API_KEY
 ```
 
 ## Response
 
-### Success response (200 OK)
-
-If the user exists, the API returns a `200 OK` status code and the user object:
+### Success Response (200 OK)
 
 ```json
 {
-  "userId": 1,
-  "firstName": "Ferdinand",
-  "lastName": "Smith",
-  "contactEmail": "f.smith@example.com"
+  "id": "user123",
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "role": "manager",
+  "createdAt": "2025-04-01T10:00:00Z",
+  "updatedAt": "2025-05-10T14:30:00Z"
 }
 ```
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | Invalid `userId` format |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 404 | `RESOURCE_NOT_FOUND` | User not found |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions to view this user) |
+| 404 | Not Found (user with the specified ID does not exist) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
-
-#### Not found response example (404)
+#### Example Error Response (404 Not Found)
 
 ```json
 {
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "User with ID 999 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  "error": {
+    "code": "resource_not_found",
+    "message": "User with ID 'user123' not found"
+  }
 }
 ```
 
-## Response fields
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-The response contains the user object with the following fields:
+## Authentication
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `userId` | integer | Unique identifier for the user |
-| `firstName` | string | User's first name |
-| `lastName` | string | User's last name |
-| `contactEmail` | string | User's email address |
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
 
-For more information about the user resource, see the [User resource](../resources/user-resource.html) document.
-
-## Common use cases
-
-### User profile display
-
-Retrieve a user's details to display their profile information in your application.
-
-### User verification
-
-Verify if a user exists before performing operations that require a valid user.
-
-### User data retrieval
-
-Get a user's information before updating or before associating them with a new task.
-
-## Code examples
-
-### cURL
-
-```bash
-curl -X GET \
-  http://localhost:3000/users/1 \
-  -H 'Authorization: Bearer YOUR_TOKEN'
 ```
+Authorization: Bearer YOUR_API_KEY
+```
+
+The authenticated user must have appropriate permissions to view the requested user:
+- `admin` users can view any user
+- `manager` users can view all users except admins
+- `member` users can only view their own user information
+
+## Important Considerations
+
+- **User ID Format**: User IDs are auto-generated strings assigned by the system when the user is created.
+
+- **Permission Restrictions**: If a user attempts to access a user they don't have permission to view, a `403 Forbidden` error will be returned rather than a `404 Not Found`, for security reasons.
+
+- **Data Sensitivity**: User information may contain sensitive data. Ensure appropriate access controls are in place in your application.
+
+## Best Practices
+
+- Cache user data when appropriate to reduce API calls, particularly for frequently accessed users.
+
+- Handle 404 errors gracefully in your application, providing a user-friendly message when a user is not found.
+
+- Verify that the returned user is the one you intended to retrieve by checking the email or other properties.
+
+- Use the returned user ID in subsequent API calls involving this user, such as assigning tasks.
+
+## Code Examples
 
 ### JavaScript
 
 ```javascript
 async function getUserById(userId) {
-  const response = await fetch(`http://localhost:3000/users/${userId}`, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
+  try {
+    const response = await fetch(`https://api.taskmanagement.example.com/v1/users/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    if (response.status === 404) {
+      console.warn(`User with ID ${userId} not found`);
+      return null;
     }
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Error retrieving user: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error(`Failed to get user ${userId}:`, error);
+    throw error;
   }
-  
-  return await response.json();
 }
 
 // Example usage
-getUserById(1)
-  .then(user => console.log('User:', user))
-  .catch(error => console.error('Failed to get user:', error));
+try {
+  const user = await getUserById('user123');
+  
+  if (user) {
+    console.log(`User found: ${user.name} (${user.email})`);
+    
+    // Use the user data for something
+    if (user.role === 'manager') {
+      // Perform manager-specific operations
+    }
+  } else {
+    console.log('User not found');
+  }
+} catch (error) {
+  console.error('Error fetching user:', error);
+}
 ```
 
 ### Python
@@ -150,53 +161,76 @@ getUserById(1)
 ```python
 import requests
 
-def get_user_by_id(user_id):
-    url = f'http://localhost:3000/users/{user_id}'
+def get_user_by_id(api_key, user_id):
+    """
+    Retrieve a specific user by their ID.
     
+    Args:
+        api_key (str): API key for authentication
+        user_id (str): The unique identifier of the user
+    
+    Returns:
+        dict: User data if found, None if not found
+        
+    Raises:
+        Exception: For API errors other than 404 Not Found
+    """
+    url = f'https://api.taskmanagement.example.com/v1/users/{user_id}'
     headers = {
-        'Authorization': 'Bearer YOUR_TOKEN',
-        'Content-Type': 'application/json'
+        'Authorization': f'Bearer {api_key}'
     }
     
     response = requests.get(url, headers=headers)
     
-    if response.status_code != 200:
-        error = response.json()
-        raise Exception(error['message'])
-    
-    return response.json()
+    if response.status_code == 200:
+        return response.json()
+    elif response.status_code == 404:
+        print(f"User with ID {user_id} not found")
+        return None
+    elif response.status_code == 403:
+        print(f"You don't have permission to view this user")
+        return None
+    else:
+        error_data = response.json()
+        raise Exception(f"API error: {error_data['error']['message']}")
 
 # Example usage
 try:
-    user = get_user_by_id(1)
-    print('User:', user)
+    user = get_user_by_id('YOUR_API_KEY', 'user123')
+    
+    if user:
+        print(f"User: {user['name']}")
+        print(f"Email: {user['email']}")
+        print(f"Role: {user['role']}")
+        
+        # Use the user information
+        if user['role'] == 'admin':
+            print("This user has administrative privileges")
+    else:
+        print("User could not be retrieved")
+        
 except Exception as e:
-    print('Failed to get user:', str(e))
+    print(f"Error: {e}")
 ```
 
-## Error handling
+### cURL
 
-When calling this endpoint, be prepared to handle the following common errors:
+```bash
+curl -X GET "https://api.taskmanagement.example.com/v1/users/user123" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
 
-### User not found
+## Related Resources
 
-If the specified `userId` does not exist, the API returns a `404 Not Found` response. Your application should handle this gracefully, for example by displaying a "User not found" message to the user.
+- [User Resource](/resources/user-resource.md) - Detailed information about the User resource
+- [Get All Users](/api-reference/get-all-users.md) - Retrieve a list of all users
+- [Update a User](/api-reference/update-user.md) - Update an existing user's information
+- [Delete a User](/api-reference/delete-user.md) - Remove a user from the system
 
-### Invalid user ID format
+## See Also
 
-If the `userId` is not a valid integer, the API returns a `400 Bad Request` response. Your application should validate the user ID before making the request.
-
-## Related resources
-
-- [User resource](../resources/user-resource.html) - Detailed information about the user resource
-- [Get all users](get-all-users.html) - Retrieve a list of all users
-- [Create a user](create-user.html) - Create a new user
-- [Update a user](update-user.html) - Update an existing user
-- [Delete a user](delete-user.html) - Remove a user
-
-## See also
-
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
-- [Getting started with users](../tutorials/getting-started-with-users.html) - Tutorial on user management
+- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Authentication](/getting-started/authentication.md) - How to authenticate your API requests
+- [Getting Started with Users](/tutorials/getting-started-with-users.md) - Guide to working with users
 
 

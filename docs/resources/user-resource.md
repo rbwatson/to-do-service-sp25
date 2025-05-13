@@ -4,224 +4,237 @@ description: "Detailed information about the User resource, its properties, and 
 tags: ["user", "resource"]
 categories: ["resources"]
 importance: 9
+parent: "resources"
+hasChildren: false
 related_pages: ["get-all-users", "create-user", "get-user-by-id", "update-user", "delete-user"]
 api_endpoints: ["/users", "/users/{userId}"]
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 1
+ai-generated-date: "2025-05-13"
+navOrder: "1"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# User resource
+# User Resource
 
-The User resource represents a person who can create and manage tasks in the Task Management API. This document provides detailed information about the User resource, its properties, and related endpoints.
+The User resource represents individuals who can create and be assigned to tasks in the Task Management API. This page provides detailed information about the User resource, its properties, and related endpoints.
 
-## Resource overview
+## Resource Properties
 
-The User resource has the following properties:
+| Property | Type | Description | Required |
+|----------|------|-------------|----------|
+| `id` | String | Unique identifier for the user | Auto-generated |
+| `name` | String | Full name of the user | Yes |
+| `email` | String | Email address of the user (must be unique) | Yes |
+| `role` | String | Role of the user (admin, manager, member) | No (default: "member") |
+| `createdAt` | Date | When the user was created | Auto-generated |
+| `updatedAt` | Date | When the user was last updated | Auto-generated |
 
-| Property | Type | Description | Constraints | Required |
-|----------|------|-------------|------------|----------|
-| `userId` | integer | Unique identifier | System-generated, immutable | Yes (in responses) |
-| `firstName` | string | User's first name | 1-100 characters | Yes |
-| `lastName` | string | User's last name | 1-100 characters | Yes |
-| `contactEmail` | string | User's email address | Valid email format, unique | Yes |
+## Resource Representation
 
-## Resource representation
-
-### JSON structure
+### JSON Format
 
 ```json
 {
-  "userId": 1,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
+  "id": "user123",
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "role": "member",
+  "createdAt": "2025-05-01T10:30:00Z",
+  "updatedAt": "2025-05-13T14:25:00Z"
 }
 ```
 
-## Property details
+## User Roles
 
-### userId
+The User resource supports the following roles:
 
-- **Type**: integer
-- **Description**: System-generated unique identifier for the user
-- **Required**: Automatically generated for responses, not included in requests
-- **Example**: `1`
+| Role | Description | Permissions |
+|------|-------------|-------------|
+| `admin` | Administrator with full access | Can perform all operations |
+| `manager` | Manager with elevated permissions | Can manage tasks and assign them to users |
+| `member` | Regular team member | Can create and update their own tasks |
 
-### firstName
+## Related Endpoints
 
-- **Type**: string
-- **Description**: The user's first name
-- **Constraints**: 1-100 characters
-- **Required**: Yes
-- **Example**: `"John"`
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/users` | GET | [Get all users](/api-reference/get-all-users.md) |
+| `/users` | POST | [Create a user](/api-reference/create-user.md) |
+| `/users/{userId}` | GET | [Get user by ID](/api-reference/get-user-by-id.md) |
+| `/users/{userId}` | PATCH | [Update a user](/api-reference/update-user.md) |
+| `/users/{userId}` | DELETE | [Delete a user](/api-reference/delete-user.md) |
 
-### lastName
+## Creating a User
 
-- **Type**: string
-- **Description**: The user's last name
-- **Constraints**: 1-100 characters
-- **Required**: Yes
-- **Example**: `"Doe"`
+To create a new user, send a `POST` request to the `/users` endpoint:
 
-### contactEmail
-
-- **Type**: string
-- **Description**: The user's email address for contact purposes
-- **Constraints**: 
-  - Must be a valid email address
-  - Must be unique across all users
-  - 3-255 characters
-- **Required**: Yes
-- **Example**: `"john.doe@example.com"`
-
-## User lifecycle
-
-1. **Creation**: A user is created via the [Create a user](../api-reference/create-user.html) endpoint
-2. **Retrieval**: User details can be fetched via the [Get user by ID](../api-reference/get-user-by-id.html) endpoint
-3. **Update**: User information can be updated via the [Update a user](../api-reference/update-user.html) endpoint
-4. **Deletion**: A user can be deleted via the [Delete a user](../api-reference/delete-user.html) endpoint
-
-When a user is deleted, all associated tasks are also removed from the system.
-
-## Related endpoints
-
-The following endpoints work with the User resource:
-
-| Method | Endpoint | Description | Reference |
-|--------|----------|-------------|-----------|
-| GET | `/users` | Retrieve all users | [Get all users](../api-reference/get-all-users.html) |
-| POST | `/users` | Create a new user | [Create a user](../api-reference/create-user.html) |
-| GET | `/users/{userId}` | Retrieve a specific user | [Get user by ID](../api-reference/get-user-by-id.html) |
-| PATCH | `/users/{userId}` | Update a user | [Update a user](../api-reference/update-user.html) |
-| DELETE | `/users/{userId}` | Delete a user | [Delete a user](../api-reference/delete-user.html) |
-
-## Creating a user
-
-To create a new user, send a POST request to the `/users` endpoint with the required fields:
+### Request
 
 ```http
-POST /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+POST /users
 Content-Type: application/json
 
 {
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
+  "name": "Jane Smith",
+  "email": "jane.smith@example.com",
+  "role": "manager"
 }
 ```
 
-The API will respond with the newly created user, including the system-generated `userId`:
-
-```json
-{
-  "userId": 1,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
-}
-```
-
-## Updating a user
-
-To update an existing user, send a PATCH request to the `/users/{userId}` endpoint with the fields you want to update:
+### Response
 
 ```http
-PATCH /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+HTTP/1.1 201 Created
 Content-Type: application/json
 
 {
-  "contactEmail": "new.email@example.com"
+  "id": "user456",
+  "name": "Jane Smith",
+  "email": "jane.smith@example.com",
+  "role": "manager",
+  "createdAt": "2025-05-13T15:30:00Z",
+  "updatedAt": "2025-05-13T15:30:00Z"
 }
 ```
 
-The API will respond with the complete updated user:
+## Updating a User
 
-```json
-{
-  "userId": 1,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "new.email@example.com"
-}
-```
+To update an existing user, send a `PATCH` request to the `/users/{userId}` endpoint:
 
-## Retrieving users
-
-To retrieve all users, send a GET request to the `/users` endpoint:
+### Request
 
 ```http
-GET /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+PATCH /users/user456
+Content-Type: application/json
+
+{
+  "name": "Jane Williams",
+  "role": "admin"
+}
 ```
 
-The API will respond with a list of users:
+### Response
 
-```json
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
 {
-  "users": [
-    {
-      "userId": 1,
-      "firstName": "John",
-      "lastName": "Doe",
-      "contactEmail": "john.doe@example.com"
-    },
-    {
-      "userId": 2,
-      "firstName": "Jane",
-      "lastName": "Smith",
-      "contactEmail": "jane.smith@example.com"
+  "id": "user456",
+  "name": "Jane Williams",
+  "email": "jane.smith@example.com",
+  "role": "admin",
+  "createdAt": "2025-05-13T15:30:00Z",
+  "updatedAt": "2025-05-13T15:45:00Z"
+}
+```
+
+## Deleting a User
+
+To delete a user, send a `DELETE` request to the `/users/{userId}` endpoint:
+
+### Request
+
+```http
+DELETE /users/user456
+```
+
+### Response
+
+```http
+HTTP/1.1 204 No Content
+```
+
+## User and Task Relationships
+
+Users are related to tasks in two ways:
+
+1. **As creators**: A user can create multiple tasks. The `createdBy` field on the Task resource references the user who created it.
+
+2. **As assignees**: A user can be assigned to multiple tasks. The `assigneeId` field on the Task resource references the assigned user.
+
+## Code Examples
+
+### Get a User by ID - JavaScript
+
+```javascript
+async function getUser(userId) {
+  try {
+    const response = await fetch(`https://api.taskmanagement.example.com/v1/users/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch user: ${response.status}`);
     }
-  ]
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    return null;
+  }
 }
 ```
 
-To retrieve a specific user, send a GET request to the `/users/{userId}` endpoint:
+### Create a User - Python
 
-```http
-GET /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+```python
+import requests
+
+def create_user(api_key, name, email, role="member"):
+    try:
+        response = requests.post(
+            "https://api.taskmanagement.example.com/v1/users",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "name": name,
+                "email": email,
+                "role": role
+            }
+        )
+        
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error creating user: {e}")
+        return None
 ```
 
-## Deleting a user
+### Get All Users Assigned to Tasks - cURL
 
-To delete a user, send a DELETE request to the `/users/{userId}` endpoint:
-
-```http
-DELETE /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+```bash
+curl -X GET "https://api.taskmanagement.example.com/v1/tasks?assigneeId=user123" \
+  -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
-A successful deletion returns a `204 No Content` response with no body.
+## Common Use Cases
 
-## Common errors
+- **User Management**: Creating and managing users in a task management system
+- **Team Organization**: Organizing users by roles and permissions
+- **User Profile**: Displaying user information in a profile page
+- **Task Assignment**: Assigning tasks to specific users based on their skills or availability
+- **Access Control**: Restricting access to certain features based on user roles
 
-| Error code | Description | HTTP status |
-|------------|-------------|-------------|
-| `INVALID_FIELD` | One or more fields have invalid values | 400 |
-| `MISSING_REQUIRED_FIELD` | A required field is missing | 400 |
-| `RESOURCE_NOT_FOUND` | The requested user does not exist | 404 |
-| `DUPLICATE_EMAIL` | The email address is already in use | 400 |
+## Best Practices
 
-## Relationships
+1. **Email Uniqueness**: Ensure email addresses are unique across all users
+2. **Role-Based Access Control**: Implement proper access controls based on user roles
+3. **Data Validation**: Validate user data before sending it to the API
+4. **User Privacy**: Handle user data in compliance with relevant privacy regulations
+5. **Secure Storage**: Store API keys and user credentials securely
 
-Each user can have multiple tasks. This one-to-many relationship is established through the `userId` field in the Task resource.
+## See Also
 
-For more information on tasks, see the [Task resource](task-resource.html) documentation.
-
-## Next steps
-
-- Learn how to [get started with users](../tutorials/getting-started-with-users.html)
-- Explore [user code examples](../developer-resources/code-examples.html)
-- Understand how users relate to [tasks](task-resource.html)
-- Learn about [authentication](../getting-started/authentication.html) for user-based operations
+- [Task Resource](/resources/task-resource.md)
+- [Data Model](/core-concepts/data-model.md)
+- [Getting Started with Users](/tutorials/getting-started-with-users.md)
 
 

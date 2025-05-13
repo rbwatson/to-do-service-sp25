@@ -4,184 +4,227 @@ description: "Understanding the various status values that tasks can have and th
 tags: ["task status", "workflow"]
 categories: ["core-concepts"]
 importance: 7
+parent: "core-concepts"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 5
+ai-generated-date: "2025-05-13"
+navOrder: "5"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Task status lifecycle
+# Task Status Lifecycle
 
-Tasks in the Task Management API progress through various states from creation to completion. This document explains the different status values, their meanings, and the typical transitions between them.
+Tasks in the Task Management API move through a series of statuses throughout their lifecycle. This page explains the different status values, valid transitions between them, and how to implement a task lifecycle in your application.
 
-## Available status values
+## Task Status Values
 
-The Task resource uses the `taskStatus` property to track the current state of a task. The available status values are:
+The Task Management API supports the following status values for tasks:
 
 | Status | Description |
 |--------|-------------|
-| `NOT_STARTED` | Task has been created but work has not begun |
-| `IN_PROGRESS` | Task is actively being worked on |
-| `BLOCKED` | Task cannot proceed due to an obstacle or dependency |
-| `DEFERRED` | Task has been postponed until a later time |
-| `COMPLETED` | Task has been successfully finished |
-| `CANCELLED` | Task has been abandoned and will not be completed |
+| `TODO` | The task has been created but work hasn't started yet |
+| `IN_PROGRESS` | Work on the task has begun but is not yet complete |
+| `REVIEW` | The task is completed and waiting for review or approval |
+| `DONE` | The task has been completed and approved |
+| `CANCELED` | The task has been canceled and won't be completed |
 
-## Default status
-
-When a task is created without explicitly specifying a status, it defaults to `NOT_STARTED`.
-
-## Status transitions
-
-While the API allows updating a task's status to any valid value, the following diagram illustrates the typical workflow:
+## Task Status Lifecycle Diagram
 
 ```
-  ┌───────────────┐
-  │  NOT_STARTED  │
-  └───────┬───────┘
-          │
-          ▼
-  ┌───────────────┐         ┌───────────────┐
-  │  IN_PROGRESS  │◄───────►│    BLOCKED    │
-  └───────┬───────┘         └───────┬───────┘
-          │                         │
-          ▼                         ▼
-  ┌───────────────┐         ┌───────────────┐
-  │   COMPLETED   │         │   CANCELLED   │
-  └───────────────┘         └───────────────┘
-          ▲                         ▲
-          │                         │
-  ┌───────────────┐                 │
-  │   DEFERRED    │─────────────────┘
-  └───────────────┘
+┌─────────┐     ┌─────────────┐     ┌────────┐     ┌──────┐
+│   TODO  │────►│ IN_PROGRESS │────►│ REVIEW │────►│ DONE │
+└─────────┘     └─────────────┘     └────────┘     └──────┘
+     │                 │                │              │
+     │                 │                │              │
+     │                 ▼                ▼              ▼
+     └───────────────►┌──────────┐◄─────────────────────
+                      │ CANCELED │
+                      └──────────┘
 ```
 
-### Common transitions
+## Valid Status Transitions
 
-1. `NOT_STARTED` → `IN_PROGRESS`: Work has begun on the task
-2. `IN_PROGRESS` → `BLOCKED`: Task has encountered an obstacle
-3. `BLOCKED` → `IN_PROGRESS`: Obstacle has been resolved
-4. `IN_PROGRESS` → `COMPLETED`: Task has been successfully completed
-5. `NOT_STARTED` → `DEFERRED`: Task has been postponed
-6. `DEFERRED` → `IN_PROGRESS`: Work has resumed on a postponed task
-7. `DEFERRED` → `CANCELLED`: A postponed task has been abandoned
-8. `BLOCKED` → `CANCELLED`: A blocked task has been abandoned
+Not all status transitions are valid. The following table shows the allowed transitions:
 
-## Updating task status
+| Current Status | Valid Next Statuses |
+|----------------|---------------------|
+| `TODO` | `IN_PROGRESS`, `CANCELED` |
+| `IN_PROGRESS` | `REVIEW`, `CANCELED` |
+| `REVIEW` | `DONE`, `IN_PROGRESS`, `CANCELED` |
+| `DONE` | `CANCELED` |
+| `CANCELED` | None (terminal state) |
 
-To update a task's status, send a PATCH request to the `/tasks/{taskId}` endpoint:
+Attempting to make an invalid status transition will result in a `422 Unprocessable Entity` error.
+
+## Implementing Status Transitions
+
+To update a task's status, use the `PATCH` method on the task resource:
 
 ```http
-PATCH /tasks/123 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+PATCH /tasks/{taskId}
 Content-Type: application/json
 
 {
-  "taskStatus": "IN_PROGRESS"
+  "status": "IN_PROGRESS"
 }
 ```
 
-## Status implications
+### Example Response
 
-Each status has specific implications for task management:
+```json
+{
+  "id": "task123",
+  "title": "Implement authentication",
+  "description": "Add token-based authentication to the application",
+  "status": "IN_PROGRESS",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "createdAt": "2025-05-01T10:30:00Z",
+  "updatedAt": "2025-05-13T14:25:00Z"
+}
+```
 
-### NOT_STARTED
+## Status-Based Filtering
 
-- Task is in the backlog or queue
-- No work has begun yet
-- Reminder will trigger based on the `warningOffset` and `dueDate`
-
-### IN_PROGRESS
-
-- Task is actively being worked on
-- Progress is being made toward completion
-- Reminder will still trigger based on the `warningOffset` and `dueDate`
-
-### BLOCKED
-
-- Task cannot be completed due to a dependency or obstacle
-- May require intervention to resolve the blocking issue
-- Reminder will still trigger based on the `warningOffset` and `dueDate`
-
-### DEFERRED
-
-- Task has been postponed to a later time
-- Not currently actively worked on
-- Reminder will still trigger based on the `warningOffset` and `dueDate`
-
-### COMPLETED
-
-- Task has been successfully finished
-- No further action is required
-- Reminders are no longer triggered
-
-### CANCELLED
-
-- Task has been abandoned and will not be completed
-- No further action is required
-- Reminders are no longer triggered
-
-## Filtering tasks by status
-
-You can filter tasks by their status using the `taskStatus` query parameter:
+You can filter tasks by status when listing them:
 
 ```http
-GET /tasks?taskStatus=IN_PROGRESS HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /tasks?status=IN_PROGRESS
 ```
 
-This allows you to retrieve only tasks in a specific state, which is useful for creating views such as:
+You can also filter by multiple statuses:
 
-- Task backlogs (`NOT_STARTED`)
-- Current work (`IN_PROGRESS`)
-- Blocked tasks that need attention (`BLOCKED`)
-- Completed tasks for review (`COMPLETED`)
+```http
+GET /tasks?status=TODO,IN_PROGRESS
+```
 
-## Implementation example
+This is useful for creating views like "Open Tasks" (TODO, IN_PROGRESS, REVIEW) or "Closed Tasks" (DONE, CANCELED).
 
-Here's an example of a function that updates a task's status:
+## Status Workflow Automation
+
+Here are some common automation practices for task status transitions:
+
+### 1. Automatic Assignment
+
+When a task moves from `TODO` to `IN_PROGRESS`, it often requires an assignee:
 
 ```javascript
-async function updateTaskStatus(taskId, newStatus) {
-  try {
-    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-      method: 'PATCH',
-      headers: {
-        'Authorization': 'Bearer YOUR_TOKEN',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ taskStatus: newStatus })
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
-    }
-    
-    return await response.json();
-  } catch (error) {
-    console.error(`Failed to update task ${taskId} status:`, error);
-    throw error;
-  }
+// JavaScript example
+async function startTask(taskId, assigneeId) {
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      status: 'IN_PROGRESS',
+      assigneeId: assigneeId
+    })
+  });
+  
+  return response.json();
 }
 ```
 
-## Best practices for status management
+### 2. Notifications on Status Change
 
-- Update the task status promptly to reflect its current state
-- Use the `BLOCKED` status to highlight tasks that need attention
-- Consider updating the `dueDate` when changing status to `DEFERRED`
-- Include a reason when marking tasks as `CANCELLED` using the task description
-- Review `BLOCKED` tasks regularly to prevent them from being forgotten
+You might want to notify relevant users when a task's status changes:
 
-## Next steps
+```python
+# Python example
+def update_task_status(api_key, task_id, new_status):
+    # First, get the current task data
+    response = requests.get(
+        f"https://api.taskmanagement.example.com/v1/tasks/{task_id}",
+        headers={"Authorization": f"Bearer {api_key}"}
+    )
+    
+    current_task = response.json()
+    old_status = current_task["status"]
+    
+    # Update the status
+    response = requests.patch(
+        f"https://api.taskmanagement.example.com/v1/tasks/{task_id}",
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        },
+        json={"status": new_status}
+    )
+    
+    updated_task = response.json()
+    
+    # Send notifications based on the transition
+    if old_status == "TODO" and new_status == "IN_PROGRESS":
+        notify_task_started(updated_task)
+    elif old_status == "IN_PROGRESS" and new_status == "REVIEW":
+        notify_task_ready_for_review(updated_task)
+    elif new_status == "DONE":
+        notify_task_completed(updated_task)
+    elif new_status == "CANCELED":
+        notify_task_canceled(updated_task)
+    
+    return updated_task
+```
 
-Now that you understand the task status lifecycle, explore these related topics:
+### 3. Implementing a Review Process
 
-- [Task resource](../resources/task-resource.html) for complete details on tasks
-- [Update a task](../api-reference/update-task.html) for API reference on task updates
-- [Get all tasks](../api-reference/get-all-tasks.html) for filtering tasks by status
-- [Task management workflow](../tutorials/task-management-workflow.html) for implementing a complete workflow
+If your workflow requires formal review, you might implement a process like this:
+
+```javascript
+// JavaScript example
+async function completeTaskWorkflow(taskId, reviewerId) {
+  // 1. Developer marks task as ready for review
+  await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      status: 'REVIEW'
+    })
+  });
+  
+  // 2. Assign the reviewer
+  await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      assigneeId: reviewerId
+    })
+  });
+  
+  // In a real application, the reviewer would review and then update the status
+  // to either DONE or back to IN_PROGRESS
+}
+```
+
+## Best Practices
+
+1. **Validate transitions**: Always validate status transitions before making API requests to avoid errors.
+
+2. **Track status history**: If you need a history of status changes, consider implementing your own tracking as the API only provides the current status.
+
+3. **Use webhooks if available**: If the API provides webhooks, subscribe to status change events to keep your application in sync.
+
+4. **Consider user permissions**: Different users might have different permissions for status transitions. For example, only a reviewer might be able to move a task from `REVIEW` to `DONE`.
+
+5. **Implement intuitive UI**: Design your user interface to make the task lifecycle clear, perhaps showing available actions based on the current status.
+
+## See Also
+
+- [Task Resource](/resources/task-resource.md)
+- [Update Task](/api-reference/update-task.md)
+- [Task Management Workflow](/tutorials/task-management-workflow.md)
 
 

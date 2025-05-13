@@ -4,303 +4,314 @@ description: "Detailed information about the Task resource, its properties, and 
 tags: ["task", "resource"]
 categories: ["resources"]
 importance: 9
+parent: "resources"
+hasChildren: false
 related_pages: ["get-all-tasks", "create-task", "get-task-by-id", "update-task", "delete-task"]
 api_endpoints: ["/tasks", "/tasks/{taskId}"]
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 2
+ai-generated-date: "2025-05-13"
+navOrder: "2"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Task resource
+# Task Resource
 
-The Task resource represents a to-do item in the Task Management API. This document provides detailed information about the Task resource, its properties, and related endpoints.
+The Task resource represents a unit of work that needs to be completed within the Task Management API. This page provides detailed information about the Task resource, its properties, and related endpoints.
 
-## Resource overview
+## Resource Properties
 
-The Task resource has the following properties:
+| Property | Type | Description | Required |
+|----------|------|-------------|----------|
+| `id` | String | Unique identifier for the task | Auto-generated |
+| `title` | String | Title of the task | Yes |
+| `description` | String | Detailed description of the task | No |
+| `status` | String | Current status of the task | No (default: "TODO") |
+| `priority` | String | Priority level of the task | No (default: "MEDIUM") |
+| `createdBy` | String | ID of the user who created the task | Auto-generated |
+| `assigneeId` | String | ID of the user assigned to the task | No |
+| `dueDate` | Date | When the task is due | No |
+| `warningOffset` | Number | Hours before due date to send a reminder | No |
+| `tags` | Array | Array of string tags associated with the task | No |
+| `createdAt` | Date | When the task was created | Auto-generated |
+| `updatedAt` | Date | When the task was last updated | Auto-generated |
 
-| Property | Type | Description | Constraints | Required |
-|----------|------|-------------|------------|----------|
-| `taskId` | integer | Unique identifier | System-generated, immutable | Yes (in responses) |
-| `userId` | integer | Owner's user ID | Must reference existing user | Yes |
-| `taskTitle` | string | Short description | 1-80 characters | Yes |
-| `taskDescription` | string | Detailed description | 1-255 characters | No |
-| `taskStatus` | string enum | Current status | One of predefined values | Yes (defaults to `NOT_STARTED`) |
-| `dueDate` | string (date-time) | When task is due | ISO 8601 format | Yes |
-| `warningOffset` | integer | Minutes before due date for reminder | 0-64000 | Yes |
+## Resource Representation
 
-## Resource representation
-
-### JSON structure
+### JSON Format
 
 ```json
 {
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Complete API documentation",
-  "taskDescription": "Finish the task management API documentation for the developer portal",
-  "taskStatus": "IN_PROGRESS",
-  "dueDate": "2025-05-15T17:00:00-05:00",
-  "warningOffset": 60
+  "id": "task123",
+  "title": "Implement authentication",
+  "description": "Add token-based authentication to the application",
+  "status": "IN_PROGRESS",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "warningOffset": 24,
+  "tags": ["authentication", "security", "api"],
+  "createdAt": "2025-05-01T10:30:00Z",
+  "updatedAt": "2025-05-13T14:25:00Z"
 }
 ```
 
-## Property details
+## Task Status Values
 
-### taskId
+The Task resource supports the following status values:
 
-- **Type**: integer
-- **Description**: System-generated unique identifier for the task
-- **Required**: Automatically generated for responses, not included in requests
-- **Example**: `1`
+| Status | Description |
+|--------|-------------|
+| `TODO` | Task has been created but work hasn't started (default) |
+| `IN_PROGRESS` | Work on the task has begun but is not yet complete |
+| `REVIEW` | Task is completed and awaiting review or approval |
+| `DONE` | Task has been completed and approved |
+| `CANCELED` | Task has been canceled and won't be completed |
 
-### userId
+For more details on task status transitions, see [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md).
 
-- **Type**: integer
-- **Description**: Identifier of the user who owns the task
-- **Constraints**: Must reference an existing user
-- **Required**: Yes
-- **Example**: `1`
+## Task Priority Levels
 
-### taskTitle
+The Task resource supports the following priority levels:
 
-- **Type**: string
-- **Description**: Short description of the task used as the title in lists and headings
-- **Constraints**: 1-80 characters
-- **Required**: Yes
-- **Example**: `"Complete API documentation"`
+| Priority | Description |
+|----------|-------------|
+| `LOW` | Low priority task |
+| `MEDIUM` | Medium priority task (default) |
+| `HIGH` | High priority task |
+| `URGENT` | Urgent task requiring immediate attention |
 
-### taskDescription
+## Related Endpoints
 
-- **Type**: string
-- **Description**: Detailed description of the task
-- **Constraints**: 1-255 characters
-- **Required**: No
-- **Example**: `"Finish the task management API documentation for the developer portal"`
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/tasks` | GET | [Get all tasks](/api-reference/get-all-tasks.md) |
+| `/tasks` | POST | [Create a task](/api-reference/create-task.md) |
+| `/tasks/{taskId}` | GET | [Get task by ID](/api-reference/get-task-by-id.md) |
+| `/tasks/{taskId}` | PATCH | [Update a task](/api-reference/update-task.md) |
+| `/tasks/{taskId}` | DELETE | [Delete a task](/api-reference/delete-task.md) |
 
-### taskStatus
+## Creating a Task
 
-- **Type**: string enum
-- **Description**: Current state of the task in its lifecycle
-- **Constraints**: Must be one of:
-  - `NOT_STARTED` - Default value for new tasks
-  - `IN_PROGRESS` - Task is actively being worked on
-  - `BLOCKED` - Task cannot proceed due to an obstacle
-  - `DEFERRED` - Task has been postponed
-  - `COMPLETED` - Task has been finished
-  - `CANCELLED` - Task has been abandoned
-- **Required**: Yes (defaults to `NOT_STARTED` if not provided)
-- **Example**: `"IN_PROGRESS"`
+To create a new task, send a `POST` request to the `/tasks` endpoint:
 
-For more information about task status values and transitions, see the [Task status lifecycle](../core-concepts/task-status-lifecycle.html) document.
-
-### dueDate
-
-- **Type**: string (date-time)
-- **Description**: The date and time when the task should be completed
-- **Constraints**: Must be in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS.sssZ`)
-- **Required**: Yes
-- **Example**: `"2025-05-15T17:00:00-05:00"`
-
-### warningOffset
-
-- **Type**: integer
-- **Description**: Number of minutes before the due date to send a reminder
-- **Constraints**: 0-64000
-- **Required**: Yes
-- **Example**: `60` (reminder 1 hour before due date)
-
-## Task lifecycle
-
-1. **Creation**: A task is created via the [Create a task](../api-reference/create-task.html) endpoint
-2. **Retrieval**: Task details can be fetched via the [Get task by ID](../api-reference/get-task-by-id.html) endpoint
-3. **Update**: Task information can be updated via the [Update a task](../api-reference/update-task.html) endpoint
-4. **Status changes**: The task moves through different statuses via updates
-5. **Deletion**: A task can be deleted via the [Delete a task](../api-reference/delete-task.html) endpoint
-
-## Related endpoints
-
-The following endpoints work with the Task resource:
-
-| Method | Endpoint | Description | Reference |
-|--------|----------|-------------|-----------|
-| GET | `/tasks` | Retrieve all tasks | [Get all tasks](../api-reference/get-all-tasks.html) |
-| POST | `/tasks` | Create a new task | [Create a task](../api-reference/create-task.html) |
-| GET | `/tasks/{taskId}` | Retrieve a specific task | [Get task by ID](../api-reference/get-task-by-id.html) |
-| PATCH | `/tasks/{taskId}` | Update a task | [Update a task](../api-reference/update-task.html) |
-| DELETE | `/tasks/{taskId}` | Delete a task | [Delete a task](../api-reference/delete-task.html) |
-
-## Creating a task
-
-To create a new task, send a POST request to the `/tasks` endpoint with the required fields:
+### Request
 
 ```http
-POST /tasks HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+POST /tasks
 Content-Type: application/json
 
 {
-  "userId": 1,
-  "taskTitle": "Complete API documentation",
-  "taskDescription": "Finish the task management API documentation for the developer portal",
-  "dueDate": "2025-05-15T17:00:00-05:00",
-  "warningOffset": 60
+  "title": "Create API documentation",
+  "description": "Write comprehensive API documentation for developers",
+  "priority": "HIGH",
+  "assigneeId": "user456",
+  "dueDate": "2025-05-30T17:00:00Z",
+  "tags": ["documentation", "api"]
 }
 ```
 
-The API will respond with the newly created task, including the system-generated `taskId` and default `taskStatus`:
-
-```json
-{
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Complete API documentation",
-  "taskDescription": "Finish the task management API documentation for the developer portal",
-  "taskStatus": "NOT_STARTED",
-  "dueDate": "2025-05-15T17:00:00-05:00",
-  "warningOffset": 60
-}
-```
-
-## Updating a task
-
-To update an existing task, send a PATCH request to the `/tasks/{taskId}` endpoint with the fields you want to update:
+### Response
 
 ```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+HTTP/1.1 201 Created
 Content-Type: application/json
 
 {
-  "taskStatus": "IN_PROGRESS"
+  "id": "task789",
+  "title": "Create API documentation",
+  "description": "Write comprehensive API documentation for developers",
+  "status": "TODO",
+  "priority": "HIGH",
+  "createdBy": "user123",
+  "assigneeId": "user456",
+  "dueDate": "2025-05-30T17:00:00Z",
+  "tags": ["documentation", "api"],
+  "createdAt": "2025-05-13T15:30:00Z",
+  "updatedAt": "2025-05-13T15:30:00Z"
 }
 ```
 
-The API will respond with the complete updated task:
+## Updating a Task
 
-```json
-{
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Complete API documentation",
-  "taskDescription": "Finish the task management API documentation for the developer portal",
-  "taskStatus": "IN_PROGRESS",
-  "dueDate": "2025-05-15T17:00:00-05:00",
-  "warningOffset": 60
-}
-```
+To update an existing task, send a `PATCH` request to the `/tasks/{taskId}` endpoint:
 
-## Retrieving tasks
-
-To retrieve all tasks, send a GET request to the `/tasks` endpoint:
+### Request
 
 ```http
-GET /tasks HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+PATCH /tasks/task789
+Content-Type: application/json
+
+{
+  "status": "IN_PROGRESS",
+  "description": "Write comprehensive API documentation for developers, including examples and best practices"
+}
 ```
 
-The API will respond with a list of tasks:
+### Response
 
-```json
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
 {
-  "tasks": [
-    {
-      "taskId": 1,
-      "userId": 1,
-      "taskTitle": "Complete API documentation",
-      "taskDescription": "Finish the task management API documentation for the developer portal",
-      "taskStatus": "IN_PROGRESS",
-      "dueDate": "2025-05-15T17:00:00-05:00",
-      "warningOffset": 60
-    },
-    {
-      "taskId": 2,
-      "userId": 1,
-      "taskTitle": "Deploy application",
-      "taskDescription": "Deploy the application to production",
-      "taskStatus": "NOT_STARTED",
-      "dueDate": "2025-05-20T09:00:00-05:00",
-      "warningOffset": 120
+  "id": "task789",
+  "title": "Create API documentation",
+  "description": "Write comprehensive API documentation for developers, including examples and best practices",
+  "status": "IN_PROGRESS",
+  "priority": "HIGH",
+  "createdBy": "user123",
+  "assigneeId": "user456",
+  "dueDate": "2025-05-30T17:00:00Z",
+  "tags": ["documentation", "api"],
+  "createdAt": "2025-05-13T15:30:00Z",
+  "updatedAt": "2025-05-13T15:45:00Z"
+}
+```
+
+## Deleting a Task
+
+To delete a task, send a `DELETE` request to the `/tasks/{taskId}` endpoint:
+
+### Request
+
+```http
+DELETE /tasks/task789
+```
+
+### Response
+
+```http
+HTTP/1.1 204 No Content
+```
+
+## Task and User Relationships
+
+Tasks are related to users in two ways:
+
+1. **Created by**: Each task has a `createdBy` field that references the user who created it.
+
+2. **Assigned to**: Each task can optionally have an `assigneeId` field that references the user assigned to complete it.
+
+## Filtering Tasks
+
+The `/tasks` endpoint supports various filtering parameters:
+
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `status` | Filter by task status | `/tasks?status=IN_PROGRESS` |
+| `priority` | Filter by task priority | `/tasks?priority=HIGH` |
+| `assigneeId` | Filter by assigned user | `/tasks?assigneeId=user456` |
+| `createdBy` | Filter by creator | `/tasks?createdBy=user123` |
+| `dueDate[lt]` | Tasks due before date | `/tasks?dueDate[lt]=2025-05-30T00:00:00Z` |
+| `dueDate[gt]` | Tasks due after date | `/tasks?dueDate[gt]=2025-05-01T00:00:00Z` |
+| `tags` | Filter by tags | `/tasks?tags=documentation,api` |
+
+Multiple filters can be combined using the `&` operator:
+
+```
+/tasks?status=TODO,IN_PROGRESS&priority=HIGH,URGENT&assigneeId=user456
+```
+
+## Code Examples
+
+### Get All Tasks - JavaScript
+
+```javascript
+async function getAllTasks() {
+  try {
+    const response = await fetch('https://api.taskmanagement.example.com/v1/tasks', {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch tasks: ${response.status}`);
     }
-  ]
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching tasks:', error);
+    return { data: [] };
+  }
 }
 ```
 
-### Filtering tasks
+### Create a Task - Python
 
-You can filter tasks by their status using the `taskStatus` query parameter:
+```python
+import requests
 
-```http
-GET /tasks?taskStatus=IN_PROGRESS HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+def create_task(api_key, title, description=None, priority="MEDIUM", assignee_id=None, due_date=None):
+    try:
+        task_data = {
+            "title": title,
+            "priority": priority
+        }
+        
+        if description:
+            task_data["description"] = description
+            
+        if assignee_id:
+            task_data["assigneeId"] = assignee_id
+            
+        if due_date:
+            task_data["dueDate"] = due_date
+        
+        response = requests.post(
+            "https://api.taskmanagement.example.com/v1/tasks",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            },
+            json=task_data
+        )
+        
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error creating task: {e}")
+        return None
 ```
 
-### Pagination and sorting
+### Update Task Status - cURL
 
-For large collections, you can use pagination and sorting parameters:
-
-```http
-GET /tasks?_page=0&_perPage=10&_sort=-dueDate HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+```bash
+curl -X PATCH "https://api.taskmanagement.example.com/v1/tasks/task123" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "DONE"
+  }'
 ```
 
-For more information, see the [Pagination](../core-concepts/pagination.html) and [Sorting](../core-concepts/sorting.html) documents.
+## Common Use Cases
 
-## Deleting a task
+- **Task Creation**: Creating new tasks for team members to work on
+- **Task Assignment**: Assigning tasks to specific users
+- **Task Tracking**: Tracking task progress through status updates
+- **Due Date Management**: Setting and managing task deadlines
+- **Priority Management**: Organizing tasks by priority level
+- **Task Filtering**: Finding tasks based on various criteria
 
-To delete a task, send a DELETE request to the `/tasks/{taskId}` endpoint:
+## Best Practices
 
-```http
-DELETE /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
+1. **Set Clear Titles**: Use clear, concise titles that describe the task
+2. **Provide Detailed Descriptions**: Include all necessary information in the task description
+3. **Set Realistic Due Dates**: Assign reasonable deadlines for task completion
+4. **Use Appropriate Priorities**: Reserve high and urgent priorities for truly important tasks
+5. **Update Status Regularly**: Keep task status up-to-date to reflect current progress
+6. **Use Tags for Organization**: Apply consistent tags to group related tasks
+7. **Clean Up Completed Tasks**: Delete or archive tasks that are no longer needed
 
-A successful deletion returns a `204 No Content` response with no body.
+## See Also
 
-## Common errors
-
-| Error code | Description | HTTP status |
-|------------|-------------|-------------|
-| `INVALID_FIELD` | One or more fields have invalid values | 400 |
-| `MISSING_REQUIRED_FIELD` | A required field is missing | 400 |
-| `RESOURCE_NOT_FOUND` | The requested task does not exist | 404 |
-| `INVALID_USER_ID` | The specified user does not exist | 400 |
-| `INVALID_STATUS` | The specified status is not valid | 400 |
-
-## Task reminders
-
-The `dueDate` and `warningOffset` properties work together to determine when a reminder should be sent:
-
-```
-Reminder time = dueDate - warningOffset minutes
-```
-
-For example, if a task has:
-- `dueDate`: `"2025-05-15T17:00:00-05:00"`
-- `warningOffset`: `60` (minutes)
-
-The reminder would be sent at `2025-05-15T16:00:00-05:00` (1 hour before the due date).
-
-For more information on implementing reminders, see the [Implementing reminders](../tutorials/implementing-reminders.html) tutorial.
-
-## Relationships
-
-Each task belongs to exactly one user, identified by the `userId` property. This establishes a many-to-one relationship between tasks and users.
-
-For more information on users, see the [User resource](user-resource.html) documentation.
-
-## Next steps
-
-- Learn about the [task status lifecycle](../core-concepts/task-status-lifecycle.html)
-- Explore the [task management workflow](../tutorials/task-management-workflow.html)
-- See [code examples](../developer-resources/code-examples.html) for working with tasks
-- Implement [reminders](../tutorials/implementing-reminders.html) for upcoming tasks
+- [User Resource](/resources/user-resource.md)
+- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md)
+- [Task Management Workflow](/tutorials/task-management-workflow.md)
 
 

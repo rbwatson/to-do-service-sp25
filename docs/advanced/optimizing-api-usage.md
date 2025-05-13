@@ -4,549 +4,725 @@ description: "Best practices for efficient API usage, including caching, batch o
 tags: ["optimization", "performance"]
 categories: ["advanced"]
 importance: 5
+parent: "advanced"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 1
+ai-generated-date: "2025-05-13"
+navOrder: "1"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Optimizing API usage
+# Optimizing API Usage
 
-This document provides best practices for optimizing your use of the Task Management API, focusing on performance, efficiency, and cost considerations.
+This guide covers advanced techniques for optimizing your use of the Task Management API, focusing on performance, efficiency, and resource utilization. By following these best practices, you can reduce latency, minimize API calls, and improve the overall performance of your applications.
 
-## Understanding API limits
+## Understanding API Rate Limits
 
-While using the Task Management API, be aware of the following limitations:
+The Task Management API implements rate limiting to ensure fair usage and system stability. Understanding and working within these limits is essential for building reliable applications.
 
-- **Rate limits**: The API enforces rate limits to ensure fair usage
-- **Response size**: Large result sets are paginated
-- **Performance considerations**: Frequent polling may impact performance
+### Current Rate Limits
 
-Optimizing your API usage helps you stay within these limits while maintaining a responsive application.
+| Plan | Requests per Minute | Requests per Day |
+|------|---------------------|------------------|
+| Free | 60 | 10,000 |
+| Standard | 120 | 50,000 |
+| Professional | 300 | 150,000 |
+| Enterprise | Custom | Custom |
 
-## Caching strategies
+### Identifying Rate Limiting
 
-Implementing effective caching is one of the most important ways to optimize API usage.
+When you exceed rate limits, the API returns a `429 Too Many Requests` status code. The response includes headers that provide information about your current usage:
 
-### What to cache
+```
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 0
+X-RateLimit-Reset: 1715123456
+Retry-After: 30
+```
 
-Consider caching these resources:
+### Best Practices for Rate Limit Management
 
-- User data that changes infrequently
-- Task lists that don't need real-time updates
-- Reference data (e.g., available task statuses)
+1. **Monitor rate limit headers**: Track the `X-RateLimit-Remaining` header in each response to stay aware of your remaining quota.
 
-### Client-side caching
+2. **Implement exponential backoff**: When rate limited, use the `Retry-After` header to determine when to retry, with exponential backoff for repeated failures.
 
-Implement client-side caching in your application:
+3. **Distribute requests over time**: Avoid bursts of requests that might trigger rate limits. Space out non-urgent requests evenly.
+
+4. **Prioritize critical operations**: Ensure that essential operations have priority access to your rate limit quota.
+
+## Efficient Data Retrieval
+
+Optimizing how you retrieve data can significantly reduce the number of API calls required and improve application performance.
+
+### Use Pagination Effectively
+
+The API uses offset-based pagination for list endpoints. To retrieve large datasets efficiently:
+
+1. **Use appropriate page sizes**: Start with the default `limit` of 10 and adjust based on your needs. For UI displays, match the `limit` to your display size.
+
+2. **Implement infinite scrolling or "load more"**: Instead of loading all data at once, fetch additional pages as the user scrolls or requests more items.
+
+3. **Track total counts**: Use the `total` value in the pagination object to show progress indicators or determine when all data has been retrieved.
 
 ```javascript
-// Simple cache implementation
-class ApiCache {
-  constructor(ttlMs = 60000) { // Default TTL: 1 minute
-    this.cache = new Map();
-    this.ttlMs = ttlMs;
-  }
-
-  set(key, value) {
-    const expiresAt = Date.now() + this.ttlMs;
-    this.cache.set(key, { value, expiresAt });
-    return value;
-  }
-
-  get(key) {
-    const entry = this.cache.get(key);
-    if (!entry) return null;
+async function getAllPages(endpoint, queryParams = {}) {
+  let allData = [];
+  let hasMore = true;
+  let offset = 0;
+  const limit = 100; // Maximum page size for bulk operations
+  
+  while (hasMore) {
+    const params = new URLSearchParams({
+      ...queryParams,
+      limit,
+      offset
+    });
     
-    if (Date.now() > entry.expiresAt) {
+    const response = await fetch(`${API_BASE_URL}/${endpoint}?${params}`, {
+      headers: { 'Authorization': `Bearer ${API_KEY}` }
+    });
+    
+    const result = await response.json();
+    allData = [...allData, ...result.data];
+    
+    // Update pagination variables
+    offset += limit;
+    hasMore = result.pagination.hasMore;
+    
+    // Optional: Add a delay to avoid rate limiting
+    if (hasMore) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+  }
+  
+  return allData;
+}
+```
+
+### Filter Data on the Server
+
+Use query parameters to filter data on the server instead of retrieving all data and filtering client-side:
+
+```javascript
+// Inefficient: Retrieve all tasks and filter client-side
+const allTasks = await getAllTasks();
+const highPriorityTasks = allTasks.filter(task => task.priority === 'HIGH');
+
+// Efficient: Use server-side filtering
+const highPriorityTasks = await getTasks({ priority: 'HIGH' });
+```
+
+### Request Only What You Need
+
+Some endpoints may support field selection in the future to limit the fields returned in the response. When available, use this feature to reduce payload size:
+
+```
+GET /tasks?fields=id,title,status,dueDate
+```
+
+## Implementing Caching Strategies
+
+A well-designed caching strategy can dramatically reduce API calls and improve response times for your users.
+
+### Client-Side Caching
+
+1. **Cache frequently accessed data**: Store common lookups like user details and task status options in memory.
+
+2. **Implement time-based cache expiry**: Set appropriate TTL (Time To Live) values based on how frequently the data changes.
+
+3. **Use conditional requests with ETags**: When supported, use the `If-None-Match` header with ETags to validate if cached data is still current.
+
+```javascript
+class ApiCache {
+  constructor(ttlSeconds = 300) {
+    this.cache = new Map();
+    this.ttlSeconds = ttlSeconds;
+  }
+  
+  set(key, value) {
+    const item = {
+      value,
+      expiry: Date.now() + (this.ttlSeconds * 1000)
+    };
+    this.cache.set(key, item);
+  }
+  
+  get(key) {
+    const item = this.cache.get(key);
+    if (!item) return null;
+    
+    if (Date.now() > item.expiry) {
       this.cache.delete(key);
       return null;
     }
     
-    return entry.value;
+    return item.value;
   }
-
-  invalidate(key) {
+  
+  delete(key) {
     this.cache.delete(key);
   }
+  
+  clear() {
+    this.cache.clear();
+  }
 }
 
-// Usage example
-const cache = new ApiCache(300000); // 5-minute TTL
+// Example usage
+const apiCache = new ApiCache(60 * 5); // 5 minute cache
 
-async function getTasksWithCaching(status = null) {
-  const cacheKey = `tasks_${status || 'all'}`;
-  const cachedData = cache.get(cacheKey);
+async function getUserWithCache(userId) {
+  const cacheKey = `user:${userId}`;
+  const cachedUser = apiCache.get(cacheKey);
   
-  if (cachedData) {
-    console.log('Using cached task data');
-    return cachedData;
+  if (cachedUser) {
+    return cachedUser;
   }
   
-  console.log('Fetching fresh task data');
-  const tasks = await getTasks(status);
-  cache.set(cacheKey, tasks);
-  return tasks;
+  const user = await getUser(userId);
+  apiCache.set(cacheKey, user);
+  return user;
 }
 ```
 
-### Cache invalidation
+### Cache Invalidation Strategies
 
-Implement proper cache invalidation to maintain data consistency:
+1. **Time-based invalidation**: Set an expiry time appropriate to the data type:
+   - User profiles: 1 hour
+   - Task lists: 5 minutes
+   - Task details: 1 minute
 
-- Invalidate user cache when user details are updated
-- Invalidate task caches when tasks are created, updated, or deleted
-- Use time-based expiration for less critical data
+2. **Action-based invalidation**: Clear relevant cache entries when mutations occur:
 
 ```javascript
-// Invalidate cache when a task is updated
-async function updateTaskWithCacheInvalidation(taskId, taskData) {
-  const updatedTask = await updateTask(taskId, taskData);
+async function updateTask(taskId, updates) {
+  const result = await apiRequest(`/tasks/${taskId}`, 'PATCH', updates);
   
-  // Invalidate specific task cache
-  cache.invalidate(`task_${taskId}`);
+  // Invalidate affected cache entries
+  apiCache.delete(`task:${taskId}`);
+  apiCache.delete('tasks:list');
   
-  // Invalidate task list caches
-  cache.invalidate('tasks_all');
-  cache.invalidate(`tasks_${updatedTask.taskStatus}`);
-  
-  return updatedTask;
+  return result;
 }
 ```
 
-## Batch operations
-
-Minimize the number of API calls by utilizing batch operations when possible.
-
-### Pagination optimization
-
-When working with large data sets, use appropriate page sizes:
+3. **Selective invalidation**: Only invalidate cache for affected items:
 
 ```javascript
-// Fetch all tasks efficiently with pagination
-async function getAllTasksEfficiently(batchSize = 50) {
-  let page = 0;
-  let allTasks = [];
-  let hasMoreData = true;
+function invalidateUserTasks(userId) {
+  // Clear all cached data related to this user's tasks
+  apiCache.delete(`user:${userId}:tasks`);
   
-  while (hasMoreData) {
-    const response = await fetch(`http://localhost:3000/tasks?_page=${page}&_perPage=${batchSize}`, {
-      headers: { 'Authorization': 'Bearer YOUR_TOKEN' }
-    });
-    
-    const data = await response.json();
-    const tasks = data.tasks || [];
-    
-    allTasks = allTasks.concat(tasks);
-    hasMoreData = tasks.length === batchSize;
-    page++;
+  // Find and delete individual task cache entries for this user
+  for (const key of apiCache.cache.keys()) {
+    if (key.startsWith('task:') && cachedTaskBelongsToUser(key, userId)) {
+      apiCache.delete(key);
+    }
   }
-  
-  return allTasks;
 }
 ```
 
-### Process data in chunks
+## Batch Operations
 
-For operations that involve large sets of data, process them in chunks:
+Reducing the number of API calls through batching can significantly improve performance.
+
+### Client-Side Batching
+
+While the API may not support native batch operations, you can implement client-side batching:
 
 ```javascript
-// Update multiple tasks in chunks
-async function updateTasksInChunks(taskUpdates, chunkSize = 5) {
-  const chunks = [];
-  
-  // Split updates into chunks
-  for (let i = 0; i < taskUpdates.length; i += chunkSize) {
-    chunks.push(taskUpdates.slice(i, i + chunkSize));
-  }
-  
+async function batchCreateTasks(tasks, batchSize = 10) {
   const results = [];
   
-  // Process each chunk
-  for (const chunk of chunks) {
-    const chunkPromises = chunk.map(update => 
-      updateTask(update.taskId, update.data)
-    );
+  // Process in batches to avoid overwhelming the API
+  for (let i = 0; i < tasks.length; i += batchSize) {
+    const batch = tasks.slice(i, i + batchSize);
     
-    const chunkResults = await Promise.all(chunkPromises);
-    results.push(...chunkResults);
+    // Create tasks in parallel
+    const batchPromises = batch.map(task => createTask(task));
+    const batchResults = await Promise.all(batchPromises);
     
-    // Optional delay between chunks to avoid rate limits
-    await new Promise(resolve => setTimeout(resolve, 100));
+    results.push(...batchResults);
+    
+    // Add a small delay between batches to avoid rate limiting
+    if (i + batchSize < tasks.length) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
   }
   
   return results;
 }
 ```
 
-## Polling optimization
+### Optimizing Parallel Requests
 
-If your application needs to check for updates regularly, optimize your polling strategy.
-
-### Adaptive polling
-
-Implement adaptive polling intervals based on user activity:
+When making multiple independent requests, use `Promise.all()` to execute them in parallel:
 
 ```javascript
-class AdaptivePoller {
-  constructor(minInterval = 5000, maxInterval = 60000) {
-    this.minInterval = minInterval; // 5 seconds
-    this.maxInterval = maxInterval; // 1 minute
-    this.currentInterval = minInterval;
-    this.timerId = null;
-    this.lastActivity = Date.now();
-    this.callback = null;
-  }
-  
-  setCallback(callback) {
-    this.callback = callback;
-  }
-  
-  start() {
-    this.poll();
-    
-    // Reset interval on user interaction
-    document.addEventListener('click', () => this.userActivity());
-    document.addEventListener('keypress', () => this.userActivity());
-  }
-  
-  stop() {
-    if (this.timerId) {
-      clearTimeout(this.timerId);
-      this.timerId = null;
-    }
-  }
-  
-  userActivity() {
-    this.lastActivity = Date.now();
-    this.currentInterval = this.minInterval;
-  }
-  
-  poll() {
-    if (this.callback) {
-      this.callback();
-    }
-    
-    // Adjust polling interval based on inactivity
-    const inactiveTime = Date.now() - this.lastActivity;
-    if (inactiveTime > 30000) { // 30 seconds of inactivity
-      this.currentInterval = Math.min(this.maxInterval, this.currentInterval * 1.5);
-    }
-    
-    this.timerId = setTimeout(() => this.poll(), this.currentInterval);
-  }
-}
-
-// Usage example
-const taskPoller = new AdaptivePoller();
-
-taskPoller.setCallback(async () => {
-  try {
-    // Only fetch tasks that are relevant to current view
-    const status = getCurrentViewStatus(); // e.g., 'IN_PROGRESS'
-    const tasks = await getTasks(status);
-    updateTasksUI(tasks);
-  } catch (error) {
-    console.error('Polling error:', error);
-  }
-});
-
-taskPoller.start();
-```
-
-### Webhooks as an alternative
-
-For real-time updates, consider implementing a webhook-based approach instead of polling, if your infrastructure supports it.
-
-## Request optimization
-
-Optimize your API requests to minimize data transfer and processing time.
-
-### Use filtering
-
-Filter results on the server side rather than client side:
-
-```javascript
-// Efficient: Server-side filtering
-const inProgressTasks = await getTasks('IN_PROGRESS');
-
-// Less efficient: Client-side filtering
-const allTasks = await getTasks();
-const inProgressTasks = allTasks.filter(task => task.taskStatus === 'IN_PROGRESS');
-```
-
-### Select only needed fields
-
-If the API supports field selection, use it to retrieve only the data you need.
-
-### Combine related operations
-
-Combine related operations to reduce round trips:
-
-```javascript
-// Helper function to fetch task and user in parallel
-async function getTaskWithUserDetails(taskId) {
-  const task = await getTaskById(taskId);
-  const user = await getUserById(task.userId);
+async function loadDashboardData(userId) {
+  // Execute requests in parallel
+  const [
+    userDetails,
+    assignedTasks,
+    createdTasks,
+    teamMembers
+  ] = await Promise.all([
+    getUser(userId),
+    getTasks({ assigneeId: userId }),
+    getTasks({ createdBy: userId }),
+    getTeamMembers(userId)
+  ]);
   
   return {
-    ...task,
-    user
+    user: userDetails,
+    tasks: {
+      assigned: assignedTasks,
+      created: createdTasks
+    },
+    team: teamMembers
   };
 }
 ```
 
-## Connection management
+Be careful not to exceed rate limits when making many parallel requests. Limit the number of concurrent requests based on your rate limit constraints.
 
-Properly manage connections to the API to avoid overhead.
+## Optimizing Payload Size
 
-### Reuse HTTP connections
+Reducing the size of request and response payloads can improve network performance.
 
-Use connection pooling or HTTP keep-alive to reduce connection overhead:
+### Request Optimization
+
+1. **Only send changed fields**: When updating resources, only include the fields that have changed:
 
 ```javascript
-// Example with node-fetch
-const fetch = require('node-fetch');
-const HttpAgent = require('agentkeepalive');
-
-const agent = new HttpAgent({
-  keepAlive: true,
-  maxSockets: 10,
-  maxFreeSockets: 5,
-  timeout: 60000,
-  freeSocketTimeout: 30000
+// Inefficient: Sending all fields
+await updateTask(taskId, {
+  title: task.title,
+  description: task.description,
+  status: 'IN_PROGRESS',
+  priority: task.priority,
+  dueDate: task.dueDate,
+  tags: task.tags
 });
 
-async function fetchWithKeepalive(url, options = {}) {
-  return fetch(url, {
-    ...options,
-    agent
-  });
+// Efficient: Only sending the changed field
+await updateTask(taskId, { status: 'IN_PROGRESS' });
+```
+
+2. **Compress large requests**: For very large payloads, use compression when supported by the API:
+
+```javascript
+const compressedData = await compressPayload(largeData);
+
+fetch(url, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Content-Encoding': 'gzip'
+  },
+  body: compressedData
+});
+```
+
+### Response Optimization
+
+1. **Use pagination wisely**: Only request the number of items you need.
+
+2. **Filter server-side**: Use query parameters to reduce the amount of data returned.
+
+3. **Request specific fields**: If supported, specify only the fields you need.
+
+## Connection and Network Optimization
+
+Optimizing network usage can improve performance, especially for mobile or slow connections.
+
+### Connection Reuse
+
+Use a single instance of your HTTP client to benefit from connection pooling and keep-alive:
+
+```javascript
+// Create a reusable client
+const apiClient = axios.create({
+  baseURL: 'https://api.taskmanagement.example.com/v1',
+  headers: {
+    'Authorization': `Bearer ${API_KEY}`,
+    'Content-Type': 'application/json'
+  },
+  timeout: 10000
+});
+
+// Reuse the client for all requests
+function getTasks(params) {
+  return apiClient.get('/tasks', { params });
+}
+
+function createTask(task) {
+  return apiClient.post('/tasks', task);
 }
 ```
 
-### Handle timeouts and retries
+### Request Timeouts
 
-Implement proper timeout handling and retry logic:
+Implement appropriate timeouts for API requests to avoid hanging operations:
 
 ```javascript
-async function fetchWithRetry(url, options = {}, retries = 3, backoff = 300) {
+async function apiRequest(endpoint, method = 'GET', data = null, timeoutMs = 5000) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  
   try {
-    const response = await fetch(url, {
-      ...options,
-      timeout: 5000 // 5 second timeout
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+      method,
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: data ? JSON.stringify(data) : undefined,
+      signal: controller.signal
     });
     
-    return response;
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+    
+    return await response.json();
   } catch (error) {
-    if (retries <= 0) throw error;
+    clearTimeout(timeoutId);
     
-    await new Promise(resolve => setTimeout(resolve, backoff));
-    return fetchWithRetry(url, options, retries - 1, backoff * 2);
+    if (error.name === 'AbortError') {
+      throw new Error(`Request timed out after ${timeoutMs}ms`);
+    }
+    
+    throw error;
   }
 }
 ```
 
-## Monitoring and analytics
+### Retry Strategies
 
-Implement monitoring to identify optimization opportunities.
-
-### Track API usage
-
-Monitor API calls to identify patterns and optimization opportunities:
+Implement robust retry logic for handling transient failures:
 
 ```javascript
-// Simple API call tracker
-class ApiMonitor {
-  constructor() {
-    this.callCounts = {};
-    this.responseTimesMs = {};
-  }
+async function fetchWithRetry(url, options, maxRetries = 3) {
+  let retries = 0;
   
-  recordCall(endpoint, responseTimeMs) {
-    this.callCounts[endpoint] = (this.callCounts[endpoint] || 0) + 1;
-    
-    if (!this.responseTimesMs[endpoint]) {
-      this.responseTimesMs[endpoint] = [];
-    }
-    this.responseTimesMs[endpoint].push(responseTimeMs);
-  }
-  
-  getStats() {
-    const stats = {};
-    
-    for (const endpoint in this.callCounts) {
-      const times = this.responseTimesMs[endpoint];
-      const avgTime = times.reduce((sum, time) => sum + time, 0) / times.length;
-      
-      stats[endpoint] = {
-        calls: this.callCounts[endpoint],
-        avgResponseTimeMs: avgTime,
-        minResponseTimeMs: Math.min(...times),
-        maxResponseTimeMs: Math.max(...times)
-      };
-    }
-    
-    return stats;
-  }
-  
-  logStats() {
-    console.table(this.getStats());
-  }
-}
-
-const apiMonitor = new ApiMonitor();
-
-// Wrap API calls with monitoring
-async function monitoredApiCall(endpoint, callFn) {
-  const startTime = performance.now();
-  try {
-    return await callFn();
-  } finally {
-    const endTime = performance.now();
-    apiMonitor.recordCall(endpoint, endTime - startTime);
-  }
-}
-
-// Usage example
-async function getTasksMonitored(status) {
-  return monitoredApiCall(`getTasks(${status || 'all'})`, () => getTasks(status));
-}
-```
-
-### Identify bottlenecks
-
-Use monitoring data to identify and address bottlenecks:
-
-- Endpoints with high response times
-- Frequently called endpoints that could benefit from caching
-- Patterns of bursts that could be smoothed out
-
-## Client-side optimization
-
-Optimize your client-side code for efficient API interaction.
-
-### State management
-
-Use efficient state management to minimize API calls:
-
-```javascript
-// Example with React and context API
-function TaskProvider({ children }) {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  
-  // Fetch tasks only once when component mounts
-  useEffect(() => {
-    const fetchTasks = async () => {
-      setLoading(true);
-      try {
-        const data = await getTasks();
-        setTasks(data);
-        setError(null);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    fetchTasks();
-  }, []);
-  
-  // Update tasks locally first, then in API
-  const updateTaskOptimistically = async (taskId, updates) => {
-    // Update locally first for responsiveness
-    setTasks(prevTasks => 
-      prevTasks.map(task => 
-        task.taskId === taskId ? { ...task, ...updates } : task
-      )
-    );
-    
-    // Then update in API
+  while (retries <= maxRetries) {
     try {
-      await updateTask(taskId, updates);
-    } catch (err) {
-      // Revert on error
-      setError(err.message);
-      setTasks(prevTasks => [...prevTasks]); // Trigger re-fetch
+      return await fetch(url, options);
+    } catch (error) {
+      retries++;
+      
+      if (retries > maxRetries || !isRetryableError(error)) {
+        throw error;
+      }
+      
+      // Exponential backoff with jitter
+      const delay = Math.min(
+        1000 * Math.pow(2, retries) + Math.random() * 1000,
+        30000 // Max 30 seconds
+      );
+      
+      console.warn(`Retry ${retries}/${maxRetries} after ${Math.round(delay)}ms`);
+      await new Promise(resolve => setTimeout(resolve, delay));
     }
-  };
-  
-    {% raw %}
-    return (
-    <TaskContext.Provider value={{ 
-      tasks, 
-      loading, 
-      error, 
-      updateTask: updateTaskOptimistically
-    }}>
-      {children}
-    </TaskContext.Provider>
-  );
-  {% endraw %}
+  }
+}
+
+function isRetryableError(error) {
+  // Retry network errors and server errors (500s)
+  return error.name === 'TypeError' || 
+         (error.response && error.response.status >= 500);
 }
 ```
 
-### Debouncing and throttling
+## Background Synchronization
 
-Implement debouncing for user input and throttling for frequent actions:
+For applications that need to work offline or in unreliable network conditions, implement background synchronization.
+
+### Offline Queue
+
+Implement a queue for operations performed offline:
 
 ```javascript
-// Debounce function for search inputs
-function debounce(func, wait) {
-  let timeout;
-  return function(...args) {
-    const context = this;
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(context, args), wait);
-  };
-}
-
-// Throttle function for scroll events
-function throttle(func, limit) {
-  let inThrottle;
-  return function(...args) {
-    const context = this;
-    if (!inThrottle) {
-      func.apply(context, args);
-      inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+class OfflineQueue {
+  constructor() {
+    this.queue = [];
+    this.isProcessing = false;
+    
+    // Attempt to process the queue when the app comes online
+    window.addEventListener('online', () => this.processQueue());
+  }
+  
+  addToQueue(operation) {
+    this.queue.push({
+      ...operation,
+      timestamp: Date.now()
+    });
+    
+    // Save queue to persistent storage
+    this.saveQueue();
+    
+    // Try to process the queue if we're online
+    if (navigator.onLine) {
+      this.processQueue();
     }
-  };
+  }
+  
+  async processQueue() {
+    if (this.isProcessing || !navigator.onLine || this.queue.length === 0) {
+      return;
+    }
+    
+    this.isProcessing = true;
+    
+    try {
+      while (this.queue.length > 0 && navigator.onLine) {
+        const operation = this.queue[0];
+        
+        try {
+          await this.executeOperation(operation);
+          
+          // Remove the successful operation from the queue
+          this.queue.shift();
+          this.saveQueue();
+        } catch (error) {
+          // If the operation failed but is retryable, keep it in the queue
+          if (isRetryableError(error)) {
+            console.warn(`Operation failed, will retry later:`, error);
+            break;
+          }
+          
+          // Otherwise, remove it from the queue
+          console.error(`Operation failed and won't be retried:`, error);
+          this.queue.shift();
+          this.saveQueue();
+        }
+      }
+    } finally {
+      this.isProcessing = false;
+    }
+  }
+  
+  async executeOperation(operation) {
+    // Execute the operation based on type
+    switch (operation.type) {
+      case 'CREATE_TASK':
+        return await createTask(operation.data);
+      case 'UPDATE_TASK':
+        return await updateTask(operation.id, operation.data);
+      case 'DELETE_TASK':
+        return await deleteTask(operation.id);
+      default:
+        throw new Error(`Unknown operation type: ${operation.type}`);
+    }
+  }
+  
+  saveQueue() {
+    localStorage.setItem('offlineQueue', JSON.stringify(this.queue));
+  }
+  
+  loadQueue() {
+    const saved = localStorage.getItem('offlineQueue');
+    this.queue = saved ? JSON.parse(saved) : [];
+  }
 }
 
 // Example usage
-const debouncedSearch = debounce(async (searchTerm) => {
-  // This will only be called after user stops typing for 300ms
-  const results = await searchTasks(searchTerm);
-  updateSearchResults(results);
-}, 300);
+const offlineQueue = new OfflineQueue();
+offlineQueue.loadQueue();
 
-// Usage in UI
-searchInput.addEventListener('input', (e) => {
-  debouncedSearch(e.target.value);
-});
+// When creating a task offline
+function createTaskOfflineSupport(taskData) {
+  if (navigator.onLine) {
+    return createTask(taskData);
+  }
+  
+  // Store in offline queue
+  offlineQueue.addToQueue({
+    type: 'CREATE_TASK',
+    data: taskData
+  });
+  
+  // Return a placeholder result for UI updates
+  return {
+    ...taskData,
+    id: `offline-${Date.now()}`, // Temporary ID
+    status: 'PENDING_SYNC',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  };
+}
 ```
 
-## Summary of best practices
+## Performance Monitoring
 
-- **Implement caching**: Cache responses to reduce API calls
-- **Use pagination efficiently**: Fetch data in appropriate page sizes
-- **Optimize polling**: Use adaptive polling or consider webhooks
-- **Batch operations**: Process data in chunks to reduce API calls
-- **Monitor performance**: Track API usage to identify optimization opportunities
-- **Implement error handling**: Add proper timeout handling and retries
-- **Use client-side optimizations**: Implement debouncing, throttling, and optimistic updates
+Implement monitoring to identify bottlenecks and opportunities for optimization.
 
-By following these best practices, you can optimize your use of the Task Management API, resulting in better performance, lower costs, and an improved user experience.
+### Track API Metrics
 
-## Related resources
+Monitor key performance indicators:
 
-- [Rate limiting](../getting-started/rate-limiting.html)
-- [Pagination](../core-concepts/pagination.html)
-- [Error handling](../core-concepts/error-handling.html)
-- [Data consistency](handling-data-consistency.html)
+```javascript
+class ApiMetrics {
+  constructor() {
+    this.metrics = {
+      totalRequests: 0,
+      successfulRequests: 0,
+      failedRequests: 0,
+      averageResponseTime: 0,
+      requestsByEndpoint: {}
+    };
+  }
+  
+  startRequest(endpoint) {
+    const startTime = performance.now();
+    this.metrics.totalRequests++;
+    
+    if (!this.metrics.requestsByEndpoint[endpoint]) {
+      this.metrics.requestsByEndpoint[endpoint] = {
+        count: 0,
+        totalTime: 0,
+        averageTime: 0,
+        failures: 0
+      };
+    }
+    
+    this.metrics.requestsByEndpoint[endpoint].count++;
+    
+    return startTime;
+  }
+  
+  endRequest(endpoint, startTime, success) {
+    const endTime = performance.now();
+    const duration = endTime - startTime;
+    
+    if (success) {
+      this.metrics.successfulRequests++;
+    } else {
+      this.metrics.failedRequests++;
+      this.metrics.requestsByEndpoint[endpoint].failures++;
+    }
+    
+    // Update average response time for this endpoint
+    const endpointMetrics = this.metrics.requestsByEndpoint[endpoint];
+    endpointMetrics.totalTime += duration;
+    endpointMetrics.averageTime = endpointMetrics.totalTime / endpointMetrics.count;
+    
+    // Update overall average response time
+    const totalTime = Object.values(this.metrics.requestsByEndpoint)
+      .reduce((sum, metrics) => sum + metrics.totalTime, 0);
+    this.metrics.averageResponseTime = totalTime / this.metrics.totalRequests;
+    
+    return duration;
+  }
+  
+  getMetrics() {
+    return { ...this.metrics };
+  }
+  
+  getEndpointPerformance() {
+    return Object.entries(this.metrics.requestsByEndpoint)
+      .map(([endpoint, metrics]) => ({
+        endpoint,
+        requests: metrics.count,
+        averageTime: metrics.averageTime.toFixed(2),
+        failures: metrics.failures,
+        successRate: ((metrics.count - metrics.failures) / metrics.count * 100).toFixed(1)
+      }))
+      .sort((a, b) => b.requests - a.requests);
+  }
+}
+
+// Create a global metrics instance
+const apiMetrics = new ApiMetrics();
+
+// Wrap API requests with metrics
+async function apiRequestWithMetrics(endpoint, method = 'GET', data = null) {
+  const startTime = apiMetrics.startRequest(endpoint);
+  let success = false;
+  
+  try {
+    const result = await apiRequest(endpoint, method, data);
+    success = true;
+    return result;
+  } finally {
+    const duration = apiMetrics.endRequest(endpoint, startTime, success);
+    console.debug(`${method} ${endpoint} took ${duration.toFixed(2)}ms`);
+  }
+}
+```
+
+### Log Slow Requests
+
+Identify and log unusually slow operations:
+
+```javascript
+function logSlowRequests(endpoint, method, duration, threshold = 1000) {
+  if (duration > threshold) {
+    console.warn(`Slow request: ${method} ${endpoint} took ${duration.toFixed(2)}ms`);
+    
+    // You could also send this to your monitoring system
+    if (typeof sendToMonitoring === 'function') {
+      sendToMonitoring('slow_request', {
+        endpoint,
+        method,
+        duration,
+        timestamp: new Date().toISOString()
+      });
+    }
+  }
+}
+```
+
+## Best Practices Summary
+
+1. **Respect rate limits**:
+   - Monitor limit headers
+   - Implement backoff strategies
+   - Distribute requests over time
+
+2. **Optimize data retrieval**:
+   - Use pagination appropriately
+   - Filter server-side
+   - Request only what you need
+
+3. **Implement caching**:
+   - Cache frequently accessed data
+   - Use appropriate cache invalidation strategies
+   - Consider data freshness requirements
+
+4. **Batch operations**:
+   - Group related operations
+   - Use parallel requests with Promise.all()
+   - Limit the number of concurrent requests
+
+5. **Optimize payload size**:
+   - Only send necessary fields
+   - Use compression for large payloads
+   - Filter responses on the server
+
+6. **Handle network issues gracefully**:
+   - Implement timeouts
+   - Use retry strategies
+   - Support offline operations when possible
+
+7. **Monitor performance**:
+   - Track API metrics
+   - Log slow requests
+   - Analyze patterns to identify optimization opportunities
+
+By applying these optimization techniques, you can build applications that use the Task Management API efficiently, providing better performance and reliability for your users.
+
+## See Also
+
+- [Rate Limiting](/getting-started/rate-limiting.md)
+- [Pagination](/core-concepts/pagination.md)
+- [Authentication](/getting-started/authentication.md)
+- [Error Handling](/core-concepts/error-handling.md)
 
 

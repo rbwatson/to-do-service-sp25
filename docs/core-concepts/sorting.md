@@ -4,164 +4,202 @@ description: "How to sort API results using sort parameters."
 tags: ["sorting", "collection"]
 categories: ["core-concepts"]
 importance: 6
+parent: "core-concepts"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 3
+ai-generated-date: "2025-05-13"
+navOrder: "3"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
 # Sorting
 
-The Task Management API provides sorting capabilities to order collections of resources based on specific fields. This document explains how to use sorting parameters to organize your API results.
+The Task Management API allows you to sort collections of resources using the `sort` query parameter. This page explains how to use sorting to organize and retrieve resources in a specific order.
 
-## Sort parameter
+## Basic Sorting
 
-To sort resources, use the `_sort` query parameter. The value should be the field name to sort by.
+To sort resources, use the `sort` query parameter with a field name:
 
-| Parameter | Description | Example |
-|-----------|-------------|---------|
-| `_sort` | Field to sort by | `_sort=dueDate` |
-
-## Sorting direction
-
-By default, sorting is in ascending order. To sort in descending order, prefix the field name with a minus sign (`-`).
-
-| Example | Description |
-|---------|-------------|
-| `_sort=dueDate` | Sort by due date in ascending order (earliest first) |
-| `_sort=-dueDate` | Sort by due date in descending order (latest first) |
-
-## Request examples
-
-To retrieve tasks sorted by title in ascending order:
-
-```http
-GET /tasks?_sort=taskTitle HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+```
+GET /tasks?sort=dueDate
 ```
 
-To retrieve users sorted by last name in descending order:
+By default, sorting is done in ascending order (A to Z, oldest to newest, etc.).
 
-```http
-GET /users?_sort=-lastName HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+## Sort Direction
+
+To specify the sort direction, prefix the field name with a plus (`+`) for ascending order or a minus (`-`) for descending order:
+
+```
+GET /tasks?sort=-dueDate   # Sort by due date, newest first
+GET /tasks?sort=+title     # Sort by title, alphabetically A-Z
 ```
 
-## Sortable fields
+## Multiple Sort Fields
 
-### User resource
+You can sort by multiple fields by separating them with commas:
 
-| Field | Description | Example |
-|-------|-------------|---------|
-| `userId` | User ID | `_sort=userId` |
-| `firstName` | First name | `_sort=firstName` |
-| `lastName` | Last name | `_sort=lastName` |
-| `contactEmail` | Email address | `_sort=contactEmail` |
-
-### Task resource
-
-| Field | Description | Example |
-|-------|-------------|---------|
-| `taskId` | Task ID | `_sort=taskId` |
-| `userId` | User ID | `_sort=userId` |
-| `taskTitle` | Task title | `_sort=taskTitle` |
-| `taskStatus` | Task status | `_sort=taskStatus` |
-| `dueDate` | Due date | `_sort=dueDate` |
-| `warningOffset` | Warning offset | `_sort=warningOffset` |
-
-## Combining sorting with pagination
-
-Sorting works seamlessly with pagination. To retrieve the first page of tasks sorted by due date in descending order:
-
-```http
-GET /tasks?_sort=-dueDate&_page=0&_perPage=10 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+```
+GET /tasks?sort=-priority,dueDate
 ```
 
-For more information on pagination, see the [Pagination](pagination.html) documentation.
+This example sorts tasks by priority in descending order (high to low) and then by due date in ascending order (earliest first) when priorities are the same.
 
-## Sorting behavior
+## Sortable Fields
 
-- String fields are sorted alphabetically
-- Date fields are sorted chronologically
-- Numeric fields are sorted numerically
-- Enum fields (like `taskStatus`) are sorted based on the string value
-- If the sort parameter is omitted, resources are typically returned in the order they were created (by ID)
+### User Resource
 
-## Sort examples by use case
+| Field | Type | Description |
+|-------|------|-------------|
+| `name` | String | User's full name |
+| `email` | String | User's email address |
+| `createdAt` | Date | When the user was created |
+| `updatedAt` | Date | When the user was last updated |
 
-### Finding urgent tasks
+### Task Resource
 
-To find tasks with the earliest due dates:
+| Field | Type | Description |
+|-------|------|-------------|
+| `title` | String | Task title |
+| `status` | String | Task status |
+| `priority` | String | Task priority |
+| `dueDate` | Date | Task due date |
+| `createdAt` | Date | When the task was created |
+| `updatedAt` | Date | When the task was last updated |
 
-```http
-GET /tasks?_sort=dueDate HTTP/1.1
-```
+## Example Requests
 
-### Finding recently added tasks
-
-To find the most recently added tasks:
-
-```http
-GET /tasks?_sort=-taskId HTTP/1.1
-```
-
-### Alphabetical user list
-
-To get an alphabetical list of users by last name:
+### Sort Tasks by Due Date (Earliest First)
 
 ```http
-GET /users?_sort=lastName HTTP/1.1
+GET /tasks?sort=dueDate
 ```
 
-## Implementing sorting in client applications
+### Sort Tasks by Priority (Highest First) and Due Date (Earliest First)
 
-When implementing sorting in a client application, consider these best practices:
+```http
+GET /tasks?sort=-priority,dueDate
+```
 
-- Provide clear UI controls for users to sort by different fields
-- Indicate the current sort field and direction
-- Remember the user's sort preference between sessions
-- Combine sorting with filtering for more precise results
+### Sort Users by Name (Alphabetical)
 
-## Sorting code example
+```http
+GET /users?sort=name
+```
 
-```javascript
-// Example function to fetch sorted tasks
-async function fetchSortedTasks(sortField, ascending = true) {
-  // Add a minus sign for descending order
-  const sortParam = ascending ? sortField : `-${sortField}`;
-  
-  try {
-    const response = await fetch(`http://localhost:3000/tasks?_sort=${sortParam}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer YOUR_TOKEN',
-        'Content-Type': 'application/json'
-      }
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
-    }
-    
-    return await response.json();
-  } catch (error) {
-    console.error('Failed to fetch sorted tasks:', error);
-    throw error;
+### Sort Users by Creation Date (Newest First)
+
+```http
+GET /users?sort=-createdAt
+```
+
+## Combining with Other Parameters
+
+Sorting can be combined with other query parameters like pagination and filtering:
+
+```http
+GET /tasks?status=IN_PROGRESS&sort=-priority&limit=10&offset=0
+```
+
+This request retrieves:
+- Tasks with status "IN_PROGRESS"
+- Sorted by priority (highest first)
+- Limited to 10 results
+- Starting from the first result (offset 0)
+
+## Sorting Response Format
+
+The sorting parameters don't change the structure of the response, only the order of items in the `data` array:
+
+```json
+{
+  "data": [
+    {
+      "id": "task123",
+      "title": "High priority task",
+      "priority": "HIGH",
+      "dueDate": "2025-05-15T10:00:00Z",
+      // other properties...
+    },
+    {
+      "id": "task456",
+      "title": "Medium priority task",
+      "priority": "MEDIUM",
+      "dueDate": "2025-05-14T10:00:00Z",
+      // other properties...
+    },
+    // more tasks...
+  ],
+  "pagination": {
+    "total": 42,
+    "limit": 10,
+    "offset": 0,
+    "hasMore": true
   }
 }
 ```
 
-## Next steps
+## Handling Sort in Code
 
-After learning about sorting, explore these related topics:
+### JavaScript Example
 
-- [Pagination](pagination.html) to handle large result sets
-- [Task status lifecycle](task-status-lifecycle.html) to understand the ordering of status values
-- [Error handling](error-handling.html) for robust client applications
-- [Task resource](../resources/task-resource.html) for more details on task fields
+```javascript
+async function getTasksSortedByPriorityAndDueDate() {
+  try {
+    const response = await fetch('https://api.taskmanagement.example.com/v1/tasks?sort=-priority,dueDate', {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    const result = await response.json();
+    return result.data;
+  } catch (error) {
+    console.error('Error fetching sorted tasks:', error);
+    return [];
+  }
+}
+```
+
+### Python Example
+
+```python
+import requests
+
+def get_tasks_sorted_by_priority_and_due_date(api_key):
+    try:
+        response = requests.get(
+            'https://api.taskmanagement.example.com/v1/tasks?sort=-priority,dueDate',
+            headers={
+                'Authorization': f'Bearer {api_key}'
+            }
+        )
+        
+        response.raise_for_status()
+        result = response.json()
+        return result['data']
+    except requests.exceptions.RequestException as e:
+        print(f'Error fetching sorted tasks: {e}')
+        return []
+```
+
+## Best Practices
+
+1. **Combine with pagination**: When sorting large collections, always use pagination to improve performance.
+
+2. **Default sorting**: If no sorting is specified, resources are typically sorted by `createdAt` in descending order (newest first).
+
+3. **Custom sorting**: For more complex sorting needs, consider using filtering and then sorting the results client-side.
+
+4. **Sorting null values**: Fields with null values typically appear last in ascending sorts and first in descending sorts.
+
+## See Also
+
+- [Pagination](/core-concepts/pagination.md)
+- [Get All Tasks](/api-reference/get-all-tasks.md)
+- [Get All Users](/api-reference/get-all-users.md)
 
 

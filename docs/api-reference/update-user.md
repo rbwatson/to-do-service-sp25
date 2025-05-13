@@ -6,15 +6,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/users/{userId}"]
 related_pages: ["user-resource"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 5
+ai-generated-date: "2025-05-13"
+navOrder: "5"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Update a user
-
-The `PATCH /users/{userId}` endpoint updates one or more properties of an existing user. This endpoint supports partial updates, allowing you to modify specific fields without affecting the others.
+# Update a User
 
 ## Endpoint
 
@@ -22,185 +25,175 @@ The `PATCH /users/{userId}` endpoint updates one or more properties of an existi
 PATCH /users/{userId}
 ```
 
-## Authentication
+This endpoint updates an existing user's information. You can update one or more properties of the user resource.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Path Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `userId` | String | Unique identifier of the user to update |
 
-## Path parameters
+## Request Body
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `userId` | integer | Yes | The unique identifier of the user to update |
+The request body should be a JSON object containing the properties you want to update. You can include one or more of the following properties:
 
-## Request body
+| Property | Type | Description |
+|----------|------|-------------|
+| `name` | String | Full name of the user |
+| `email` | String | Email address of the user (must be unique) |
+| `role` | String | Role of the user: "admin", "manager", or "member" |
 
-The request body should be a JSON object containing one or more user properties to update:
-
-| Property | Type | Required | Description | Constraints |
-|----------|------|----------|-------------|-------------|
-| `firstName` | string | No | User's first name | 1-100 characters |
-| `lastName` | string | No | User's last name | 1-100 characters |
-| `contactEmail` | string | No | User's email address | Valid email format, unique |
-
-At least one property must be included in the request.
-
-### Example request body
+### Example Request Body
 
 ```json
 {
-  "contactEmail": "new.email@example.com"
+  "name": "John Smith",
+  "role": "admin"
 }
 ```
 
-## Request example
+## Request Example
 
 ```http
-PATCH /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+PATCH /users/user123
 Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
 
 {
-  "contactEmail": "new.email@example.com"
+  "name": "John Smith",
+  "role": "admin"
 }
 ```
 
 ## Response
 
-### Success response (200 OK)
-
-If the user is updated successfully, the API returns a `200 OK` status code and the complete updated user object:
+### Success Response (200 OK)
 
 ```json
 {
-  "userId": 1,
-  "firstName": "Ferdinand",
-  "lastName": "Smith",
-  "contactEmail": "new.email@example.com"
+  "id": "user123",
+  "name": "John Smith",
+  "email": "john.doe@example.com",
+  "role": "admin",
+  "createdAt": "2025-04-01T10:00:00Z",
+  "updatedAt": "2025-05-13T15:30:00Z"
 }
 ```
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | One or more fields have invalid values |
-| 400 | `MISSING_REQUIRED_FIELD` | No fields provided for update |
-| 400 | `DUPLICATE_EMAIL` | The email address is already in use |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 404 | `RESOURCE_NOT_FOUND` | User not found |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 400 | Bad request (e.g., malformed request body) |
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions to update this user) |
+| 404 | Not Found (user with the specified ID does not exist) |
+| 409 | Conflict (e.g., email already exists) |
+| 422 | Unprocessable entity (e.g., validation errors) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
-
-#### Invalid field example (400)
+#### Example Error Response (409 Conflict)
 
 ```json
 {
-  "code": "INVALID_FIELD",
-  "message": "The field `contactEmail` must be a valid email address",
-  "details": [
-    {
-      "field": "contactEmail",
-      "reason": "Invalid format",
-      "location": "body"
-    }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  "error": {
+    "code": "resource_conflict",
+    "message": "Email address is already in use by another user"
+  }
 }
 ```
 
-#### User not found example (404)
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-```json
-{
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "User with ID 999 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
+## Authentication
+
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
+
+```
+Authorization: Bearer YOUR_API_KEY
 ```
 
-## Response fields
+The authenticated user must have appropriate permissions to update the requested user:
+- `admin` users can update any user, including changing roles
+- `manager` users can update users with "member" role but cannot change roles to "admin"
+- `member` users can only update their own information and cannot change their role
 
-The response contains the updated user object with the following fields:
+## Important Considerations
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `userId` | integer | Unique identifier for the user |
-| `firstName` | string | User's first name |
-| `lastName` | string | User's last name |
-| `contactEmail` | string | User's email address |
+- **Partial Updates**: This endpoint supports partial updates. You only need to include the properties you want to change in the request body.
 
-For more information about the user resource, see the [User resource](../resources/user-resource.html) document.
+- **Email Uniqueness**: If you update the email address, it must be unique across all users. Attempting to use an email that's already associated with another user will result in a `409 Conflict` error.
 
-## Validation rules
+- **Role Restrictions**: There are restrictions on who can change roles:
+  - Only admins can promote users to the "admin" role
+  - Managers can promote members to "manager" but cannot promote to "admin"
+  - Users cannot change their own role
 
-The API applies the following validation rules when updating a user:
+- **Read-Only Fields**: The `id`, `createdAt`, and `updatedAt` fields are read-only and cannot be updated. If included in the request, they will be ignored.
 
-- At least one field must be provided for update
-- `firstName` must be between 1 and 100 characters, if provided
-- `lastName` must be between 1 and 100 characters, if provided
-- `contactEmail` must be a valid email format, if provided
-- `contactEmail` must be unique across all users, if provided
+- **No Response Body for Empty Updates**: If the request body is empty or contains only read-only fields, the response will be a `204 No Content` status with no response body.
 
-If validation fails, the API returns a `400 Bad Request` response with details about the validation errors.
+## Best Practices
 
-## Update behavior
+- Only include the fields you want to update in the request body
+- Validate email formats client-side before making the API request
+- Handle email conflict errors gracefully in your application
+- Implement proper authorization checks in your application before attempting role changes
+- Consider the impact of role changes on user permissions and access
 
-- The update is partial, meaning only the fields included in the request will be modified
-- Omitted fields retain their current values
-- The `userId` cannot be modified
-- The response includes the complete user object with all fields, including those not modified
-
-## Code examples
-
-### cURL
-
-```bash
-curl -X PATCH \
-  http://localhost:3000/users/1 \
-  -H 'Authorization: Bearer YOUR_TOKEN' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "contactEmail": "new.email@example.com"
-  }'
-```
+## Code Examples
 
 ### JavaScript
 
 ```javascript
-async function updateUser(userId, userData) {
-  const response = await fetch(`http://localhost:3000/users/${userId}`, {
-    method: 'PATCH',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(userData)
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+async function updateUser(userId, updates) {
+  try {
+    const response = await fetch(`https://api.taskmanagement.example.com/v1/users/${userId}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updates)
+    });
+    
+    if (response.status === 204) {
+      // No content response (empty update)
+      return null;
+    }
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to update user: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error(`Error updating user ${userId}:`, error);
+    throw error;
   }
-  
-  return await response.json();
 }
 
 // Example usage
-const userUpdates = {
-  contactEmail: "new.email@example.com"
-};
-
-updateUser(1, userUpdates)
-  .then(user => console.log('User updated:', user))
-  .catch(error => console.error('Failed to update user:', error));
+try {
+  const updatedUser = await updateUser('user123', {
+    name: 'John Smith',
+    role: 'manager'
+  });
+  
+  if (updatedUser) {
+    console.log(`User updated: ${updatedUser.name} (${updatedUser.role})`);
+  } else {
+    console.log('User update returned no content');
+  }
+} catch (error) {
+  if (error.message.includes('already in use')) {
+    console.error('Email address is already taken by another user');
+  } else if (error.message.includes('permission')) {
+    console.error('You do not have permission to perform this update');
+  } else {
+    console.error('Failed to update user:', error);
+  }
+}
 ```
 
 ### Python
@@ -208,68 +201,103 @@ updateUser(1, userUpdates)
 ```python
 import requests
 
-def update_user(user_id, user_data):
-    url = f'http://localhost:3000/users/{user_id}'
+def update_user(api_key, user_id, **updates):
+    """
+    Update an existing user's information.
     
+    Args:
+        api_key (str): API key for authentication
+        user_id (str): The unique identifier of the user to update
+        **updates: Keyword arguments for fields to update (name, email, role)
+    
+    Returns:
+        dict: Updated user data if successful, None for empty updates
+        
+    Raises:
+        Exception: If the API request fails
+    """
+    url = f'https://api.taskmanagement.example.com/v1/users/{user_id}'
     headers = {
-        'Authorization': 'Bearer YOUR_TOKEN',
+        'Authorization': f'Bearer {api_key}',
         'Content-Type': 'application/json'
     }
     
-    response = requests.patch(url, headers=headers, json=user_data)
+    # Filter out None values
+    update_data = {k: v for k, v in updates.items() if v is not None}
     
-    if response.status_code != 200:
-        error = response.json()
-        raise Exception(error['message'])
+    if not update_data:
+        return None  # No updates to make
     
-    return response.json()
+    response = requests.patch(url, json=update_data, headers=headers)
+    
+    if response.status_code == 204:
+        # No content response (empty update was accepted)
+        return None
+    elif response.status_code == 200:
+        return response.json()
+    elif response.status_code == 404:
+        raise Exception(f"User with ID {user_id} not found")
+    elif response.status_code == 409:
+        raise Exception("Email address is already in use by another user")
+    elif response.status_code == 403:
+        raise Exception("You don't have permission to update this user")
+    else:
+        error_data = response.json()
+        raise Exception(f"API error: {error_data['error']['message']}")
 
 # Example usage
-user_updates = {
-    "contactEmail": "new.email@example.com"
-}
-
 try:
-    user = update_user(1, user_updates)
-    print('User updated:', user)
+    # Update just the name
+    updated_user = update_user(
+        api_key='YOUR_API_KEY',
+        user_id='user123',
+        name='Jane Wilson'
+    )
+    
+    if updated_user:
+        print(f"User updated successfully:")
+        print(f"Name: {updated_user['name']}")
+        print(f"Email: {updated_user['email']}")
+        print(f"Role: {updated_user['role']}")
+    else:
+        print("No updates were made or no content was returned")
+        
 except Exception as e:
-    print('Failed to update user:', str(e))
+    print(f"Error updating user: {e}")
 ```
 
-## Common use cases
+### cURL
 
-### Update contact information
+```bash
+# Update name and role
+curl -X PATCH "https://api.taskmanagement.example.com/v1/users/user123" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Smith",
+    "role": "admin"
+  }'
 
-When a user's contact information changes, update their email address:
-
-```json
-{
-  "contactEmail": "new.email@example.com"
-}
+# Update just the email
+curl -X PATCH "https://api.taskmanagement.example.com/v1/users/user123" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "john.smith@example.com"
+  }'
 ```
 
-### Update user name
+## Related Resources
 
-When a user's name changes, update their first name, last name, or both:
+- [User Resource](/resources/user-resource.md) - Detailed information about the User resource
+- [Get All Users](/api-reference/get-all-users.md) - Retrieve a list of all users
+- [Get User by ID](/api-reference/get-user-by-id.md) - Retrieve a specific user by ID
+- [Delete a User](/api-reference/delete-user.md) - Remove a user from the system
 
-```json
-{
-  "firstName": "NewFirstName",
-  "lastName": "NewLastName"
-}
-```
+## See Also
 
-## Related resources
-
-- [User resource](../resources/user-resource.html) - Detailed information about the user resource
-- [Get all users](get-all-users.html) - Retrieve a list of all users
-- [Get user by ID](get-user-by-id.html) - Retrieve a specific user
-- [Create a user](create-user.html) - Create a new user
-- [Delete a user](delete-user.html) - Remove a user
-
-## See also
-
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
-- [Getting started with users](../tutorials/getting-started-with-users.html) - Tutorial on user management
+- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Authentication](/getting-started/authentication.md) - How to authenticate your API requests
+- [Getting Started with Users](/tutorials/getting-started-with-users.md) - Guide to working with users
 
 
