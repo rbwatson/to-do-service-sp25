@@ -22,15 +22,16 @@ global:
     - Adjust content depth based on 'importance', 'audience', and 'readerLevel' properties.
     - Use 'codeExampleScope' and 'errorExampleScope' to determine appropriate detail level for examples.
 
-    Formatting requirements:
-    - Place topics from content:topics: in the root documentation directory.
-    - Replace navOrder: "$pos" with the 1-based index in the array.
-    - Replace $today with the current date.
+    File output requirements:
     - Write all content in one file named "all-docs.md".
     - Start each topic with "--- FILE: directory/filename.md ---".
     - Use markdown for content and YAML for Jekyll front matter.
 
-    If you have a
+    Formatting requirements:
+    - Place topics from content:topics: in the root documentation directory.
+    - Replace navOrder: "$pos" with the 1-based index in the array.
+    - Replace $today with the current date.
+
   aiModel: "Claude 3.7 Sonnet"
   aiModelVersion: "3.7"
   styleGuideFiles:
