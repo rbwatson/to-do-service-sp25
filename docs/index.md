@@ -7,7 +7,7 @@ importance: 10
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "1"
+nav_exclude: true
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"

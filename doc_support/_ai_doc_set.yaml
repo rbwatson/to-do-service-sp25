@@ -115,7 +115,7 @@ content:
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        nav_order: "1"
+        nav_exclude: true
 
     - filename: "getting-started.md"
       frontMatter:

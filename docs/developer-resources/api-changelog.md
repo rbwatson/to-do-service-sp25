@@ -3,9 +3,10 @@ title: "API changelog"
 description: "History of changes to the Task Management API across versions."
 tags: ["changelog", "versions"]
 categories: ["developer-resources"]
+parent: "Developer Resources"
 importance: 3
 ai-generated: false
-navOrder: 1
+nav_order: 1
 ---
 
 # API changelog

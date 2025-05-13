@@ -3,9 +3,10 @@ title: "Postman collection"
 description: "How to use the Task Management API Postman collection for testing and development."
 tags: ["tools", "postman"]
 categories: ["developer-resources"]
+parent: "Developer Resources"
 importance: 4
 ai-generated: false
-navOrder: 2
+nav_order: 2
 ---
 
 # Postman collection
