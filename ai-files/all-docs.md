@@ -1,3 +1,566 @@
+--- FILE: index.md
+---
+title: "Task Management API Documentation"
+description: "Comprehensive guide to the Task Management API, including usage, endpoints, and best practices."
+tags: ["API", "documentation", "task management"]
+categories: ["overview"]
+importance: 10
+ai-generated: true
+ai-generated-by: "Claude 3.7 Sonnet"
+ai-generated-date: "2025-05-13"
+navOrder: "1"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
+---
+
+# Task Management API Documentation
+
+Welcome to the Task Management API documentation. This comprehensive guide provides all the information you need to integrate and work with our Task Management service.
+
+## Overview
+
+The Task Management API allows you to create, read, update, and delete tasks and users in a task management system. With this API, you can:
+
+- Manage users who can create and be assigned to tasks
+- Create and manage tasks with various properties including title, description, status, and due dates
+- Track task status throughout its lifecycle
+- Set reminders for upcoming tasks
+
+## Key Features
+
+- **RESTful API Design**: Consistent and predictable resource-oriented URLs
+- **JSON Format**: All requests and responses use JSON format
+- **Authentication**: Secure your API access with bearer token authentication
+- **Pagination**: Navigate through large collections of resources efficiently
+- **Sorting**: Order resources by various properties
+- **Error Handling**: Comprehensive error responses with clear messages
+
+## Getting Started
+
+To get started with the Task Management API:
+
+1. Check out the [Getting Started Guide](getting-started.md) for a quick introduction
+2. Understand the [Core Concepts](core-concepts.md) behind the API
+3. Explore the available [API Resources](resources.md)
+4. Reference the [API Endpoints](api-reference.md) for detailed implementation
+5. Follow our [Tutorials & Guides](tutorials.md) for common use cases
+
+## API Base URL
+
+All API requests should be made to: `https://api.taskmanagement.example.com/v1`
+
+## API Support
+
+If you need assistance with the API:
+
+- Check our [Support & FAQ](support.md) section
+- Review [Troubleshooting](support/troubleshooting.md) for common issues
+- Contact our support team through the [Support Resources](support/support-resources.md)
+
+--- FILE: getting-started.md
+---
+title: "Getting Started with the Task Management API"
+description: "Introduction to getting started with the Task Management API, including setup, authentication, and basic concepts."
+tags: ["introduction", "overview", "getting-started"]
+categories: ["getting-started"]
+importance: 10
+hasChildren: true
+hasToc: false
+ai-generated: true
+ai-generated-by: "Claude 3.7 Sonnet"
+ai-generated-date: "2025-05-13"
+navOrder: "2"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
+---
+
+# Getting Started with the Task Management API
+
+This section introduces you to the Task Management API and provides essential information to help you start making API requests quickly and effectively.
+
+## What is the Task Management API?
+
+The Task Management API is a RESTful service that enables you to create and manage tasks and users programmatically. It provides endpoints for creating, reading, updating, and deleting task and user resources, along with additional functionality for managing task statuses and user roles.
+
+## In This Section
+
+The Getting Started section covers the following topics:
+
+| Topic | Description |
+|-------|-------------|
+| [Introduction](getting-started/introduction.md) | Overview of the API capabilities, features, and use cases |
+| [Quick Start Guide](getting-started/quickstart.md) | Step-by-step guide to make your first API request |
+| [Authentication](getting-started/authentication.md) | How to authenticate your requests using bearer tokens |
+| [Rate Limiting](getting-started/rate-limiting.md) | Understanding API rate limits and how to handle them |
+
+## Prerequisites
+
+Before you start using the Task Management API, you should have:
+
+- Basic knowledge of REST APIs and HTTP methods
+- An API key or credentials for authentication
+- Familiarity with JSON for request and response formatting
+- A tool for making HTTP requests (curl, Postman, or an HTTP library for your programming language)
+
+## Base URL
+
+All API requests should be made to the following base URL:
+
+```
+https://api.taskmanagement.example.com/v1
+```
+
+## Next Steps
+
+1. Start with the [Introduction](getting-started/introduction.md) to get an overview of the API
+2. Follow the [Quick Start Guide](getting-started/quickstart.md) to make your first API request
+3. Learn about [Authentication](getting-started/authentication.md) to secure your API calls
+4. After understanding the basics, explore the [Core Concepts](core-concepts.md) section to deepen your knowledge
+
+--- FILE: core-concepts.md
+---
+title: "Core Concepts"
+description: "Overview of fundamental concepts in the Task Management API, including data model, pagination, sorting, error handling, and task statuses."
+tags: ["concepts", "overview"]
+categories: ["core-concepts"]
+importance: 9
+hasChildren: true
+hasToc: false
+ai-generated: true
+ai-generated-by: "Claude 3.7 Sonnet"
+ai-generated-date: "2025-05-13"
+navOrder: "3"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
+---
+
+# Core Concepts
+
+This section covers the fundamental concepts and patterns used throughout the Task Management API. Understanding these concepts will help you work with the API more effectively.
+
+## In This Section
+
+The Core Concepts section contains the following topics:
+
+| Topic | Description |
+|-------|-------------|
+| [Data Model](core-concepts/data-model.md) | Overview of the core resources and their relationships |
+| [Pagination](core-concepts/pagination.md) | How to navigate through large collections of resources |
+| [Sorting](core-concepts/sorting.md) | How to sort API results using sort parameters |
+| [Error Handling](core-concepts/error-handling.md) | Common error patterns and how to handle them |
+| [Task Status Lifecycle](core-concepts/task-status-lifecycle.md) | Understanding task statuses and transitions |
+
+## API Design Principles
+
+The Task Management API follows these design principles:
+
+- **RESTful Resources**: The API is organized around resources with standard HTTP methods
+- **JSON Formatting**: All requests and responses use JSON format
+- **Consistent Patterns**: Similar patterns are used across different endpoints for a consistent developer experience
+- **Clear Error Messages**: Error responses include detailed information to help you troubleshoot issues
+- **Stateless Operation**: Each request contains all the information needed to complete the operation
+
+## Resources
+
+The Task Management API centers around two main resources:
+
+1. **Users**: Individuals who can create and be assigned to tasks
+2. **Tasks**: Work items that have various properties like title, description, status, and deadlines
+
+Each resource has its own set of endpoints for creating, reading, updating, and deleting instances.
+
+## Next Steps
+
+After understanding these core concepts, you can:
+
+- Explore the detailed [API Resources](resources.md) documentation
+- Check out the [API Reference](api-reference.md) for specific endpoint details
+- Try out the concepts in our [Tutorials & Guides](tutorials.md)
+
+--- FILE: resources.md
+---
+title: "API Resources"
+description: "Detailed information about the core resources available in the Task Management API."
+tags: ["resources", "overview"]
+categories: ["resources"]
+importance: 9
+hasChildren: true
+hasToc: false
+ai-generated: true
+ai-generated-by: "Claude 3.7 Sonnet"
+ai-generated-date: "2025-05-13"
+navOrder: "4"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
+---
+
+# API Resources
+
+The Task Management API provides access to resources that represent the core entities in the system. This section details these resources and their properties.
+
+## In This Section
+
+The Resources section covers the following topics:
+
+| Resource | Description |
+|----------|-------------|
+| [User Resource](resources/user-resource.md) | Detailed information about the User resource |
+| [Task Resource](resources/task-resource.md) | Detailed information about the Task resource |
+
+## Resource Relationships
+
+The main resources in the Task Management API are related in the following ways:
+
+- **Users** can create and be assigned to **Tasks**
+- **Tasks** can be assigned to one or more **Users**
+- **Tasks** have a status and lifecycle that determines their progress
+
+## Common Resource Properties
+
+All resources in the API share some common properties:
+
+- `id`: A unique identifier for the resource
+- `createdAt`: Timestamp when the resource was created
+- `updatedAt`: Timestamp when the resource was last updated
+
+## Resource Collections
+
+When retrieving multiple resources (e.g., all users or all tasks), the API returns a collection that includes:
+
+- The resources themselves as an array
+- Pagination information
+- Metadata about the collection
+
+## Next Steps
+
+To learn more about the specific resources:
+
+- Read about the [User Resource](resources/user-resource.md)
+- Explore the [Task Resource](resources/task-resource.md)
+- Check out the [API Reference](api-reference.md) for endpoint-specific details
+- Review [Core Concepts](core-concepts.md) for fundamental API patterns
+
+--- FILE: api-reference.md
+---
+title: "API Reference"
+description: "Comprehensive reference documentation for all endpoints in the Task Management API."
+tags: ["reference", "endpoints", "api"]
+categories: ["api-reference"]
+importance: 8
+hasChildren: true
+hasToc: false
+ai-generated: true
+ai-generated-by: "Claude 3.7 Sonnet"
+ai-generated-date: "2025-05-13"
+navOrder: "5"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
+---
+
+# API Reference
+
+This section provides comprehensive reference documentation for all endpoints available in the Task Management API. Each endpoint is documented with request formats, response examples, and usage guidelines.
+
+## Base URL
+
+All API endpoints should be prefixed with the base URL:
+
+```
+https://api.taskmanagement.example.com/v1
+```
+
+## Available Endpoints
+
+### User Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| [Get All Users](/api-reference/get-all-users.md) | GET | Retrieve a list of all users |
+| [Create a User](/api-reference/create-user.md) | POST | Create a new user |
+| [Get User by ID](/api-reference/get-user-by-id.md) | GET | Retrieve a specific user by ID |
+| [Update a User](/api-reference/update-user.md) | PATCH | Update an existing user |
+| [Delete a User](/api-reference/delete-user.md) | DELETE | Remove a user from the system |
+
+### Task Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| [Get All Tasks](/api-reference/get-all-tasks.md) | GET | Retrieve a list of all tasks |
+| [Create a Task](/api-reference/create-task.md) | POST | Create a new task |
+| [Get Task by ID](/api-reference/get-task-by-id.md) | GET | Retrieve a specific task by ID |
+| [Update a Task](/api-reference/update-task.md) | PATCH | Update an existing task |
+| [Delete a Task](/api-reference/delete-task.md) | DELETE | Remove a task from the system |
+
+### Error Handling
+
+For information about error responses, see the [Error Responses](/api-reference/error-responses.md) page.
+
+## Authentication
+
+All API endpoints require authentication using a bearer token. For more information, see the [Authentication](/getting-started/authentication.md) guide.
+
+## Request Format
+
+Unless otherwise specified, all request bodies should be in JSON format with the `Content-Type: application/json` header.
+
+## Response Format
+
+All responses are returned in JSON format. Successful responses include the requested data, while error responses include an error message and additional information to help troubleshoot the issue.
+
+--- FILE: tutorials.md
+---
+title: "Tutorials & Guides"
+description: "Step-by-step tutorials and practical guides for working with the Task Management API."
+tags: ["tutorials", "guides", "how-to"]
+categories: ["tutorials"]
+importance: 7
+hasChildren: true
+hasToc: false
+ai-generated: true
+ai-generated-by: "Claude 3.7 Sonnet"
+ai-generated-date: "2025-05-13"
+navOrder: "6"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
+---
+
+# Tutorials & Guides
+
+This section provides practical, step-by-step tutorials and guides to help you implement common use cases with the Task Management API.
+
+## Available Tutorials
+
+| Tutorial | Description |
+|----------|-------------|
+| [Getting Started with Users](/tutorials/getting-started-with-users.md) | Learn how to create, list, update, and delete users |
+| [Task Management Workflow](/tutorials/task-management-workflow.md) | Implement a complete task management workflow |
+| [Implementing Reminders](/tutorials/implementing-reminders.md) | Use the warningOffset property to set up task reminders |
+| [Integration Patterns](/tutorials/integration-patterns.md) | Common patterns for integrating with other systems |
+
+## Use Case Examples
+
+These tutorials cover common use cases that you might encounter when working with the Task Management API:
+
+- Setting up a new user account
+- Creating and assigning tasks to users
+- Tracking task progress through status updates
+- Implementing deadline reminders for approaching tasks
+- Integrating task management with calendars or project management tools
+
+## Skill Level
+
+The tutorials in this section are primarily designed for developers who are new to the Task Management API but have some experience with REST APIs in general. More advanced topics are covered in the [Advanced Topics](/advanced.md) section.
+
+## Tools Used
+
+The tutorials use standard tools for working with REST APIs:
+
+- Command-line examples using cURL
+- Code examples in JavaScript and Python
+- Tool-specific examples using Postman
+
+## Next Steps
+
+After working through these tutorials, you can:
+
+- Explore the [API Reference](/api-reference.md) for detailed endpoint documentation
+- Check out [Advanced Topics](/advanced.md) for more complex use cases
+- Review [Developer Resources](/developer-resources.md) for additional tools and code examples
+
+--- FILE: advanced.md
+---
+title: "Advanced Topics"
+description: "Advanced considerations for working with the Task Management API, including optimization, security, and data consistency."
+tags: ["advanced", "optimization", "security"]
+categories: ["advanced"]
+importance: 6
+hasChildren: true
+hasToc: false
+ai-generated: true
+ai-generated-by: "Claude 3.7 Sonnet"
+ai-generated-date: "2025-05-13"
+navOrder: "7"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
+---
+
+# Advanced Topics
+
+This section covers advanced topics and considerations for working with the Task Management API. These topics are intended for experienced users who are already familiar with the basics of the API.
+
+## In This Section
+
+The Advanced Topics section covers the following areas:
+
+| Topic | Description |
+|-------|-------------|
+| [Optimizing API Usage](/advanced/optimizing-api-usage.md) | Best practices for efficient API usage |
+| [Security Best Practices](/advanced/security-best-practices.md) | Advanced security considerations |
+| [Handling Data Consistency](/advanced/handling-data-consistency.md) | Strategies for maintaining data consistency |
+
+## When to Use These Advanced Topics
+
+Consider exploring these advanced topics when:
+
+- You're implementing a production application that needs to be highly optimized
+- You need to handle large volumes of tasks or users
+- You require high availability or need to implement caching strategies
+- You're concerned about security beyond basic authentication
+- You need to handle concurrent updates to resources
+
+## Prerequisites
+
+Before diving into these advanced topics, you should already:
+
+- Be familiar with the basic API concepts and endpoints
+- Have experience working with the User and Task resources
+- Understand authentication and error handling in the API
+- Have implemented at least a basic integration with the API
+
+## Next Steps
+
+After reviewing these advanced topics, you may want to:
+
+- Check out [Developer Resources](/developer-resources.md) for additional tools
+- Review our [Integration Patterns](/tutorials/integration-patterns.md) for system integration guidance
+- Explore the [Support & FAQ](/support.md) section for troubleshooting help
+
+--- FILE: developer-resources.md
+---
+title: "Developer Resources"
+description: "Additional resources for developers working with the Task Management API, including changelogs, tooling, and code examples."
+tags: ["resources", "developers", "tools"]
+categories: ["developer-resources"]
+importance: 5
+hasChildren: true
+hasToc: false
+ai-generated: true
+ai-generated-by: "Claude 3.7 Sonnet"
+ai-generated-date: "2025-05-13"
+navOrder: "8"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
+---
+
+# Developer Resources
+
+This section provides additional resources to help developers working with the Task Management API, including developer tools, code examples, and version information.
+
+## In This Section
+
+The Developer Resources section includes the following topics:
+
+| Resource | Description |
+|----------|-------------|
+| [API Changelog](/developer-resources/api-changelog.md) | History of changes to the API across versions |
+| [Postman Collection](/developer-resources/postman-collection.md) | How to use the Postman collection for testing |
+| [Code Examples](/developer-resources/code-examples.md) | Example code in various programming languages |
+
+## Development Tools
+
+The following tools can help you develop and test with the Task Management API:
+
+- **API Key Management Console**: Manage your API keys and access
+- **Request Logs**: View logs of your recent API requests
+- **API Status Dashboard**: Check the current status of the API
+- **OpenAPI Specification**: Download the OpenAPI spec for use in code generation tools
+
+## Community Resources
+
+Connect with other developers working with the Task Management API:
+
+- **Developer Forum**: Discuss implementation approaches and ask questions
+- **GitHub Repository**: Find open source tools and libraries
+- **Stack Overflow**: Find answers to common questions (tagged with 'task-management-api')
+
+## SDK Libraries
+
+Official client libraries for common programming languages:
+
+- JavaScript/Node.js
+- Python
+- Java
+- Ruby
+- PHP
+
+## Next Steps
+
+After exploring these developer resources, you might want to:
+
+- Check the [API Reference](/api-reference.md) for detailed endpoint specifications
+- Review [Advanced Topics](/advanced.md) for optimization and security best practices
+- Visit the [Support & FAQ](/support.md) section if you need assistance
+
+--- FILE: support.md
+---
+title: "Support & FAQ"
+description: "Support resources, frequently asked questions, and troubleshooting information for the Task Management API."
+tags: ["support", "faq", "help", "troubleshooting"]
+categories: ["support"]
+importance: 4
+hasChildren: true
+hasToc: false
+ai-generated: true
+ai-generated-by: "Claude 3.7 Sonnet"
+ai-generated-date: "2025-05-13"
+navOrder: "9"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
+---
+
+# Support & FAQ
+
+This section provides support resources, frequently asked questions, and troubleshooting information to help you resolve common issues when working with the Task Management API.
+
+## In This Section
+
+The Support & FAQ section includes the following topics:
+
+| Topic | Description |
+|-------|-------------|
+| [Frequently Asked Questions](/support/faq.md) | Common questions and answers |
+| [Troubleshooting](/support/troubleshooting.md) | Solutions to common issues |
+| [Support Resources](/support/support-resources.md) | How to get help and contact information |
+
+## Common Questions
+
+Here are quick answers to some of the most common questions about the Task Management API:
+
+**Q: What is the rate limit for API requests?**  
+A: Standard accounts have a limit of 100 requests per minute. For higher limits, please contact support.
+
+**Q: How do I reset my API key?**  
+A: You can reset your API key in the developer dashboard under "API Keys & Security."
+
+**Q: Is there a sandbox environment for testing?**  
+A: Yes, use the base URL `https://sandbox-api.taskmanagement.example.com/v1` for testing.
+
+**Q: How do I report an API bug?**  
+A: Please send details to api-support@taskmanagement.example.com or use the support portal.
+
+## Getting Help
+
+If you're experiencing issues with the API, we recommend the following steps:
+
+1. Check the [Troubleshooting](/support/troubleshooting.md) guide for common issues
+2. Review the [API Reference](/api-reference.md) to ensure you're using the endpoints correctly
+3. Search the [FAQ](/support/faq.md) for answers to common questions
+4. Contact support using the information in [Support Resources](/support/support-resources.md)
+
+## Service Status
+
+You can check the current status of the API at:
+[status.taskmanagement.example.com](https://status.taskmanagement.example.com)
+
 --- FILE: getting-started/introduction.md
 ---
 title: "Introduction to the Task Management API"
@@ -5,54 +568,75 @@ description: "Overview of the Task Management API capabilities, features, and us
 tags: ["introduction", "overview"]
 categories: ["getting-started"]
 importance: 10
+parent: "getting-started"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 1
+ai-generated-date: "2025-05-13"
+navOrder: "1"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
 # Introduction to the Task Management API
 
-The Task Management API is a comprehensive solution for creating and managing to-do tasks and users. This RESTful API provides all the tools needed to build robust task management applications with features for tracking task status, setting deadlines, and managing reminders.
+The Task Management API provides a powerful, flexible interface for creating and managing tasks and users in your applications. This introduction will help you understand what the API offers and how it can be used.
 
-## Key features
+## What is the Task Management API?
 
-- **User management**: Create, retrieve, update, and delete user accounts
-- **Task management**: Create, retrieve, update, and delete tasks with support for various status values
-- **Task status lifecycle**: Track tasks through their complete lifecycle from creation to completion
-- **Due dates and reminders**: Set due dates for tasks with configurable warning offsets for reminders
-- **Pagination and sorting**: Efficiently navigate through large collections of resources
-- **Comprehensive error handling**: Clear error messages and status codes for troubleshooting
+The Task Management API is a RESTful service that allows you to programmatically create, read, update, and delete tasks and users. It's designed to be simple to integrate with while providing robust features for task management workflows.
 
-## Use cases
+## Key Features
 
-The Task Management API is designed to support a wide range of applications, including:
+- **User Management**: Create and manage users who can create and be assigned to tasks
+- **Task Creation and Management**: Create tasks with titles, descriptions, due dates, and other properties
+- **Status Tracking**: Track task progress through defined status stages
+- **Assignment**: Assign tasks to specific users
+- **Deadlines and Reminders**: Set due dates and configure reminder notifications
+- **Filtering and Sorting**: Find tasks based on various criteria including status, assignee, and due date
+- **Pagination**: Handle large collections of tasks and users efficiently
+- **Secure Access**: Protect your data with bearer token authentication
 
-- Personal to-do list applications
-- Team task management tools
-- Project management systems
-- Reminder and calendar applications
-- Productivity trackers
+## Common Use Cases
 
-## Getting started
+The Task Management API is well-suited for a variety of applications, including:
 
-To start using the Task Management API:
+- Project management tools
+- Team collaboration software
+- Personal productivity applications
+- Workflow automation systems
+- Customer support ticket systems
+- Event planning applications
+- Educational platforms with assignment tracking
 
-1. Review the [Quick start guide](quickstart.html) to set up your development environment
-2. Learn how to [authenticate](authentication.html) your API requests
-3. Understand the [rate limits](rate-limiting.html) to ensure uninterrupted service
+## API Design Principles
 
-## API design principles
+The API follows these design principles:
 
-The Task Management API follows RESTful design principles with consistent patterns for resource naming, HTTP methods, and response formats. Key design elements include:
+- **RESTful Architecture**: Resources are accessed via standard HTTP methods
+- **JSON Formatting**: All requests and responses use JSON
+- **Consistent Patterns**: Similar patterns across endpoints for ease of use
+- **Clear Documentation**: Comprehensive documentation with examples
+- **Robust Error Handling**: Detailed error messages to help troubleshoot issues
 
-- Resource-based URL structure
-- Appropriate use of HTTP methods (GET, POST, PATCH, DELETE)
-- JSON request and response bodies
-- Consistent error handling
-- Bearer token authentication
+## Getting Started
 
-This API documentation provides all the information needed to effectively utilize the Task Management API in your applications.
+To start working with the API:
+
+1. [Create an account](https://taskmanagement.example.com/signup) to get your API credentials
+2. Follow our [Quick Start Guide](/getting-started/quickstart.md) to make your first API request
+3. Learn about [Authentication](/getting-started/authentication.md) to secure your API calls
+4. Explore the [API Reference](/api-reference.md) for detailed endpoint information
+
+## Next Steps
+
+After understanding the basics of the Task Management API, you can:
+
+- Check out the [Quick Start Guide](/getting-started/quickstart.md) to make your first API call
+- Learn about [Core Concepts](/core-concepts.md) to understand the API's foundations
+- Explore the [Resources](/resources.md) to understand the data model
+- Try our [Tutorials](/tutorials.md) for practical examples
 
 --- FILE: getting-started/quickstart.md
 ---
@@ -61,175 +645,252 @@ description: "Get up and running with the Task Management API in minutes."
 tags: ["quick start", "tutorial"]
 categories: ["getting-started"]
 importance: 9
+parent: "getting-started"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 2
+ai-generated-date: "2025-05-13"
+navOrder: "2"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Quick start guide
+# Quick Start Guide
 
-This guide helps you get started with the Task Management API quickly. Follow these steps to create your first user and task.
+This guide will help you make your first request to the Task Management API in minutes. We'll cover the basic steps to authenticate, create a user, and create a task.
 
 ## Prerequisites
 
-Before you begin, make sure you have:
+Before you begin, you'll need:
 
-- An API client or HTTP tool like Postman, cURL, or similar
-- A text editor for writing request bodies
-- Basic understanding of RESTful APIs and JSON
-
-## Base URL
-
-For development and testing, the API is available at:
-
-```
-http://localhost:3000
-```
+- An API key (get one by [registering for an account](https://taskmanagement.example.com/signup))
+- A tool to make HTTP requests (cURL, Postman, or an HTTP client in your preferred programming language)
 
 ## Step 1: Authenticate
 
-The Task Management API uses bearer token authentication. Include the bearer token in your request headers:
+All requests to the API require authentication using a bearer token. Include your API key in the `Authorization` header:
 
 ```
-Authorization: Bearer YOUR_TOKEN
+Authorization: Bearer YOUR_API_KEY
 ```
 
-Refer to the [Authentication](authentication.html) page for details on obtaining a token.
+## Step 2: Create a User
 
-## Step 2: Create a user
-
-Create a user by sending a POST request to the `/users` endpoint with the required user information.
+Let's start by creating a user:
 
 ### Request
 
-```http
-POST /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-
-{
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
-}
+```bash
+curl -X POST https://api.taskmanagement.example.com/v1/users \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Doe",
+    "email": "john.doe@example.com"
+  }'
 ```
 
 ### Response
 
 ```json
 {
-  "userId": 1,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
+  "id": "user123",
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T10:30:00Z"
 }
 ```
 
-Take note of the `userId` as you need it to create tasks.
+## Step 3: Create a Task
 
-## Step 3: Create a task
-
-Create a task by sending a POST request to the `/tasks` endpoint with the task details.
+Now, let's create a task and assign it to the user we just created:
 
 ### Request
 
-```http
-POST /tasks HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "taskTitle": "Complete API setup",
-  "taskDescription": "Set up and test the Task Management API",
-  "dueDate": "2025-05-20T14:00:00-05:00",
-  "warningOffset": 60
-}
+```bash
+curl -X POST https://api.taskmanagement.example.com/v1/tasks \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Complete API integration",
+    "description": "Finish integrating with the Task Management API",
+    "status": "TODO",
+    "dueDate": "2025-05-20T17:00:00Z",
+    "assigneeId": "user123"
+  }'
 ```
 
 ### Response
 
 ```json
 {
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Complete API setup",
-  "taskDescription": "Set up and test the Task Management API",
-  "taskStatus": "NOT_STARTED",
-  "dueDate": "2025-05-20T14:00:00-05:00",
-  "warningOffset": 60
+  "id": "task456",
+  "title": "Complete API integration",
+  "description": "Finish integrating with the Task Management API",
+  "status": "TODO",
+  "dueDate": "2025-05-20T17:00:00Z",
+  "assigneeId": "user123",
+  "createdAt": "2025-05-13T10:35:00Z",
+  "updatedAt": "2025-05-13T10:35:00Z"
 }
 ```
 
-## Step 4: Retrieve tasks
+## Step 4: Retrieve Tasks
 
-Retrieve all tasks with a GET request to the `/tasks` endpoint:
+Let's retrieve all tasks to verify our task was created:
 
-```http
-GET /tasks HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+### Request
+
+```bash
+curl -X GET https://api.taskmanagement.example.com/v1/tasks \
+  -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
 ### Response
 
 ```json
 {
-  "tasks": [
+  "data": [
     {
-      "taskId": 1,
-      "userId": 1,
-      "taskTitle": "Complete API setup",
-      "taskDescription": "Set up and test the Task Management API",
-      "taskStatus": "NOT_STARTED",
-      "dueDate": "2025-05-20T14:00:00-05:00",
-      "warningOffset": 60
+      "id": "task456",
+      "title": "Complete API integration",
+      "description": "Finish integrating with the Task Management API",
+      "status": "TODO",
+      "dueDate": "2025-05-20T17:00:00Z",
+      "assigneeId": "user123",
+      "createdAt": "2025-05-13T10:35:00Z",
+      "updatedAt": "2025-05-13T10:35:00Z"
     }
-  ]
+  ],
+  "pagination": {
+    "total": 1,
+    "limit": 10,
+    "offset": 0,
+    "hasMore": false
+  }
 }
 ```
 
-## Step 5: Update a task's status
+## Code Examples
 
-Update the task status by sending a PATCH request to `/tasks/{taskId}`:
+### JavaScript/Node.js
 
-```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
+```javascript
+const axios = require('axios');
 
-{
-  "taskStatus": "IN_PROGRESS"
+const API_KEY = 'YOUR_API_KEY';
+const BASE_URL = 'https://api.taskmanagement.example.com/v1';
+
+// Create a user
+async function createUser() {
+  try {
+    const response = await axios.post(`${BASE_URL}/users`, {
+      name: 'John Doe',
+      email: 'john.doe@example.com'
+    }, {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error creating user:', error.response.data);
+  }
 }
+
+// Create a task
+async function createTask(userId) {
+  try {
+    const response = await axios.post(`${BASE_URL}/tasks`, {
+      title: 'Complete API integration',
+      description: 'Finish integrating with the Task Management API',
+      status: 'TODO',
+      dueDate: '2025-05-20T17:00:00Z',
+      assigneeId: userId
+    }, {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error creating task:', error.response.data);
+  }
+}
+
+// Run the example
+async function run() {
+  const user = await createUser();
+  if (user && user.id) {
+    const task = await createTask(user.id);
+    console.log('Task created:', task);
+  }
+}
+
+run();
 ```
 
-### Response
+### Python
 
-```json
-{
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Complete API setup",
-  "taskDescription": "Set up and test the Task Management API",
-  "taskStatus": "IN_PROGRESS",
-  "dueDate": "2025-05-20T14:00:00-05:00",
-  "warningOffset": 60
+```python
+import requests
+
+API_KEY = 'YOUR_API_KEY'
+BASE_URL = 'https://api.taskmanagement.example.com/v1'
+
+headers = {
+    'Authorization': f'Bearer {API_KEY}',
+    'Content-Type': 'application/json'
 }
+
+# Create a user
+def create_user():
+    data = {
+        'name': 'John Doe',
+        'email': 'john.doe@example.com'
+    }
+    
+    response = requests.post(f'{BASE_URL}/users', json=data, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+# Create a task
+def create_task(user_id):
+    data = {
+        'title': 'Complete API integration',
+        'description': 'Finish integrating with the Task Management API',
+        'status': 'TODO',
+        'dueDate': '2025-05-20T17:00:00Z',
+        'assigneeId': user_id
+    }
+    
+    response = requests.post(f'{BASE_URL}/tasks', json=data, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+# Run the example
+try:
+    user = create_user()
+    task = create_task(user['id'])
+    print('Task created:', task)
+except requests.exceptions.RequestException as e:
+    print('Error:', e)
 ```
 
-## Next steps
+## Next Steps
 
-Now that you've created a user and managed tasks, explore more advanced features:
+Now that you've made your first API requests, you can:
 
-- [Task status lifecycle](../core-concepts/task-status-lifecycle.html) to understand all possible task states
-- [User resource](../resources/user-resource.html) for details on user management
-- [Task resource](../resources/task-resource.html) for complete task management capabilities
-- [Pagination](../core-concepts/pagination.html) to handle large collections of tasks
-- [Error handling](../core-concepts/error-handling.html) for robust application development
+1. Learn more about [Authentication](/getting-started/authentication.md)
+2. Explore the [User Resource](/resources/user-resource.md) and [Task Resource](/resources/task-resource.md)
+3. Check out [API Reference](/api-reference.md) for all available endpoints
+4. Try the [Task Management Workflow](/tutorials/task-management-workflow.md) tutorial
 
 --- FILE: getting-started/authentication.md
 ---
@@ -238,107 +899,144 @@ description: "Learn how to authenticate your requests to the Task Management API
 tags: ["authentication", "security", "bearer token"]
 categories: ["getting-started"]
 importance: 8
+parent: "getting-started"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 3
+ai-generated-date: "2025-05-13"
+navOrder: "3"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
 # Authentication
 
-The Task Management API uses bearer token authentication to secure endpoints. This page explains how to authenticate your requests and manage tokens for the API.
+All requests to the Task Management API must be authenticated using bearer token authentication. This guide explains how to authenticate your requests and manage your API keys.
 
-## Bearer token authentication
+## Bearer Token Authentication
 
-All API requests must include an `Authorization` header with a valid bearer token. The format is:
+The Task Management API uses bearer token authentication. To authenticate your requests, include your API key in the `Authorization` header of each request:
 
 ```
-Authorization: Bearer YOUR_TOKEN
+Authorization: Bearer YOUR_API_KEY
 ```
 
-Replace `YOUR_TOKEN` with the actual authentication token provided to you.
+## Getting an API Key
 
-## Obtaining a token
+To get an API key:
 
-To obtain a bearer token, contact the API administrator or follow your organization's process for requesting API access. The Task Management API does not provide an endpoint for token generation as token management is handled externally.
+1. [Create an account](https://taskmanagement.example.com/signup) on the Task Management platform
+2. Navigate to the Developer Settings or API section in your account dashboard
+3. Generate a new API key
 
-## Token security
+## API Key Security Best Practices
 
-Follow these security best practices when working with authentication tokens:
+Follow these best practices to keep your API key secure:
 
-- Store tokens securely and never expose them in client-side code
-- Rotate tokens periodically according to your organization's security policy
-- Do not share tokens across different applications or environments
-- Revoke tokens immediately if they are compromised
+- **Keep it secret**: Never share your API key in public repositories, client-side code, or public forums
+- **Use environment variables**: Store your API key in environment variables instead of hardcoding it
+- **Restrict permissions**: Use the principle of least privilege when assigning permissions to API keys
+- **Rotate regularly**: Rotate your API keys periodically, especially after team member changes
+- **Monitor usage**: Regularly check the usage logs for any suspicious activity
 
-## Authentication errors
+## Authentication Errors
 
-If authentication fails, the API returns a `401 Unauthorized` status code with an error response:
+If your authentication is invalid, you'll receive a `401 Unauthorized` response:
 
 ```json
 {
-  "code": "UNAUTHORIZED",
-  "message": "Authentication is required to access this resource",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  "error": {
+    "code": "unauthorized",
+    "message": "Invalid or missing API key"
+  }
 }
 ```
 
 Common authentication errors include:
 
 - Missing the `Authorization` header
-- Invalid token format
-- Expired token
-- Revoked token
+- Incorrect format of the `Authorization` header
+- Invalid or expired API key
+- API key without sufficient permissions for the requested operation
 
-## Permission errors
+## Authentication in Code Examples
 
-Even with valid authentication, a user might not have permission to access certain resources. In these cases, the API returns a `403 Forbidden` status code:
+### cURL
 
-```json
-{
-  "code": "FORBIDDEN",
-  "message": "You do not have permission to access this resource",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+```bash
+curl -X GET https://api.taskmanagement.example.com/v1/tasks \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+### JavaScript
+
+```javascript
+const axios = require('axios');
+
+const apiKey = 'YOUR_API_KEY';
+const baseUrl = 'https://api.taskmanagement.example.com/v1';
+
+async function getTasks() {
+  try {
+    const response = await axios.get(`${baseUrl}/tasks`, {
+      headers: {
+        'Authorization': `Bearer ${apiKey}`
+      }
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error('Authentication error:', error.response.data);
+  }
 }
 ```
 
-## Token lifespan
+### Python
 
-Bearer tokens have a finite lifespan. Once a token expires, you need to request a new one. The expiration policy depends on your organization's security requirements.
+```python
+import requests
 
-## Implementation example
+api_key = 'YOUR_API_KEY'
+base_url = 'https://api.taskmanagement.example.com/v1'
 
-Here's an example of how to include the bearer token in a request using cURL:
-
-```shell
-curl -X GET \
-  http://localhost:3000/tasks \
-  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' \
-  -H 'Content-Type: application/json'
+def get_tasks():
+    headers = {
+        'Authorization': f'Bearer {api_key}'
+    }
+    
+    response = requests.get(f'{base_url}/tasks', headers=headers)
+    
+    if response.status_code == 401:
+        print('Authentication error:', response.json())
+        return None
+    
+    response.raise_for_status()
+    return response.json()
 ```
 
-And using JavaScript/Fetch API:
+## API Key Management
 
-```javascript
-fetch('http://localhost:3000/tasks', {
-  method: 'GET',
-  headers: {
-    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
-    'Content-Type': 'application/json'
-  }
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error('Error:', error));
-```
+The Task Management platform provides several features for managing your API keys:
 
-## Next steps
+- **Key rotation**: Generate new keys and deprecate old ones
+- **Permission scopes**: Limit what each key can access
+- **Usage monitoring**: Track how and when your keys are being used
+- **IP restrictions**: Limit API access to specific IP addresses
 
-After authenticating your requests, you can proceed to:
+## Next Steps
 
-- [Rate limiting](rate-limiting.html) to understand API usage constraints
-- [Quick start guide](quickstart.html) to create your first API resources
-- [Error handling](../core-concepts/error-handling.html) to handle authentication and other errors
+Now that you understand authentication, you can:
+
+- Continue to [Rate Limiting](/getting-started/rate-limiting.md) to learn about API request limits
+- Explore the [API Reference](/api-reference.md) for details on available endpoints
+- Check out [Security Best Practices](/advanced/security-best-practices.md) for more advanced security considerations
+
+## See Also
+
+- [Quick Start Guide](/getting-started/quickstart.md)
+- [Error Handling](/core-concepts/error-handling.md)
+- [Security Best Practices](/advanced/security-best-practices.md)
 
 --- FILE: getting-started/rate-limiting.md
 ---
@@ -347,66 +1045,64 @@ description: "Understand the API's rate limits and how to handle rate limiting r
 tags: ["rate limiting", "throttling"]
 categories: ["getting-started"]
 importance: 7
+parent: "getting-started"
+hasChildren: false
 ai-generated: false
-navOrder: 4
+navOrder: "4"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Rate limiting
+# Rate Limiting
 
-The Task Management API implements rate limiting to ensure fair usage and system stability. This document explains how rate limiting works and how to handle rate limit responses.
+## Overview
 
-## Rate limit overview
+This document outlines the rate limiting policies for the Task Management API, how to recognize when you've hit a rate limit, and strategies for handling rate limiting in your applications.
 
-<!-- This section should explain the basic concept of rate limiting and why it's necessary -->
+## Content Outline
 
-- Explain the purpose of rate limiting
-- Detail the current rate limits (requests per minute/hour)
-- Describe how limits are applied (per token, IP address, or user)
-- Note any endpoints with special rate limits
+### 1. Introduction to Rate Limiting
+- Purpose of rate limiting (protect API infrastructure, ensure fair usage)
+- How rate limits are structured (requests per minute, per hour, etc.)
+- Different rate limit tiers by account type
 
-## Rate limit headers
+### 2. Rate Limit Headers
+- X-RateLimit-Limit header explanation
+- X-RateLimit-Remaining header explanation
+- X-RateLimit-Reset header explanation
+- Example response headers
 
-<!-- This section should list and describe the response headers related to rate limiting -->
+### 3. Rate Limit Response Codes
+- 429 Too Many Requests response
+- Sample rate limit error response
+- Retry-After header usage
 
-- `X-RateLimit-Limit`: Maximum number of requests allowed in a time window
-- `X-RateLimit-Remaining`: Number of requests remaining in the current window
-- `X-RateLimit-Reset`: Time when the current rate limit window resets (Unix timestamp)
+### 4. Best Practices for Handling Rate Limits
+- Implementing exponential backoff
+- Monitoring rate limit headers preemptively
+- Optimizing requests to reduce API calls
+- Caching strategies to reduce request volume
 
-## Handling rate limit exceeded responses
+### 5. Rate Limits by Endpoint
+- Table of endpoints with their specific rate limits
+- Special considerations for high-volume endpoints
 
-<!-- This section should explain what happens when rate limits are exceeded and how to handle it -->
-
-- Explain the 429 Too Many Requests response
-- Detail the Retry-After header and its usage
-- Provide code examples for handling rate limit errors
-- Suggest exponential backoff strategies
-
-## Best practices
-
-<!-- This section should provide recommendations for working within rate limits -->
-
-- Implement request caching where appropriate
-- Use bulk operations instead of multiple single requests
-- Monitor rate limit headers proactively
-- Implement graceful degradation when limits are approached
-
-## Rate limit increase requests
-
-<!-- This section should explain if and how rate limits can be increased -->
-
-- Process for requesting increased rate limits
-- Criteria for rate limit increases
+### 6. Requesting Rate Limit Increases
+- Process for requesting higher rate limits
+- Requirements and considerations
 - Contact information for support
 
-## Example implementation
+## Suggested Content
 
-<!-- This section should include a code example showing how to handle rate limits -->
+- **Diagram**: Visual representation of exponential backoff algorithm
+- **Code Examples**: Sample code showing proper rate limit handling in different languages
+- **Table**: Comparison of rate limits across different account tiers
 
-```javascript
-// Example code for handling rate limits
-```
-
-<!-- Consider adding a diagram showing the rate limiting process -->
+## Related Topics
+- [Error Handling](/core-concepts/error-handling.md)
+- [Authentication](/getting-started/authentication.md)
+- [Optimizing API Usage](/advanced/optimizing-api-usage.md)
 
 --- FILE: core-concepts/data-model.md
 ---
@@ -415,123 +1111,129 @@ description: "Overview of the core resources in the Task Management API and thei
 tags: ["data model", "resources", "schema"]
 categories: ["core-concepts"]
 importance: 9
+parent: "core-concepts"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 1
+ai-generated-date: "2025-05-13"
+navOrder: "1"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Data model
+# Data Model
 
-The Task Management API is built around two primary resources: Users and Tasks. This document explains the core data model and the relationships between these resources.
+The Task Management API is built around two primary resources: Users and Tasks. This page explains these resources, their properties, and how they relate to each other.
 
-## Resource overview
+## Core Resources
 
-The API has two main resources:
+### Users
 
-1. **User** - Represents a person who can create and manage tasks
-2. **Task** - Represents a to-do item that needs to be completed
+Users represent individuals who can create and be assigned to tasks. Each user has the following properties:
 
-These resources are linked by the `userId` property, establishing a one-to-many relationship between users and tasks.
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | String | Unique identifier for the user |
+| `name` | String | Full name of the user |
+| `email` | String | Email address of the user (must be unique) |
+| `role` | String | Role of the user (default: "member") |
+| `createdAt` | Date | When the user was created |
+| `updatedAt` | Date | When the user was last updated |
 
-## User resource
+### Tasks
 
-The User resource contains information about individuals who use the task management system.
+Tasks represent work items that need to be completed. Each task has the following properties:
 
-### User properties
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | String | Unique identifier for the task |
+| `title` | String | Title of the task |
+| `description` | String | Detailed description of the task (optional) |
+| `status` | String | Current status of the task (e.g., "TODO", "IN_PROGRESS", "DONE") |
+| `priority` | String | Priority level (e.g., "LOW", "MEDIUM", "HIGH") |
+| `createdBy` | String | ID of the user who created the task |
+| `assigneeId` | String | ID of the user assigned to the task (optional) |
+| `dueDate` | Date | When the task is due (optional) |
+| `warningOffset` | Number | Hours before due date to send a reminder (optional) |
+| `tags` | Array | Array of string tags associated with the task (optional) |
+| `createdAt` | Date | When the task was created |
+| `updatedAt` | Date | When the task was last updated |
 
-| Property | Type | Description | Required |
-|----------|------|-------------|----------|
-| userId | integer | System-generated unique identifier | Yes |
-| firstName | string | User's first name (1-100 characters) | Yes |
-| lastName | string | User's last name (1-100 characters) | Yes |
-| contactEmail | string | Valid email address for the user (unique) | Yes |
+## Resource Relationships
 
-### User constraints
+The relationships between resources in the Task Management API are as follows:
 
-- Each user must have a unique `contactEmail`
-- The `userId` is automatically generated and immutable
-- `firstName` and `lastName` must be between 1 and 100 characters
-- `contactEmail` must follow standard email format
+1. **User to Tasks (Creation)**: A user can create multiple tasks. Each task has a `createdBy` field that references the user who created it.
 
-## Task resource
+2. **User to Tasks (Assignment)**: A user can be assigned to multiple tasks. Each task has an optional `assigneeId` field that references the assigned user.
 
-The Task resource represents individual to-do items that users create and manage.
+3. **Task to User**: A task can be assigned to at most one user at a time. The `assigneeId` field references the assigned user's ID.
 
-### Task properties
-
-| Property | Type | Description | Required |
-|----------|------|-------------|----------|
-| taskId | integer | System-generated unique identifier | Yes |
-| userId | integer | ID of the user who owns the task | Yes |
-| taskTitle | string | Short description (1-80 characters) | Yes |
-| taskDescription | string | Detailed description (1-255 characters) | No |
-| taskStatus | string enum | Current status of the task | Yes |
-| dueDate | string (date-time) | When the task should be completed | Yes |
-| warningOffset | integer | Minutes before due date to send reminder | Yes |
-
-### Task status values
-
-The `taskStatus` property can have one of the following values:
-
-- `NOT_STARTED` - Default status for new tasks
-- `IN_PROGRESS` - Task is actively being worked on
-- `BLOCKED` - Task cannot proceed due to an obstacle
-- `DEFERRED` - Task is postponed until a later time
-- `COMPLETED` - Task has been finished successfully
-- `CANCELLED` - Task has been abandoned
-
-For more details on task status transitions, see the [Task status lifecycle](task-status-lifecycle.html) document.
-
-### Task constraints
-
-- Each task must be associated with a valid user
-- The `taskId` is automatically generated and immutable
-- `taskTitle` must be between 1 and 80 characters
-- `taskDescription` must be between 1 and 255 characters, if provided
-- `dueDate` must be in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS.sssZ`)
-- `warningOffset` must be a non-negative integer (0-64000)
-
-## Resource relationships
+## Data Model Diagram
 
 ```
-    +--------+          +---------+
-    |        |          |         |
-    |  User  |<---------+  Task   |
-    |        |    1:n   |         |
-    +--------+          +---------+
+┌───────────────────┐        ┌───────────────────┐
+│      User         │        │       Task        │
+├───────────────────┤        ├───────────────────┤
+│ id                │        │ id                │
+│ name              │        │ title             │
+│ email             │        │ description       │
+│ role              │◄───────┤ createdBy         │
+│ createdAt         │        │ assigneeId        │◄─┐
+│ updatedAt         │        │ status            │  │
+└───────────────────┘        │ priority          │  │
+         ▲                   │ dueDate           │  │
+         │                   │ warningOffset     │  │
+         │                   │ tags              │  │
+         │                   │ createdAt         │  │
+         │                   │ updatedAt         │  │
+         └───────────────────────────────────────┘  │
+                             │                      │
+                             └──────────────────────┘
 ```
 
-- Each User can have multiple Tasks (one-to-many relationship)
-- Each Task belongs to exactly one User
-- When a User is deleted, all associated Tasks are also deleted
+## Enumerations
 
-## Data model diagram
+### Task Status
 
-The following entity-relationship diagram shows the relationships between the core resources:
+Task status represents the current state of a task in its lifecycle:
 
-```
-+-------------------+       +-------------------+
-| User              |       | Task              |
-+-------------------+       +-------------------+
-| userId (PK)       |<----->| taskId (PK)       |
-| firstName         |       | userId (FK)       |
-| lastName          |       | taskTitle         |
-| contactEmail      |       | taskDescription   |
-+-------------------+       | taskStatus        |
-                            | dueDate           |
-                            | warningOffset     |
-                            +-------------------+
-```
+- `TODO`: Task has been created but work hasn't started
+- `IN_PROGRESS`: Work on the task has begun
+- `REVIEW`: Task is completed and awaiting review
+- `DONE`: Task has been completed and approved
+- `CANCELED`: Task has been canceled and won't be completed
 
-## Next steps
+### Task Priority
 
-Now that you understand the data model, learn more about:
+Priority indicates the importance level of a task:
 
-- [User resource details](../resources/user-resource.html)
-- [Task resource details](../resources/task-resource.html)
-- [Task status lifecycle](task-status-lifecycle.html)
-- [Pagination](pagination.html) for retrieving multiple resources
+- `LOW`: Low priority task
+- `MEDIUM`: Medium priority task (default)
+- `HIGH`: High priority task
+- `URGENT`: Urgent task requiring immediate attention
+
+### User Role
+
+User roles determine the permissions a user has:
+
+- `admin`: Can perform all operations
+- `manager`: Can manage tasks and assign them to users
+- `member`: Can create and update their own tasks (default)
+
+## Important Notes
+
+- All IDs are automatically generated by the API and are guaranteed to be unique.
+- Timestamps (`createdAt` and `updatedAt`) are automatically managed by the API.
+- When creating a task, the `createdBy` field is automatically set to the authenticated user's ID.
+- The `email` field on the User resource must be unique across all users.
+
+## See Also
+
+- [User Resource](/resources/user-resource.md)
+- [Task Resource](/resources/task-resource.md)
+- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md)
 
 --- FILE: core-concepts/pagination.md
 ---
@@ -540,153 +1242,161 @@ description: "How to navigate through large collections of resources using pagin
 tags: ["pagination", "collection"]
 categories: ["core-concepts"]
 importance: 7
+parent: "core-concepts"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 2
+ai-generated-date: "2025-05-13"
+navOrder: "2"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
 # Pagination
 
-The Task Management API implements pagination to efficiently handle large collections of resources. This document explains how to use pagination parameters to retrieve resources in manageable chunks.
+The Task Management API uses pagination to control the number of items returned in list responses. This helps improve performance and keeps response sizes manageable when working with large collections of resources.
 
-## Pagination parameters
+## How Pagination Works
 
-The API supports the following query parameters for pagination:
+When you make a request to an endpoint that returns multiple resources (like `/users` or `/tasks`), the API will return a subset of the results along with pagination information to help you navigate through all available resources.
 
-| Parameter | Type | Description | Default | Example |
-|-----------|------|-------------|---------|---------|
-| `_page` | integer | Page number (zero-indexed) | 0 | `_page=0` |
-| `_perPage` | integer | Number of items per page | 20 | `_perPage=10` |
+## Pagination Parameters
 
-## Request example
+You can control pagination using the following query parameters:
 
-To retrieve the first page with 10 items per page:
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `limit` | Integer | 10 | Number of items to return per page (max: 100) |
+| `offset` | Integer | 0 | Number of items to skip before starting to collect the result set |
 
-```http
-GET /tasks?_page=0&_perPage=10 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-To retrieve the second page:
+## Example Request with Pagination
 
 ```http
-GET /tasks?_page=1&_perPage=10 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /tasks?limit=5&offset=10
 ```
 
-## Response format
+This request will:
+- Skip the first 10 tasks (offset=10)
+- Return the next 5 tasks (limit=5)
 
-The response body contains the paginated resources:
+## Pagination Response Format
+
+The API returns pagination information in the response body. Here's an example response for a paginated list of tasks:
 
 ```json
 {
-  "tasks": [
+  "data": [
     {
-      "taskId": 11,
-      "userId": 1,
-      "taskTitle": "Example Task 11",
-      "taskDescription": "Description of task 11",
-      "taskStatus": "NOT_STARTED",
-      "dueDate": "2025-05-20T14:00:00-05:00",
-      "warningOffset": 60
+      "id": "task123",
+      "title": "Complete API documentation",
+      "status": "IN_PROGRESS",
+      // other task properties...
     },
-    // ... 9 more tasks
-  ]
-}
-```
-
-## Pagination limits
-
-- The `_page` parameter must be a non-negative integer (0 or greater)
-- The `_perPage` parameter must be between 1 and 100
-- If you request a page beyond the available data, the API returns an empty array of resources
-- If pagination parameters are omitted, the API uses default values (`_page=0` and `_perPage=20`)
-
-## Pagination and sorting
-
-Pagination works seamlessly with sorting. You can combine both features to retrieve sorted pages of resources:
-
-```http
-GET /tasks?_page=0&_perPage=10&_sort=-dueDate HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-This request retrieves the first 10 tasks sorted by due date in descending order. For more information on sorting, see the [Sorting](sorting.html) document.
-
-## Pagination and filtering
-
-Pagination can be combined with filtering parameters. For example, to get the first page of tasks with the `IN_PROGRESS` status:
-
-```http
-GET /tasks?_page=0&_perPage=10&taskStatus=IN_PROGRESS HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-## Calculating total pages
-
-The API does not currently provide the total count of resources or pages in the response. If you need to know the total number of pages, you can:
-
-1. Gradually increment the `_page` parameter until you receive an empty array
-2. Use a smaller `_perPage` value to reduce the number of requests needed
-
-## Implementing pagination in client applications
-
-When implementing pagination in a client application, consider these best practices:
-
-- Allow users to adjust the number of items per page
-- Provide navigation controls (Previous/Next buttons, page numbers)
-- Show users which page they're currently viewing
-- Cache previously fetched pages to improve performance
-
-## Pagination code example
-
-```javascript
-// Example function to fetch paginated tasks
-async function fetchTasks(page = 0, perPage = 20) {
-  try {
-    const response = await fetch(`http://localhost:3000/tasks?_page=${page}&_perPage=${perPage}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer YOUR_TOKEN',
-        'Content-Type': 'application/json'
-      }
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    
-    // Check if we've reached the end of the data
-    const isEmpty = data.tasks.length === 0;
-    
-    return {
-      tasks: data.tasks,
-      isEmpty: isEmpty,
-      page: page,
-      perPage: perPage
-    };
-  } catch (error) {
-    console.error('Failed to fetch tasks:', error);
-    throw error;
+    // more tasks...
+  ],
+  "pagination": {
+    "total": 42,       // Total number of items across all pages
+    "limit": 5,        // Number of items per page
+    "offset": 10,      // Current offset
+    "hasMore": true    // Whether there are more items beyond this page
   }
 }
 ```
 
-## Next steps
+## Pagination Links
 
-After mastering pagination, explore these related topics:
+For convenience, the API also includes pagination links in the response headers using the `Link` header:
 
-- [Sorting](sorting.html) to order your paginated results
-- [Error handling](error-handling.html) for robust client applications
-- [User resource](../resources/user-resource.html) for user-specific operations
-- [Task resource](../resources/task-resource.html) for task-specific operations
+```
+Link: <https://api.taskmanagement.example.com/v1/tasks?limit=5&offset=15>; rel="next",
+      <https://api.taskmanagement.example.com/v1/tasks?limit=5&offset=5>; rel="prev",
+      <https://api.taskmanagement.example.com/v1/tasks?limit=5&offset=0>; rel="first",
+      <https://api.taskmanagement.example.com/v1/tasks?limit=5&offset=40>; rel="last"
+```
+
+These links provide URLs for the next, previous, first, and last pages of results.
+
+## Handling Pagination in Code
+
+### JavaScript Example
+
+```javascript
+async function getAllTasks() {
+  const allTasks = [];
+  let hasMore = true;
+  let offset = 0;
+  const limit = 20;
+  
+  while (hasMore) {
+    const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks?limit=${limit}&offset=${offset}`, {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    const result = await response.json();
+    
+    // Add the current page of results to our array
+    allTasks.push(...result.data);
+    
+    // Update pagination variables for next iteration
+    offset += limit;
+    hasMore = result.pagination.hasMore;
+  }
+  
+  return allTasks;
+}
+```
+
+### Python Example
+
+```python
+import requests
+
+def get_all_tasks(api_key):
+    all_tasks = []
+    has_more = True
+    offset = 0
+    limit = 20
+    
+    while has_more:
+        response = requests.get(
+            f"https://api.taskmanagement.example.com/v1/tasks?limit={limit}&offset={offset}",
+            headers={
+                'Authorization': f'Bearer {api_key}'
+            }
+        )
+        
+        result = response.json()
+        
+        # Add the current page of results to our list
+        all_tasks.extend(result['data'])
+        
+        # Update pagination variables for next iteration
+        offset += limit
+        has_more = result['pagination']['hasMore']
+    
+    return all_tasks
+```
+
+## Best Practices
+
+1. **Use reasonable page sizes**: Start with the default limit of 10 and adjust based on your needs. Using very large limits can impact performance.
+
+2. **Cache results when appropriate**: If you're making multiple requests for the same data, consider caching the results to reduce API calls.
+
+3. **Handle empty results**: When the offset exceeds the total number of items, the API will return an empty data array with `hasMore` set to `false`.
+
+4. **Use the provided pagination links**: Instead of calculating offsets manually, use the pagination links provided in the `Link` header when available.
+
+5. **Consider using cursor-based pagination for real-time data**: For frequently updated collections, consider using cursor-based pagination if available to avoid missing or duplicating items.
+
+## See Also
+
+- [Sorting](/core-concepts/sorting.md)
+- [Get All Tasks](/api-reference/get-all-tasks.md)
+- [Get All Users](/api-reference/get-all-users.md)
 
 --- FILE: core-concepts/sorting.md
 ---
@@ -695,165 +1405,203 @@ description: "How to sort API results using sort parameters."
 tags: ["sorting", "collection"]
 categories: ["core-concepts"]
 importance: 6
+parent: "core-concepts"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 3
+ai-generated-date: "2025-05-13"
+navOrder: "3"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
 # Sorting
 
-The Task Management API provides sorting capabilities to order collections of resources based on specific fields. This document explains how to use sorting parameters to organize your API results.
+The Task Management API allows you to sort collections of resources using the `sort` query parameter. This page explains how to use sorting to organize and retrieve resources in a specific order.
 
-## Sort parameter
+## Basic Sorting
 
-To sort resources, use the `_sort` query parameter. The value should be the field name to sort by.
+To sort resources, use the `sort` query parameter with a field name:
 
-| Parameter | Description | Example |
-|-----------|-------------|---------|
-| `_sort` | Field to sort by | `_sort=dueDate` |
-
-## Sorting direction
-
-By default, sorting is in ascending order. To sort in descending order, prefix the field name with a minus sign (`-`).
-
-| Example | Description |
-|---------|-------------|
-| `_sort=dueDate` | Sort by due date in ascending order (earliest first) |
-| `_sort=-dueDate` | Sort by due date in descending order (latest first) |
-
-## Request examples
-
-To retrieve tasks sorted by title in ascending order:
-
-```http
-GET /tasks?_sort=taskTitle HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+```
+GET /tasks?sort=dueDate
 ```
 
-To retrieve users sorted by last name in descending order:
+By default, sorting is done in ascending order (A to Z, oldest to newest, etc.).
 
-```http
-GET /users?_sort=-lastName HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+## Sort Direction
+
+To specify the sort direction, prefix the field name with a plus (`+`) for ascending order or a minus (`-`) for descending order:
+
+```
+GET /tasks?sort=-dueDate   # Sort by due date, newest first
+GET /tasks?sort=+title     # Sort by title, alphabetically A-Z
 ```
 
-## Sortable fields
+## Multiple Sort Fields
 
-### User resource
+You can sort by multiple fields by separating them with commas:
 
-| Field | Description | Example |
-|-------|-------------|---------|
-| `userId` | User ID | `_sort=userId` |
-| `firstName` | First name | `_sort=firstName` |
-| `lastName` | Last name | `_sort=lastName` |
-| `contactEmail` | Email address | `_sort=contactEmail` |
-
-### Task resource
-
-| Field | Description | Example |
-|-------|-------------|---------|
-| `taskId` | Task ID | `_sort=taskId` |
-| `userId` | User ID | `_sort=userId` |
-| `taskTitle` | Task title | `_sort=taskTitle` |
-| `taskStatus` | Task status | `_sort=taskStatus` |
-| `dueDate` | Due date | `_sort=dueDate` |
-| `warningOffset` | Warning offset | `_sort=warningOffset` |
-
-## Combining sorting with pagination
-
-Sorting works seamlessly with pagination. To retrieve the first page of tasks sorted by due date in descending order:
-
-```http
-GET /tasks?_sort=-dueDate&_page=0&_perPage=10 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+```
+GET /tasks?sort=-priority,dueDate
 ```
 
-For more information on pagination, see the [Pagination](pagination.html) documentation.
+This example sorts tasks by priority in descending order (high to low) and then by due date in ascending order (earliest first) when priorities are the same.
 
-## Sorting behavior
+## Sortable Fields
 
-- String fields are sorted alphabetically
-- Date fields are sorted chronologically
-- Numeric fields are sorted numerically
-- Enum fields (like `taskStatus`) are sorted based on the string value
-- If the sort parameter is omitted, resources are typically returned in the order they were created (by ID)
+### User Resource
 
-## Sort examples by use case
+| Field | Type | Description |
+|-------|------|-------------|
+| `name` | String | User's full name |
+| `email` | String | User's email address |
+| `createdAt` | Date | When the user was created |
+| `updatedAt` | Date | When the user was last updated |
 
-### Finding urgent tasks
+### Task Resource
 
-To find tasks with the earliest due dates:
+| Field | Type | Description |
+|-------|------|-------------|
+| `title` | String | Task title |
+| `status` | String | Task status |
+| `priority` | String | Task priority |
+| `dueDate` | Date | Task due date |
+| `createdAt` | Date | When the task was created |
+| `updatedAt` | Date | When the task was last updated |
 
-```http
-GET /tasks?_sort=dueDate HTTP/1.1
-```
+## Example Requests
 
-### Finding recently added tasks
-
-To find the most recently added tasks:
-
-```http
-GET /tasks?_sort=-taskId HTTP/1.1
-```
-
-### Alphabetical user list
-
-To get an alphabetical list of users by last name:
+### Sort Tasks by Due Date (Earliest First)
 
 ```http
-GET /users?_sort=lastName HTTP/1.1
+GET /tasks?sort=dueDate
 ```
 
-## Implementing sorting in client applications
+### Sort Tasks by Priority (Highest First) and Due Date (Earliest First)
 
-When implementing sorting in a client application, consider these best practices:
+```http
+GET /tasks?sort=-priority,dueDate
+```
 
-- Provide clear UI controls for users to sort by different fields
-- Indicate the current sort field and direction
-- Remember the user's sort preference between sessions
-- Combine sorting with filtering for more precise results
+### Sort Users by Name (Alphabetical)
 
-## Sorting code example
+```http
+GET /users?sort=name
+```
 
-```javascript
-// Example function to fetch sorted tasks
-async function fetchSortedTasks(sortField, ascending = true) {
-  // Add a minus sign for descending order
-  const sortParam = ascending ? sortField : `-${sortField}`;
-  
-  try {
-    const response = await fetch(`http://localhost:3000/tasks?_sort=${sortParam}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer YOUR_TOKEN',
-        'Content-Type': 'application/json'
-      }
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
-    }
-    
-    return await response.json();
-  } catch (error) {
-    console.error('Failed to fetch sorted tasks:', error);
-    throw error;
+### Sort Users by Creation Date (Newest First)
+
+```http
+GET /users?sort=-createdAt
+```
+
+## Combining with Other Parameters
+
+Sorting can be combined with other query parameters like pagination and filtering:
+
+```http
+GET /tasks?status=IN_PROGRESS&sort=-priority&limit=10&offset=0
+```
+
+This request retrieves:
+- Tasks with status "IN_PROGRESS"
+- Sorted by priority (highest first)
+- Limited to 10 results
+- Starting from the first result (offset 0)
+
+## Sorting Response Format
+
+The sorting parameters don't change the structure of the response, only the order of items in the `data` array:
+
+```json
+{
+  "data": [
+    {
+      "id": "task123",
+      "title": "High priority task",
+      "priority": "HIGH",
+      "dueDate": "2025-05-15T10:00:00Z",
+      // other properties...
+    },
+    {
+      "id": "task456",
+      "title": "Medium priority task",
+      "priority": "MEDIUM",
+      "dueDate": "2025-05-14T10:00:00Z",
+      // other properties...
+    },
+    // more tasks...
+  ],
+  "pagination": {
+    "total": 42,
+    "limit": 10,
+    "offset": 0,
+    "hasMore": true
   }
 }
 ```
 
-## Next steps
+## Handling Sort in Code
 
-After learning about sorting, explore these related topics:
+### JavaScript Example
 
-- [Pagination](pagination.html) to handle large result sets
-- [Task status lifecycle](task-status-lifecycle.html) to understand the ordering of status values
-- [Error handling](error-handling.html) for robust client applications
-- [Task resource](../resources/task-resource.html) for more details on task fields
+```javascript
+async function getTasksSortedByPriorityAndDueDate() {
+  try {
+    const response = await fetch('https://api.taskmanagement.example.com/v1/tasks?sort=-priority,dueDate', {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    const result = await response.json();
+    return result.data;
+  } catch (error) {
+    console.error('Error fetching sorted tasks:', error);
+    return [];
+  }
+}
+```
+
+### Python Example
+
+```python
+import requests
+
+def get_tasks_sorted_by_priority_and_due_date(api_key):
+    try:
+        response = requests.get(
+            'https://api.taskmanagement.example.com/v1/tasks?sort=-priority,dueDate',
+            headers={
+                'Authorization': f'Bearer {api_key}'
+            }
+        )
+        
+        response.raise_for_status()
+        result = response.json()
+        return result['data']
+    except requests.exceptions.RequestException as e:
+        print(f'Error fetching sorted tasks: {e}')
+        return []
+```
+
+## Best Practices
+
+1. **Combine with pagination**: When sorting large collections, always use pagination to improve performance.
+
+2. **Default sorting**: If no sorting is specified, resources are typically sorted by `createdAt` in descending order (newest first).
+
+3. **Custom sorting**: For more complex sorting needs, consider using filtering and then sorting the results client-side.
+
+4. **Sorting null values**: Fields with null values typically appear last in ascending sorts and first in descending sorts.
+
+## See Also
+
+- [Pagination](/core-concepts/pagination.md)
+- [Get All Tasks](/api-reference/get-all-tasks.md)
+- [Get All Users](/api-reference/get-all-users.md)
 
 --- FILE: core-concepts/error-handling.md
 ---
@@ -862,218 +1610,262 @@ description: "Common error patterns and best practices for handling errors in th
 tags: ["errors", "troubleshooting"]
 categories: ["core-concepts"]
 importance: 8
+parent: "core-concepts"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 4
+ai-generated-date: "2025-05-13"
+navOrder: "4"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Error handling
+# Error Handling
 
-The Task Management API uses consistent error response patterns to help you identify and resolve issues. This document explains the error format, common error codes, and best practices for handling errors in your applications.
+The Task Management API uses conventional HTTP response codes and a consistent error response format to indicate the success or failure of API requests. This page explains how errors are structured and provides best practices for handling them in your code.
 
-## Error response format
+## HTTP Status Codes
 
-All API errors follow a standard JSON format:
+The API uses the following HTTP status codes to indicate the result of a request:
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 - OK | The request was successful |
+| 201 - Created | The resource was successfully created |
+| 400 - Bad Request | The request was invalid or improperly formatted |
+| 401 - Unauthorized | Authentication is required or failed |
+| 403 - Forbidden | The authenticated user lacks permission for the requested operation |
+| 404 - Not Found | The requested resource does not exist |
+| 409 - Conflict | The request conflicts with the current state of the resource |
+| 422 - Unprocessable Entity | The request is properly formatted but contains semantic errors |
+| 429 - Too Many Requests | The client has exceeded rate limits |
+| 500 - Internal Server Error | Something went wrong on the server |
+
+## Error Response Format
+
+All error responses follow a consistent format:
 
 ```json
 {
-  "code": "ERROR_CODE",
-  "message": "Human-readable error message",
-  "details": [
-    {
-      "field": "fieldName",
-      "reason": "specific reason",
-      "location": "body"
+  "error": {
+    "code": "error_code",
+    "message": "A human-readable error message",
+    "details": {
+      // Additional error details if available
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  }
 }
 ```
 
-### Error properties
+The `details` field is optional and may contain additional information about the error, such as specific validation errors for each field.
 
-| Property | Description | Always present |
-|----------|-------------|----------------|
-| `code` | Error code identifying the type of error | Yes |
-| `message` | Human-readable description of the error | Yes |
-| `details` | Array of objects with specific validation errors | No |
-| `requestId` | Unique identifier for the request (for support) | Yes |
+## Common Error Codes
 
-The `details` array is included for validation errors and provides information about specific fields that failed validation.
-
-## HTTP status codes
-
-The API uses standard HTTP status codes to indicate the general category of response:
-
-| Status code | Description | Example scenario |
-|-------------|-------------|------------------|
-| 400 | Bad Request | Invalid request format or validation failure |
-| 401 | Unauthorized | Missing or invalid authentication token |
-| 403 | Forbidden | Valid authentication but insufficient permissions |
-| 404 | Not Found | Requested resource does not exist |
-| 429 | Too Many Requests | Rate limit exceeded |
-| 500 | Internal Server Error | Unexpected server-side error |
-
-## Common error codes
-
-The `code` field in the error response provides more specific information about what went wrong:
-
-| Error code | Description | HTTP status |
+| Error Code | HTTP Status | Description |
 |------------|-------------|-------------|
-| `INVALID_FIELD` | A field value is invalid | 400 |
-| `MISSING_REQUIRED_FIELD` | A required field is missing | 400 |
-| `RESOURCE_NOT_FOUND` | The requested resource doesn't exist | 404 |
-| `UNAUTHORIZED` | Authentication is required | 401 |
-| `FORBIDDEN` | Operation not permitted | 403 |
-| `RATE_LIMIT_EXCEEDED` | Too many requests | 429 |
-| `SERVER_ERROR` | Unexpected server error | 500 |
+| `invalid_request` | 400 | The request is malformed or missing required fields |
+| `unauthorized` | 401 | Invalid or missing authentication |
+| `forbidden` | 403 | The user doesn't have permission for this action |
+| `not_found` | 404 | The requested resource doesn't exist |
+| `conflict` | 409 | The request conflicts with the current state |
+| `validation_error` | 422 | The request contains invalid data |
+| `rate_limit_exceeded` | 429 | The client has sent too many requests |
+| `server_error` | 500 | An unexpected error occurred on the server |
 
-## Validation errors
+## Validation Error Example
 
-Validation errors include detailed information about which fields failed validation and why:
+When a request fails validation, the response includes details about each invalid field:
 
 ```json
 {
-  "code": "INVALID_FIELD",
-  "message": "The field `contactEmail` must be a valid email address",
-  "details": [
-    {
-      "field": "contactEmail",
-      "reason": "Invalid format",
-      "location": "body"
+  "error": {
+    "code": "validation_error",
+    "message": "The request contains invalid data",
+    "details": {
+      "title": "Title is required",
+      "dueDate": "Due date must be in the future",
+      "status": "Status must be one of: TODO, IN_PROGRESS, REVIEW, DONE, CANCELED"
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-## Error handling best practices
-
-### 1. Check HTTP status code first
-
-The HTTP status code provides the general category of the error and helps determine how to proceed:
-
-```javascript
-if (!response.ok) {
-  if (response.status === 401 || response.status === 403) {
-    // Handle authentication/authorization errors
-  } else if (response.status === 400) {
-    // Handle validation errors
-  } else if (response.status === 404) {
-    // Handle not found errors
-  } else if (response.status === 429) {
-    // Handle rate limiting
-  } else {
-    // Handle unexpected errors
   }
 }
 ```
 
-### 2. Parse error details for validation errors
+## Error Handling Best Practices
 
-For validation errors (status 400), check the `details` array for specific field errors:
+### 1. Check HTTP Status Codes
+
+Always check the HTTP status code before processing the response body:
 
 ```javascript
-if (error.details && error.details.length > 0) {
-  error.details.forEach(detail => {
-    // Handle each validation error
-    console.log(`Field ${detail.field}: ${detail.reason}`);
-    
-    // Update UI to show validation errors
-    showValidationError(detail.field, detail.reason);
-  });
+// JavaScript example
+if (response.status >= 200 && response.status < 300) {
+  // Success - process the response
+} else {
+  // Error - handle according to status code
 }
 ```
 
-### 3. Implement retry logic for rate limiting
+### 2. Extract Error Information
 
-For rate limit errors (status 429), implement a backoff strategy using the `Retry-After` header:
-
-```javascript
-if (response.status === 429) {
-  const retryAfter = response.headers.get('Retry-After') || 30;
-  console.log(`Rate limited. Retrying after ${retryAfter} seconds`);
-  
-  // Wait and retry
-  setTimeout(() => {
-    // Retry the request
-  }, retryAfter * 1000);
-}
-```
-
-### 4. Log the request ID for troubleshooting
-
-Always log the `requestId` for troubleshooting purposes:
+Parse the error response to get detailed information:
 
 ```javascript
-console.error(`API Error: ${error.message}`, {
-  code: error.code,
-  requestId: error.requestId
-});
-```
-
-## Error handling code example
-
-```javascript
-async function createTask(taskData) {
+// JavaScript example
+async function handleApiError(response) {
   try {
-    const response = await fetch('http://localhost:3000/tasks', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer YOUR_TOKEN',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(taskData)
-    });
+    const errorData = await response.json();
+    console.error(`API Error (${response.status}): ${errorData.error.message}`);
     
-    if (!response.ok) {
-      const errorData = await response.json();
-      
-      // Handle different types of errors
-      switch (response.status) {
-        case 400:
-          handleValidationErrors(errorData);
-          break;
-        case 401:
-        case 403:
-          handleAuthErrors(errorData);
-          break;
-        case 429:
-          handleRateLimiting(response, errorData);
-          break;
-        default:
-          handleGenericError(errorData);
-      }
-      
-      throw new Error(errorData.message);
+    // Handle specific error codes
+    if (errorData.error.code === 'validation_error') {
+      handleValidationErrors(errorData.error.details);
     }
     
-    return await response.json();
-  } catch (error) {
-    console.error('Task creation failed:', error);
-    throw error;
-  }
-}
-
-function handleValidationErrors(errorData) {
-  if (errorData.details) {
-    errorData.details.forEach(detail => {
-      console.error(`Validation error: ${detail.field} - ${detail.reason}`);
-      // Update UI to show validation errors
-    });
+    return errorData.error;
+  } catch (e) {
+    console.error(`Failed to parse error response: ${e}`);
+    return { code: 'unknown_error', message: 'An unknown error occurred' };
   }
 }
 ```
 
-## Next steps
+### 3. Implement Retry Logic for Certain Errors
 
-Now that you understand error handling, explore these related topics:
+For transient errors like rate limiting (429), implement retry logic with exponential backoff:
 
-- [Authentication](../getting-started/authentication.html) to prevent authentication errors
-- [Rate limiting](../getting-started/rate-limiting.html) to avoid rate limit errors
-- [Data model](data-model.html) to understand validation requirements
-- [Troubleshooting](../support/troubleshooting.html) for more help resolving common issues
+```javascript
+// JavaScript example
+async function fetchWithRetry(url, options, maxRetries = 3) {
+  let retries = 0;
+  
+  while (retries < maxRetries) {
+    const response = await fetch(url, options);
+    
+    if (response.status !== 429) {
+      return response;
+    }
+    
+    // Get retry-after header or use exponential backoff
+    const retryAfter = response.headers.get('Retry-After') || Math.pow(2, retries);
+    const delay = parseInt(retryAfter, 10) * 1000;
+    
+    console.log(`Rate limited, retrying after ${delay}ms (retry ${retries + 1}/${maxRetries})`);
+    await new Promise(resolve => setTimeout(resolve, delay));
+    
+    retries++;
+  }
+  
+  // If we've exhausted all retries
+  const response = await fetch(url, options);
+  return response;
+}
+```
+
+### 4. Gracefully Handle 404 Errors
+
+Handle 404 errors gracefully, especially for `GET` requests:
+
+```javascript
+// JavaScript example
+async function getTask(taskId) {
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    headers: { 'Authorization': `Bearer ${API_KEY}` }
+  });
+  
+  if (response.status === 404) {
+    console.warn(`Task ${taskId} not found`);
+    return null;
+  } else if (!response.ok) {
+    throw await handleApiError(response);
+  }
+  
+  return response.json();
+}
+```
+
+### 5. Validate Input Before Sending
+
+Validate user input client-side before sending requests to reduce validation errors:
+
+```javascript
+// JavaScript example
+function validateTask(task) {
+  const errors = {};
+  
+  if (!task.title || task.title.trim() === '') {
+    errors.title = 'Title is required';
+  }
+  
+  if (task.dueDate && new Date(task.dueDate) <= new Date()) {
+    errors.dueDate = 'Due date must be in the future';
+  }
+  
+  const validStatuses = ['TODO', 'IN_PROGRESS', 'REVIEW', 'DONE', 'CANCELED'];
+  if (task.status && !validStatuses.includes(task.status)) {
+    errors.status = `Status must be one of: ${validStatuses.join(', ')}`;
+  }
+  
+  return Object.keys(errors).length > 0 ? errors : null;
+}
+```
+
+## Language-Specific Examples
+
+### Python
+
+```python
+import requests
+
+def handle_api_error(response):
+    try:
+        error_data = response.json()
+        print(f"API Error ({response.status_code}): {error_data['error']['message']}")
+        return error_data['error']
+    except Exception as e:
+        print(f"Failed to parse error response: {e}")
+        return {"code": "unknown_error", "message": "An unknown error occurred"}
+
+def get_task(api_key, task_id):
+    response = requests.get(
+        f"https://api.taskmanagement.example.com/v1/tasks/{task_id}",
+        headers={"Authorization": f"Bearer {api_key}"}
+    )
+    
+    if response.status_code == 404:
+        print(f"Task {task_id} not found")
+        return None
+    elif not response.ok:
+        raise Exception(handle_api_error(response))
+    
+    return response.json()
+```
+
+### cURL
+
+When using cURL, you'll need to handle errors manually by checking the response:
+
+```bash
+response=$(curl -s -w "\n%{http_code}" https://api.taskmanagement.example.com/v1/tasks/non-existent-id \
+  -H "Authorization: Bearer YOUR_API_KEY")
+
+http_code=$(echo "$response" | tail -n1)
+body=$(echo "$response" | sed '$d')
+
+if [ "$http_code" -ge 400 ]; then
+  echo "Error (HTTP $http_code):"
+  echo "$body" | jq .
+else
+  echo "Success:"
+  echo "$body" | jq .
+fi
+```
+
+## See Also
+
+- [API Reference - Error Responses](/api-reference/error-responses.md)
+- [Rate Limiting](/getting-started/rate-limiting.md)
+- [Troubleshooting](/support/troubleshooting.md)
 
 --- FILE: core-concepts/task-status-lifecycle.md
 ---
@@ -1082,185 +1874,228 @@ description: "Understanding the various status values that tasks can have and th
 tags: ["task status", "workflow"]
 categories: ["core-concepts"]
 importance: 7
+parent: "core-concepts"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 5
+ai-generated-date: "2025-05-13"
+navOrder: "5"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Task status lifecycle
+# Task Status Lifecycle
 
-Tasks in the Task Management API progress through various states from creation to completion. This document explains the different status values, their meanings, and the typical transitions between them.
+Tasks in the Task Management API move through a series of statuses throughout their lifecycle. This page explains the different status values, valid transitions between them, and how to implement a task lifecycle in your application.
 
-## Available status values
+## Task Status Values
 
-The Task resource uses the `taskStatus` property to track the current state of a task. The available status values are:
+The Task Management API supports the following status values for tasks:
 
 | Status | Description |
 |--------|-------------|
-| `NOT_STARTED` | Task has been created but work has not begun |
-| `IN_PROGRESS` | Task is actively being worked on |
-| `BLOCKED` | Task cannot proceed due to an obstacle or dependency |
-| `DEFERRED` | Task has been postponed until a later time |
-| `COMPLETED` | Task has been successfully finished |
-| `CANCELLED` | Task has been abandoned and will not be completed |
+| `TODO` | The task has been created but work hasn't started yet |
+| `IN_PROGRESS` | Work on the task has begun but is not yet complete |
+| `REVIEW` | The task is completed and waiting for review or approval |
+| `DONE` | The task has been completed and approved |
+| `CANCELED` | The task has been canceled and won't be completed |
 
-## Default status
-
-When a task is created without explicitly specifying a status, it defaults to `NOT_STARTED`.
-
-## Status transitions
-
-While the API allows updating a task's status to any valid value, the following diagram illustrates the typical workflow:
+## Task Status Lifecycle Diagram
 
 ```
-  ┌───────────────┐
-  │  NOT_STARTED  │
-  └───────┬───────┘
-          │
-          ▼
-  ┌───────────────┐         ┌───────────────┐
-  │  IN_PROGRESS  │◄───────►│    BLOCKED    │
-  └───────┬───────┘         └───────┬───────┘
-          │                         │
-          ▼                         ▼
-  ┌───────────────┐         ┌───────────────┐
-  │   COMPLETED   │         │   CANCELLED   │
-  └───────────────┘         └───────────────┘
-          ▲                         ▲
-          │                         │
-  ┌───────────────┐                 │
-  │   DEFERRED    │─────────────────┘
-  └───────────────┘
+┌─────────┐     ┌─────────────┐     ┌────────┐     ┌──────┐
+│   TODO  │────►│ IN_PROGRESS │────►│ REVIEW │────►│ DONE │
+└─────────┘     └─────────────┘     └────────┘     └──────┘
+     │                 │                │              │
+     │                 │                │              │
+     │                 ▼                ▼              ▼
+     └───────────────►┌──────────┐◄─────────────────────
+                      │ CANCELED │
+                      └──────────┘
 ```
 
-### Common transitions
+## Valid Status Transitions
 
-1. `NOT_STARTED` → `IN_PROGRESS`: Work has begun on the task
-2. `IN_PROGRESS` → `BLOCKED`: Task has encountered an obstacle
-3. `BLOCKED` → `IN_PROGRESS`: Obstacle has been resolved
-4. `IN_PROGRESS` → `COMPLETED`: Task has been successfully completed
-5. `NOT_STARTED` → `DEFERRED`: Task has been postponed
-6. `DEFERRED` → `IN_PROGRESS`: Work has resumed on a postponed task
-7. `DEFERRED` → `CANCELLED`: A postponed task has been abandoned
-8. `BLOCKED` → `CANCELLED`: A blocked task has been abandoned
+Not all status transitions are valid. The following table shows the allowed transitions:
 
-## Updating task status
+| Current Status | Valid Next Statuses |
+|----------------|---------------------|
+| `TODO` | `IN_PROGRESS`, `CANCELED` |
+| `IN_PROGRESS` | `REVIEW`, `CANCELED` |
+| `REVIEW` | `DONE`, `IN_PROGRESS`, `CANCELED` |
+| `DONE` | `CANCELED` |
+| `CANCELED` | None (terminal state) |
 
-To update a task's status, send a PATCH request to the `/tasks/{taskId}` endpoint:
+Attempting to make an invalid status transition will result in a `422 Unprocessable Entity` error.
+
+## Implementing Status Transitions
+
+To update a task's status, use the `PATCH` method on the task resource:
 
 ```http
-PATCH /tasks/123 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+PATCH /tasks/{taskId}
 Content-Type: application/json
 
 {
-  "taskStatus": "IN_PROGRESS"
+  "status": "IN_PROGRESS"
 }
 ```
 
-## Status implications
+### Example Response
 
-Each status has specific implications for task management:
+```json
+{
+  "id": "task123",
+  "title": "Implement authentication",
+  "description": "Add token-based authentication to the application",
+  "status": "IN_PROGRESS",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "createdAt": "2025-05-01T10:30:00Z",
+  "updatedAt": "2025-05-13T14:25:00Z"
+}
+```
 
-### NOT_STARTED
+## Status-Based Filtering
 
-- Task is in the backlog or queue
-- No work has begun yet
-- Reminder will trigger based on the `warningOffset` and `dueDate`
-
-### IN_PROGRESS
-
-- Task is actively being worked on
-- Progress is being made toward completion
-- Reminder will still trigger based on the `warningOffset` and `dueDate`
-
-### BLOCKED
-
-- Task cannot be completed due to a dependency or obstacle
-- May require intervention to resolve the blocking issue
-- Reminder will still trigger based on the `warningOffset` and `dueDate`
-
-### DEFERRED
-
-- Task has been postponed to a later time
-- Not currently actively worked on
-- Reminder will still trigger based on the `warningOffset` and `dueDate`
-
-### COMPLETED
-
-- Task has been successfully finished
-- No further action is required
-- Reminders are no longer triggered
-
-### CANCELLED
-
-- Task has been abandoned and will not be completed
-- No further action is required
-- Reminders are no longer triggered
-
-## Filtering tasks by status
-
-You can filter tasks by their status using the `taskStatus` query parameter:
+You can filter tasks by status when listing them:
 
 ```http
-GET /tasks?taskStatus=IN_PROGRESS HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /tasks?status=IN_PROGRESS
 ```
 
-This allows you to retrieve only tasks in a specific state, which is useful for creating views such as:
+You can also filter by multiple statuses:
 
-- Task backlogs (`NOT_STARTED`)
-- Current work (`IN_PROGRESS`)
-- Blocked tasks that need attention (`BLOCKED`)
-- Completed tasks for review (`COMPLETED`)
+```http
+GET /tasks?status=TODO,IN_PROGRESS
+```
 
-## Implementation example
+This is useful for creating views like "Open Tasks" (TODO, IN_PROGRESS, REVIEW) or "Closed Tasks" (DONE, CANCELED).
 
-Here's an example of a function that updates a task's status:
+## Status Workflow Automation
+
+Here are some common automation practices for task status transitions:
+
+### 1. Automatic Assignment
+
+When a task moves from `TODO` to `IN_PROGRESS`, it often requires an assignee:
 
 ```javascript
-async function updateTaskStatus(taskId, newStatus) {
-  try {
-    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-      method: 'PATCH',
-      headers: {
-        'Authorization': 'Bearer YOUR_TOKEN',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ taskStatus: newStatus })
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
-    }
-    
-    return await response.json();
-  } catch (error) {
-    console.error(`Failed to update task ${taskId} status:`, error);
-    throw error;
-  }
+// JavaScript example
+async function startTask(taskId, assigneeId) {
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      status: 'IN_PROGRESS',
+      assigneeId: assigneeId
+    })
+  });
+  
+  return response.json();
 }
 ```
 
-## Best practices for status management
+### 2. Notifications on Status Change
 
-- Update the task status promptly to reflect its current state
-- Use the `BLOCKED` status to highlight tasks that need attention
-- Consider updating the `dueDate` when changing status to `DEFERRED`
-- Include a reason when marking tasks as `CANCELLED` using the task description
-- Review `BLOCKED` tasks regularly to prevent them from being forgotten
+You might want to notify relevant users when a task's status changes:
 
-## Next steps
+```python
+# Python example
+def update_task_status(api_key, task_id, new_status):
+    # First, get the current task data
+    response = requests.get(
+        f"https://api.taskmanagement.example.com/v1/tasks/{task_id}",
+        headers={"Authorization": f"Bearer {api_key}"}
+    )
+    
+    current_task = response.json()
+    old_status = current_task["status"]
+    
+    # Update the status
+    response = requests.patch(
+        f"https://api.taskmanagement.example.com/v1/tasks/{task_id}",
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        },
+        json={"status": new_status}
+    )
+    
+    updated_task = response.json()
+    
+    # Send notifications based on the transition
+    if old_status == "TODO" and new_status == "IN_PROGRESS":
+        notify_task_started(updated_task)
+    elif old_status == "IN_PROGRESS" and new_status == "REVIEW":
+        notify_task_ready_for_review(updated_task)
+    elif new_status == "DONE":
+        notify_task_completed(updated_task)
+    elif new_status == "CANCELED":
+        notify_task_canceled(updated_task)
+    
+    return updated_task
+```
 
-Now that you understand the task status lifecycle, explore these related topics:
+### 3. Implementing a Review Process
 
-- [Task resource](../resources/task-resource.html) for complete details on tasks
-- [Update a task](../api-reference/update-task.html) for API reference on task updates
-- [Get all tasks](../api-reference/get-all-tasks.html) for filtering tasks by status
-- [Task management workflow](../tutorials/task-management-workflow.html) for implementing a complete workflow
+If your workflow requires formal review, you might implement a process like this:
+
+```javascript
+// JavaScript example
+async function completeTaskWorkflow(taskId, reviewerId) {
+  // 1. Developer marks task as ready for review
+  await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      status: 'REVIEW'
+    })
+  });
+  
+  // 2. Assign the reviewer
+  await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      assigneeId: reviewerId
+    })
+  });
+  
+  // In a real application, the reviewer would review and then update the status
+  // to either DONE or back to IN_PROGRESS
+}
+```
+
+## Best Practices
+
+1. **Validate transitions**: Always validate status transitions before making API requests to avoid errors.
+
+2. **Track status history**: If you need a history of status changes, consider implementing your own tracking as the API only provides the current status.
+
+3. **Use webhooks if available**: If the API provides webhooks, subscribe to status change events to keep your application in sync.
+
+4. **Consider user permissions**: Different users might have different permissions for status transitions. For example, only a reviewer might be able to move a task from `REVIEW` to `DONE`.
+
+5. **Implement intuitive UI**: Design your user interface to make the task lifecycle clear, perhaps showing available actions based on the current status.
+
+## See Also
+
+- [Task Resource](/resources/task-resource.md)
+- [Update Task](/api-reference/update-task.md)
+- [Task Management Workflow](/tutorials/task-management-workflow.md)
 
 --- FILE: resources/user-resource.md
 ---
@@ -1269,225 +2104,238 @@ description: "Detailed information about the User resource, its properties, and 
 tags: ["user", "resource"]
 categories: ["resources"]
 importance: 9
+parent: "resources"
+hasChildren: false
 related_pages: ["get-all-users", "create-user", "get-user-by-id", "update-user", "delete-user"]
 api_endpoints: ["/users", "/users/{userId}"]
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 1
+ai-generated-date: "2025-05-13"
+navOrder: "1"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# User resource
+# User Resource
 
-The User resource represents a person who can create and manage tasks in the Task Management API. This document provides detailed information about the User resource, its properties, and related endpoints.
+The User resource represents individuals who can create and be assigned to tasks in the Task Management API. This page provides detailed information about the User resource, its properties, and related endpoints.
 
-## Resource overview
+## Resource Properties
 
-The User resource has the following properties:
+| Property | Type | Description | Required |
+|----------|------|-------------|----------|
+| `id` | String | Unique identifier for the user | Auto-generated |
+| `name` | String | Full name of the user | Yes |
+| `email` | String | Email address of the user (must be unique) | Yes |
+| `role` | String | Role of the user (admin, manager, member) | No (default: "member") |
+| `createdAt` | Date | When the user was created | Auto-generated |
+| `updatedAt` | Date | When the user was last updated | Auto-generated |
 
-| Property | Type | Description | Constraints | Required |
-|----------|------|-------------|------------|----------|
-| `userId` | integer | Unique identifier | System-generated, immutable | Yes (in responses) |
-| `firstName` | string | User's first name | 1-100 characters | Yes |
-| `lastName` | string | User's last name | 1-100 characters | Yes |
-| `contactEmail` | string | User's email address | Valid email format, unique | Yes |
+## Resource Representation
 
-## Resource representation
-
-### JSON structure
+### JSON Format
 
 ```json
 {
-  "userId": 1,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
+  "id": "user123",
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "role": "member",
+  "createdAt": "2025-05-01T10:30:00Z",
+  "updatedAt": "2025-05-13T14:25:00Z"
 }
 ```
 
-## Property details
+## User Roles
 
-### userId
+The User resource supports the following roles:
 
-- **Type**: integer
-- **Description**: System-generated unique identifier for the user
-- **Required**: Automatically generated for responses, not included in requests
-- **Example**: `1`
+| Role | Description | Permissions |
+|------|-------------|-------------|
+| `admin` | Administrator with full access | Can perform all operations |
+| `manager` | Manager with elevated permissions | Can manage tasks and assign them to users |
+| `member` | Regular team member | Can create and update their own tasks |
 
-### firstName
+## Related Endpoints
 
-- **Type**: string
-- **Description**: The user's first name
-- **Constraints**: 1-100 characters
-- **Required**: Yes
-- **Example**: `"John"`
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/users` | GET | [Get all users](/api-reference/get-all-users.md) |
+| `/users` | POST | [Create a user](/api-reference/create-user.md) |
+| `/users/{userId}` | GET | [Get user by ID](/api-reference/get-user-by-id.md) |
+| `/users/{userId}` | PATCH | [Update a user](/api-reference/update-user.md) |
+| `/users/{userId}` | DELETE | [Delete a user](/api-reference/delete-user.md) |
 
-### lastName
+## Creating a User
 
-- **Type**: string
-- **Description**: The user's last name
-- **Constraints**: 1-100 characters
-- **Required**: Yes
-- **Example**: `"Doe"`
+To create a new user, send a `POST` request to the `/users` endpoint:
 
-### contactEmail
-
-- **Type**: string
-- **Description**: The user's email address for contact purposes
-- **Constraints**: 
-  - Must be a valid email address
-  - Must be unique across all users
-  - 3-255 characters
-- **Required**: Yes
-- **Example**: `"john.doe@example.com"`
-
-## User lifecycle
-
-1. **Creation**: A user is created via the [Create a user](../api-reference/create-user.html) endpoint
-2. **Retrieval**: User details can be fetched via the [Get user by ID](../api-reference/get-user-by-id.html) endpoint
-3. **Update**: User information can be updated via the [Update a user](../api-reference/update-user.html) endpoint
-4. **Deletion**: A user can be deleted via the [Delete a user](../api-reference/delete-user.html) endpoint
-
-When a user is deleted, all associated tasks are also removed from the system.
-
-## Related endpoints
-
-The following endpoints work with the User resource:
-
-| Method | Endpoint | Description | Reference |
-|--------|----------|-------------|-----------|
-| GET | `/users` | Retrieve all users | [Get all users](../api-reference/get-all-users.html) |
-| POST | `/users` | Create a new user | [Create a user](../api-reference/create-user.html) |
-| GET | `/users/{userId}` | Retrieve a specific user | [Get user by ID](../api-reference/get-user-by-id.html) |
-| PATCH | `/users/{userId}` | Update a user | [Update a user](../api-reference/update-user.html) |
-| DELETE | `/users/{userId}` | Delete a user | [Delete a user](../api-reference/delete-user.html) |
-
-## Creating a user
-
-To create a new user, send a POST request to the `/users` endpoint with the required fields:
+### Request
 
 ```http
-POST /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+POST /users
 Content-Type: application/json
 
 {
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
+  "name": "Jane Smith",
+  "email": "jane.smith@example.com",
+  "role": "manager"
 }
 ```
 
-The API will respond with the newly created user, including the system-generated `userId`:
-
-```json
-{
-  "userId": 1,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
-}
-```
-
-## Updating a user
-
-To update an existing user, send a PATCH request to the `/users/{userId}` endpoint with the fields you want to update:
+### Response
 
 ```http
-PATCH /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+HTTP/1.1 201 Created
 Content-Type: application/json
 
 {
-  "contactEmail": "new.email@example.com"
+  "id": "user456",
+  "name": "Jane Smith",
+  "email": "jane.smith@example.com",
+  "role": "manager",
+  "createdAt": "2025-05-13T15:30:00Z",
+  "updatedAt": "2025-05-13T15:30:00Z"
 }
 ```
 
-The API will respond with the complete updated user:
+## Updating a User
 
-```json
-{
-  "userId": 1,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "new.email@example.com"
-}
-```
+To update an existing user, send a `PATCH` request to the `/users/{userId}` endpoint:
 
-## Retrieving users
-
-To retrieve all users, send a GET request to the `/users` endpoint:
+### Request
 
 ```http
-GET /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+PATCH /users/user456
+Content-Type: application/json
+
+{
+  "name": "Jane Williams",
+  "role": "admin"
+}
 ```
 
-The API will respond with a list of users:
+### Response
 
-```json
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
 {
-  "users": [
-    {
-      "userId": 1,
-      "firstName": "John",
-      "lastName": "Doe",
-      "contactEmail": "john.doe@example.com"
-    },
-    {
-      "userId": 2,
-      "firstName": "Jane",
-      "lastName": "Smith",
-      "contactEmail": "jane.smith@example.com"
+  "id": "user456",
+  "name": "Jane Williams",
+  "email": "jane.smith@example.com",
+  "role": "admin",
+  "createdAt": "2025-05-13T15:30:00Z",
+  "updatedAt": "2025-05-13T15:45:00Z"
+}
+```
+
+## Deleting a User
+
+To delete a user, send a `DELETE` request to the `/users/{userId}` endpoint:
+
+### Request
+
+```http
+DELETE /users/user456
+```
+
+### Response
+
+```http
+HTTP/1.1 204 No Content
+```
+
+## User and Task Relationships
+
+Users are related to tasks in two ways:
+
+1. **As creators**: A user can create multiple tasks. The `createdBy` field on the Task resource references the user who created it.
+
+2. **As assignees**: A user can be assigned to multiple tasks. The `assigneeId` field on the Task resource references the assigned user.
+
+## Code Examples
+
+### Get a User by ID - JavaScript
+
+```javascript
+async function getUser(userId) {
+  try {
+    const response = await fetch(`https://api.taskmanagement.example.com/v1/users/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch user: ${response.status}`);
     }
-  ]
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    return null;
+  }
 }
 ```
 
-To retrieve a specific user, send a GET request to the `/users/{userId}` endpoint:
+### Create a User - Python
 
-```http
-GET /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+```python
+import requests
+
+def create_user(api_key, name, email, role="member"):
+    try:
+        response = requests.post(
+            "https://api.taskmanagement.example.com/v1/users",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "name": name,
+                "email": email,
+                "role": role
+            }
+        )
+        
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error creating user: {e}")
+        return None
 ```
 
-## Deleting a user
+### Get All Users Assigned to Tasks - cURL
 
-To delete a user, send a DELETE request to the `/users/{userId}` endpoint:
-
-```http
-DELETE /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+```bash
+curl -X GET "https://api.taskmanagement.example.com/v1/tasks?assigneeId=user123" \
+  -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
-A successful deletion returns a `204 No Content` response with no body.
+## Common Use Cases
 
-## Common errors
+- **User Management**: Creating and managing users in a task management system
+- **Team Organization**: Organizing users by roles and permissions
+- **User Profile**: Displaying user information in a profile page
+- **Task Assignment**: Assigning tasks to specific users based on their skills or availability
+- **Access Control**: Restricting access to certain features based on user roles
 
-| Error code | Description | HTTP status |
-|------------|-------------|-------------|
-| `INVALID_FIELD` | One or more fields have invalid values | 400 |
-| `MISSING_REQUIRED_FIELD` | A required field is missing | 400 |
-| `RESOURCE_NOT_FOUND` | The requested user does not exist | 404 |
-| `DUPLICATE_EMAIL` | The email address is already in use | 400 |
+## Best Practices
 
-## Relationships
+1. **Email Uniqueness**: Ensure email addresses are unique across all users
+2. **Role-Based Access Control**: Implement proper access controls based on user roles
+3. **Data Validation**: Validate user data before sending it to the API
+4. **User Privacy**: Handle user data in compliance with relevant privacy regulations
+5. **Secure Storage**: Store API keys and user credentials securely
 
-Each user can have multiple tasks. This one-to-many relationship is established through the `userId` field in the Task resource.
+## See Also
 
-For more information on tasks, see the [Task resource](task-resource.html) documentation.
-
-## Next steps
-
-- Learn how to [get started with users](../tutorials/getting-started-with-users.html)
-- Explore [user code examples](../developer-resources/code-examples.html)
-- Understand how users relate to [tasks](task-resource.html)
-- Learn about [authentication](../getting-started/authentication.html) for user-based operations
+- [Task Resource](/resources/task-resource.md)
+- [Data Model](/core-concepts/data-model.md)
+- [Getting Started with Users](/tutorials/getting-started-with-users.md)
 
 --- FILE: resources/task-resource.md
 ---
@@ -1496,304 +2344,315 @@ description: "Detailed information about the Task resource, its properties, and 
 tags: ["task", "resource"]
 categories: ["resources"]
 importance: 9
+parent: "resources"
+hasChildren: false
 related_pages: ["get-all-tasks", "create-task", "get-task-by-id", "update-task", "delete-task"]
 api_endpoints: ["/tasks", "/tasks/{taskId}"]
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 2
+ai-generated-date: "2025-05-13"
+navOrder: "2"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Task resource
+# Task Resource
 
-The Task resource represents a to-do item in the Task Management API. This document provides detailed information about the Task resource, its properties, and related endpoints.
+The Task resource represents a unit of work that needs to be completed within the Task Management API. This page provides detailed information about the Task resource, its properties, and related endpoints.
 
-## Resource overview
+## Resource Properties
 
-The Task resource has the following properties:
+| Property | Type | Description | Required |
+|----------|------|-------------|----------|
+| `id` | String | Unique identifier for the task | Auto-generated |
+| `title` | String | Title of the task | Yes |
+| `description` | String | Detailed description of the task | No |
+| `status` | String | Current status of the task | No (default: "TODO") |
+| `priority` | String | Priority level of the task | No (default: "MEDIUM") |
+| `createdBy` | String | ID of the user who created the task | Auto-generated |
+| `assigneeId` | String | ID of the user assigned to the task | No |
+| `dueDate` | Date | When the task is due | No |
+| `warningOffset` | Number | Hours before due date to send a reminder | No |
+| `tags` | Array | Array of string tags associated with the task | No |
+| `createdAt` | Date | When the task was created | Auto-generated |
+| `updatedAt` | Date | When the task was last updated | Auto-generated |
 
-| Property | Type | Description | Constraints | Required |
-|----------|------|-------------|------------|----------|
-| `taskId` | integer | Unique identifier | System-generated, immutable | Yes (in responses) |
-| `userId` | integer | Owner's user ID | Must reference existing user | Yes |
-| `taskTitle` | string | Short description | 1-80 characters | Yes |
-| `taskDescription` | string | Detailed description | 1-255 characters | No |
-| `taskStatus` | string enum | Current status | One of predefined values | Yes (defaults to `NOT_STARTED`) |
-| `dueDate` | string (date-time) | When task is due | ISO 8601 format | Yes |
-| `warningOffset` | integer | Minutes before due date for reminder | 0-64000 | Yes |
+## Resource Representation
 
-## Resource representation
-
-### JSON structure
+### JSON Format
 
 ```json
 {
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Complete API documentation",
-  "taskDescription": "Finish the task management API documentation for the developer portal",
-  "taskStatus": "IN_PROGRESS",
-  "dueDate": "2025-05-15T17:00:00-05:00",
-  "warningOffset": 60
+  "id": "task123",
+  "title": "Implement authentication",
+  "description": "Add token-based authentication to the application",
+  "status": "IN_PROGRESS",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "warningOffset": 24,
+  "tags": ["authentication", "security", "api"],
+  "createdAt": "2025-05-01T10:30:00Z",
+  "updatedAt": "2025-05-13T14:25:00Z"
 }
 ```
 
-## Property details
+## Task Status Values
 
-### taskId
+The Task resource supports the following status values:
 
-- **Type**: integer
-- **Description**: System-generated unique identifier for the task
-- **Required**: Automatically generated for responses, not included in requests
-- **Example**: `1`
+| Status | Description |
+|--------|-------------|
+| `TODO` | Task has been created but work hasn't started (default) |
+| `IN_PROGRESS` | Work on the task has begun but is not yet complete |
+| `REVIEW` | Task is completed and awaiting review or approval |
+| `DONE` | Task has been completed and approved |
+| `CANCELED` | Task has been canceled and won't be completed |
 
-### userId
+For more details on task status transitions, see [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md).
 
-- **Type**: integer
-- **Description**: Identifier of the user who owns the task
-- **Constraints**: Must reference an existing user
-- **Required**: Yes
-- **Example**: `1`
+## Task Priority Levels
 
-### taskTitle
+The Task resource supports the following priority levels:
 
-- **Type**: string
-- **Description**: Short description of the task used as the title in lists and headings
-- **Constraints**: 1-80 characters
-- **Required**: Yes
-- **Example**: `"Complete API documentation"`
+| Priority | Description |
+|----------|-------------|
+| `LOW` | Low priority task |
+| `MEDIUM` | Medium priority task (default) |
+| `HIGH` | High priority task |
+| `URGENT` | Urgent task requiring immediate attention |
 
-### taskDescription
+## Related Endpoints
 
-- **Type**: string
-- **Description**: Detailed description of the task
-- **Constraints**: 1-255 characters
-- **Required**: No
-- **Example**: `"Finish the task management API documentation for the developer portal"`
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/tasks` | GET | [Get all tasks](/api-reference/get-all-tasks.md) |
+| `/tasks` | POST | [Create a task](/api-reference/create-task.md) |
+| `/tasks/{taskId}` | GET | [Get task by ID](/api-reference/get-task-by-id.md) |
+| `/tasks/{taskId}` | PATCH | [Update a task](/api-reference/update-task.md) |
+| `/tasks/{taskId}` | DELETE | [Delete a task](/api-reference/delete-task.md) |
 
-### taskStatus
+## Creating a Task
 
-- **Type**: string enum
-- **Description**: Current state of the task in its lifecycle
-- **Constraints**: Must be one of:
-  - `NOT_STARTED` - Default value for new tasks
-  - `IN_PROGRESS` - Task is actively being worked on
-  - `BLOCKED` - Task cannot proceed due to an obstacle
-  - `DEFERRED` - Task has been postponed
-  - `COMPLETED` - Task has been finished
-  - `CANCELLED` - Task has been abandoned
-- **Required**: Yes (defaults to `NOT_STARTED` if not provided)
-- **Example**: `"IN_PROGRESS"`
+To create a new task, send a `POST` request to the `/tasks` endpoint:
 
-For more information about task status values and transitions, see the [Task status lifecycle](../core-concepts/task-status-lifecycle.html) document.
-
-### dueDate
-
-- **Type**: string (date-time)
-- **Description**: The date and time when the task should be completed
-- **Constraints**: Must be in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS.sssZ`)
-- **Required**: Yes
-- **Example**: `"2025-05-15T17:00:00-05:00"`
-
-### warningOffset
-
-- **Type**: integer
-- **Description**: Number of minutes before the due date to send a reminder
-- **Constraints**: 0-64000
-- **Required**: Yes
-- **Example**: `60` (reminder 1 hour before due date)
-
-## Task lifecycle
-
-1. **Creation**: A task is created via the [Create a task](../api-reference/create-task.html) endpoint
-2. **Retrieval**: Task details can be fetched via the [Get task by ID](../api-reference/get-task-by-id.html) endpoint
-3. **Update**: Task information can be updated via the [Update a task](../api-reference/update-task.html) endpoint
-4. **Status changes**: The task moves through different statuses via updates
-5. **Deletion**: A task can be deleted via the [Delete a task](../api-reference/delete-task.html) endpoint
-
-## Related endpoints
-
-The following endpoints work with the Task resource:
-
-| Method | Endpoint | Description | Reference |
-|--------|----------|-------------|-----------|
-| GET | `/tasks` | Retrieve all tasks | [Get all tasks](../api-reference/get-all-tasks.html) |
-| POST | `/tasks` | Create a new task | [Create a task](../api-reference/create-task.html) |
-| GET | `/tasks/{taskId}` | Retrieve a specific task | [Get task by ID](../api-reference/get-task-by-id.html) |
-| PATCH | `/tasks/{taskId}` | Update a task | [Update a task](../api-reference/update-task.html) |
-| DELETE | `/tasks/{taskId}` | Delete a task | [Delete a task](../api-reference/delete-task.html) |
-
-## Creating a task
-
-To create a new task, send a POST request to the `/tasks` endpoint with the required fields:
+### Request
 
 ```http
-POST /tasks HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+POST /tasks
 Content-Type: application/json
 
 {
-  "userId": 1,
-  "taskTitle": "Complete API documentation",
-  "taskDescription": "Finish the task management API documentation for the developer portal",
-  "dueDate": "2025-05-15T17:00:00-05:00",
-  "warningOffset": 60
+  "title": "Create API documentation",
+  "description": "Write comprehensive API documentation for developers",
+  "priority": "HIGH",
+  "assigneeId": "user456",
+  "dueDate": "2025-05-30T17:00:00Z",
+  "tags": ["documentation", "api"]
 }
 ```
 
-The API will respond with the newly created task, including the system-generated `taskId` and default `taskStatus`:
-
-```json
-{
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Complete API documentation",
-  "taskDescription": "Finish the task management API documentation for the developer portal",
-  "taskStatus": "NOT_STARTED",
-  "dueDate": "2025-05-15T17:00:00-05:00",
-  "warningOffset": 60
-}
-```
-
-## Updating a task
-
-To update an existing task, send a PATCH request to the `/tasks/{taskId}` endpoint with the fields you want to update:
+### Response
 
 ```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+HTTP/1.1 201 Created
 Content-Type: application/json
 
 {
-  "taskStatus": "IN_PROGRESS"
+  "id": "task789",
+  "title": "Create API documentation",
+  "description": "Write comprehensive API documentation for developers",
+  "status": "TODO",
+  "priority": "HIGH",
+  "createdBy": "user123",
+  "assigneeId": "user456",
+  "dueDate": "2025-05-30T17:00:00Z",
+  "tags": ["documentation", "api"],
+  "createdAt": "2025-05-13T15:30:00Z",
+  "updatedAt": "2025-05-13T15:30:00Z"
 }
 ```
 
-The API will respond with the complete updated task:
+## Updating a Task
 
-```json
-{
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Complete API documentation",
-  "taskDescription": "Finish the task management API documentation for the developer portal",
-  "taskStatus": "IN_PROGRESS",
-  "dueDate": "2025-05-15T17:00:00-05:00",
-  "warningOffset": 60
-}
-```
+To update an existing task, send a `PATCH` request to the `/tasks/{taskId}` endpoint:
 
-## Retrieving tasks
-
-To retrieve all tasks, send a GET request to the `/tasks` endpoint:
+### Request
 
 ```http
-GET /tasks HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+PATCH /tasks/task789
+Content-Type: application/json
+
+{
+  "status": "IN_PROGRESS",
+  "description": "Write comprehensive API documentation for developers, including examples and best practices"
+}
 ```
 
-The API will respond with a list of tasks:
+### Response
 
-```json
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
 {
-  "tasks": [
-    {
-      "taskId": 1,
-      "userId": 1,
-      "taskTitle": "Complete API documentation",
-      "taskDescription": "Finish the task management API documentation for the developer portal",
-      "taskStatus": "IN_PROGRESS",
-      "dueDate": "2025-05-15T17:00:00-05:00",
-      "warningOffset": 60
-    },
-    {
-      "taskId": 2,
-      "userId": 1,
-      "taskTitle": "Deploy application",
-      "taskDescription": "Deploy the application to production",
-      "taskStatus": "NOT_STARTED",
-      "dueDate": "2025-05-20T09:00:00-05:00",
-      "warningOffset": 120
+  "id": "task789",
+  "title": "Create API documentation",
+  "description": "Write comprehensive API documentation for developers, including examples and best practices",
+  "status": "IN_PROGRESS",
+  "priority": "HIGH",
+  "createdBy": "user123",
+  "assigneeId": "user456",
+  "dueDate": "2025-05-30T17:00:00Z",
+  "tags": ["documentation", "api"],
+  "createdAt": "2025-05-13T15:30:00Z",
+  "updatedAt": "2025-05-13T15:45:00Z"
+}
+```
+
+## Deleting a Task
+
+To delete a task, send a `DELETE` request to the `/tasks/{taskId}` endpoint:
+
+### Request
+
+```http
+DELETE /tasks/task789
+```
+
+### Response
+
+```http
+HTTP/1.1 204 No Content
+```
+
+## Task and User Relationships
+
+Tasks are related to users in two ways:
+
+1. **Created by**: Each task has a `createdBy` field that references the user who created it.
+
+2. **Assigned to**: Each task can optionally have an `assigneeId` field that references the user assigned to complete it.
+
+## Filtering Tasks
+
+The `/tasks` endpoint supports various filtering parameters:
+
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `status` | Filter by task status | `/tasks?status=IN_PROGRESS` |
+| `priority` | Filter by task priority | `/tasks?priority=HIGH` |
+| `assigneeId` | Filter by assigned user | `/tasks?assigneeId=user456` |
+| `createdBy` | Filter by creator | `/tasks?createdBy=user123` |
+| `dueDate[lt]` | Tasks due before date | `/tasks?dueDate[lt]=2025-05-30T00:00:00Z` |
+| `dueDate[gt]` | Tasks due after date | `/tasks?dueDate[gt]=2025-05-01T00:00:00Z` |
+| `tags` | Filter by tags | `/tasks?tags=documentation,api` |
+
+Multiple filters can be combined using the `&` operator:
+
+```
+/tasks?status=TODO,IN_PROGRESS&priority=HIGH,URGENT&assigneeId=user456
+```
+
+## Code Examples
+
+### Get All Tasks - JavaScript
+
+```javascript
+async function getAllTasks() {
+  try {
+    const response = await fetch('https://api.taskmanagement.example.com/v1/tasks', {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch tasks: ${response.status}`);
     }
-  ]
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching tasks:', error);
+    return { data: [] };
+  }
 }
 ```
 
-### Filtering tasks
+### Create a Task - Python
 
-You can filter tasks by their status using the `taskStatus` query parameter:
+```python
+import requests
 
-```http
-GET /tasks?taskStatus=IN_PROGRESS HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+def create_task(api_key, title, description=None, priority="MEDIUM", assignee_id=None, due_date=None):
+    try:
+        task_data = {
+            "title": title,
+            "priority": priority
+        }
+        
+        if description:
+            task_data["description"] = description
+            
+        if assignee_id:
+            task_data["assigneeId"] = assignee_id
+            
+        if due_date:
+            task_data["dueDate"] = due_date
+        
+        response = requests.post(
+            "https://api.taskmanagement.example.com/v1/tasks",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json"
+            },
+            json=task_data
+        )
+        
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error creating task: {e}")
+        return None
 ```
 
-### Pagination and sorting
+### Update Task Status - cURL
 
-For large collections, you can use pagination and sorting parameters:
-
-```http
-GET /tasks?_page=0&_perPage=10&_sort=-dueDate HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+```bash
+curl -X PATCH "https://api.taskmanagement.example.com/v1/tasks/task123" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "DONE"
+  }'
 ```
 
-For more information, see the [Pagination](../core-concepts/pagination.html) and [Sorting](../core-concepts/sorting.html) documents.
+## Common Use Cases
 
-## Deleting a task
+- **Task Creation**: Creating new tasks for team members to work on
+- **Task Assignment**: Assigning tasks to specific users
+- **Task Tracking**: Tracking task progress through status updates
+- **Due Date Management**: Setting and managing task deadlines
+- **Priority Management**: Organizing tasks by priority level
+- **Task Filtering**: Finding tasks based on various criteria
 
-To delete a task, send a DELETE request to the `/tasks/{taskId}` endpoint:
+## Best Practices
 
-```http
-DELETE /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
+1. **Set Clear Titles**: Use clear, concise titles that describe the task
+2. **Provide Detailed Descriptions**: Include all necessary information in the task description
+3. **Set Realistic Due Dates**: Assign reasonable deadlines for task completion
+4. **Use Appropriate Priorities**: Reserve high and urgent priorities for truly important tasks
+5. **Update Status Regularly**: Keep task status up-to-date to reflect current progress
+6. **Use Tags for Organization**: Apply consistent tags to group related tasks
+7. **Clean Up Completed Tasks**: Delete or archive tasks that are no longer needed
 
-A successful deletion returns a `204 No Content` response with no body.
+## See Also
 
-## Common errors
-
-| Error code | Description | HTTP status |
-|------------|-------------|-------------|
-| `INVALID_FIELD` | One or more fields have invalid values | 400 |
-| `MISSING_REQUIRED_FIELD` | A required field is missing | 400 |
-| `RESOURCE_NOT_FOUND` | The requested task does not exist | 404 |
-| `INVALID_USER_ID` | The specified user does not exist | 400 |
-| `INVALID_STATUS` | The specified status is not valid | 400 |
-
-## Task reminders
-
-The `dueDate` and `warningOffset` properties work together to determine when a reminder should be sent:
-
-```
-Reminder time = dueDate - warningOffset minutes
-```
-
-For example, if a task has:
-- `dueDate`: `"2025-05-15T17:00:00-05:00"`
-- `warningOffset`: `60` (minutes)
-
-The reminder would be sent at `2025-05-15T16:00:00-05:00` (1 hour before the due date).
-
-For more information on implementing reminders, see the [Implementing reminders](../tutorials/implementing-reminders.html) tutorial.
-
-## Relationships
-
-Each task belongs to exactly one user, identified by the `userId` property. This establishes a many-to-one relationship between tasks and users.
-
-For more information on users, see the [User resource](user-resource.html) documentation.
-
-## Next steps
-
-- Learn about the [task status lifecycle](../core-concepts/task-status-lifecycle.html)
-- Explore the [task management workflow](../tutorials/task-management-workflow.html)
-- See [code examples](../developer-resources/code-examples.html) for working with tasks
-- Implement [reminders](../tutorials/implementing-reminders.html) for upcoming tasks
+- [User Resource](/resources/user-resource.md)
+- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md)
+- [Task Management Workflow](/tutorials/task-management-workflow.md)
 
 --- FILE: api-reference/error-responses.md
 ---
@@ -1802,214 +2661,300 @@ description: "Reference documentation for all error responses returned by the AP
 tags: ["errors", "reference"]
 categories: ["api-reference"]
 importance: 8
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 1
+ai-generated-date: "2025-05-13"
+navOrder: "1"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Error responses
+# Error Responses
 
-This document provides reference information for all error responses that can be returned by the Task Management API. Understanding these error structures will help you implement robust error handling in your applications.
+The Task Management API returns consistent error responses across all endpoints. This page documents the error response format, common error codes, and provides examples for each type of error.
 
-## Error response format
+## Error Response Format
 
-All API errors follow a standard JSON format:
+All error responses follow this standard format:
 
 ```json
 {
-  "code": "ERROR_CODE",
-  "message": "Human-readable error message",
-  "details": [
-    {
-      "field": "fieldName",
-      "reason": "specific reason",
-      "location": "body"
+  "error": {
+    "code": "error_code",
+    "message": "A human-readable error message",
+    "details": {
+      // Additional error details (optional)
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  }
 }
 ```
 
-### Error response properties
+* `code`: A string identifier for the type of error
+* `message`: A human-readable description of the error
+* `details`: An optional object with additional information about the error
 
-| Property | Type | Description | Always present |
-|----------|------|-------------|----------------|
-| `code` | string | Error code identifying the type of error | Yes |
-| `message` | string | Human-readable description of the error | Yes |
-| `details` | array | Array of objects with specific validation errors | No |
-| `requestId` | string | Unique identifier for the request (for support) | Yes |
+## HTTP Status Codes
 
-The `details` array is included for validation errors and provides information about specific fields that failed validation.
+The API uses standard HTTP status codes to indicate the general category of error:
 
-## HTTP status codes
+| Status Code | Category | Description |
+|-------------|----------|-------------|
+| 400 | Bad Request | The request is malformed or contains invalid parameters |
+| 401 | Unauthorized | Authentication is missing or invalid |
+| 403 | Forbidden | The authenticated user lacks permission for this operation |
+| 404 | Not Found | The requested resource does not exist |
+| 409 | Conflict | The request conflicts with the current state of the resource |
+| 422 | Unprocessable Entity | The request is well-formed but contains semantic errors |
+| 429 | Too Many Requests | The client has sent too many requests in a given time |
+| 500 | Internal Server Error | An unexpected error occurred on the server |
 
-| Status code | Name | Description |
-|-------------|------|-------------|
-| 400 | Bad Request | The request was malformed or contains invalid parameters |
-| 401 | Unauthorized | Authentication is required or the provided credentials are invalid |
-| 403 | Forbidden | The authenticated user does not have permission to access the requested resource |
-| 404 | Not Found | The requested resource was not found |
-| 429 | Too Many Requests | The client has sent too many requests in a given amount of time |
-| 500 | Internal Server Error | An unexpected server error occurred |
+## Common Error Codes
 
-## Error codes
+### Authentication Errors
 
-The following error codes can be returned in the `code` field of the error response:
+| Error Code | HTTP Status | Description |
+|------------|-------------|-------------|
+| `missing_authentication` | 401 | No authentication credentials were provided |
+| `invalid_authentication` | 401 | The provided authentication credentials are invalid |
+| `expired_token` | 401 | The authentication token has expired |
 
-### Validation errors (400)
+### Permission Errors
 
-| Error code | Description | Example message |
-|------------|-------------|-----------------|
-| `INVALID_FIELD` | A field value is invalid | "The field `contactEmail` must be a valid email address" |
-| `MISSING_REQUIRED_FIELD` | A required field is missing | "The `lastName` field is required" |
-| `INVALID_FORMAT` | A field value has an invalid format | "The `dueDate` field must be in ISO 8601 format" |
-| `INVALID_LENGTH` | A field value exceeds length limits | "The `taskTitle` field must be between 1 and 80 characters" |
-| `DUPLICATE_EMAIL` | Email address is already in use | "The email address is already in use by another user" |
-| `INVALID_STATUS` | Invalid task status value | "The `taskStatus` value 'DONE' is not valid" |
-| `INVALID_RANGE` | Value outside allowed range | "The `warningOffset` must be between 0 and 64000" |
-| `INVALID_USER_ID` | Referenced user does not exist | "The specified `userId` does not exist" |
-| `INVALID_TASK_ID` | Referenced task does not exist | "The specified `taskId` does not exist" |
+| Error Code | HTTP Status | Description |
+|------------|-------------|-------------|
+| `permission_denied` | 403 | The authenticated user does not have permission for this action |
+| `insufficient_scope` | 403 | The token does not have the required scope for this action |
 
-### Authentication errors (401)
+### Resource Errors
 
-| Error code | Description | Example message |
-|------------|-------------|-----------------|
-| `UNAUTHORIZED` | Authentication is required | "Authentication is required to access this resource" |
-| `INVALID_TOKEN` | Token is invalid or malformed | "The provided authentication token is invalid" |
-| `EXPIRED_TOKEN` | Token has expired | "The authentication token has expired" |
+| Error Code | HTTP Status | Description |
+|------------|-------------|-------------|
+| `resource_not_found` | 404 | The requested resource does not exist |
+| `resource_conflict` | 409 | The request conflicts with the current state of the resource |
+| `resource_gone` | 410 | The resource existed previously but has been removed |
 
-### Permission errors (403)
+### Validation Errors
 
-| Error code | Description | Example message |
-|------------|-------------|-----------------|
-| `FORBIDDEN` | Operation not permitted | "You do not have permission to access this resource" |
-| `READ_ONLY_ACCESS` | Write operation not permitted | "You have read-only access to this resource" |
+| Error Code | HTTP Status | Description |
+|------------|-------------|-------------|
+| `validation_error` | 422 | The request contains invalid data |
+| `invalid_parameters` | 400 | One or more query parameters are invalid |
+| `invalid_format` | 400 | The request body format is invalid (e.g., malformed JSON) |
+| `missing_required_field` | 422 | A required field is missing from the request |
+| `invalid_field_value` | 422 | A field value is invalid (e.g., wrong type or out of range) |
+| `invalid_status_transition` | 422 | The requested status transition is not allowed |
 
-### Resource errors (404)
+### Rate Limiting Errors
 
-| Error code | Description | Example message |
-|------------|-------------|-----------------|
-| `RESOURCE_NOT_FOUND` | Resource does not exist | "The requested resource could not be found" |
-| `USER_NOT_FOUND` | User does not exist | "User with ID 123 could not be found" |
-| `TASK_NOT_FOUND` | Task does not exist | "Task with ID 456 could not be found" |
+| Error Code | HTTP Status | Description |
+|------------|-------------|-------------|
+| `rate_limit_exceeded` | 429 | The client has exceeded their rate limit |
+| `daily_limit_exceeded` | 429 | The client has exceeded their daily request limit |
 
-### Rate limit errors (429)
+### Server Errors
 
-| Error code | Description | Example message |
-|------------|-------------|-----------------|
-| `RATE_LIMIT_EXCEEDED` | Too many requests | "Rate limit exceeded. Try again in 30 seconds" |
+| Error Code | HTTP Status | Description |
+|------------|-------------|-------------|
+| `server_error` | 500 | An unexpected error occurred on the server |
+| `service_unavailable` | 503 | The service is temporarily unavailable |
+| `database_error` | 500 | An error occurred while accessing the database |
 
-### Server errors (500)
+## Error Examples
 
-| Error code | Description | Example message |
-|------------|-------------|-----------------|
-| `SERVER_ERROR` | Unexpected server error | "An unexpected error occurred. Please try again later" |
-| `SERVICE_UNAVAILABLE` | Service temporarily unavailable | "The service is temporarily unavailable. Please try again later" |
+### Authentication Error
 
-## Detailed validation error examples
+```http
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
 
-### Invalid email format
-
-```json
 {
-  "code": "INVALID_FIELD",
-  "message": "The field `contactEmail` must be a valid email address",
-  "details": [
-    {
-      "field": "contactEmail",
-      "reason": "Invalid format",
-      "location": "body"
+  "error": {
+    "code": "invalid_authentication",
+    "message": "The provided API key is invalid or has been revoked"
+  }
+}
+```
+
+### Resource Not Found Error
+
+```http
+HTTP/1.1 404 Not Found
+Content-Type: application/json
+
+{
+  "error": {
+    "code": "resource_not_found",
+    "message": "The requested task with ID 'task123' does not exist"
+  }
+}
+```
+
+### Validation Error
+
+```http
+HTTP/1.1 422 Unprocessable Entity
+Content-Type: application/json
+
+{
+  "error": {
+    "code": "validation_error",
+    "message": "The request contains invalid data",
+    "details": {
+      "title": "Title is required",
+      "dueDate": "Due date must be in the future",
+      "status": "Status must be one of: TODO, IN_PROGRESS, REVIEW, DONE, CANCELED"
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  }
 }
 ```
 
-### Missing required field
+### Rate Limit Error
 
-```json
+```http
+HTTP/1.1 429 Too Many Requests
+Content-Type: application/json
+Retry-After: 60
+
 {
-  "code": "MISSING_REQUIRED_FIELD",
-  "message": "The `lastName` field is required",
-  "details": [
-    {
-      "field": "lastName",
-      "reason": "Is required",
-      "location": "body"
+  "error": {
+    "code": "rate_limit_exceeded",
+    "message": "You have exceeded the rate limit of 100 requests per minute",
+    "details": {
+      "limit": 100,
+      "remaining": 0,
+      "resetAt": "2025-05-13T15:45:00Z"
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  }
 }
 ```
 
-### Invalid task status
+## Common Error Scenarios
 
-```json
-{
-  "code": "INVALID_STATUS",
-  "message": "The `taskStatus` value 'DONE' is not valid",
-  "details": [
-    {
-      "field": "taskStatus",
-      "reason": "Invalid value",
-      "location": "body"
+### Missing or Invalid Authentication
+
+If you receive a `401 Unauthorized` error, check that:
+- You are including the `Authorization` header with your requests
+- The format is correct: `Authorization: Bearer YOUR_API_KEY`
+- Your API key is valid and has not expired
+
+### Permission Denied
+
+If you receive a `403 Forbidden` error, check that:
+- The authenticated user has the necessary permissions for the action
+- The user's role has access to the requested resource
+- For task operations, the user may need to be the creator or assignee of the task
+
+### Resource Not Found
+
+If you receive a `404 Not Found` error, check that:
+- The resource ID is correct
+- The resource has not been deleted
+- You are using the correct endpoint URL
+
+### Validation Errors
+
+If you receive a `422 Unprocessable Entity` error:
+- Check the `details` field for specific validation errors
+- Ensure all required fields are provided
+- Verify that field values match the expected format and constraints
+- For status updates, ensure the transition is valid (see [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md))
+
+## Handling Errors in Code
+
+### JavaScript Example
+
+```javascript
+async function handleApiRequest(url, options) {
+  try {
+    const response = await fetch(url, options);
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      
+      // Handle specific error types
+      switch (errorData.error.code) {
+        case 'rate_limit_exceeded':
+          console.error('Rate limit exceeded. Try again later.');
+          // Maybe implement retry with backoff
+          break;
+        case 'validation_error':
+          console.error('Validation error:', errorData.error.details);
+          // Maybe highlight form fields with errors
+          break;
+        default:
+          console.error(`API Error (${response.status}):`, errorData.error.message);
+      }
+      
+      throw new Error(errorData.error.message);
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+    
+    return await response.json();
+  } catch (error) {
+    // Handle network errors or other exceptions
+    console.error('Request failed:', error);
+    throw error;
+  }
 }
 ```
 
-### Resource not found
+### Python Example
 
-```json
-{
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "User with ID 123 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
+```python
+import requests
+
+def handle_api_request(url, method="GET", data=None, headers=None):
+    try:
+        if method == "GET":
+            response = requests.get(url, headers=headers)
+        elif method == "POST":
+            response = requests.post(url, json=data, headers=headers)
+        elif method == "PATCH":
+            response = requests.patch(url, json=data, headers=headers)
+        elif method == "DELETE":
+            response = requests.delete(url, headers=headers)
+        else:
+            raise ValueError(f"Unsupported method: {method}")
+        
+        # Check if the request was successful
+        response.raise_for_status()
+        
+        # For non-204 responses, return the JSON data
+        if response.status_code != 204:
+            return response.json()
+        return None
+        
+    except requests.exceptions.HTTPError as e:
+        # Handle API errors
+        error_data = e.response.json()
+        error_code = error_data.get("error", {}).get("code", "unknown_error")
+        error_message = error_data.get("error", {}).get("message", "Unknown error")
+        error_details = error_data.get("error", {}).get("details", {})
+        
+        print(f"API Error ({e.response.status_code}): {error_message}")
+        
+        if error_code == "validation_error" and error_details:
+            print("Validation errors:")
+            for field, error in error_details.items():
+                print(f"  {field}: {error}")
+        
+        # Re-raise the exception with more context
+        raise Exception(f"{error_code}: {error_message}") from e
+        
+    except requests.exceptions.RequestException as e:
+        # Handle network errors
+        print(f"Request failed: {e}")
+        raise
 ```
 
-### Authentication required
+## See Also
 
-```json
-{
-  "code": "UNAUTHORIZED",
-  "message": "Authentication is required to access this resource",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-### Rate limit exceeded
-
-```json
-{
-  "code": "RATE_LIMIT_EXCEEDED",
-  "message": "Rate limit exceeded. Try again in 30 seconds",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-## Handling errors
-
-For guidance on handling these errors in your application, refer to the [Error handling](../core-concepts/error-handling.html) document.
-
-## Error response headers
-
-Some error responses include additional information in the headers:
-
-| Error type | Header | Description | Example |
-|------------|--------|-------------|---------|
-| Rate limiting | `Retry-After` | Seconds to wait before retrying | `Retry-After: 30` |
-
-## Next steps
-
-Now that you understand the error response format, explore these related topics:
-
-- [Error handling best practices](../core-concepts/error-handling.html)
-- [Troubleshooting common issues](../support/troubleshooting.html)
-- [Authentication](../getting-started/authentication.html)
-- [Rate limiting](../getting-started/rate-limiting.html)
+- [Core Concepts - Error Handling](/core-concepts/error-handling.md)
+- [Getting Started - Authentication](/getting-started/authentication.md)
+- [Rate Limiting](/getting-started/rate-limiting.md)
+- [Troubleshooting](/support/troubleshooting.md)
 
 --- FILE: api-reference/get-all-users.md
 ---
@@ -2020,15 +2965,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/users"]
 related_pages: ["user-resource", "pagination", "sorting"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 2
+ai-generated-date: "2025-05-13"
+navOrder: "2"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Get all users
-
-The `GET /users` endpoint retrieves a list of all users in the system. This endpoint supports pagination and sorting to help manage large collections of users.
+# Get All Users
 
 ## Endpoint
 
@@ -2036,181 +2984,172 @@ The `GET /users` endpoint retrieves a list of all users in the system. This endp
 GET /users
 ```
 
-## Authentication
+This endpoint retrieves a paginated list of users. It supports pagination, sorting, and filtering options to help you find specific users or navigate through large user collections.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Request Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+The following query parameters can be used to filter, sort, and paginate the results:
 
-## Request parameters
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `limit` | Integer | 10 | Number of items to return per page (max: 100) |
+| `offset` | Integer | 0 | Number of items to skip before starting to collect the result set |
+| `sort` | String | `createdAt` | Field to sort by, optionally prefixed with `+` (ascending) or `-` (descending) |
+| `email` | String | - | Filter by email (exact match) |
+| `name` | String | - | Filter by name (partial match) |
+| `role` | String | - | Filter by role (multiple roles can be separated by commas) |
 
-The following query parameters are supported:
+## Request Example
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `_page` | integer | No | Page number (zero-indexed). Default: 0 |
-| `_perPage` | integer | No | Number of items per page (1-100). Default: 20 |
-| `_sort` | string | No | Field to sort by. Prefix with `-` for descending order |
-
-### Pagination parameters
-
-- `_page`: Zero-indexed page number to retrieve
-- `_perPage`: Number of users to return per page (maximum 100)
-
-For more information on pagination, see the [Pagination](../core-concepts/pagination.html) document.
-
-### Sorting parameters
-
-- `_sort`: Field name to sort by
-  - Available fields: `userId`, `firstName`, `lastName`, `contactEmail`
-  - Prefix with `-` for descending order (e.g., `-lastName`)
-
-For more information on sorting, see the [Sorting](../core-concepts/sorting.html) document.
-
-## Request examples
-
-### Basic request
+### Basic Request
 
 ```http
-GET /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /users
+Authorization: Bearer YOUR_API_KEY
 ```
 
-### With pagination
+### Request with Pagination and Sorting
 
 ```http
-GET /users?_page=0&_perPage=10 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /users?limit=5&offset=10&sort=-createdAt
+Authorization: Bearer YOUR_API_KEY
 ```
 
-### With sorting
+This request will:
+- Return up to 5 users per page
+- Skip the first 10 users
+- Sort the results by creation date in descending order (newest first)
+
+### Request with Filtering
 
 ```http
-GET /users?_sort=lastName HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /users?role=admin,manager&name=Smith
+Authorization: Bearer YOUR_API_KEY
 ```
 
-### With pagination and sorting
-
-```http
-GET /users?_page=0&_perPage=10&_sort=-lastName HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
+This request will return users:
+- With roles "admin" or "manager"
+- Whose name contains "Smith"
 
 ## Response
 
-### Success response (200 OK)
+### Success Response (200 OK)
 
 ```json
 {
-  "users": [
+  "data": [
     {
-      "userId": 1,
-      "firstName": "Ferdinand",
-      "lastName": "Smith",
-      "contactEmail": "f.smith@example.com"
+      "id": "user123",
+      "name": "John Smith",
+      "email": "john.smith@example.com",
+      "role": "admin",
+      "createdAt": "2025-04-01T10:00:00Z",
+      "updatedAt": "2025-05-10T14:30:00Z"
     },
     {
-      "userId": 2,
-      "firstName": "Jill",
-      "lastName": "Jones",
-      "contactEmail": "j.jones@example.com"
+      "id": "user456",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "role": "manager",
+      "createdAt": "2025-04-15T09:30:00Z",
+      "updatedAt": "2025-05-09T11:45:00Z"
     },
-    {
-      "userId": 3,
-      "firstName": "Marty",
-      "lastName": "Martinez",
-      "contactEmail": "m.martinez@example.com"
-    },
-    {
-      "userId": 4,
-      "firstName": "Bill",
-      "lastName": "Bailey",
-      "contactEmail": "b.bailey@example.com"
-    }
-  ]
+    // More users...
+  ],
+  "pagination": {
+    "total": 42,    // Total number of users matching the filter
+    "limit": 5,     // Number of users per page
+    "offset": 10,   // Current offset
+    "hasMore": true // Whether there are more users to fetch
+  }
 }
 ```
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | Invalid query parameter |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 400 | Bad request (e.g., invalid parameters) |
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-## Response fields
+## Authentication
 
-The response contains an array of user objects, each with the following fields:
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `userId` | integer | Unique identifier for the user |
-| `firstName` | string | User's first name |
-| `lastName` | string | User's last name |
-| `contactEmail` | string | User's email address |
-
-For more information about the user resource, see the [User resource](../resources/user-resource.html) document.
-
-## Empty results
-
-If no users match the criteria or if the page is beyond available data, the API returns an empty array:
-
-```json
-{
-  "users": []
-}
+```
+Authorization: Bearer YOUR_API_KEY
 ```
 
-## Code examples
+The authenticated user must have appropriate permissions to view users based on their role:
+- `admin` users can see all users
+- `manager` users can see all users except admins
+- `member` users can only see their own user information
 
-### cURL
+## Important Considerations
 
-```bash
-curl -X GET \
-  'http://localhost:3000/users?_page=0&_perPage=10&_sort=lastName' \
-  -H 'Authorization: Bearer YOUR_TOKEN'
-```
+- The user list is paginated. By default, only 10 users are returned per request.
+- For large user collections, implement pagination to navigate through all users efficiently.
+- Email addresses are unique across all users. If you're searching by email, use exact matches.
+- Name searches are partial and case-insensitive (e.g., "smith" will match "John Smith").
+- Multiple roles can be specified as a comma-separated list (e.g., `role=admin,manager`).
+
+## Best Practices
+
+- Use pagination to avoid loading too many users at once, especially for large organizations.
+- Be specific with filtering to reduce the number of results and improve performance.
+- Consider caching user data that doesn't change frequently to reduce API calls.
+- When listing all users, sort by a relevant field (e.g., name for alphabetical listing, createdAt for newest users).
+- Use the user IDs returned by this endpoint when creating tasks or specifying assignees.
+
+## Code Examples
 
 ### JavaScript
 
 ```javascript
-async function getAllUsers(page = 0, perPage = 20, sort = null) {
-  const url = new URL('http://localhost:3000/users');
+async function getAllUsers(options = {}) {
+  // Default parameters
+  const queryParams = {
+    limit: options.limit || 10,
+    offset: options.offset || 0,
+    sort: options.sort || '-createdAt',
+    ...options.filters
+  };
   
-  url.searchParams.append('_page', page);
-  url.searchParams.append('_perPage', perPage);
+  // Build query string
+  const queryString = Object.entries(queryParams)
+    .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+    .join('&');
   
-  if (sort) {
-    url.searchParams.append('_sort', sort);
-  }
-  
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
+  try {
+    const response = await fetch(`https://api.taskmanagement.example.com/v1/users?${queryString}`, {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Error fetching users: ${errorData.error.message}`);
     }
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Failed to fetch users:', error);
+    throw error;
   }
-  
-  return await response.json();
 }
+
+// Example usage
+const adminUsers = await getAllUsers({
+  filters: { role: 'admin' },
+  limit: 20
+});
+
+console.log(`Found ${adminUsers.pagination.total} admin users`);
+adminUsers.data.forEach(user => console.log(`${user.name} (${user.email})`));
 ```
 
 ### Python
@@ -2218,44 +3157,83 @@ async function getAllUsers(page = 0, perPage = 20, sort = null) {
 ```python
 import requests
 
-def get_all_users(page=0, per_page=20, sort=None):
-    url = 'http://localhost:3000/users'
+def get_all_users(api_key, limit=10, offset=0, sort='-createdAt', **filters):
+    """
+    Retrieve a list of users with optional filtering, sorting, and pagination.
     
+    Args:
+        api_key (str): API key for authentication
+        limit (int): Number of users to return per page
+        offset (int): Number of users to skip
+        sort (str): Field to sort by (prefix with - for descending)
+        **filters: Additional filters (role, name, email)
+    
+    Returns:
+        dict: Response containing users and pagination info
+    """
     params = {
-        '_page': page,
-        '_perPage': per_page
+        'limit': limit,
+        'offset': offset,
+        'sort': sort,
+        **filters
     }
     
-    if sort:
-        params['_sort'] = sort
-    
-    headers = {
-        'Authorization': 'Bearer YOUR_TOKEN',
-        'Content-Type': 'application/json'
-    }
-    
-    response = requests.get(url, params=params, headers=headers)
+    response = requests.get(
+        'https://api.taskmanagement.example.com/v1/users',
+        params=params,
+        headers={
+            'Authorization': f'Bearer {api_key}'
+        }
+    )
     
     if response.status_code != 200:
-        error = response.json()
-        raise Exception(error['message'])
+        error_data = response.json()
+        raise Exception(f"Error fetching users: {error_data['error']['message']}")
     
     return response.json()
+
+# Example usage
+try:
+    # Get managers with "Johnson" in their name
+    managers = get_all_users(
+        api_key='YOUR_API_KEY',
+        role='manager',
+        name='Johnson',
+        limit=5
+    )
+    
+    print(f"Found {managers['pagination']['total']} managers matching the criteria")
+    
+    for user in managers['data']:
+        print(f"{user['name']} ({user['email']}) - {user['role']}")
+        
+except Exception as e:
+    print(f"Failed to retrieve users: {e}")
 ```
 
-## Related resources
+### cURL
 
-- [User resource](../resources/user-resource.html) - Detailed information about the user resource
-- [Create a user](create-user.html) - Create a new user
-- [Get user by ID](get-user-by-id.html) - Retrieve a specific user
-- [Update a user](update-user.html) - Update an existing user
-- [Delete a user](delete-user.html) - Remove a user
+```bash
+# Basic request to get all users (first page)
+curl -X GET "https://api.taskmanagement.example.com/v1/users" \
+  -H "Authorization: Bearer YOUR_API_KEY"
 
-## See also
+# Request with pagination, sorting, and filtering
+curl -X GET "https://api.taskmanagement.example.com/v1/users?limit=5&offset=10&sort=-createdAt&role=admin,manager&name=Smith" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
 
-- [Pagination](../core-concepts/pagination.html) - Detailed information about pagination
-- [Sorting](../core-concepts/sorting.html) - Detailed information about sorting
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
+## Related Resources
+
+- [User Resource](/resources/user-resource.md) - Detailed information about the User resource
+- [Create a User](/api-reference/create-user.md) - Create a new user
+- [Get User by ID](/api-reference/get-user-by-id.md) - Retrieve a specific user by ID
+
+## See Also
+
+- [Pagination](/core-concepts/pagination.md) - How to navigate through large collections of resources
+- [Sorting](/core-concepts/sorting.md) - How to sort API results using sort parameters
+- [Authentication](/getting-started/authentication.md) - How to authenticate your API requests
 
 --- FILE: api-reference/create-user.md
 ---
@@ -2266,15 +3244,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/users"]
 related_pages: ["user-resource"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 3
+ai-generated-date: "2025-05-13"
+navOrder: "3"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Create a user
-
-The `POST /users` endpoint creates a new user in the system. This endpoint allows you to add a user record that can then be associated with tasks.
+# Create a User
 
 ## Endpoint
 
@@ -2282,224 +3263,258 @@ The `POST /users` endpoint creates a new user in the system. This endpoint allow
 POST /users
 ```
 
-## Authentication
+This endpoint creates a new user in the system. The new user can be assigned tasks and will have permissions based on their assigned role.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Path Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+None.
 
-## Request body
+## Request Body
 
-The request body must be a JSON object with the following properties:
+The request body should be a JSON object with the following properties:
 
-| Property | Type | Required | Description | Constraints |
-|----------|------|----------|-------------|-------------|
-| `firstName` | string | Yes | User's first name | 1-100 characters |
-| `lastName` | string | Yes | User's last name | 1-100 characters |
-| `contactEmail` | string | Yes | User's email address | Valid email format, unique |
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `name` | String | Yes | Full name of the user |
+| `email` | String | Yes | Email address of the user (must be unique) |
+| `role` | String | No | Role of the user: "admin", "manager", or "member" (default: "member") |
 
-### Example request body
+### Example Request Body
 
 ```json
 {
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "j.doe@example.com"
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "role": "manager"
 }
 ```
 
-## Request example
+## Request Example
 
 ```http
-POST /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+POST /users
 Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
 
 {
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "j.doe@example.com"
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "role": "manager"
 }
 ```
 
 ## Response
 
-### Success response (201 Created)
-
-If the user is created successfully, the API returns a `201 Created` status code and the complete user object, including the system-generated `userId`:
+### Success Response (201 Created)
 
 ```json
 {
-  "userId": 5,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "j.doe@example.com"
+  "id": "user123",
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "role": "manager",
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T10:30:00Z"
 }
 ```
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | One or more fields have invalid values |
-| 400 | `MISSING_REQUIRED_FIELD` | A required field is missing |
-| 400 | `DUPLICATE_EMAIL` | The email address is already in use |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 400 | Bad request (e.g., malformed request body) |
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions to create users) |
+| 409 | Conflict (e.g., email already exists) |
+| 422 | Unprocessable entity (e.g., validation errors) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
-
-## Response fields
-
-The response contains the newly created user object with the following fields:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `userId` | integer | System-generated unique identifier for the user |
-| `firstName` | string | User's first name |
-| `lastName` | string | User's last name |
-| `contactEmail` | string | User's email address |
-
-For more information about the user resource, see the [User resource](../resources/user-resource.html) document.
-
-## Validation rules
-
-The API applies the following validation rules when creating a user:
-
-- `firstName` must be between 1 and 100 characters
-- `lastName` must be between 1 and 100 characters
-- `contactEmail` must be a valid email format
-- `contactEmail` must be unique across all users
-- All required fields must be provided
-
-If validation fails, the API returns a `400 Bad Request` response with details about the validation errors:
+#### Example Error Response
 
 ```json
 {
-  "code": "INVALID_FIELD",
-  "message": "The field `contactEmail` must be a valid email address",
-  "details": [
-    {
-      "field": "contactEmail",
-      "reason": "Invalid format",
-      "location": "body"
+  "error": {
+    "code": "validation_error",
+    "message": "The request contains invalid data",
+    "details": {
+      "email": "Email address is already in use"
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  }
 }
 ```
 
-## Code examples
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-### cURL
+## Authentication
 
-```bash
-curl -X POST \
-  http://localhost:3000/users \
-  -H 'Authorization: Bearer YOUR_TOKEN' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "firstName": "John",
-    "lastName": "Doe",
-    "contactEmail": "j.doe@example.com"
-  }'
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
+
 ```
+Authorization: Bearer YOUR_API_KEY
+```
+
+The authenticated user must have appropriate permissions to create users:
+- `admin` users can create users with any role
+- `manager` users can create users with "member" role only
+- `member` users cannot create new users
+
+## Important Considerations
+
+- **Email Uniqueness**: Each user must have a unique email address. Attempting to create a user with an email that's already in use will result in a `409 Conflict` error.
+
+- **User Roles**: Valid roles are "admin", "manager", and "member". If no role is specified, "member" is assigned by default.
+
+- **Permissions**: The newly created user's permissions will be based on their role:
+  - `admin`: Full access to all API endpoints
+  - `manager`: Can manage users and tasks but with some restrictions
+  - `member`: Limited access, primarily to their own resources
+
+- **Auto-Generated Fields**: The `id`, `createdAt`, and `updatedAt` fields are automatically generated and cannot be specified in the request.
+
+## Best Practices
+
+- Validate the email format client-side before making the API request
+- Use strong, unique passwords for each user (managed outside this API)
+- Assign the least privileged role necessary for the user's needs
+- Store the returned user ID for future operations involving this user
+- Implement proper error handling for duplicate email addresses
+
+## Code Examples
 
 ### JavaScript
 
 ```javascript
-async function createUser(userData) {
-  const response = await fetch('http://localhost:3000/users', {
-    method: 'POST',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(userData)
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+async function createUser(name, email, role = 'member') {
+  try {
+    const response = await fetch('https://api.taskmanagement.example.com/v1/users', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        role
+      })
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to create user: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error creating user:', error);
+    throw error;
   }
-  
-  return await response.json();
 }
 
 // Example usage
-const newUser = {
-  firstName: "John",
-  lastName: "Doe",
-  contactEmail: "j.doe@example.com"
-};
-
-createUser(newUser)
-  .then(user => console.log('User created:', user))
-  .catch(error => console.error('Failed to create user:', error));
+try {
+  const newUser = await createUser(
+    'Jane Smith',
+    'jane.smith@example.com',
+    'manager'
+  );
+  
+  console.log(`User created with ID: ${newUser.id}`);
+} catch (error) {
+  // Handle error
+  if (error.message.includes('already in use')) {
+    console.error('Email address is already registered');
+  } else {
+    console.error('Failed to create user:', error);
+  }
+}
 ```
 
 ### Python
 
 ```python
 import requests
-import json
 
-def create_user(user_data):
-    url = 'http://localhost:3000/users'
+def create_user(api_key, name, email, role='member'):
+    """
+    Create a new user in the system.
     
+    Args:
+        api_key (str): API key for authentication
+        name (str): Full name of the user
+        email (str): Email address of the user
+        role (str, optional): User role (admin, manager, or member). Defaults to 'member'.
+        
+    Returns:
+        dict: The created user object
+        
+    Raises:
+        Exception: If the API request fails
+    """
+    url = 'https://api.taskmanagement.example.com/v1/users'
     headers = {
-        'Authorization': 'Bearer YOUR_TOKEN',
+        'Authorization': f'Bearer {api_key}',
         'Content-Type': 'application/json'
     }
+    data = {
+        'name': name,
+        'email': email,
+        'role': role
+    }
     
-    response = requests.post(url, headers=headers, json=user_data)
+    response = requests.post(url, json=data, headers=headers)
     
-    if response.status_code != 201:
-        error = response.json()
-        raise Exception(error['message'])
-    
-    return response.json()
+    if response.status_code == 201:
+        return response.json()
+    elif response.status_code == 409:
+        error_data = response.json()
+        raise Exception(f"User creation failed: Email already exists")
+    else:
+        error_data = response.json()
+        raise Exception(f"User creation failed: {error_data['error']['message']}")
 
 # Example usage
-new_user = {
-    "firstName": "John",
-    "lastName": "Doe",
-    "contactEmail": "j.doe@example.com"
-}
-
 try:
-    user = create_user(new_user)
-    print('User created:', user)
+    user = create_user(
+        api_key='YOUR_API_KEY',
+        name='Alex Johnson',
+        email='alex.johnson@example.com',
+        role='member'
+    )
+    
+    print(f"User created successfully:")
+    print(f"ID: {user['id']}")
+    print(f"Name: {user['name']}")
+    print(f"Email: {user['email']}")
+    print(f"Role: {user['role']}")
+    
 except Exception as e:
-    print('Failed to create user:', str(e))
+    print(f"Error: {e}")
 ```
 
-## Next steps
+### cURL
 
-After creating a user, you can:
+```bash
+curl -X POST "https://api.taskmanagement.example.com/v1/users" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "role": "manager"
+  }'
+```
 
-- [Get user by ID](get-user-by-id.html) to retrieve the user
-- [Update a user](update-user.html) to modify the user
-- [Create a task](create-task.html) associated with the user
-- [Get all tasks](get-all-tasks.html) for the user
+## Related Resources
 
-## Related resources
+- [User Resource](/resources/user-resource.md) - Detailed information about the User resource
+- [Get All Users](/api-reference/get-all-users.md) - Retrieve a list of all users
+- [Get User by ID](/api-reference/get-user-by-id.md) - Retrieve a specific user by ID
 
-- [User resource](../resources/user-resource.html) - Detailed information about the user resource
-- [Get all users](get-all-users.html) - Retrieve a list of all users
-- [Get user by ID](get-user-by-id.html) - Retrieve a specific user
-- [Update a user](update-user.html) - Update an existing user
-- [Delete a user](delete-user.html) - Remove a user
+## See Also
 
-## See also
-
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
-- [Getting started with users](../tutorials/getting-started-with-users.html) - Tutorial on user management
+- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Authentication](/getting-started/authentication.md) - How to authenticate your API requests
+- [Getting Started with Users](/tutorials/getting-started-with-users.md) - Guide to working with users
 
 --- FILE: api-reference/get-user-by-id.md
 ---
@@ -2510,15 +3525,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/users/{userId}"]
 related_pages: ["user-resource"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 4
+ai-generated-date: "2025-05-13"
+navOrder: "4"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Get user by ID
-
-The `GET /users/{userId}` endpoint retrieves a specific user by their unique identifier. This endpoint allows you to fetch detailed information about a single user.
+# Get User by ID
 
 ## Endpoint
 
@@ -2526,127 +3544,135 @@ The `GET /users/{userId}` endpoint retrieves a specific user by their unique ide
 GET /users/{userId}
 ```
 
-## Authentication
+This endpoint retrieves a specific user by their unique identifier.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Path Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `userId` | String | Unique identifier of the user to retrieve |
 
-## Path parameters
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `userId` | integer | Yes | The unique identifier of the user to retrieve |
-
-## Request example
+## Request Example
 
 ```http
-GET /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /users/user123
+Authorization: Bearer YOUR_API_KEY
 ```
 
 ## Response
 
-### Success response (200 OK)
-
-If the user exists, the API returns a `200 OK` status code and the user object:
+### Success Response (200 OK)
 
 ```json
 {
-  "userId": 1,
-  "firstName": "Ferdinand",
-  "lastName": "Smith",
-  "contactEmail": "f.smith@example.com"
+  "id": "user123",
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "role": "manager",
+  "createdAt": "2025-04-01T10:00:00Z",
+  "updatedAt": "2025-05-10T14:30:00Z"
 }
 ```
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | Invalid `userId` format |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 404 | `RESOURCE_NOT_FOUND` | User not found |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions to view this user) |
+| 404 | Not Found (user with the specified ID does not exist) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
-
-#### Not found response example (404)
+#### Example Error Response (404 Not Found)
 
 ```json
 {
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "User with ID 999 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  "error": {
+    "code": "resource_not_found",
+    "message": "User with ID 'user123' not found"
+  }
 }
 ```
 
-## Response fields
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-The response contains the user object with the following fields:
+## Authentication
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `userId` | integer | Unique identifier for the user |
-| `firstName` | string | User's first name |
-| `lastName` | string | User's last name |
-| `contactEmail` | string | User's email address |
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
 
-For more information about the user resource, see the [User resource](../resources/user-resource.html) document.
-
-## Common use cases
-
-### User profile display
-
-Retrieve a user's details to display their profile information in your application.
-
-### User verification
-
-Verify if a user exists before performing operations that require a valid user.
-
-### User data retrieval
-
-Get a user's information before updating or before associating them with a new task.
-
-## Code examples
-
-### cURL
-
-```bash
-curl -X GET \
-  http://localhost:3000/users/1 \
-  -H 'Authorization: Bearer YOUR_TOKEN'
 ```
+Authorization: Bearer YOUR_API_KEY
+```
+
+The authenticated user must have appropriate permissions to view the requested user:
+- `admin` users can view any user
+- `manager` users can view all users except admins
+- `member` users can only view their own user information
+
+## Important Considerations
+
+- **User ID Format**: User IDs are auto-generated strings assigned by the system when the user is created.
+
+- **Permission Restrictions**: If a user attempts to access a user they don't have permission to view, a `403 Forbidden` error will be returned rather than a `404 Not Found`, for security reasons.
+
+- **Data Sensitivity**: User information may contain sensitive data. Ensure appropriate access controls are in place in your application.
+
+## Best Practices
+
+- Cache user data when appropriate to reduce API calls, particularly for frequently accessed users.
+
+- Handle 404 errors gracefully in your application, providing a user-friendly message when a user is not found.
+
+- Verify that the returned user is the one you intended to retrieve by checking the email or other properties.
+
+- Use the returned user ID in subsequent API calls involving this user, such as assigning tasks.
+
+## Code Examples
 
 ### JavaScript
 
 ```javascript
 async function getUserById(userId) {
-  const response = await fetch(`http://localhost:3000/users/${userId}`, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
+  try {
+    const response = await fetch(`https://api.taskmanagement.example.com/v1/users/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    if (response.status === 404) {
+      console.warn(`User with ID ${userId} not found`);
+      return null;
     }
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Error retrieving user: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error(`Failed to get user ${userId}:`, error);
+    throw error;
   }
-  
-  return await response.json();
 }
 
 // Example usage
-getUserById(1)
-  .then(user => console.log('User:', user))
-  .catch(error => console.error('Failed to get user:', error));
+try {
+  const user = await getUserById('user123');
+  
+  if (user) {
+    console.log(`User found: ${user.name} (${user.email})`);
+    
+    // Use the user data for something
+    if (user.role === 'manager') {
+      // Perform manager-specific operations
+    }
+  } else {
+    console.log('User not found');
+  }
+} catch (error) {
+  console.error('Error fetching user:', error);
+}
 ```
 
 ### Python
@@ -2654,54 +3680,77 @@ getUserById(1)
 ```python
 import requests
 
-def get_user_by_id(user_id):
-    url = f'http://localhost:3000/users/{user_id}'
+def get_user_by_id(api_key, user_id):
+    """
+    Retrieve a specific user by their ID.
     
+    Args:
+        api_key (str): API key for authentication
+        user_id (str): The unique identifier of the user
+    
+    Returns:
+        dict: User data if found, None if not found
+        
+    Raises:
+        Exception: For API errors other than 404 Not Found
+    """
+    url = f'https://api.taskmanagement.example.com/v1/users/{user_id}'
     headers = {
-        'Authorization': 'Bearer YOUR_TOKEN',
-        'Content-Type': 'application/json'
+        'Authorization': f'Bearer {api_key}'
     }
     
     response = requests.get(url, headers=headers)
     
-    if response.status_code != 200:
-        error = response.json()
-        raise Exception(error['message'])
-    
-    return response.json()
+    if response.status_code == 200:
+        return response.json()
+    elif response.status_code == 404:
+        print(f"User with ID {user_id} not found")
+        return None
+    elif response.status_code == 403:
+        print(f"You don't have permission to view this user")
+        return None
+    else:
+        error_data = response.json()
+        raise Exception(f"API error: {error_data['error']['message']}")
 
 # Example usage
 try:
-    user = get_user_by_id(1)
-    print('User:', user)
+    user = get_user_by_id('YOUR_API_KEY', 'user123')
+    
+    if user:
+        print(f"User: {user['name']}")
+        print(f"Email: {user['email']}")
+        print(f"Role: {user['role']}")
+        
+        # Use the user information
+        if user['role'] == 'admin':
+            print("This user has administrative privileges")
+    else:
+        print("User could not be retrieved")
+        
 except Exception as e:
-    print('Failed to get user:', str(e))
+    print(f"Error: {e}")
 ```
 
-## Error handling
+### cURL
 
-When calling this endpoint, be prepared to handle the following common errors:
+```bash
+curl -X GET "https://api.taskmanagement.example.com/v1/users/user123" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
 
-### User not found
+## Related Resources
 
-If the specified `userId` does not exist, the API returns a `404 Not Found` response. Your application should handle this gracefully, for example by displaying a "User not found" message to the user.
+- [User Resource](/resources/user-resource.md) - Detailed information about the User resource
+- [Get All Users](/api-reference/get-all-users.md) - Retrieve a list of all users
+- [Update a User](/api-reference/update-user.md) - Update an existing user's information
+- [Delete a User](/api-reference/delete-user.md) - Remove a user from the system
 
-### Invalid user ID format
+## See Also
 
-If the `userId` is not a valid integer, the API returns a `400 Bad Request` response. Your application should validate the user ID before making the request.
-
-## Related resources
-
-- [User resource](../resources/user-resource.html) - Detailed information about the user resource
-- [Get all users](get-all-users.html) - Retrieve a list of all users
-- [Create a user](create-user.html) - Create a new user
-- [Update a user](update-user.html) - Update an existing user
-- [Delete a user](delete-user.html) - Remove a user
-
-## See also
-
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
-- [Getting started with users](../tutorials/getting-started-with-users.html) - Tutorial on user management
+- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Authentication](/getting-started/authentication.md) - How to authenticate your API requests
+- [Getting Started with Users](/tutorials/getting-started-with-users.md) - Guide to working with users
 
 --- FILE: api-reference/update-user.md
 ---
@@ -2712,15 +3761,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/users/{userId}"]
 related_pages: ["user-resource"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 5
+ai-generated-date: "2025-05-13"
+navOrder: "5"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Update a user
-
-The `PATCH /users/{userId}` endpoint updates one or more properties of an existing user. This endpoint supports partial updates, allowing you to modify specific fields without affecting the others.
+# Update a User
 
 ## Endpoint
 
@@ -2728,185 +3780,175 @@ The `PATCH /users/{userId}` endpoint updates one or more properties of an existi
 PATCH /users/{userId}
 ```
 
-## Authentication
+This endpoint updates an existing user's information. You can update one or more properties of the user resource.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Path Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `userId` | String | Unique identifier of the user to update |
 
-## Path parameters
+## Request Body
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `userId` | integer | Yes | The unique identifier of the user to update |
+The request body should be a JSON object containing the properties you want to update. You can include one or more of the following properties:
 
-## Request body
+| Property | Type | Description |
+|----------|------|-------------|
+| `name` | String | Full name of the user |
+| `email` | String | Email address of the user (must be unique) |
+| `role` | String | Role of the user: "admin", "manager", or "member" |
 
-The request body should be a JSON object containing one or more user properties to update:
-
-| Property | Type | Required | Description | Constraints |
-|----------|------|----------|-------------|-------------|
-| `firstName` | string | No | User's first name | 1-100 characters |
-| `lastName` | string | No | User's last name | 1-100 characters |
-| `contactEmail` | string | No | User's email address | Valid email format, unique |
-
-At least one property must be included in the request.
-
-### Example request body
+### Example Request Body
 
 ```json
 {
-  "contactEmail": "new.email@example.com"
+  "name": "John Smith",
+  "role": "admin"
 }
 ```
 
-## Request example
+## Request Example
 
 ```http
-PATCH /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+PATCH /users/user123
 Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
 
 {
-  "contactEmail": "new.email@example.com"
+  "name": "John Smith",
+  "role": "admin"
 }
 ```
 
 ## Response
 
-### Success response (200 OK)
-
-If the user is updated successfully, the API returns a `200 OK` status code and the complete updated user object:
+### Success Response (200 OK)
 
 ```json
 {
-  "userId": 1,
-  "firstName": "Ferdinand",
-  "lastName": "Smith",
-  "contactEmail": "new.email@example.com"
+  "id": "user123",
+  "name": "John Smith",
+  "email": "john.doe@example.com",
+  "role": "admin",
+  "createdAt": "2025-04-01T10:00:00Z",
+  "updatedAt": "2025-05-13T15:30:00Z"
 }
 ```
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | One or more fields have invalid values |
-| 400 | `MISSING_REQUIRED_FIELD` | No fields provided for update |
-| 400 | `DUPLICATE_EMAIL` | The email address is already in use |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 404 | `RESOURCE_NOT_FOUND` | User not found |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 400 | Bad request (e.g., malformed request body) |
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions to update this user) |
+| 404 | Not Found (user with the specified ID does not exist) |
+| 409 | Conflict (e.g., email already exists) |
+| 422 | Unprocessable entity (e.g., validation errors) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
-
-#### Invalid field example (400)
+#### Example Error Response (409 Conflict)
 
 ```json
 {
-  "code": "INVALID_FIELD",
-  "message": "The field `contactEmail` must be a valid email address",
-  "details": [
-    {
-      "field": "contactEmail",
-      "reason": "Invalid format",
-      "location": "body"
-    }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  "error": {
+    "code": "resource_conflict",
+    "message": "Email address is already in use by another user"
+  }
 }
 ```
 
-#### User not found example (404)
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-```json
-{
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "User with ID 999 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
+## Authentication
+
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
+
+```
+Authorization: Bearer YOUR_API_KEY
 ```
 
-## Response fields
+The authenticated user must have appropriate permissions to update the requested user:
+- `admin` users can update any user, including changing roles
+- `manager` users can update users with "member" role but cannot change roles to "admin"
+- `member` users can only update their own information and cannot change their role
 
-The response contains the updated user object with the following fields:
+## Important Considerations
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `userId` | integer | Unique identifier for the user |
-| `firstName` | string | User's first name |
-| `lastName` | string | User's last name |
-| `contactEmail` | string | User's email address |
+- **Partial Updates**: This endpoint supports partial updates. You only need to include the properties you want to change in the request body.
 
-For more information about the user resource, see the [User resource](../resources/user-resource.html) document.
+- **Email Uniqueness**: If you update the email address, it must be unique across all users. Attempting to use an email that's already associated with another user will result in a `409 Conflict` error.
 
-## Validation rules
+- **Role Restrictions**: There are restrictions on who can change roles:
+  - Only admins can promote users to the "admin" role
+  - Managers can promote members to "manager" but cannot promote to "admin"
+  - Users cannot change their own role
 
-The API applies the following validation rules when updating a user:
+- **Read-Only Fields**: The `id`, `createdAt`, and `updatedAt` fields are read-only and cannot be updated. If included in the request, they will be ignored.
 
-- At least one field must be provided for update
-- `firstName` must be between 1 and 100 characters, if provided
-- `lastName` must be between 1 and 100 characters, if provided
-- `contactEmail` must be a valid email format, if provided
-- `contactEmail` must be unique across all users, if provided
+- **No Response Body for Empty Updates**: If the request body is empty or contains only read-only fields, the response will be a `204 No Content` status with no response body.
 
-If validation fails, the API returns a `400 Bad Request` response with details about the validation errors.
+## Best Practices
 
-## Update behavior
+- Only include the fields you want to update in the request body
+- Validate email formats client-side before making the API request
+- Handle email conflict errors gracefully in your application
+- Implement proper authorization checks in your application before attempting role changes
+- Consider the impact of role changes on user permissions and access
 
-- The update is partial, meaning only the fields included in the request will be modified
-- Omitted fields retain their current values
-- The `userId` cannot be modified
-- The response includes the complete user object with all fields, including those not modified
-
-## Code examples
-
-### cURL
-
-```bash
-curl -X PATCH \
-  http://localhost:3000/users/1 \
-  -H 'Authorization: Bearer YOUR_TOKEN' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "contactEmail": "new.email@example.com"
-  }'
-```
+## Code Examples
 
 ### JavaScript
 
 ```javascript
-async function updateUser(userId, userData) {
-  const response = await fetch(`http://localhost:3000/users/${userId}`, {
-    method: 'PATCH',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(userData)
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+async function updateUser(userId, updates) {
+  try {
+    const response = await fetch(`https://api.taskmanagement.example.com/v1/users/${userId}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updates)
+    });
+    
+    if (response.status === 204) {
+      // No content response (empty update)
+      return null;
+    }
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to update user: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error(`Error updating user ${userId}:`, error);
+    throw error;
   }
-  
-  return await response.json();
 }
 
 // Example usage
-const userUpdates = {
-  contactEmail: "new.email@example.com"
-};
-
-updateUser(1, userUpdates)
-  .then(user => console.log('User updated:', user))
-  .catch(error => console.error('Failed to update user:', error));
+try {
+  const updatedUser = await updateUser('user123', {
+    name: 'John Smith',
+    role: 'manager'
+  });
+  
+  if (updatedUser) {
+    console.log(`User updated: ${updatedUser.name} (${updatedUser.role})`);
+  } else {
+    console.log('User update returned no content');
+  }
+} catch (error) {
+  if (error.message.includes('already in use')) {
+    console.error('Email address is already taken by another user');
+  } else if (error.message.includes('permission')) {
+    console.error('You do not have permission to perform this update');
+  } else {
+    console.error('Failed to update user:', error);
+  }
+}
 ```
 
 ### Python
@@ -2914,69 +3956,104 @@ updateUser(1, userUpdates)
 ```python
 import requests
 
-def update_user(user_id, user_data):
-    url = f'http://localhost:3000/users/{user_id}'
+def update_user(api_key, user_id, **updates):
+    """
+    Update an existing user's information.
     
+    Args:
+        api_key (str): API key for authentication
+        user_id (str): The unique identifier of the user to update
+        **updates: Keyword arguments for fields to update (name, email, role)
+    
+    Returns:
+        dict: Updated user data if successful, None for empty updates
+        
+    Raises:
+        Exception: If the API request fails
+    """
+    url = f'https://api.taskmanagement.example.com/v1/users/{user_id}'
     headers = {
-        'Authorization': 'Bearer YOUR_TOKEN',
+        'Authorization': f'Bearer {api_key}',
         'Content-Type': 'application/json'
     }
     
-    response = requests.patch(url, headers=headers, json=user_data)
+    # Filter out None values
+    update_data = {k: v for k, v in updates.items() if v is not None}
     
-    if response.status_code != 200:
-        error = response.json()
-        raise Exception(error['message'])
+    if not update_data:
+        return None  # No updates to make
     
-    return response.json()
+    response = requests.patch(url, json=update_data, headers=headers)
+    
+    if response.status_code == 204:
+        # No content response (empty update was accepted)
+        return None
+    elif response.status_code == 200:
+        return response.json()
+    elif response.status_code == 404:
+        raise Exception(f"User with ID {user_id} not found")
+    elif response.status_code == 409:
+        raise Exception("Email address is already in use by another user")
+    elif response.status_code == 403:
+        raise Exception("You don't have permission to update this user")
+    else:
+        error_data = response.json()
+        raise Exception(f"API error: {error_data['error']['message']}")
 
 # Example usage
-user_updates = {
-    "contactEmail": "new.email@example.com"
-}
-
 try:
-    user = update_user(1, user_updates)
-    print('User updated:', user)
+    # Update just the name
+    updated_user = update_user(
+        api_key='YOUR_API_KEY',
+        user_id='user123',
+        name='Jane Wilson'
+    )
+    
+    if updated_user:
+        print(f"User updated successfully:")
+        print(f"Name: {updated_user['name']}")
+        print(f"Email: {updated_user['email']}")
+        print(f"Role: {updated_user['role']}")
+    else:
+        print("No updates were made or no content was returned")
+        
 except Exception as e:
-    print('Failed to update user:', str(e))
+    print(f"Error updating user: {e}")
 ```
 
-## Common use cases
+### cURL
 
-### Update contact information
+```bash
+# Update name and role
+curl -X PATCH "https://api.taskmanagement.example.com/v1/users/user123" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Smith",
+    "role": "admin"
+  }'
 
-When a user's contact information changes, update their email address:
-
-```json
-{
-  "contactEmail": "new.email@example.com"
-}
+# Update just the email
+curl -X PATCH "https://api.taskmanagement.example.com/v1/users/user123" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "john.smith@example.com"
+  }'
 ```
 
-### Update user name
+## Related Resources
 
-When a user's name changes, update their first name, last name, or both:
+- [User Resource](/resources/user-resource.md) - Detailed information about the User resource
+- [Get All Users](/api-reference/get-all-users.md) - Retrieve a list of all users
+- [Get User by ID](/api-reference/get-user-by-id.md) - Retrieve a specific user by ID
+- [Delete a User](/api-reference/delete-user.md) - Remove a user from the system
 
-```json
-{
-  "firstName": "NewFirstName",
-  "lastName": "NewLastName"
-}
-```
+## See Also
 
-## Related resources
-
-- [User resource](../resources/user-resource.html) - Detailed information about the user resource
-- [Get all users](get-all-users.html) - Retrieve a list of all users
-- [Get user by ID](get-user-by-id.html) - Retrieve a specific user
-- [Create a user](create-user.html) - Create a new user
-- [Delete a user](delete-user.html) - Remove a user
-
-## See also
-
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
-- [Getting started with users](../tutorials/getting-started-with-users.html) - Tutorial on user management
+- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Authentication](/getting-started/authentication.md) - How to authenticate your API requests
+- [Getting Started with Users](/tutorials/getting-started-with-users.md) - Guide to working with users
 
 --- FILE: api-reference/delete-user.md
 ---
@@ -2987,15 +4064,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/users/{userId}"]
 related_pages: ["user-resource"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 6
+ai-generated-date: "2025-05-13"
+navOrder: "6"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Delete a user
-
-The `DELETE /users/{userId}` endpoint removes a specific user from the system. This endpoint permanently deletes the user and all associated tasks.
+# Delete a User
 
 ## Endpoint
 
@@ -3003,101 +4083,150 @@ The `DELETE /users/{userId}` endpoint removes a specific user from the system. T
 DELETE /users/{userId}
 ```
 
-## Authentication
+This endpoint deletes a specific user from the system. Once deleted, the user can no longer log in, be assigned tasks, or be referenced in new API calls.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Path Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `userId` | String | Unique identifier of the user to delete |
 
-## Path parameters
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `userId` | integer | Yes | The unique identifier of the user to delete |
-
-## Request example
+## Request Example
 
 ```http
-DELETE /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+DELETE /users/user123
+Authorization: Bearer YOUR_API_KEY
 ```
 
 ## Response
 
-### Success response (204 No Content)
+### Success Response (204 No Content)
 
-If the user is deleted successfully, the API returns a `204 No Content` status code with no response body.
+A successful deletion returns a `204 No Content` status code with no response body, indicating that the user has been successfully deleted.
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | Invalid `userId` format |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 404 | `RESOURCE_NOT_FOUND` | User not found |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions to delete this user) |
+| 404 | Not Found (user with the specified ID does not exist) |
+| 409 | Conflict (e.g., user has assigned tasks) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
-
-#### User not found example (404)
+#### Example Error Response (409 Conflict)
 
 ```json
 {
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "User with ID 999 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  "error": {
+    "code": "resource_conflict",
+    "message": "Cannot delete user with assigned tasks",
+    "details": {
+      "assignedTaskCount": 5
+    }
+  }
 }
 ```
 
-## Cascade delete behavior
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-When a user is deleted, all tasks associated with that user are also deleted. This cascade delete behavior ensures that no orphaned tasks remain in the system.
+## Authentication
 
-## Important considerations
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
 
-- This operation cannot be undone
-- All tasks owned by the user will be permanently deleted
-- The `userId` cannot be reused for new users
-
-## Code examples
-
-### cURL
-
-```bash
-curl -X DELETE \
-  http://localhost:3000/users/1 \
-  -H 'Authorization: Bearer YOUR_TOKEN'
 ```
+Authorization: Bearer YOUR_API_KEY
+```
+
+The authenticated user must have appropriate permissions to delete the requested user:
+- `admin` users can delete any user except themselves
+- `manager` users can delete users with "member" role
+- `member` users cannot delete any users
+
+## Important Considerations
+
+- **Permanent Operation**: Deletion is permanent and cannot be undone. Consider deactivating users instead of deleting them if you may need to restore access later.
+
+- **Assigned Tasks**: By default, you cannot delete a user who has assigned tasks. You have two options:
+  1. First reassign all tasks to other users
+  2. Use the `force=true` query parameter to delete the user and unassign their tasks
+
+- **Created Tasks**: Tasks created by the deleted user will remain in the system, but the `createdBy` field will be set to null.
+
+- **Last Admin**: The system prevents deletion of the last admin user to ensure there's always at least one user with administrative privileges.
+
+## Best Practices
+
+- Before deleting a user, retrieve and reassign any tasks assigned to them
+- Confirm the deletion with the user or administrator to prevent accidental data loss
+- Consider implementing a "soft delete" in your application by deactivating users instead of deleting them
+- Maintain an audit log of user deletions for security and compliance purposes
+- Handle deletion errors gracefully in your application UI
+
+## Code Examples
 
 ### JavaScript
 
 ```javascript
-async function deleteUser(userId) {
-  const response = await fetch(`http://localhost:3000/users/${userId}`, {
-    method: 'DELETE',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN'
+async function deleteUser(userId, forceDelete = false) {
+  try {
+    const url = forceDelete
+      ? `https://api.taskmanagement.example.com/v1/users/${userId}?force=true`
+      : `https://api.taskmanagement.example.com/v1/users/${userId}`;
+    
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    if (response.status === 204) {
+      return true; // Successful deletion
     }
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+    
+    if (response.status === 409) {
+      // Conflict - user has assigned tasks
+      const errorData = await response.json();
+      const taskCount = errorData.error.details?.assignedTaskCount || 'unknown';
+      throw new Error(`User has ${taskCount} assigned tasks. Use forceDelete=true to delete anyway.`);
+    }
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to delete user: ${errorData.error.message}`);
+    }
+    
+    return false; // Should not reach here if properly handled above
+  } catch (error) {
+    console.error(`Error deleting user ${userId}:`, error);
+    throw error;
   }
-  
-  // Success response has no content
-  return true;
 }
 
 // Example usage
-deleteUser(1)
-  .then(() => console.log('User deleted successfully'))
-  .catch(error => console.error('Failed to delete user:', error));
+try {
+  // Try to delete without force first
+  await deleteUser('user123');
+  console.log('User successfully deleted');
+} catch (error) {
+  if (error.message.includes('assigned tasks')) {
+    console.warn(error.message);
+    
+    // Ask for confirmation before force deletion
+    const confirmForce = confirm('User has assigned tasks. Delete anyway and unassign tasks?');
+    
+    if (confirmForce) {
+      try {
+        await deleteUser('user123', true);
+        console.log('User successfully deleted with force option');
+      } catch (forceError) {
+        console.error('Force deletion failed:', forceError);
+      }
+    }
+  } else {
+    console.error('Failed to delete user:', error);
+  }
+}
 ```
 
 ### Python
@@ -3105,58 +4234,95 @@ deleteUser(1)
 ```python
 import requests
 
-def delete_user(user_id):
-    url = f'http://localhost:3000/users/{user_id}'
+def delete_user(api_key, user_id, force=False):
+    """
+    Delete a user from the system.
     
+    Args:
+        api_key (str): API key for authentication
+        user_id (str): The unique identifier of the user to delete
+        force (bool, optional): Whether to force deletion even if user has assigned tasks. Defaults to False.
+    
+    Returns:
+        bool: True if user was successfully deleted
+        
+    Raises:
+        Exception: If the API request fails
+    """
+    url = f'https://api.taskmanagement.example.com/v1/users/{user_id}'
+    
+    if force:
+        url += '?force=true'
+        
     headers = {
-        'Authorization': 'Bearer YOUR_TOKEN'
+        'Authorization': f'Bearer {api_key}'
     }
     
     response = requests.delete(url, headers=headers)
     
-    if response.status_code != 204:
-        error = response.json()
-        raise Exception(error['message'])
-    
-    # Success response has no content
-    return True
+    if response.status_code == 204:
+        return True
+    elif response.status_code == 409:
+        error_data = response.json()
+        task_count = error_data['error']['details'].get('assignedTaskCount', 'unknown')
+        raise Exception(f"User has {task_count} assigned tasks. Set force=True to delete anyway.")
+    elif response.status_code == 404:
+        raise Exception(f"User with ID {user_id} not found")
+    elif response.status_code == 403:
+        raise Exception("You don't have permission to delete this user")
+    else:
+        error_data = response.json()
+        raise Exception(f"API error: {error_data['error']['message']}")
 
 # Example usage
 try:
-    delete_user(1)
-    print('User deleted successfully')
+    # First try without force
+    success = delete_user('YOUR_API_KEY', 'user123')
+    
+    if success:
+        print("User successfully deleted")
+        
 except Exception as e:
-    print('Failed to delete user:', str(e))
+    if "assigned tasks" in str(e):
+        print(str(e))
+        
+        # Ask for confirmation
+        force_delete = input("User has assigned tasks. Type 'yes' to delete anyway: ")
+        
+        if force_delete.lower() == 'yes':
+            try:
+                success = delete_user('YOUR_API_KEY', 'user123', force=True)
+                print("User successfully deleted with force option")
+            except Exception as force_error:
+                print(f"Force deletion failed: {force_error}")
+    else:
+        print(f"Error deleting user: {e}")
 ```
 
-## Common use cases
+### cURL
 
-### Account removal
+```bash
+# Delete a user
+curl -X DELETE "https://api.taskmanagement.example.com/v1/users/user123" \
+  -H "Authorization: Bearer YOUR_API_KEY"
 
-When a user wants to remove their account from the system, along with all their tasks.
+# Force delete a user with assigned tasks
+curl -X DELETE "https://api.taskmanagement.example.com/v1/users/user123?force=true" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
 
-### Administrative cleanup
+## Related Resources
 
-When administrators need to remove inactive or problematic user accounts.
+- [User Resource](/resources/user-resource.md) - Detailed information about the User resource
+- [Get All Users](/api-reference/get-all-users.md) - Retrieve a list of all users
+- [Create a User](/api-reference/create-user.md) - Create a new user
+- [Get User by ID](/api-reference/get-user-by-id.md) - Retrieve a specific user by ID
 
-## Best practices
+## See Also
 
-- Confirm the deletion with the user before making this request, as it cannot be undone
-- Consider implementing a "soft delete" in your application logic if you need to preserve user data
-- Handle the 404 error gracefully if the user has already been deleted
-
-## Related resources
-
-- [User resource](../resources/user-resource.html) - Detailed information about the user resource
-- [Get all users](get-all-users.html) - Retrieve a list of all users
-- [Get user by ID](get-user-by-id.html) - Retrieve a specific user
-- [Create a user](create-user.html) - Create a new user
-- [Update a user](update-user.html) - Update an existing user
-
-## See also
-
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
-- [Getting started with users](../tutorials/getting-started-with-users.html) - Tutorial on user management
+- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Update a Task](/api-reference/update-task.md) - Reassign tasks to another user
+- [Getting Started with Users](/tutorials/getting-started-with-users.md) - Guide to working with users
 
 --- FILE: api-reference/get-all-tasks.md
 ---
@@ -3167,15 +4333,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/tasks"]
 related_pages: ["task-resource", "pagination", "sorting", "task-status-lifecycle"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 7
+ai-generated-date: "2025-05-13"
+navOrder: "7"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Get all tasks
-
-The `GET /tasks` endpoint retrieves a list of all tasks in the system. This endpoint supports pagination, sorting, and filtering by task status to help manage large collections of tasks.
+# Get All Tasks
 
 ## Endpoint
 
@@ -3183,303 +4352,334 @@ The `GET /tasks` endpoint retrieves a list of all tasks in the system. This endp
 GET /tasks
 ```
 
-## Authentication
+This endpoint retrieves a paginated list of tasks. It supports comprehensive filtering, sorting, and pagination options to help you find specific tasks or navigate through large task collections.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Request Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+The following query parameters can be used to filter, sort, and paginate the results:
 
-## Request parameters
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `limit` | Integer | 10 | Number of items to return per page (max: 100) |
+| `offset` | Integer | 0 | Number of items to skip before starting to collect the result set |
+| `sort` | String | `-createdAt` | Field to sort by, optionally prefixed with `+` (ascending) or `-` (descending) |
+| `status` | String | - | Filter by task status (comma-separated for multiple values) |
+| `priority` | String | - | Filter by task priority (comma-separated for multiple values) |
+| `assigneeId` | String | - | Filter by assigned user ID |
+| `createdBy` | String | - | Filter by creator user ID |
+| `tags` | String | - | Filter by tags (comma-separated for multiple values) |
+| `dueDate[gt]` | String | - | Filter tasks due after this date (ISO format) |
+| `dueDate[lt]` | String | - | Filter tasks due before this date (ISO format) |
+| `dueDate[exists]` | Boolean | - | Filter tasks that have (true) or don't have (false) a due date |
+| `search` | String | - | Search in task title and description (minimum 3 characters) |
 
-The following query parameters are supported:
+## Request Example
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `_page` | integer | No | Page number (zero-indexed). Default: 0 |
-| `_perPage` | integer | No | Number of items per page (1-100). Default: 20 |
-| `_sort` | string | No | Field to sort by. Prefix with `-` for descending order |
-| `taskStatus` | string | No | Filter tasks by status (e.g., `NOT_STARTED`, `IN_PROGRESS`) |
-
-### Pagination parameters
-
-- `_page`: Zero-indexed page number to retrieve
-- `_perPage`: Number of tasks to return per page (maximum 100)
-
-For more information on pagination, see the [Pagination](../core-concepts/pagination.html) document.
-
-### Sorting parameters
-
-- `_sort`: Field name to sort by
-  - Available fields: `taskId`, `userId`, `taskTitle`, `taskStatus`, `dueDate`, `warningOffset`
-  - Prefix with `-` for descending order (e.g., `-dueDate`)
-
-For more information on sorting, see the [Sorting](../core-concepts/sorting.html) document.
-
-### Filtering parameters
-
-- `taskStatus`: Filter tasks by their status
-  - Possible values: `NOT_STARTED`, `IN_PROGRESS`, `BLOCKED`, `DEFERRED`, `COMPLETED`, `CANCELLED`
-
-For more information on task statuses, see the [Task status lifecycle](../core-concepts/task-status-lifecycle.html) document.
-
-## Request examples
-
-### Basic request
+### Basic Request
 
 ```http
-GET /tasks HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /tasks
+Authorization: Bearer YOUR_API_KEY
 ```
 
-### With pagination
+### Request with Pagination and Sorting
 
 ```http
-GET /tasks?_page=0&_perPage=10 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /tasks?limit=5&offset=10&sort=-dueDate
+Authorization: Bearer YOUR_API_KEY
 ```
 
-### With sorting
+This request will:
+- Return up to 5 tasks per page
+- Skip the first 10 tasks
+- Sort the results by due date in descending order (tasks due sooner appear first)
+
+### Request with Filtering
 
 ```http
-GET /tasks?_sort=dueDate HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /tasks?status=TODO,IN_PROGRESS&priority=HIGH,URGENT&assigneeId=user123&dueDate[lt]=2025-06-01T00:00:00Z
+Authorization: Bearer YOUR_API_KEY
 ```
 
-### With status filtering
-
-```http
-GET /tasks?taskStatus=IN_PROGRESS HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Combined parameters
-
-```http
-GET /tasks?_page=0&_perPage=10&_sort=-dueDate&taskStatus=NOT_STARTED HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
+This request will return tasks:
+- With status "TODO" or "IN_PROGRESS"
+- With priority "HIGH" or "URGENT"
+- Assigned to user with ID "user123"
+- Due before June 1, 2025
 
 ## Response
 
-### Success response (200 OK)
+### Success Response (200 OK)
 
 ```json
 {
-  "tasks": [
+  "data": [
     {
-      "taskId": 1,
-      "userId": 1,
-      "taskTitle": "Grocery shopping",
-      "taskDescription": "eggs, bacon, gummy bears",
-      "taskStatus": "NOT_STARTED",
-      "dueDate": "2025-05-20T17:00:00-05:00",
-      "warningOffset": 60
+      "id": "task123",
+      "title": "Implement authentication",
+      "description": "Add token-based authentication to the application",
+      "status": "IN_PROGRESS",
+      "priority": "HIGH",
+      "createdBy": "user456",
+      "assigneeId": "user123",
+      "dueDate": "2025-05-20T17:00:00Z",
+      "tags": ["authentication", "security"],
+      "createdAt": "2025-05-01T10:30:00Z",
+      "updatedAt": "2025-05-13T14:25:00Z"
     },
     {
-      "taskId": 2,
-      "userId": 1,
-      "taskTitle": "Piano recital",
-      "taskDescription": "Daughter's first concert appearance",
-      "taskStatus": "IN_PROGRESS",
-      "dueDate": "2025-04-02T15:00:00-05:00",
-      "warningOffset": 30
+      "id": "task456",
+      "title": "Design user interface",
+      "description": "Create wireframes for the new dashboard",
+      "status": "TODO",
+      "priority": "MEDIUM",
+      "createdBy": "user789",
+      "assigneeId": "user123",
+      "dueDate": "2025-05-25T17:00:00Z",
+      "tags": ["design", "ui"],
+      "createdAt": "2025-05-05T09:15:00Z",
+      "updatedAt": "2025-05-05T09:15:00Z"
     },
-    {
-      "taskId": 3,
-      "userId": 2,
-      "taskTitle": "Oil change",
-      "taskDescription": "5K auto service",
-      "taskStatus": "COMPLETED",
-      "dueDate": "2025-03-10T09:00:00-05:00",
-      "warningOffset": 60
-    },
-    {
-      "taskId": 4,
-      "userId": 3,
-      "taskTitle": "Get shots for dog",
-      "taskDescription": "Annual vaccinations for poochy",
-      "taskStatus": "DEFERRED",
-      "dueDate": "2025-05-11T14:00:00-05:00",
-      "warningOffset": 20
-    }
-  ]
+    // More tasks...
+  ],
+  "pagination": {
+    "total": 42,    // Total number of tasks matching the filter
+    "limit": 5,     // Number of tasks per page
+    "offset": 10,   // Current offset
+    "hasMore": true // Whether there are more tasks to fetch
+  }
 }
 ```
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | Invalid query parameter |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 400 | Bad request (e.g., invalid parameters) |
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-## Response fields
+## Authentication
 
-The response contains an array of task objects, each with the following fields:
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `taskId` | integer | Unique identifier for the task |
-| `userId` | integer | ID of the user who owns the task |
-| `taskTitle` | string | Short description (1-80 characters) |
-| `taskDescription` | string | Detailed description (1-255 characters) |
-| `taskStatus` | string | Current status of the task |
-| `dueDate` | string (date-time) | When the task should be completed |
-| `warningOffset` | integer | Minutes before due date to send reminder |
-
-For more information about the task resource, see the [Task resource](../resources/task-resource.html) document.
-
-## Empty results
-
-If no tasks match the criteria or if the page is beyond available data, the API returns an empty array:
-
-```json
-{
-  "tasks": []
-}
+```
+Authorization: Bearer YOUR_API_KEY
 ```
 
-## Code examples
+The authenticated user's role affects which tasks they can view:
+- `admin` users can see all tasks
+- `manager` users can see all tasks
+- `member` users can only see tasks they created or are assigned to
 
-### cURL
+## Important Considerations
 
-```bash
-curl -X GET \
-  'http://localhost:3000/tasks?_page=0&_perPage=10&_sort=-dueDate&taskStatus=NOT_STARTED' \
-  -H 'Authorization: Bearer YOUR_TOKEN'
-```
+- **Task Visibility**: By default, users only see tasks they have access to based on their role. There is no need to filter by `createdBy` or `assigneeId` for member users as they will only see their own tasks.
+
+- **Date Filtering**: When filtering by dates, use the ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ). You can use `dueDate[gt]` and `dueDate[lt]` together to find tasks due within a specific range.
+
+- **Status Values**: Valid status values are "TODO", "IN_PROGRESS", "REVIEW", "DONE", and "CANCELED".
+
+- **Priority Values**: Valid priority values are "LOW", "MEDIUM", "HIGH", and "URGENT".
+
+- **Performance**: For large task collections, use appropriate filtering to limit the result set. Using specific filters improves API performance.
+
+## Best Practices
+
+- **Use Pagination**: Always implement pagination for task lists to handle large numbers of tasks efficiently.
+
+- **Filter Appropriately**: Apply relevant filters to get only the tasks you need. This reduces response size and improves performance.
+
+- **Combine Filters**: For complex queries, combine multiple filters (e.g., status + priority + assignee).
+
+- **Status Grouping**: For typical task views, group statuses logically:
+  - Active tasks: `status=TODO,IN_PROGRESS,REVIEW`
+  - Completed tasks: `status=DONE`
+  - Archived tasks: `status=CANCELED`
+
+- **Due Date Handling**: To find overdue tasks, use `dueDate[lt]=` with the current date and filter for non-completed statuses.
+
+## Code Examples
 
 ### JavaScript
 
 ```javascript
-async function getAllTasks(page = 0, perPage = 20, sort = null, status = null) {
-  const url = new URL('http://localhost:3000/tasks');
+async function getTasks(filters = {}, pagination = {}, sort = '-dueDate') {
+  // Build query parameters
+  const queryParams = new URLSearchParams();
   
-  url.searchParams.append('_page', page);
-  url.searchParams.append('_perPage', perPage);
+  // Add pagination parameters
+  if (pagination.limit) queryParams.append('limit', pagination.limit);
+  if (pagination.offset) queryParams.append('offset', pagination.offset);
   
-  if (sort) {
-    url.searchParams.append('_sort', sort);
-  }
+  // Add sort parameter
+  queryParams.append('sort', sort);
   
-  if (status) {
-    url.searchParams.append('taskStatus', status);
-  }
-  
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
+  // Add filter parameters
+  for (const [key, value] of Object.entries(filters)) {
+    if (Array.isArray(value)) {
+      queryParams.append(key, value.join(','));
+    } else if (value !== null && value !== undefined) {
+      queryParams.append(key, value);
     }
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
   }
   
-  return await response.json();
+  try {
+    const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks?${queryParams}`, {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Error fetching tasks: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Failed to fetch tasks:', error);
+    throw error;
+  }
 }
 
-// Example usage
-getAllTasks(0, 10, '-dueDate', 'NOT_STARTED')
-  .then(data => console.log('Tasks:', data.tasks))
-  .catch(error => console.error('Failed to fetch tasks:', error));
+// Example usage: Get high priority tasks due soon
+const today = new Date();
+const nextWeek = new Date(today);
+nextWeek.setDate(today.getDate() + 7);
+
+try {
+  const result = await getTasks({
+    status: ['TODO', 'IN_PROGRESS'],
+    priority: ['HIGH', 'URGENT'],
+    'dueDate[gt]': today.toISOString(),
+    'dueDate[lt]': nextWeek.toISOString()
+  }, {
+    limit: 10,
+    offset: 0
+  }, '-priority');
+  
+  console.log(`Found ${result.pagination.total} high priority tasks due in the next week`);
+  result.data.forEach(task => {
+    console.log(`${task.title} (${task.priority}) - Due: ${new Date(task.dueDate).toLocaleDateString()}`);
+  });
+} catch (error) {
+  console.error('Error:', error);
+}
 ```
 
 ### Python
 
 ```python
 import requests
+from datetime import datetime, timedelta
 
-def get_all_tasks(page=0, per_page=20, sort=None, status=None):
-    url = 'http://localhost:3000/tasks'
+def get_tasks(api_key, filters=None, pagination=None, sort='-dueDate'):
+    """
+    Retrieve a list of tasks with optional filtering, sorting, and pagination.
     
-    params = {
-        '_page': page,
-        '_perPage': per_page
-    }
+    Args:
+        api_key (str): API key for authentication
+        filters (dict, optional): Filters to apply
+        pagination (dict, optional): Pagination parameters (limit, offset)
+        sort (str, optional): Field to sort by
     
-    if sort:
-        params['_sort'] = sort
+    Returns:
+        dict: Response containing tasks and pagination info
+    """
+    url = 'https://api.taskmanagement.example.com/v1/tasks'
     
-    if status:
-        params['taskStatus'] = status
+    # Build query parameters
+    params = {}
     
-    headers = {
-        'Authorization': 'Bearer YOUR_TOKEN',
-        'Content-Type': 'application/json'
-    }
+    # Add pagination parameters
+    if pagination:
+        params.update(pagination)
     
-    response = requests.get(url, params=params, headers=headers)
+    # Add sort parameter
+    params['sort'] = sort
+    
+    # Add filter parameters
+    if filters:
+        for key, value in filters.items():
+            if isinstance(value, list):
+                params[key] = ','.join(value)
+            elif value is not None:
+                params[key] = value
+    
+    response = requests.get(
+        url,
+        params=params,
+        headers={
+            'Authorization': f'Bearer {api_key}'
+        }
+    )
     
     if response.status_code != 200:
-        error = response.json()
-        raise Exception(error['message'])
+        error_data = response.json()
+        raise Exception(f"Error fetching tasks: {error_data['error']['message']}")
     
     return response.json()
 
-# Example usage
+# Example usage: Get tasks assigned to a specific user that are due this month
 try:
-    result = get_all_tasks(page=0, per_page=10, sort='-dueDate', status='NOT_STARTED')
-    print('Tasks:', result['tasks'])
+    # Calculate date range for this month
+    today = datetime.now()
+    start_of_month = datetime(today.year, today.month, 1).isoformat()
+    next_month = today.replace(day=28) + timedelta(days=4)
+    end_of_month = next_month.replace(day=1) - timedelta(days=1)
+    end_of_month = end_of_month.replace(hour=23, minute=59, second=59).isoformat()
+    
+    result = get_tasks(
+        api_key='YOUR_API_KEY',
+        filters={
+            'assigneeId': 'user123',
+            'status': ['TODO', 'IN_PROGRESS', 'REVIEW'],
+            'dueDate[gt]': start_of_month,
+            'dueDate[lt]': end_of_month
+        },
+        pagination={
+            'limit': 20,
+            'offset': 0
+        },
+        sort='dueDate'  # Ascending by due date (earliest first)
+    )
+    
+    print(f"Found {result['pagination']['total']} tasks due this month")
+    
+    for task in result['data']:
+        due_date = datetime.fromisoformat(task['dueDate'].replace('Z', '+00:00'))
+        print(f"{task['title']} ({task['status']}) - Due: {due_date.strftime('%Y-%m-%d')}")
+        
 except Exception as e:
-    print('Failed to fetch tasks:', str(e))
+    print(f"Failed to retrieve tasks: {e}")
 ```
 
-## Common use cases
+### cURL
 
-### Task list view
+```bash
+# Basic request to get all tasks (first page)
+curl -X GET "https://api.taskmanagement.example.com/v1/tasks" \
+  -H "Authorization: Bearer YOUR_API_KEY"
 
-Retrieve all tasks for display in a list view, sorted by due date:
-
-```http
-GET /tasks?_sort=dueDate HTTP/1.1
+# Request with pagination, sorting, and filtering
+curl -X GET "https://api.taskmanagement.example.com/v1/tasks?limit=5&offset=0&sort=-priority&status=TODO,IN_PROGRESS&assigneeId=user123&dueDate[lt]=2025-06-01T00:00:00Z" \
+  -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
-### Filtering by status
+## Related Resources
 
-Retrieve only tasks with a specific status, such as those in progress:
+- [Task Resource](/resources/task-resource.md) - Detailed information about the Task resource
+- [Create a Task](/api-reference/create-task.md) - Create a new task
+- [Get Task by ID](/api-reference/get-task-by-id.md) - Retrieve a specific task by ID
 
-```http
-GET /tasks?taskStatus=IN_PROGRESS HTTP/1.1
-```
+## See Also
 
-### Finding urgent tasks
-
-Retrieve tasks sorted by due date to identify those that need attention soon:
-
-```http
-GET /tasks?_sort=dueDate&_perPage=5 HTTP/1.1
-```
-
-## Related resources
-
-- [Task resource](../resources/task-resource.html) - Detailed information about the task resource
-- [Create a task](create-task.html) - Create a new task
-- [Get task by ID](get-task-by-id.html) - Retrieve a specific task
-- [Update a task](update-task.html) - Update an existing task
-- [Delete a task](delete-task.html) - Remove a task
-
-## See also
-
-- [Pagination](../core-concepts/pagination.html) - Detailed information about pagination
-- [Sorting](../core-concepts/sorting.html) - Detailed information about sorting
-- [Task status lifecycle](../core-concepts/task-status-lifecycle.html) - Understanding task statuses
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
+- [Pagination](/core-concepts/pagination.md) - How to navigate through large collections of resources
+- [Sorting](/core-concepts/sorting.md) - How to sort API results using sort parameters
+- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md) - Understanding task statuses and transitions
 
 --- FILE: api-reference/create-task.md
 ---
@@ -3490,15 +4690,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/tasks"]
 related_pages: ["task-resource", "task-status-lifecycle"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 8
+ai-generated-date: "2025-05-13"
+navOrder: "8"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Create a task
-
-The `POST /tasks` endpoint creates a new task in the system. This endpoint allows you to add a task that belongs to a specific user with details such as title, description, due date, and warning offset.
+# Create a Task
 
 ## Endpoint
 
@@ -3506,280 +4709,333 @@ The `POST /tasks` endpoint creates a new task in the system. This endpoint allow
 POST /tasks
 ```
 
-## Authentication
+This endpoint creates a new task in the system. The task can include a title, description, priority, assignment to a user, due date, and other properties.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Path Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+None.
 
-## Request body
+## Request Body
 
-The request body must be a JSON object with the following properties:
+The request body should be a JSON object with the following properties:
 
-| Property | Type | Required | Description | Constraints |
-|----------|------|----------|-------------|-------------|
-| `userId` | integer | Yes | ID of the user who owns the task | Must reference existing user |
-| `taskTitle` | string | Yes | Short description of the task | 1-80 characters |
-| `taskDescription` | string | No | Detailed description of the task | 1-255 characters |
-| `taskStatus` | string | No | Current status of the task | One of predefined values |
-| `dueDate` | string (date-time) | Yes | When the task should be completed | ISO 8601 format |
-| `warningOffset` | integer | Yes | Minutes before due date to send reminder | 0-64000 |
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `title` | String | Yes | Title of the task |
+| `description` | String | No | Detailed description of the task |
+| `status` | String | No | Initial status of the task (default: "TODO") |
+| `priority` | String | No | Priority level: "LOW", "MEDIUM", "HIGH", "URGENT" (default: "MEDIUM") |
+| `assigneeId` | String | No | ID of the user assigned to the task |
+| `dueDate` | String | No | When the task is due (ISO 8601 format) |
+| `warningOffset` | Number | No | Hours before due date to send a reminder |
+| `tags` | Array | No | Array of string tags associated with the task |
 
-### Default values
-
-- `taskStatus`: If not provided, defaults to `NOT_STARTED`
-
-### Example request body
+### Example Request Body
 
 ```json
 {
-  "userId": 1,
-  "taskTitle": "Complete API documentation",
-  "taskDescription": "Finish the task management API documentation for the developer portal",
-  "dueDate": "2025-05-15T17:00:00-05:00",
-  "warningOffset": 60
+  "title": "Implement authentication",
+  "description": "Add token-based authentication to the application",
+  "status": "TODO",
+  "priority": "HIGH",
+  "assigneeId": "user123",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "warningOffset": 24,
+  "tags": ["authentication", "security", "api"]
 }
 ```
 
-## Request example
+## Request Example
 
 ```http
-POST /tasks HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+POST /tasks
 Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
 
 {
-  "userId": 1,
-  "taskTitle": "Complete API documentation",
-  "taskDescription": "Finish the task management API documentation for the developer portal",
-  "dueDate": "2025-05-15T17:00:00-05:00",
-  "warningOffset": 60
+  "title": "Implement authentication",
+  "description": "Add token-based authentication to the application",
+  "status": "TODO",
+  "priority": "HIGH",
+  "assigneeId": "user123",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "warningOffset": 24,
+  "tags": ["authentication", "security", "api"]
 }
 ```
 
 ## Response
 
-### Success response (201 Created)
-
-If the task is created successfully, the API returns a `201 Created` status code and the complete task object, including the system-generated `taskId` and default values for any omitted fields:
+### Success Response (201 Created)
 
 ```json
 {
-  "taskId": 5,
-  "userId": 1,
-  "taskTitle": "Complete API documentation",
-  "taskDescription": "Finish the task management API documentation for the developer portal",
-  "taskStatus": "NOT_STARTED",
-  "dueDate": "2025-05-15T17:00:00-05:00",
-  "warningOffset": 60
+  "id": "task789",
+  "title": "Implement authentication",
+  "description": "Add token-based authentication to the application",
+  "status": "TODO",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user123",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "warningOffset": 24,
+  "tags": ["authentication", "security", "api"],
+  "createdAt": "2025-05-13T15:30:00Z",
+  "updatedAt": "2025-05-13T15:30:00Z"
 }
 ```
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | One or more fields have invalid values |
-| 400 | `MISSING_REQUIRED_FIELD` | A required field is missing |
-| 400 | `INVALID_USER_ID` | The specified user doesn't exist |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 400 | Bad request (e.g., malformed request body) |
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions to create tasks) |
+| 404 | Not Found (e.g., referenced assignee does not exist) |
+| 422 | Unprocessable entity (e.g., validation errors) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
-
-## Response fields
-
-The response contains the newly created task object with the following fields:
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `taskId` | integer | System-generated unique identifier for the task |
-| `userId` | integer | ID of the user who owns the task |
-| `taskTitle` | string | Short description of the task |
-| `taskDescription` | string | Detailed description of the task |
-| `taskStatus` | string | Current status of the task |
-| `dueDate` | string (date-time) | When the task should be completed |
-| `warningOffset` | integer | Minutes before due date to send reminder |
-
-For more information about the task resource, see the [Task resource](../resources/task-resource.html) document.
-
-## Validation rules
-
-The API applies the following validation rules when creating a task:
-
-- `userId` must reference an existing user
-- `taskTitle` must be between 1 and 80 characters
-- `taskDescription` must be between 1 and 255 characters, if provided
-- `taskStatus` must be one of the valid status values, if provided
-- `dueDate` must be in ISO 8601 format
-- `warningOffset` must be between 0 and 64000
-- All required fields must be provided
-
-If validation fails, the API returns a `400 Bad Request` response with details about the validation errors:
+#### Example Error Response
 
 ```json
 {
-  "code": "INVALID_FIELD",
-  "message": "The field `warningOffset` must be between 0 and 64000",
-  "details": [
-    {
-      "field": "warningOffset",
-      "reason": "Invalid range",
-      "location": "body"
+  "error": {
+    "code": "validation_error",
+    "message": "The request contains invalid data",
+    "details": {
+      "title": "Title is required",
+      "dueDate": "Due date must be in the future",
+      "assigneeId": "Assignee with ID 'user123' does not exist"
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  }
 }
 ```
 
-## Code examples
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-### cURL
+## Authentication
 
-```bash
-curl -X POST \
-  http://localhost:3000/tasks \
-  -H 'Authorization: Bearer YOUR_TOKEN' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "userId": 1,
-    "taskTitle": "Complete API documentation",
-    "taskDescription": "Finish the task management API documentation for the developer portal",
-    "dueDate": "2025-05-15T17:00:00-05:00",
-    "warningOffset": 60
-  }'
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
+
 ```
+Authorization: Bearer YOUR_API_KEY
+```
+
+All authenticated users can create tasks, but there may be restrictions on certain fields:
+- Only `admin` and `manager` users can assign tasks to any user
+- `member` users can only assign tasks to themselves
+
+## Important Considerations
+
+- **Auto-Generated Fields**: The `id`, `createdBy`, `createdAt`, and `updatedAt` fields are automatically generated and cannot be specified in the request.
+
+- **CreatedBy Field**: The `createdBy` field is automatically set to the ID of the authenticated user who creates the task.
+
+- **Status Restrictions**: If `status` is specified, it must be a valid task status. If omitted, "TODO" is used as the default initial status.
+
+- **Priority Levels**: Valid priority values are "LOW", "MEDIUM", "HIGH", and "URGENT". If omitted, "MEDIUM" is used as the default.
+
+- **Date Format**: The `dueDate` must be specified in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ) and should be in the future.
+
+- **Warning Offset**: If `warningOffset` is specified, it defines the number of hours before the due date when a reminder should be sent. This requires a valid `dueDate` to be set.
+
+- **Tags Limitations**: Each tag must be a string. The maximum number of tags per task is 10, and each tag can be at most 50 characters long.
+
+## Best Practices
+
+- Provide clear, descriptive titles and detailed descriptions to make tasks easy to understand
+- Set appropriate priority levels to help team members prioritize their work
+- Assign due dates that allow sufficient time for task completion
+- Use consistent tags to categorize and filter tasks effectively
+- Consider setting warning offsets for important tasks to provide timely reminders
+- Validate input client-side before sending to reduce validation errors
+
+## Code Examples
 
 ### JavaScript
 
 ```javascript
 async function createTask(taskData) {
-  const response = await fetch('http://localhost:3000/tasks', {
-    method: 'POST',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(taskData)
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+  try {
+    const response = await fetch('https://api.taskmanagement.example.com/v1/tasks', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(taskData)
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to create task: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error creating task:', error);
+    throw error;
   }
-  
-  return await response.json();
 }
 
 // Example usage
-const newTask = {
-  userId: 1,
-  taskTitle: "Complete API documentation",
-  taskDescription: "Finish the task management API documentation for the developer portal",
-  dueDate: "2025-05-15T17:00:00-05:00",
-  warningOffset: 60
-};
-
-createTask(newTask)
-  .then(task => console.log('Task created:', task))
-  .catch(error => console.error('Failed to create task:', error));
+try {
+  // Set the due date to 2 weeks from now
+  const dueDate = new Date();
+  dueDate.setDate(dueDate.getDate() + 14);
+  
+  const newTask = await createTask({
+    title: 'Create API documentation',
+    description: 'Write comprehensive API documentation for developers',
+    priority: 'HIGH',
+    assigneeId: 'user123',
+    dueDate: dueDate.toISOString(),
+    warningOffset: 24, // Reminder 24 hours before due date
+    tags: ['documentation', 'api']
+  });
+  
+  console.log(`Task created with ID: ${newTask.id}`);
+  console.log(`Due date: ${new Date(newTask.dueDate).toLocaleDateString()}`);
+} catch (error) {
+  // Handle validation errors specifically
+  if (error.message.includes('validation_error')) {
+    console.error('Please correct the following errors:');
+    // Extract and display specific validation errors
+    const errorDetails = JSON.parse(error.message.split(': ')[1]);
+    Object.entries(errorDetails).forEach(([field, message]) => {
+      console.error(`- ${field}: ${message}`);
+    });
+  } else {
+    console.error('Failed to create task:', error);
+  }
+}
 ```
 
 ### Python
 
 ```python
 import requests
-import json
+from datetime import datetime, timedelta
 
-def create_task(task_data):
-    url = 'http://localhost:3000/tasks'
+def create_task(api_key, title, description=None, status='TODO', priority='MEDIUM', assignee_id=None, due_date=None, warning_offset=None, tags=None):
+    """
+    Create a new task in the system.
     
+    Args:
+        api_key (str): API key for authentication
+        title (str): Title of the task
+        description (str, optional): Detailed description of the task
+        status (str, optional): Initial status of the task. Defaults to 'TODO'.
+        priority (str, optional): Priority level. Defaults to 'MEDIUM'.
+        assignee_id (str, optional): ID of the user assigned to the task
+        due_date (datetime or str, optional): When the task is due
+        warning_offset (int, optional): Hours before due date to send a reminder
+        tags (list, optional): List of tags associated with the task
+        
+    Returns:
+        dict: Created task object
+        
+    Raises:
+        Exception: If the API request fails
+    """
+    url = 'https://api.taskmanagement.example.com/v1/tasks'
     headers = {
-        'Authorization': 'Bearer YOUR_TOKEN',
+        'Authorization': f'Bearer {api_key}',
         'Content-Type': 'application/json'
     }
     
-    response = requests.post(url, headers=headers, json=task_data)
+    # Build request data
+    data = {
+        'title': title,
+        'status': status,
+        'priority': priority
+    }
     
-    if response.status_code != 201:
-        error = response.json()
-        raise Exception(error['message'])
+    if description:
+        data['description'] = description
+        
+    if assignee_id:
+        data['assigneeId'] = assignee_id
+        
+    if due_date:
+        # Convert datetime to ISO string if needed
+        if isinstance(due_date, datetime):
+            data['dueDate'] = due_date.isoformat()
+        else:
+            data['dueDate'] = due_date
+            
+    if warning_offset is not None:
+        data['warningOffset'] = warning_offset
+        
+    if tags:
+        data['tags'] = tags
     
-    return response.json()
+    response = requests.post(url, json=data, headers=headers)
+    
+    if response.status_code == 201:
+        return response.json()
+    else:
+        error_data = response.json()
+        
+        if response.status_code == 422 and 'details' in error_data['error']:
+            error_details = error_data['error']['details']
+            raise Exception(f"Validation error: {error_details}")
+        else:
+            raise Exception(f"Task creation failed: {error_data['error']['message']}")
 
 # Example usage
-new_task = {
-    "userId": 1,
-    "taskTitle": "Complete API documentation",
-    "taskDescription": "Finish the task management API documentation for the developer portal",
-    "dueDate": "2025-05-15T17:00:00-05:00",
-    "warningOffset": 60
-}
-
 try:
-    task = create_task(new_task)
-    print('Task created:', task)
+    # Set due date to 1 week from now
+    due_date = datetime.now() + timedelta(days=7)
+    
+    task = create_task(
+        api_key='YOUR_API_KEY',
+        title='Prepare quarterly report',
+        description='Compile and analyze Q2 2025 financial data',
+        priority='HIGH',
+        assignee_id='user456',
+        due_date=due_date,
+        warning_offset=48,  # 2 days before deadline
+        tags=['finance', 'reporting', 'quarterly']
+    )
+    
+    print(f"Task created successfully:")
+    print(f"ID: {task['id']}")
+    print(f"Title: {task['title']}")
+    print(f"Assigned to: {task['assigneeId']}")
+    print(f"Due date: {task['dueDate']}")
+    
 except Exception as e:
-    print('Failed to create task:', str(e))
+    print(f"Error: {e}")
 ```
 
-## Common use cases
+### cURL
 
-### Basic task creation
-
-Create a simple task with just the required fields:
-
-```json
-{
-  "userId": 1,
-  "taskTitle": "Buy groceries",
-  "dueDate": "2025-05-20T17:00:00-05:00",
-  "warningOffset": 60
-}
+```bash
+curl -X POST "https://api.taskmanagement.example.com/v1/tasks" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Implement authentication",
+    "description": "Add token-based authentication to the application",
+    "priority": "HIGH",
+    "assigneeId": "user123",
+    "dueDate": "2025-06-01T17:00:00Z",
+    "tags": ["authentication", "security", "api"]
+  }'
 ```
 
-### Detailed task with specific status
+## Related Resources
 
-Create a task with all fields and a specific initial status:
+- [Task Resource](/resources/task-resource.md) - Detailed information about the Task resource
+- [Get All Tasks](/api-reference/get-all-tasks.md) - Retrieve a list of all tasks
+- [Get Task by ID](/api-reference/get-task-by-id.md) - Retrieve a specific task by ID
 
-```json
-{
-  "userId": 1,
-  "taskTitle": "Prepare quarterly report",
-  "taskDescription": "Gather data, create charts, write executive summary",
-  "taskStatus": "IN_PROGRESS",
-  "dueDate": "2025-06-30T17:00:00-05:00",
-  "warningOffset": 1440
-}
-```
+## See Also
 
-## Next steps
-
-After creating a task, you can:
-
-- [Get task by ID](get-task-by-id.html) to retrieve the task
-- [Update a task](update-task.html) to modify the task
-- [Get all tasks](get-all-tasks.html) to view all tasks
-
-## Related resources
-
-- [Task resource](../resources/task-resource.html) - Detailed information about the task resource
-- [Task status lifecycle](../core-concepts/task-status-lifecycle.html) - Understanding task statuses
-- [User resource](../resources/user-resource.html) - Information about the user resource
-- [Get all tasks](get-all-tasks.html) - Retrieve a list of all tasks
-- [Get task by ID](get-task-by-id.html) - Retrieve a specific task
-- [Update a task](update-task.html) - Update an existing task
-- [Delete a task](delete-task.html) - Remove a task
-
-## See also
-
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
-- [Task management workflow](../tutorials/task-management-workflow.html) - Tutorial on task management
+- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md) - Understanding task statuses and transitions
+- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Task Management Workflow](/tutorials/task-management-workflow.md) - Guide to implementing a task management workflow
 
 --- FILE: api-reference/get-task-by-id.md
 ---
@@ -3790,15 +5046,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/tasks/{taskId}"]
 related_pages: ["task-resource"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 9
+ai-generated-date: "2025-05-13"
+navOrder: "9"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Get task by ID
-
-The `GET /tasks/{taskId}` endpoint retrieves a specific task by its unique identifier. This endpoint allows you to fetch detailed information about a single task.
+# Get Task by ID
 
 ## Endpoint
 
@@ -3806,189 +5065,248 @@ The `GET /tasks/{taskId}` endpoint retrieves a specific task by its unique ident
 GET /tasks/{taskId}
 ```
 
-## Authentication
+This endpoint retrieves a specific task by its unique identifier.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Path Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `taskId` | String | Unique identifier of the task to retrieve |
 
-## Path parameters
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `taskId` | integer | Yes | The unique identifier of the task to retrieve |
-
-## Request example
+## Request Example
 
 ```http
-GET /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+GET /tasks/task123
+Authorization: Bearer YOUR_API_KEY
 ```
 
 ## Response
 
-### Success response (200 OK)
-
-If the task exists, the API returns a `200 OK` status code and the task object:
+### Success Response (200 OK)
 
 ```json
 {
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Grocery shopping",
-  "taskDescription": "eggs, bacon, gummy bears",
-  "taskStatus": "NOT_STARTED",
-  "dueDate": "2025-05-20T17:00:00-05:00",
-  "warningOffset": 60
+  "id": "task123",
+  "title": "Implement authentication",
+  "description": "Add token-based authentication to the application",
+  "status": "IN_PROGRESS",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "warningOffset": 24,
+  "tags": ["authentication", "security", "api"],
+  "createdAt": "2025-05-01T10:30:00Z",
+  "updatedAt": "2025-05-13T14:25:00Z"
 }
 ```
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | Invalid `taskId` format |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 404 | `RESOURCE_NOT_FOUND` | Task not found |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions to view this task) |
+| 404 | Not Found (task with the specified ID does not exist) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
-
-#### Not found response example (404)
+#### Example Error Response (404 Not Found)
 
 ```json
 {
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "Task with ID 999 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  "error": {
+    "code": "resource_not_found",
+    "message": "Task with ID 'task123' not found"
+  }
 }
 ```
 
-## Response fields
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-The response contains the task object with the following fields:
+## Authentication
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `taskId` | integer | Unique identifier for the task |
-| `userId` | integer | ID of the user who owns the task |
-| `taskTitle` | string | Short description of the task |
-| `taskDescription` | string | Detailed description of the task |
-| `taskStatus` | string | Current status of the task |
-| `dueDate` | string (date-time) | When the task should be completed |
-| `warningOffset` | integer | Minutes before due date to send reminder |
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
 
-For more information about the task resource, see the [Task resource](../resources/task-resource.html) document.
-
-## Common use cases
-
-### Task detail view
-
-Retrieve a task's details to display in a detail view or edit form in your application.
-
-### Task verification
-
-Verify if a task exists before performing operations that require a valid task.
-
-### Task status check
-
-Check the current status of a specific task.
-
-## Code examples
-
-### cURL
-
-```bash
-curl -X GET \
-  http://localhost:3000/tasks/1 \
-  -H 'Authorization: Bearer YOUR_TOKEN'
 ```
+Authorization: Bearer YOUR_API_KEY
+```
+
+The authenticated user must have appropriate permissions to view the requested task:
+- `admin` and `manager` users can view any task
+- `member` users can only view tasks they created or are assigned to
+
+## Important Considerations
+
+- **Task ID Format**: Task IDs are auto-generated strings assigned by the system when the task is created.
+
+- **Permission Restrictions**: If a user attempts to access a task they don't have permission to view, a `403 Forbidden` error will be returned rather than a `404 Not Found`, for security reasons.
+
+- **Date Format**: The `dueDate` and timestamp fields (`createdAt`, `updatedAt`) are returned in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ).
+
+- **Referenced Users**: The `createdBy` and `assigneeId` fields contain user IDs. To get the full user details, you'll need to make additional API calls to the user endpoints.
+
+## Best Practices
+
+- Cache task data when appropriate to reduce API calls, especially for frequently accessed tasks.
+
+- Handle 404 errors gracefully in your application, providing a user-friendly message when a task is not found.
+
+- Use the task information to build detailed task views in your application, showing all relevant properties.
+
+- Check the task's status and due date to highlight tasks that need attention, such as overdue tasks or tasks in specific statuses.
+
+## Code Examples
 
 ### JavaScript
 
 ```javascript
 async function getTaskById(taskId) {
-  const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
+  try {
+    const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    if (response.status === 404) {
+      console.warn(`Task with ID ${taskId} not found`);
+      return null;
     }
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Error retrieving task: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error(`Failed to get task ${taskId}:`, error);
+    throw error;
   }
-  
-  return await response.json();
 }
 
 // Example usage
-getTaskById(1)
-  .then(task => console.log('Task:', task))
-  .catch(error => console.error('Failed to get task:', error));
+try {
+  const task = await getTaskById('task123');
+  
+  if (task) {
+    console.log(`Task: ${task.title}`);
+    console.log(`Status: ${task.status}`);
+    console.log(`Priority: ${task.priority}`);
+    
+    if (task.dueDate) {
+      const dueDate = new Date(task.dueDate);
+      const now = new Date();
+      
+      // Check if task is overdue
+      if (task.status !== 'DONE' && task.status !== 'CANCELED' && dueDate < now) {
+        console.log(`⚠️ OVERDUE by ${Math.floor((now - dueDate) / (1000 * 60 * 60 * 24))} days`);
+      } else {
+        console.log(`Due: ${dueDate.toLocaleDateString()}`);
+      }
+    }
+    
+    if (task.tags && task.tags.length > 0) {
+      console.log(`Tags: ${task.tags.join(', ')}`);
+    }
+  } else {
+    console.log('Task not found');
+  }
+} catch (error) {
+  console.error('Error fetching task:', error);
+}
 ```
 
 ### Python
 
 ```python
 import requests
+from datetime import datetime
 
-def get_task_by_id(task_id):
-    url = f'http://localhost:3000/tasks/{task_id}'
+def get_task_by_id(api_key, task_id):
+    """
+    Retrieve a specific task by its ID.
     
+    Args:
+        api_key (str): API key for authentication
+        task_id (str): The unique identifier of the task
+    
+    Returns:
+        dict: Task data if found, None if not found
+        
+    Raises:
+        Exception: For API errors other than 404 Not Found
+    """
+    url = f'https://api.taskmanagement.example.com/v1/tasks/{task_id}'
     headers = {
-        'Authorization': 'Bearer YOUR_TOKEN',
-        'Content-Type': 'application/json'
+        'Authorization': f'Bearer {api_key}'
     }
     
     response = requests.get(url, headers=headers)
     
-    if response.status_code != 200:
-        error = response.json()
-        raise Exception(error['message'])
-    
-    return response.json()
+    if response.status_code == 200:
+        return response.json()
+    elif response.status_code == 404:
+        print(f"Task with ID {task_id} not found")
+        return None
+    elif response.status_code == 403:
+        print(f"You don't have permission to view this task")
+        return None
+    else:
+        error_data = response.json()
+        raise Exception(f"API error: {error_data['error']['message']}")
 
 # Example usage
 try:
-    task = get_task_by_id(1)
-    print('Task:', task)
+    task = get_task_by_id('YOUR_API_KEY', 'task123')
+    
+    if task:
+        print(f"Task: {task['title']}")
+        print(f"Status: {task['status']}")
+        print(f"Priority: {task['priority']}")
+        
+        if 'dueDate' in task and task['dueDate']:
+            # Parse the ISO date string
+            due_date = datetime.fromisoformat(task['dueDate'].replace('Z', '+00:00'))
+            now = datetime.now()
+            
+            # Check if task is overdue
+            if task['status'] not in ['DONE', 'CANCELED'] and due_date < now:
+                days_overdue = (now - due_date).days
+                print(f"⚠️ OVERDUE by {days_overdue} days")
+            else:
+                print(f"Due: {due_date.strftime('%Y-%m-%d')}")
+        
+        if 'assigneeId' in task and task['assigneeId']:
+            print(f"Assigned to: {task['assigneeId']}")
+            
+        if 'tags' in task and task['tags']:
+            print(f"Tags: {', '.join(task['tags'])}")
+    else:
+        print("Task could not be retrieved")
+        
 except Exception as e:
-    print('Failed to get task:', str(e))
+    print(f"Error: {e}")
 ```
 
-## Error handling
+### cURL
 
-When calling this endpoint, be prepared to handle the following common errors:
+```bash
+curl -X GET "https://api.taskmanagement.example.com/v1/tasks/task123" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
 
-### Task not found
+## Related Resources
 
-If the specified `taskId` does not exist, the API returns a `404 Not Found` response. Your application should handle this gracefully, for example by displaying a "Task not found" message to the user.
+- [Task Resource](/resources/task-resource.md) - Detailed information about the Task resource
+- [Get All Tasks](/api-reference/get-all-tasks.md) - Retrieve a list of all tasks
+- [Update a Task](/api-reference/update-task.md) - Update an existing task's information
+- [Delete a Task](/api-reference/delete-task.md) - Remove a task from the system
 
-### Invalid task ID format
+## See Also
 
-If the `taskId` is not a valid integer, the API returns a `400 Bad Request` response. Your application should validate the task ID before making the request.
-
-## Related resources
-
-- [Task resource](../resources/task-resource.html) - Detailed information about the task resource
-- [Get all tasks](get-all-tasks.html) - Retrieve a list of all tasks
-- [Create a task](create-task.html) - Create a new task
-- [Update a task](update-task.html) - Update an existing task
-- [Delete a task](delete-task.html) - Remove a task
-
-## See also
-
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
-- [Task management workflow](../tutorials/task-management-workflow.html) - Tutorial on task management
-- [Task status lifecycle](../core-concepts/task-status-lifecycle.html) - Understanding task statuses
+- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md) - Understanding task statuses and transitions
+- [Task Management Workflow](/tutorials/task-management-workflow.md) - Guide to implementing a task management workflow
 
 --- FILE: api-reference/update-task.md
 ---
@@ -3999,15 +5317,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/tasks/{taskId}"]
 related_pages: ["task-resource", "task-status-lifecycle"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 10
+ai-generated-date: "2025-05-13"
+navOrder: "10"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Update a task
-
-The `PATCH /tasks/{taskId}` endpoint updates one or more properties of an existing task. This endpoint supports partial updates, allowing you to modify specific fields without affecting the others.
+# Update a Task
 
 ## Endpoint
 
@@ -4015,197 +5336,190 @@ The `PATCH /tasks/{taskId}` endpoint updates one or more properties of an existi
 PATCH /tasks/{taskId}
 ```
 
-## Authentication
+This endpoint updates an existing task's information. You can update one or more properties of the task resource, including its status, priority, assignee, and other fields.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Path Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `taskId` | String | Unique identifier of the task to update |
 
-## Path parameters
+## Request Body
 
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `taskId` | integer | Yes | The unique identifier of the task to update |
+The request body should be a JSON object containing the properties you want to update. You can include one or more of the following properties:
 
-## Request body
+| Property | Type | Description |
+|----------|------|-------------|
+| `title` | String | Title of the task |
+| `description` | String | Detailed description of the task |
+| `status` | String | Status of the task: "TODO", "IN_PROGRESS", "REVIEW", "DONE", "CANCELED" |
+| `priority` | String | Priority level: "LOW", "MEDIUM", "HIGH", "URGENT" |
+| `assigneeId` | String | ID of the user assigned to the task |
+| `dueDate` | String | When the task is due (ISO 8601 format) |
+| `warningOffset` | Number | Hours before due date to send a reminder |
+| `tags` | Array | Array of string tags associated with the task |
 
-The request body should be a JSON object containing one or more task properties to update:
-
-| Property | Type | Required | Description | Constraints |
-|----------|------|----------|-------------|-------------|
-| `userId` | integer | No | ID of the user who owns the task | Must reference existing user |
-| `taskTitle` | string | No | Short description of the task | 1-80 characters |
-| `taskDescription` | string | No | Detailed description of the task | 1-255 characters |
-| `taskStatus` | string | No | Current status of the task | One of predefined values |
-| `dueDate` | string (date-time) | No | When the task should be completed | ISO 8601 format |
-| `warningOffset` | integer | No | Minutes before due date to send reminder | 0-64000 |
-
-At least one property must be included in the request.
-
-### Example request body
+### Example Request Body
 
 ```json
 {
-  "taskStatus": "IN_PROGRESS"
+  "status": "IN_PROGRESS",
+  "description": "Add token-based authentication to the application. Use JWT for stateless authentication.",
+  "priority": "HIGH"
 }
 ```
 
-## Request example
+## Request Example
 
 ```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+PATCH /tasks/task123
 Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
 
 {
-  "taskStatus": "IN_PROGRESS"
+  "status": "IN_PROGRESS",
+  "description": "Add token-based authentication to the application. Use JWT for stateless authentication.",
+  "priority": "HIGH"
 }
 ```
 
 ## Response
 
-### Success response (200 OK)
-
-If the task is updated successfully, the API returns a `200 OK` status code and the complete updated task object:
+### Success Response (200 OK)
 
 ```json
 {
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Grocery shopping",
-  "taskDescription": "eggs, bacon, gummy bears",
-  "taskStatus": "IN_PROGRESS",
-  "dueDate": "2025-05-20T17:00:00-05:00",
-  "warningOffset": 60
+  "id": "task123",
+  "title": "Implement authentication",
+  "description": "Add token-based authentication to the application. Use JWT for stateless authentication.",
+  "status": "IN_PROGRESS",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "warningOffset": 24,
+  "tags": ["authentication", "security", "api"],
+  "createdAt": "2025-05-01T10:30:00Z",
+  "updatedAt": "2025-05-13T15:45:00Z"
 }
 ```
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | One or more fields have invalid values |
-| 400 | `MISSING_REQUIRED_FIELD` | No fields provided for update |
-| 400 | `INVALID_USER_ID` | The specified user doesn't exist |
-| 400 | `INVALID_STATUS` | The specified status is not valid |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 404 | `RESOURCE_NOT_FOUND` | Task not found |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 400 | Bad request (e.g., malformed request body) |
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions to update this task) |
+| 404 | Not Found (task with the specified ID does not exist) |
+| 409 | Conflict (e.g., invalid status transition) |
+| 422 | Unprocessable entity (e.g., validation errors) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
-
-#### Invalid status example (400)
+#### Example Error Response (422 Unprocessable Entity)
 
 ```json
 {
-  "code": "INVALID_STATUS",
-  "message": "The `taskStatus` value 'DONE' is not valid",
-  "details": [
-    {
-      "field": "taskStatus",
-      "reason": "Invalid value",
-      "location": "body"
+  "error": {
+    "code": "invalid_status_transition",
+    "message": "Cannot transition from status 'DONE' to 'IN_PROGRESS'",
+    "details": {
+      "currentStatus": "DONE",
+      "requestedStatus": "IN_PROGRESS",
+      "allowedTransitions": ["CANCELED"]
     }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  }
 }
 ```
 
-#### Task not found example (404)
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-```json
-{
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "Task with ID 999 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
+## Authentication
+
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
+
+```
+Authorization: Bearer YOUR_API_KEY
 ```
 
-## Response fields
+The authenticated user must have appropriate permissions to update the requested task:
+- `admin` users can update any task
+- `manager` users can update any task
+- `member` users can only update tasks they created or are assigned to
 
-The response contains the updated task object with the following fields:
+## Important Considerations
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `taskId` | integer | Unique identifier for the task |
-| `userId` | integer | ID of the user who owns the task |
-| `taskTitle` | string | Short description of the task |
-| `taskDescription` | string | Detailed description of the task |
-| `taskStatus` | string | Current status of the task |
-| `dueDate` | string (date-time) | When the task should be completed |
-| `warningOffset` | integer | Minutes before due date to send reminder |
+- **Partial Updates**: This endpoint supports partial updates. You only need to include the properties you want to change in the request body.
 
-For more information about the task resource, see the [Task resource](../resources/task-resource.html) document.
+- **Status Transitions**: When updating the task status, only certain transitions are allowed based on the current status. See [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md) for valid transitions.
 
-## Validation rules
+- **Assignment Restrictions**: There may be restrictions on who can be assigned to a task:
+  - `admin` and `manager` users can assign tasks to any user
+  - `member` users may only be able to assign tasks to themselves
 
-The API applies the following validation rules when updating a task:
+- **Read-Only Fields**: The `id`, `createdBy`, `createdAt`, and `updatedAt` fields are read-only and cannot be updated. If included in the request, they will be ignored.
 
-- At least one field must be provided for update
-- `userId` must reference an existing user, if provided
-- `taskTitle` must be between 1 and 80 characters, if provided
-- `taskDescription` must be between 1 and 255 characters, if provided
-- `taskStatus` must be one of the valid status values, if provided
-- `dueDate` must be in ISO 8601 format, if provided
-- `warningOffset` must be between 0 and 64000, if provided
+- **Due Date Format**: When updating the `dueDate`, it must be specified in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ) and should be in the future.
 
-If validation fails, the API returns a `400 Bad Request` response with details about the validation errors.
+- **Setting Fields to Null**: To remove an optional field, set its value to `null` in the request body.
 
-## Update behavior
+## Best Practices
 
-- The update is partial, meaning only the fields included in the request will be modified
-- Omitted fields retain their current values
-- The `taskId` cannot be modified
-- The response includes the complete task object with all fields, including those not modified
+- Only include the fields you want to update in the request body
+- Verify that status transitions are valid before attempting to update the status
+- Validate due dates to ensure they are in the future
+- Implement proper error handling for invalid status transitions
+- Consider the impact of status changes on task workflows and notifications
 
-## Code examples
-
-### cURL
-
-```bash
-curl -X PATCH \
-  http://localhost:3000/tasks/1 \
-  -H 'Authorization: Bearer YOUR_TOKEN' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "taskStatus": "IN_PROGRESS"
-  }'
-```
+## Code Examples
 
 ### JavaScript
 
 ```javascript
-async function updateTask(taskId, taskData) {
-  const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-    method: 'PATCH',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(taskData)
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+async function updateTask(taskId, updates) {
+  try {
+    const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updates)
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to update task: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error(`Error updating task ${taskId}:`, error);
+    throw error;
   }
-  
-  return await response.json();
 }
 
-// Example usage
-const taskUpdates = {
-  taskStatus: "IN_PROGRESS"
-};
-
-updateTask(1, taskUpdates)
-  .then(task => console.log('Task updated:', task))
-  .catch(error => console.error('Failed to update task:', error));
+// Example usage: Update task status and assignee
+try {
+  const updatedTask = await updateTask('task123', {
+    status: 'IN_PROGRESS',
+    assigneeId: 'user456'
+  });
+  
+  console.log(`Task updated: ${updatedTask.title}`);
+  console.log(`New status: ${updatedTask.status}`);
+  console.log(`Assigned to: ${updatedTask.assigneeId}`);
+  
+  // You can check if the response matches the requested updates
+  if (updatedTask.status !== 'IN_PROGRESS') {
+    console.warn('Status was not updated as requested');
+  }
+} catch (error) {
+  if (error.message.includes('invalid_status_transition')) {
+    console.error('Cannot transition to the requested status. Check the task status lifecycle.');
+  } else {
+    console.error('Failed to update task:', error);
+  }
+}
 ```
 
 ### Python
@@ -4213,91 +5527,106 @@ updateTask(1, taskUpdates)
 ```python
 import requests
 
-def update_task(task_id, task_data):
-    url = f'http://localhost:3000/tasks/{task_id}'
+def update_task(api_key, task_id, **updates):
+    """
+    Update an existing task's information.
     
+    Args:
+        api_key (str): API key for authentication
+        task_id (str): The unique identifier of the task to update
+        **updates: Keyword arguments for fields to update
+    
+    Returns:
+        dict: Updated task data if successful
+        
+    Raises:
+        Exception: If the API request fails
+    """
+    url = f'https://api.taskmanagement.example.com/v1/tasks/{task_id}'
     headers = {
-        'Authorization': 'Bearer YOUR_TOKEN',
+        'Authorization': f'Bearer {api_key}',
         'Content-Type': 'application/json'
     }
     
-    response = requests.patch(url, headers=headers, json=task_data)
+    # Filter out None values
+    update_data = {k: v for k, v in updates.items() if v is not None}
     
-    if response.status_code != 200:
-        error = response.json()
-        raise Exception(error['message'])
+    if not update_data:
+        return None  # No updates to make
     
-    return response.json()
+    response = requests.patch(url, json=update_data, headers=headers)
+    
+    if response.status_code == 200:
+        return response.json()
+    elif response.status_code == 404:
+        raise Exception(f"Task with ID {task_id} not found")
+    elif response.status_code == 422:
+        error_data = response.json()
+        if error_data['error']['code'] == 'invalid_status_transition':
+            current = error_data['error']['details']['currentStatus']
+            requested = error_data['error']['details']['requestedStatus']
+            allowed = error_data['error']['details']['allowedTransitions']
+            raise Exception(f"Cannot change status from '{current}' to '{requested}'. Allowed transitions: {', '.join(allowed)}")
+        else:
+            raise Exception(f"Validation error: {error_data['error']['message']}")
+    else:
+        error_data = response.json()
+        raise Exception(f"API error: {error_data['error']['message']}")
 
-# Example usage
-task_updates = {
-    "taskStatus": "IN_PROGRESS"
-}
-
+# Example usage: Update task status and priority
 try:
-    task = update_task(1, task_updates)
-    print('Task updated:', task)
+    task = update_task(
+        api_key='YOUR_API_KEY',
+        task_id='task123',
+        status='REVIEW',
+        priority='HIGH',
+        description='Updated task description with additional details'
+    )
+    
+    if task:
+        print(f"Task '{task['title']}' updated successfully")
+        print(f"Status: {task['status']}")
+        print(f"Priority: {task['priority']}")
+        print(f"Last updated: {task['updatedAt']}")
+        
 except Exception as e:
-    print('Failed to update task:', str(e))
+    print(f"Error updating task: {e}")
 ```
 
-## Common use cases
+### cURL
 
-### Update task status
+```bash
+# Update task status and priority
+curl -X PATCH "https://api.taskmanagement.example.com/v1/tasks/task123" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "IN_PROGRESS",
+    "priority": "HIGH"
+  }'
 
-The most common use case is updating a task's status as it progresses through its lifecycle:
-
-```json
-{
-  "taskStatus": "COMPLETED"
-}
+# Update task due date and assignee
+curl -X PATCH "https://api.taskmanagement.example.com/v1/tasks/task123" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "dueDate": "2025-06-15T17:00:00Z",
+    "assigneeId": "user456"
+  }'
 ```
 
-For more information about task status values and transitions, see the [Task status lifecycle](../core-concepts/task-status-lifecycle.html) document.
+## Related Resources
 
-### Update due date
+- [Task Resource](/resources/task-resource.md) - Detailed information about the Task resource
+- [Get Task by ID](/api-reference/get-task-by-id.md) - Retrieve a specific task by ID
+- [Get All Tasks](/api-reference/get-all-tasks.md) - Retrieve a list of all tasks
+- [Delete a Task](/api-reference/delete-task.md) - Remove a task from the system
 
-Adjust a task's due date when a deadline changes:
+## See Also
 
-```json
-{
-  "dueDate": "2025-06-01T17:00:00-05:00"
-}
-```
-
-### Update task description
-
-Add or modify details in a task's description:
-
-```json
-{
-  "taskDescription": "Updated task description with more details"
-}
-```
-
-### Transfer task to another user
-
-Change the user who owns the task:
-
-```json
-{
-  "userId": 2
-}
-```
-
-## Related resources
-
-- [Task resource](../resources/task-resource.html) - Detailed information about the task resource
-- [Task status lifecycle](../core-concepts/task-status-lifecycle.html) - Understanding task statuses
-- [Get all tasks](get-all-tasks.html) - Retrieve a list of all tasks
-- [Get task by ID](get-task-by-id.html) - Retrieve a specific task
-- [Create a task](create-task.html) - Create a new task
-- [Delete a task](delete-task.html) - Remove a task
-
-## See also
-
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
-- [Task management workflow](../tutorials/task-management-workflow.html) - Tutorial on task management
+- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md) - Understanding valid status transitions
+- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Task Management Workflow](/tutorials/task-management-workflow.md) - Guide to implementing a task management workflow
 
 --- FILE: api-reference/delete-task.md
 ---
@@ -4308,15 +5637,18 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/tasks/{taskId}"]
 related_pages: ["task-resource"]
+parent: "api-reference"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 11
+ai-generated-date: "2025-05-13"
+navOrder: "11"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Delete a task
-
-The `DELETE /tasks/{taskId}` endpoint removes a specific task from the system. This endpoint permanently deletes the task.
+# Delete a Task
 
 ## Endpoint
 
@@ -4324,98 +5656,137 @@ The `DELETE /tasks/{taskId}` endpoint removes a specific task from the system. T
 DELETE /tasks/{taskId}
 ```
 
-## Authentication
+This endpoint deletes a specific task from the system. Once deleted, the task cannot be recovered.
 
-This endpoint requires authentication. Include the bearer token in the request header:
+## Path Parameters
 
-```
-Authorization: Bearer YOUR_TOKEN
-```
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `taskId` | String | Unique identifier of the task to delete |
 
-## Path parameters
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `taskId` | integer | Yes | The unique identifier of the task to delete |
-
-## Request example
+## Request Example
 
 ```http
-DELETE /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+DELETE /tasks/task123
+Authorization: Bearer YOUR_API_KEY
 ```
 
 ## Response
 
-### Success response (204 No Content)
+### Success Response (204 No Content)
 
-If the task is deleted successfully, the API returns a `204 No Content` status code with no response body.
+A successful deletion returns a `204 No Content` status code with no response body, indicating that the task has been successfully deleted.
 
-### Error responses
+### Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| 400 | `INVALID_FIELD` | Invalid `taskId` format |
-| 401 | `UNAUTHORIZED` | Authentication required |
-| 403 | `FORBIDDEN` | Access denied |
-| 404 | `RESOURCE_NOT_FOUND` | Task not found |
-| 429 | `RATE_LIMIT_EXCEEDED` | Too many requests |
-| 500 | `SERVER_ERROR` | Server error |
+| Status Code | Description |
+|-------------|-------------|
+| 401 | Unauthorized (missing or invalid authentication) |
+| 403 | Forbidden (insufficient permissions to delete this task) |
+| 404 | Not Found (task with the specified ID does not exist) |
 
-For more information on error responses, see the [Error responses](error-responses.html) document.
-
-#### Task not found example (404)
+#### Example Error Response (403 Forbidden)
 
 ```json
 {
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "Task with ID 999 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+  "error": {
+    "code": "permission_denied",
+    "message": "You don't have permission to delete this task"
+  }
 }
 ```
 
-## Important considerations
+For details on error responses, see [Error Responses](/api-reference/error-responses.md).
 
-- This operation cannot be undone
-- The task will be permanently deleted
-- The `taskId` cannot be reused for new tasks
-- Consider using the `CANCELLED` or `COMPLETED` status instead of deletion for tasks that need to be preserved for historical purposes
+## Authentication
 
-## Code examples
+This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
 
-### cURL
-
-```bash
-curl -X DELETE \
-  http://localhost:3000/tasks/1 \
-  -H 'Authorization: Bearer YOUR_TOKEN'
 ```
+Authorization: Bearer YOUR_API_KEY
+```
+
+The authenticated user must have appropriate permissions to delete the requested task:
+- `admin` users can delete any task
+- `manager` users can delete any task
+- `member` users can only delete tasks they created (and possibly tasks assigned to them, depending on system configuration)
+
+## Important Considerations
+
+- **Permanent Operation**: Deletion is permanent and cannot be undone. Consider updating the task status to "CANCELED" instead if you might need to reference the task later.
+
+- **Related Records**: When a task is deleted, any records that directly reference it may also be affected. For example, if you have a comments system linked to tasks, comments on the deleted task might be deleted as well.
+
+- **Alternative to Deletion**: If you need to keep a record of all tasks for audit or reporting purposes, consider implementing a "soft delete" in your application by changing the task status to "CANCELED" instead of using this endpoint.
+
+- **Bulk Operations**: This endpoint only deletes a single task. For bulk deletions, you'll need to make multiple API calls.
+
+## Best Practices
+
+- Confirm deletion with the user before making the API request
+- Consider using status updates instead of deletion for maintaining historical records
+- Implement proper error handling in your application
+- Keep track of deleted tasks in your application if needed for audit purposes
+- Check task ownership and permissions in your application before attempting deletion
+
+## Code Examples
 
 ### JavaScript
 
 ```javascript
 async function deleteTask(taskId) {
-  const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-    method: 'DELETE',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN'
+  try {
+    const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`
+      }
+    });
+    
+    if (response.status === 204) {
+      return true; // Successfully deleted
     }
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+    
+    if (response.status === 404) {
+      console.warn(`Task with ID ${taskId} not found`);
+      return false;
+    }
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to delete task: ${errorData.error.message}`);
+    }
+    
+    return false; // Should not reach here if properly handled above
+  } catch (error) {
+    console.error(`Error deleting task ${taskId}:`, error);
+    throw error;
   }
-  
-  // Success response has no content
-  return true;
 }
 
 // Example usage
-deleteTask(1)
-  .then(() => console.log('Task deleted successfully'))
-  .catch(error => console.error('Failed to delete task:', error));
+try {
+  // Confirm with the user before deletion
+  const confirmDelete = confirm(`Are you sure you want to delete this task? This action cannot be undone.`);
+  
+  if (confirmDelete) {
+    const result = await deleteTask('task123');
+    
+    if (result) {
+      console.log('Task successfully deleted');
+      // Update your UI to remove the task
+      document.getElementById('task-123').remove();
+    } else {
+      console.log('Task was not deleted');
+    }
+  } else {
+    console.log('Deletion canceled by user');
+  }
+} catch (error) {
+  console.error('Failed to delete task:', error);
+  // Show error message to the user
+  displayErrorMessage(`Failed to delete task: ${error.message}`);
+}
 ```
 
 ### Python
@@ -4423,79 +5794,79 @@ deleteTask(1)
 ```python
 import requests
 
-def delete_task(task_id):
-    url = f'http://localhost:3000/tasks/{task_id}'
+def delete_task(api_key, task_id):
+    """
+    Delete a task from the system.
     
+    Args:
+        api_key (str): API key for authentication
+        task_id (str): The unique identifier of the task to delete
+    
+    Returns:
+        bool: True if task was successfully deleted
+        
+    Raises:
+        Exception: If the API request fails
+    """
+    url = f'https://api.taskmanagement.example.com/v1/tasks/{task_id}'
     headers = {
-        'Authorization': 'Bearer YOUR_TOKEN'
+        'Authorization': f'Bearer {api_key}'
     }
     
     response = requests.delete(url, headers=headers)
     
-    if response.status_code != 204:
-        error = response.json()
-        raise Exception(error['message'])
-    
-    # Success response has no content
-    return True
+    if response.status_code == 204:
+        return True
+    elif response.status_code == 404:
+        print(f"Task with ID {task_id} not found")
+        return False
+    elif response.status_code == 403:
+        raise Exception(f"You don't have permission to delete this task")
+    else:
+        error_data = response.json()
+        raise Exception(f"API error: {error_data['error']['message']}")
 
 # Example usage
 try:
-    delete_task(1)
-    print('Task deleted successfully')
+    # Prompt for confirmation
+    task_id = 'task123'
+    confirm = input(f"Are you sure you want to delete task {task_id}? (yes/no): ")
+    
+    if confirm.lower() == 'yes':
+        success = delete_task('YOUR_API_KEY', task_id)
+        
+        if success:
+            print(f"Task {task_id} was successfully deleted")
+            # Update your application state
+        else:
+            print(f"Task was not deleted")
+    else:
+        print("Deletion cancelled")
+        
 except Exception as e:
-    print('Failed to delete task:', str(e))
+    print(f"Error deleting task: {e}")
 ```
 
-## Common use cases
+### cURL
 
-### Task cleanup
+```bash
+# Delete a task
+curl -X DELETE "https://api.taskmanagement.example.com/v1/tasks/task123" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
 
-Remove completed or cancelled tasks that are no longer needed.
+## Related Resources
 
-### Error correction
+- [Task Resource](/resources/task-resource.md) - Detailed information about the Task resource
+- [Get All Tasks](/api-reference/get-all-tasks.md) - Retrieve a list of all tasks
+- [Get Task by ID](/api-reference/get-task-by-id.md) - Retrieve a specific task by ID
+- [Update a Task](/api-reference/update-task.md) - Update an existing task's information
 
-Delete tasks that were created by mistake.
+## See Also
 
-### Privacy compliance
-
-Remove tasks containing sensitive or personal information when no longer needed.
-
-## Alternatives to deletion
-
-Instead of deleting tasks, consider these alternatives:
-
-1. **Update the status**: Mark tasks as `COMPLETED` or `CANCELLED` to preserve the history
-   ```http
-   PATCH /tasks/1 HTTP/1.1
-   Content-Type: application/json
-   
-   {
-     "taskStatus": "COMPLETED"
-   }
-   ```
-
-2. **Archive functionality**: Implement client-side archiving to hide tasks without deleting them
-
-## Best practices
-
-- Confirm the deletion with the user before making this request, as it cannot be undone
-- Consider implementing a "soft delete" in your application logic if you need to preserve task history
-- Handle the 404 error gracefully if the task has already been deleted
-
-## Related resources
-
-- [Task resource](../resources/task-resource.html) - Detailed information about the task resource
-- [Get all tasks](get-all-tasks.html) - Retrieve a list of all tasks
-- [Get task by ID](get-task-by-id.html) - Retrieve a specific task
-- [Create a task](create-task.html) - Create a new task
-- [Update a task](update-task.html) - Update an existing task
-
-## See also
-
-- [Error handling](../core-concepts/error-handling.html) - How to handle API errors
-- [Task management workflow](../tutorials/task-management-workflow.html) - Tutorial on task management
-- [Task status lifecycle](../core-concepts/task-status-lifecycle.html) - Understanding task statuses
+- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md) - Understanding task statuses and transitions
+- [Task Management Workflow](/tutorials/task-management-workflow.md) - Guide to implementing a task management workflow
 
 --- FILE: tutorials/getting-started-with-users.md
 ---
@@ -4504,41 +5875,46 @@ description: "A practical guide to creating, listing, updating, and deleting use
 tags: ["tutorial", "users"]
 categories: ["tutorials"]
 importance: 6
+parent: "tutorials"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 1
+ai-generated-date: "2025-05-13"
+navOrder: "1"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Getting started with users
+# Getting Started with Users
 
-This tutorial guides you through common operations for managing users in the Task Management API. You'll learn how to create, list, retrieve, update, and delete user resources.
+This tutorial provides a step-by-step guide to performing common operations with users in the Task Management API. You'll learn how to create, list, update, and delete users through practical examples.
 
 ## Prerequisites
 
 Before you begin, make sure you have:
 
-- An API client (like cURL, Postman, or your own code)
-- A valid authentication token for the API
-- Understanding of basic HTTP request methods (GET, POST, PATCH, DELETE)
-- Familiarity with JSON data format
+- An API key for the Task Management API
+- Appropriate permissions to manage users
+- A tool for making HTTP requests (we'll use cURL, JavaScript, and Python examples)
 
-## Step 1: Create a user
+## 1. Creating a User
 
-Let's start by creating a new user. Send a POST request to the `/users` endpoint with the required user information.
+Let's start by creating a new user in the system.
 
 ### Request
 
+Use the `POST /users` endpoint to create a new user:
+
 ```http
-POST /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+POST /users
 Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
 
 {
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
+  "name": "Jane Smith",
+  "email": "jane.smith@example.com",
+  "role": "manager"
 }
 ```
 
@@ -4546,405 +5922,804 @@ Content-Type: application/json
 
 ```json
 {
-  "userId": 1,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
+  "id": "user123",
+  "name": "Jane Smith",
+  "email": "jane.smith@example.com",
+  "role": "manager",
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T10:30:00Z"
 }
 ```
 
-The API has assigned a unique `userId` to your new user. Make note of this ID as you'll need it for subsequent operations.
+### Code Example
 
-### Code example
+#### JavaScript
 
 ```javascript
-// Create a user
-async function createUser() {
-  const userData = {
-    firstName: "John",
-    lastName: "Doe",
-    contactEmail: "john.doe@example.com"
-  };
-  
-  const response = await fetch('http://localhost:3000/users', {
+async function createUser(name, email, role = 'member') {
+  const response = await fetch('https://api.taskmanagement.example.com/v1/users', {
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
+      'Authorization': `Bearer ${API_KEY}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(userData)
+    body: JSON.stringify({
+      name,
+      email,
+      role
+    })
   });
   
   if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
-  
-  const user = await response.json();
-  console.log('User created:', user);
-  return user;
-}
-```
-
-## Step 2: Retrieve all users
-
-Next, let's retrieve a list of all users in the system. Send a GET request to the `/users` endpoint.
-
-### Request
-
-```http
-GET /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Response
-
-```json
-{
-  "users": [
-    {
-      "userId": 1,
-      "firstName": "John",
-      "lastName": "Doe",
-      "contactEmail": "john.doe@example.com"
-    }
-  ]
-}
-```
-
-### With pagination
-
-For systems with many users, you can use pagination parameters to limit the results:
-
-```http
-GET /users?_page=0&_perPage=10 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Code example
-
-```javascript
-// Get all users
-async function getAllUsers(page = 0, perPage = 10) {
-  const response = await fetch(`http://localhost:3000/users?_page=${page}&_perPage=${perPage}`, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN'
-    }
-  });
-  
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
-  
-  const data = await response.json();
-  console.log('Users:', data.users);
-  return data.users;
-}
-```
-
-## Step 3: Retrieve a specific user
-
-To get details for a specific user, send a GET request to `/users/{userId}` with the user's ID.
-
-### Request
-
-```http
-GET /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Response
-
-```json
-{
-  "userId": 1,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
-}
-```
-
-### Code example
-
-```javascript
-// Get a specific user
-async function getUser(userId) {
-  const response = await fetch(`http://localhost:3000/users/${userId}`, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN'
-    }
-  });
-  
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
-  
-  const user = await response.json();
-  console.log('User details:', user);
-  return user;
-}
-```
-
-## Step 4: Update a user
-
-To update an existing user, send a PATCH request to `/users/{userId}` with the fields you want to change.
-
-### Request
-
-```http
-PATCH /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-
-{
-  "contactEmail": "new.email@example.com"
-}
-```
-
-### Response
-
-```json
-{
-  "userId": 1,
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "new.email@example.com"
-}
-```
-
-The API returns the complete updated user object. Notice that only the `contactEmail` field was changed, while other fields remain the same.
-
-### Code example
-
-```javascript
-// Update a user
-async function updateUser(userId, updateData) {
-  const response = await fetch(`http://localhost:3000/users/${userId}`, {
-    method: 'PATCH',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(updateData)
-  });
-  
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
-  
-  const updatedUser = await response.json();
-  console.log('User updated:', updatedUser);
-  return updatedUser;
-}
-
-// Example usage
-updateUser(1, { contactEmail: "new.email@example.com" });
-```
-
-## Step 5: Delete a user
-
-To remove a user, send a DELETE request to `/users/{userId}`.
-
-### Request
-
-```http
-DELETE /users/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Response
-
-A successful deletion returns a `204 No Content` status code with no response body.
-
-### Code example
-
-```javascript
-// Delete a user
-async function deleteUser(userId) {
-  const response = await fetch(`http://localhost:3000/users/${userId}`, {
-    method: 'DELETE',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN'
-    }
-  });
-  
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status}`);
-  }
-  
-  console.log('User deleted successfully');
-  return true;
-}
-```
-
-## Handling errors
-
-The API returns appropriate error responses when operations fail. Always check for error responses in your code.
-
-### Common errors
-
-- `400 Bad Request`: Invalid input data (e.g., missing required fields)
-- `404 Not Found`: User not found
-- `401 Unauthorized`: Authentication token missing or invalid
-- `403 Forbidden`: Permission denied
-
-### Error response example
-
-```json
-{
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "User with ID 999 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-### Error handling example
-
-```javascript
-async function getUserSafely(userId) {
-  try {
-    const response = await fetch(`http://localhost:3000/users/${userId}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer YOUR_TOKEN'
-      }
-    });
-    
-    if (!response.ok) {
-      const error = await response.json();
-      console.error(`Error ${response.status}: ${error.message}`);
-      return null;
-    }
-    
-    return await response.json();
-  } catch (error) {
-    console.error('Failed to fetch user:', error);
-    return null;
-  }
-}
-```
-
-## Complete user management example
-
-Here's a complete example that demonstrates all the user management operations:
-
-```javascript
-// User management functions
-const API_BASE_URL = 'http://localhost:3000';
-const TOKEN = 'YOUR_TOKEN';
-
-async function apiRequest(endpoint, method, data = null) {
-  const options = {
-    method: method,
-    headers: {
-      'Authorization': `Bearer ${TOKEN}`,
-      'Content-Type': 'application/json'
-    }
-  };
-  
-  if (data && (method === 'POST' || method === 'PATCH')) {
-    options.body = JSON.stringify(data);
-  }
-  
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
-  
-  if (response.status === 204) {
-    return true; // No content but successful
-  }
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(`API Error: ${error.message}`);
+    const errorData = await response.json();
+    throw new Error(`Failed to create user: ${errorData.error.message}`);
   }
   
   return await response.json();
 }
 
-// User management operations
-async function createUser(userData) {
-  return apiRequest('/users', 'POST', userData);
+// Usage
+try {
+  const newUser = await createUser('Jane Smith', 'jane.smith@example.com', 'manager');
+  console.log('User created:', newUser);
+} catch (error) {
+  console.error(error);
+}
+```
+
+#### Python
+
+```python
+import requests
+
+def create_user(api_key, name, email, role='member'):
+    url = 'https://api.taskmanagement.example.com/v1/users'
+    headers = {
+        'Authorization': f'Bearer {api_key}',
+        'Content-Type': 'application/json'
+    }
+    data = {
+        'name': name,
+        'email': email,
+        'role': role
+    }
+    
+    response = requests.post(url, json=data, headers=headers)
+    
+    if response.status_code == 201:
+        return response.json()
+    else:
+        error_data = response.json()
+        raise Exception(f"Failed to create user: {error_data['error']['message']}")
+
+# Usage
+try:
+    api_key = 'YOUR_API_KEY'
+    new_user = create_user(api_key, 'Jane Smith', 'jane.smith@example.com', 'manager')
+    print('User created:')
+    print(f"ID: {new_user['id']}")
+    print(f"Name: {new_user['name']}")
+    print(f"Email: {new_user['email']}")
+    print(f"Role: {new_user['role']}")
+except Exception as e:
+    print(e)
+```
+
+## 2. Listing Users
+
+Now let's retrieve a list of users from the API.
+
+### Request
+
+Use the `GET /users` endpoint to list users:
+
+```http
+GET /users?limit=10&offset=0&sort=name
+Authorization: Bearer YOUR_API_KEY
+```
+
+### Response
+
+```json
+{
+  "data": [
+    {
+      "id": "user456",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "role": "admin",
+      "createdAt": "2025-04-10T08:15:00Z",
+      "updatedAt": "2025-05-01T13:45:00Z"
+    },
+    {
+      "id": "user123",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "role": "manager",
+      "createdAt": "2025-05-13T10:30:00Z",
+      "updatedAt": "2025-05-13T10:30:00Z"
+    },
+    // More users...
+  ],
+  "pagination": {
+    "total": 25,
+    "limit": 10,
+    "offset": 0,
+    "hasMore": true
+  }
+}
+```
+
+### Code Example
+
+#### JavaScript
+
+```javascript
+async function listUsers(options = {}) {
+  // Build query string from options
+  const params = new URLSearchParams();
+  
+  if (options.limit) params.append('limit', options.limit);
+  if (options.offset) params.append('offset', options.offset);
+  if (options.sort) params.append('sort', options.sort);
+  if (options.name) params.append('name', options.name);
+  if (options.role) params.append('role', options.role);
+  
+  const url = `https://api.taskmanagement.example.com/v1/users?${params}`;
+  
+  const response = await fetch(url, {
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`
+    }
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Failed to list users: ${errorData.error.message}`);
+  }
+  
+  return await response.json();
 }
 
-async function getAllUsers(page = 0, perPage = 10) {
-  const result = await apiRequest(`/users?_page=${page}&_perPage=${perPage}`, 'GET');
-  return result.users;
+// Usage: List users sorted by name
+try {
+  const result = await listUsers({
+    limit: 10,
+    offset: 0,
+    sort: 'name'
+  });
+  
+  console.log(`Found ${result.pagination.total} users`);
+  
+  result.data.forEach(user => {
+    console.log(`${user.name} (${user.email}) - ${user.role}`);
+  });
+  
+  if (result.pagination.hasMore) {
+    console.log('More users available. Increase limit or use pagination.');
+  }
+} catch (error) {
+  console.error(error);
 }
+```
 
+#### Python
+
+```python
+import requests
+
+def list_users(api_key, limit=10, offset=0, sort=None, name=None, role=None):
+    url = 'https://api.taskmanagement.example.com/v1/users'
+    headers = {
+        'Authorization': f'Bearer {api_key}'
+    }
+    
+    # Build query parameters
+    params = {
+        'limit': limit,
+        'offset': offset
+    }
+    
+    if sort:
+        params['sort'] = sort
+    if name:
+        params['name'] = name
+    if role:
+        params['role'] = role
+    
+    response = requests.get(url, params=params, headers=headers)
+    
+    if response.status_code == 200:
+        return response.json()
+    else:
+        error_data = response.json()
+        raise Exception(f"Failed to list users: {error_data['error']['message']}")
+
+# Usage: List manager users
+try:
+    api_key = 'YOUR_API_KEY'
+    result = list_users(api_key, role='manager', sort='name')
+    
+    print(f"Found {result['pagination']['total']} managers")
+    
+    for user in result['data']:
+        print(f"{user['name']} ({user['email']})")
+    
+    if result['pagination']['hasMore']:
+        print('More users available. Increase limit or use pagination.')
+except Exception as e:
+    print(e)
+```
+
+## 3. Getting a Specific User
+
+Let's retrieve details about a specific user using their ID.
+
+### Request
+
+Use the `GET /users/{userId}` endpoint:
+
+```http
+GET /users/user123
+Authorization: Bearer YOUR_API_KEY
+```
+
+### Response
+
+```json
+{
+  "id": "user123",
+  "name": "Jane Smith",
+  "email": "jane.smith@example.com",
+  "role": "manager",
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T10:30:00Z"
+}
+```
+
+### Code Example
+
+#### JavaScript
+
+```javascript
 async function getUserById(userId) {
-  return apiRequest(`/users/${userId}`, 'GET');
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/users/${userId}`, {
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`
+    }
+  });
+  
+  if (response.status === 404) {
+    return null; // User not found
+  }
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Failed to get user: ${errorData.error.message}`);
+  }
+  
+  return await response.json();
 }
 
-async function updateUser(userId, userData) {
-  return apiRequest(`/users/${userId}`, 'PATCH', userData);
+// Usage
+try {
+  const userId = 'user123';
+  const user = await getUserById(userId);
+  
+  if (user) {
+    console.log('User found:');
+    console.log(`Name: ${user.name}`);
+    console.log(`Email: ${user.email}`);
+    console.log(`Role: ${user.role}`);
+  } else {
+    console.log(`User with ID ${userId} not found`);
+  }
+} catch (error) {
+  console.error(error);
+}
+```
+
+#### Python
+
+```python
+import requests
+
+def get_user_by_id(api_key, user_id):
+    url = f'https://api.taskmanagement.example.com/v1/users/{user_id}'
+    headers = {
+        'Authorization': f'Bearer {api_key}'
+    }
+    
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code == 200:
+        return response.json()
+    elif response.status_code == 404:
+        return None
+    else:
+        error_data = response.json()
+        raise Exception(f"Failed to get user: {error_data['error']['message']}")
+
+# Usage
+try:
+    api_key = 'YOUR_API_KEY'
+    user_id = 'user123'
+    user = get_user_by_id(api_key, user_id)
+    
+    if user:
+        print('User found:')
+        print(f"Name: {user['name']}")
+        print(f"Email: {user['email']}")
+        print(f"Role: {user['role']}")
+    else:
+        print(f"User with ID {user_id} not found")
+except Exception as e:
+    print(e)
+```
+
+## 4. Updating a User
+
+Now let's update an existing user's information.
+
+### Request
+
+Use the `PATCH /users/{userId}` endpoint:
+
+```http
+PATCH /users/user123
+Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
+
+{
+  "name": "Jane Wilson",
+  "role": "admin"
+}
+```
+
+### Response
+
+```json
+{
+  "id": "user123",
+  "name": "Jane Wilson",
+  "email": "jane.smith@example.com",
+  "role": "admin",
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T11:45:00Z"
+}
+```
+
+### Code Example
+
+#### JavaScript
+
+```javascript
+async function updateUser(userId, updates) {
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/users/${userId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(updates)
+  });
+  
+  if (response.status === 404) {
+    throw new Error(`User with ID ${userId} not found`);
+  }
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Failed to update user: ${errorData.error.message}`);
+  }
+  
+  return await response.json();
 }
 
+// Usage
+try {
+  const userId = 'user123';
+  const updates = {
+    name: 'Jane Wilson',
+    role: 'admin'
+  };
+  
+  const updatedUser = await updateUser(userId, updates);
+  
+  console.log('User updated:');
+  console.log(`Name: ${updatedUser.name}`);
+  console.log(`Email: ${updatedUser.email}`);
+  console.log(`Role: ${updatedUser.role}`);
+} catch (error) {
+  console.error(error);
+}
+```
+
+#### Python
+
+```python
+import requests
+
+def update_user(api_key, user_id, **updates):
+    url = f'https://api.taskmanagement.example.com/v1/users/{user_id}'
+    headers = {
+        'Authorization': f'Bearer {api_key}',
+        'Content-Type': 'application/json'
+    }
+    
+    # Remove None values from updates
+    updates = {k: v for k, v in updates.items() if v is not None}
+    
+    response = requests.patch(url, json=updates, headers=headers)
+    
+    if response.status_code == 200:
+        return response.json()
+    elif response.status_code == 404:
+        raise Exception(f"User with ID {user_id} not found")
+    else:
+        error_data = response.json()
+        raise Exception(f"Failed to update user: {error_data['error']['message']}")
+
+# Usage
+try:
+    api_key = 'YOUR_API_KEY'
+    user_id = 'user123'
+    
+    updated_user = update_user(
+        api_key, 
+        user_id,
+        name='Jane Wilson',
+        role='admin'
+    )
+    
+    print('User updated:')
+    print(f"Name: {updated_user['name']}")
+    print(f"Email: {updated_user['email']}")
+    print(f"Role: {updated_user['role']}")
+except Exception as e:
+    print(e)
+```
+
+## 5. Deleting a User
+
+Finally, let's learn how to delete a user.
+
+### Request
+
+Use the `DELETE /users/{userId}` endpoint:
+
+```http
+DELETE /users/user123
+Authorization: Bearer YOUR_API_KEY
+```
+
+### Response
+
+A successful deletion returns a `204 No Content` status with no response body.
+
+### Code Example
+
+#### JavaScript
+
+```javascript
 async function deleteUser(userId) {
-  return apiRequest(`/users/${userId}`, 'DELETE');
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/users/${userId}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`
+    }
+  });
+  
+  if (response.status === 204) {
+    return true; // Successfully deleted
+  }
+  
+  if (response.status === 404) {
+    throw new Error(`User with ID ${userId} not found`);
+  }
+  
+  const errorData = await response.json();
+  throw new Error(`Failed to delete user: ${errorData.error.message}`);
 }
 
-// Example usage
-async function userManagementExample() {
-  try {
-    // Create a user
-    console.log('Creating a user...');
-    const newUser = await createUser({
-      firstName: "Jane",
-      lastName: "Smith",
-      contactEmail: "jane.smith@example.com"
+// Usage
+try {
+  const userId = 'user123';
+  
+  // Confirm before deleting
+  const confirmDelete = confirm(`Are you sure you want to delete the user with ID ${userId}?`);
+  
+  if (confirmDelete) {
+    await deleteUser(userId);
+    console.log(`User ${userId} has been deleted`);
+  } else {
+    console.log('Deletion cancelled');
+  }
+} catch (error) {
+  console.error(error);
+}
+```
+
+#### Python
+
+```python
+import requests
+
+def delete_user(api_key, user_id):
+    url = f'https://api.taskmanagement.example.com/v1/users/{user_id}'
+    headers = {
+        'Authorization': f'Bearer {api_key}'
+    }
+    
+    response = requests.delete(url, headers=headers)
+    
+    if response.status_code == 204:
+        return True  # Successfully deleted
+    elif response.status_code == 404:
+        raise Exception(f"User with ID {user_id} not found")
+    else:
+        error_data = response.json()
+        raise Exception(f"Failed to delete user: {error_data['error']['message']}")
+
+# Usage
+try:
+    api_key = 'YOUR_API_KEY'
+    user_id = 'user123'
+    
+    # Confirm before deleting
+    confirm = input(f"Are you sure you want to delete the user with ID {user_id}? (yes/no): ")
+    
+    if confirm.lower() == 'yes':
+        success = delete_user(api_key, user_id)
+        if success:
+            print(f"User {user_id} has been deleted")
+    else:
+        print('Deletion cancelled')
+except Exception as e:
+    print(e)
+```
+
+## 6. Putting It All Together
+
+Here's a complete example of a user management workflow in JavaScript:
+
+```javascript
+// User Management Module
+const userManagement = {
+  API_KEY: 'YOUR_API_KEY',
+  BASE_URL: 'https://api.taskmanagement.example.com/v1',
+  
+  async createUser(name, email, role = 'member') {
+    const response = await fetch(`${this.BASE_URL}/users`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${this.API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email, role })
     });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to create user: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  },
+  
+  async listUsers(options = {}) {
+    const params = new URLSearchParams();
+    
+    if (options.limit) params.append('limit', options.limit);
+    if (options.offset) params.append('offset', options.offset);
+    if (options.sort) params.append('sort', options.sort);
+    if (options.name) params.append('name', options.name);
+    if (options.role) params.append('role', options.role);
+    
+    const response = await fetch(`${this.BASE_URL}/users?${params}`, {
+      headers: {
+        'Authorization': `Bearer ${this.API_KEY}`
+      }
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to list users: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  },
+  
+  async getUserById(userId) {
+    const response = await fetch(`${this.BASE_URL}/users/${userId}`, {
+      headers: {
+        'Authorization': `Bearer ${this.API_KEY}`
+      }
+    });
+    
+    if (response.status === 404) {
+      return null;
+    }
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to get user: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  },
+  
+  async updateUser(userId, updates) {
+    const response = await fetch(`${this.BASE_URL}/users/${userId}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${this.API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updates)
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Failed to update user: ${errorData.error.message}`);
+    }
+    
+    return await response.json();
+  },
+  
+  async deleteUser(userId) {
+    const response = await fetch(`${this.BASE_URL}/users/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${this.API_KEY}`
+      }
+    });
+    
+    if (response.status === 204) {
+      return true;
+    }
+    
+    const errorData = await response.json();
+    throw new Error(`Failed to delete user: ${errorData.error.message}`);
+  }
+};
+
+// Example workflow
+async function userManagementWorkflow() {
+  try {
+    // 1. Create a new user
+    console.log('Creating a new user...');
+    const newUser = await userManagement.createUser(
+      'Alice Johnson',
+      'alice.johnson@example.com',
+      'member'
+    );
     console.log('User created:', newUser);
     
-    // Get all users
-    console.log('\nGetting all users...');
-    const users = await getAllUsers();
-    console.log('All users:', users);
-    
-    // Get user by ID
-    console.log(`\nGetting user ${newUser.userId}...`);
-    const user = await getUserById(newUser.userId);
-    console.log('User details:', user);
-    
-    // Update user
-    console.log(`\nUpdating user ${newUser.userId}...`);
-    const updatedUser = await updateUser(newUser.userId, {
-      firstName: "Janet"
+    // 2. List users
+    console.log('\nListing all users...');
+    const userList = await userManagement.listUsers({
+      limit: 10,
+      sort: 'name'
     });
-    console.log('Updated user:', updatedUser);
+    console.log(`Found ${userList.pagination.total} users:`);
+    userList.data.forEach(user => {
+      console.log(`- ${user.name} (${user.role})`);
+    });
     
-    // Delete user
-    console.log(`\nDeleting user ${newUser.userId}...`);
-    await deleteUser(newUser.userId);
-    console.log('User deleted successfully');
+    // 3. Update the user
+    console.log('\nUpdating user...');
+    const updatedUser = await userManagement.updateUser(
+      newUser.id,
+      { name: 'Alice Smith' }
+    );
+    console.log('User updated:', updatedUser);
+    
+    // 4. Get the updated user
+    console.log('\nRetrieving updated user...');
+    const retrievedUser = await userManagement.getUserById(newUser.id);
+    console.log('Retrieved user:', retrievedUser);
+    
+    // 5. Delete the user
+    console.log('\nDeleting user...');
+    await userManagement.deleteUser(newUser.id);
+    console.log('User deleted');
+    
+    // 6. Verify deletion
+    console.log('\nVerifying deletion...');
+    const deletedUser = await userManagement.getUserById(newUser.id);
+    if (deletedUser === null) {
+      console.log('User successfully deleted');
+    } else {
+      console.log('User was not deleted');
+    }
     
   } catch (error) {
-    console.error('Error:', error.message);
+    console.error('Workflow failed:', error);
   }
 }
 
-// Run the example
-userManagementExample();
+// Run the workflow
+userManagementWorkflow();
 ```
 
-## Next steps
+## Common Errors and Troubleshooting
 
-Now that you understand how to manage users, you can:
+Here are some common errors you might encounter when working with users:
 
-1. Create a user interface for user management
-2. Implement user authentication in your application
-3. Learn how to [create and manage tasks](task-management-workflow.html) for users
-4. Explore more advanced topics like [pagination](../core-concepts/pagination.html) and [sorting](../core-concepts/sorting.html)
+### Email Already In Use
 
-## Related resources
+If you try to create a user with an email that already exists:
 
-- [User resource](../resources/user-resource.html) - Detailed information about the user resource
-- [API reference](../api-reference/get-all-users.html) - Complete API reference for user endpoints
-- [Error handling](../core-concepts/error-handling.html) - In-depth guide to API error handling
+```json
+{
+  "error": {
+    "code": "resource_conflict",
+    "message": "Email address is already in use"
+  }
+}
+```
+
+**Solution**: Check if the user already exists before creating, or handle this error by suggesting a different email address.
+
+### Permission Denied
+
+If you try to perform an operation without sufficient permissions:
+
+```json
+{
+  "error": {
+    "code": "permission_denied",
+    "message": "You don't have permission to perform this action"
+  }
+}
+```
+
+**Solution**: Use an API key with appropriate permissions, or request elevated privileges.
+
+### User Not Found
+
+If you try to retrieve, update, or delete a non-existent user:
+
+```json
+{
+  "error": {
+    "code": "resource_not_found",
+    "message": "User with ID 'user123' not found"
+  }
+}
+```
+
+**Solution**: Verify the user ID is correct, and handle this error gracefully in your application.
+
+## Best Practices
+
+1. **Validate Input**: Validate user data before sending API requests to reduce errors.
+
+2. **Handle Errors Gracefully**: Implement proper error handling for all API requests.
+
+3. **Confirm Destructive Actions**: Always confirm with the user before performing destructive actions like deletion.
+
+4. **Pagination**: Use pagination when listing users to improve performance and user experience.
+
+5. **Role-Based Access Control**: Implement appropriate role checks in your application based on user roles.
+
+6. **Email Validation**: Validate email formats client-side before creating or updating users.
+
+7. **Consistent Error Handling**: Develop a consistent approach to handling and displaying API errors in your application.
+
+## Next Steps
+
+Now that you understand the basics of user management, you can:
+
+1. Explore how to [assign tasks to users](/tutorials/task-management-workflow.md)
+2. Learn about [task status transitions](/core-concepts/task-status-lifecycle.md)
+3. Implement more advanced [user filtering and sorting](/api-reference/get-all-users.md)
+4. Explore [security best practices](/advanced/security-best-practices.md) for your application
+
+## Conclusion
+
+In this tutorial, you've learned how to perform essential user management operations with the Task Management API. You now know how to create, list, retrieve, update, and delete users, which forms the foundation for building user management features in your application.
 
 --- FILE: tutorials/task-management-workflow.md
 ---
@@ -4953,55 +6728,58 @@ description: "A guide to implementing a complete task management workflow using 
 tags: ["tutorial", "tasks", "workflow"]
 categories: ["tutorials"]
 importance: 6
+parent: "tutorials"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 2
+ai-generated-date: "2025-05-13"
+navOrder: "2"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Task management workflow
+# Task Management Workflow
 
-This tutorial guides you through implementing a complete task management workflow using the Task Management API. You'll learn how to create, track, update, and complete tasks as part of a cohesive workflow.
+This tutorial guides you through implementing a complete task management workflow using the Task Management API. You'll learn how to create tasks, assign them to users, update their status through the full lifecycle, and track their completion.
 
 ## Overview
 
-A typical task management workflow includes these stages:
+A typical task management workflow involves these stages:
 
-1. Creating a new task
-2. Viewing and tracking tasks
-3. Starting work on a task
-4. Handling obstacles
-5. Completing or cancelling tasks
+1. **Task Creation**: Create a new task with title, description, and priority
+2. **Task Assignment**: Assign the task to a user
+3. **Task Progress Tracking**: Update the task's status as work progresses
+4. **Task Completion**: Mark the task as done when completed
+5. **Task Reporting**: Generate insights on task completion and performance
 
-We'll implement each stage using the appropriate API endpoints.
+This tutorial will walk you through each stage with practical code examples.
 
 ## Prerequisites
 
 Before you begin, make sure you have:
 
-- An API client (like cURL, Postman, or your own code)
-- A valid authentication token for the API
-- At least one user created in the system (see [Getting started with users](getting-started-with-users.html))
-- Understanding of the [task status lifecycle](../core-concepts/task-status-lifecycle.html)
+- An API key for the Task Management API
+- Appropriate permissions to work with tasks
+- A basic understanding of the [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md)
 
-## Stage 1: Creating a new task
+## 1. Task Creation
 
-The first step in any task workflow is creating the task. We'll create a task with the initial status `NOT_STARTED`.
+First, let's create a new task using the `POST /tasks` endpoint.
 
 ### Request
 
 ```http
-POST /tasks HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+POST /tasks
 Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
 
 {
-  "userId": 1,
-  "taskTitle": "Prepare quarterly report",
-  "taskDescription": "Gather data, create charts, write executive summary",
-  "dueDate": "2025-06-30T17:00:00-05:00",
-  "warningOffset": 1440
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application",
+  "priority": "HIGH",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"]
 }
 ```
 
@@ -5009,157 +6787,66 @@ Content-Type: application/json
 
 ```json
 {
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Prepare quarterly report",
-  "taskDescription": "Gather data, create charts, write executive summary",
-  "taskStatus": "NOT_STARTED",
-  "dueDate": "2025-06-30T17:00:00-05:00",
-  "warningOffset": 1440
+  "id": "task123",
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application",
+  "status": "TODO",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": null,
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"],
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T10:30:00Z"
 }
 ```
 
-The task is created with the default status `NOT_STARTED`. The `warningOffset` of 1440 minutes means you'll receive a reminder 24 hours before the due date.
-
-### Code example
+### Code Example
 
 ```javascript
 async function createTask(taskData) {
-  const response = await fetch('http://localhost:3000/tasks', {
+  const response = await fetch('https://api.taskmanagement.example.com/v1/tasks', {
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
+      'Authorization': `Bearer ${API_KEY}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(taskData)
   });
   
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+    const errorData = await response.json();
+    throw new Error(`Failed to create task: ${errorData.error.message}`);
   }
   
   return await response.json();
 }
 
 // Example usage
-const newTask = {
-  userId: 1,
-  taskTitle: "Prepare quarterly report",
-  taskDescription: "Gather data, create charts, write executive summary",
-  dueDate: "2025-06-30T17:00:00-05:00",
-  warningOffset: 1440
-};
+const newTask = await createTask({
+  title: 'Implement user authentication',
+  description: 'Add token-based authentication to the web application',
+  priority: 'HIGH',
+  dueDate: '2025-06-01T17:00:00Z',
+  tags: ['authentication', 'security']
+});
 
-createTask(newTask)
-  .then(task => console.log('Task created:', task))
-  .catch(error => console.error('Failed to create task:', error));
+console.log(`Task created with ID: ${newTask.id}`);
 ```
 
-## Stage 2: Viewing and tracking tasks
+## 2. Task Assignment
 
-After creating tasks, you'll need to view and track them. Let's retrieve all tasks for a specific status.
+Now that we have created a task, let's assign it to a specific user.
 
 ### Request
 
 ```http
-GET /tasks?taskStatus=NOT_STARTED HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Response
-
-```json
-{
-  "tasks": [
-    {
-      "taskId": 1,
-      "userId": 1,
-      "taskTitle": "Prepare quarterly report",
-      "taskDescription": "Gather data, create charts, write executive summary",
-      "taskStatus": "NOT_STARTED",
-      "dueDate": "2025-06-30T17:00:00-05:00",
-      "warningOffset": 1440
-    },
-    {
-      "taskId": 2,
-      "userId": 1,
-      "taskTitle": "Review marketing materials",
-      "taskDescription": "Check new brochures and website content",
-      "taskStatus": "NOT_STARTED",
-      "dueDate": "2025-06-15T12:00:00-05:00",
-      "warningOffset": 120
-    }
-  ]
-}
-```
-
-You can also retrieve tasks sorted by due date to prioritize your work:
-
-```http
-GET /tasks?_sort=dueDate HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Code example
-
-```javascript
-async function getTasks(status = null, sortBy = null) {
-  let url = 'http://localhost:3000/tasks';
-  const params = [];
-  
-  if (status) {
-    params.push(`taskStatus=${status}`);
-  }
-  
-  if (sortBy) {
-    params.push(`_sort=${sortBy}`);
-  }
-  
-  if (params.length > 0) {
-    url += '?' + params.join('&');
-  }
-  
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN'
-    }
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
-  }
-  
-  const data = await response.json();
-  return data.tasks;
-}
-
-// Example: Get not started tasks sorted by due date
-getTasks('NOT_STARTED', 'dueDate')
-  .then(tasks => {
-    console.log('Tasks to do (sorted by due date):', tasks);
-  })
-  .catch(error => console.error('Failed to get tasks:', error));
-```
-
-## Stage 3: Starting work on a task
-
-When you begin working on a task, update its status to `IN_PROGRESS`.
-
-### Request
-
-```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+PATCH /tasks/task123
 Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
 
 {
-  "taskStatus": "IN_PROGRESS"
+  "assigneeId": "user789"
 }
 ```
 
@@ -5167,60 +6854,61 @@ Content-Type: application/json
 
 ```json
 {
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Prepare quarterly report",
-  "taskDescription": "Gather data, create charts, write executive summary",
-  "taskStatus": "IN_PROGRESS",
-  "dueDate": "2025-06-30T17:00:00-05:00",
-  "warningOffset": 1440
+  "id": "task123",
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application",
+  "status": "TODO",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"],
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T10:45:00Z"
 }
 ```
 
-The task status is now updated to `IN_PROGRESS`, indicating that work has begun.
-
-### Code example
+### Code Example
 
 ```javascript
-async function updateTaskStatus(taskId, newStatus) {
-  const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+async function assignTask(taskId, userId) {
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
     method: 'PATCH',
     headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
+      'Authorization': `Bearer ${API_KEY}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ taskStatus: newStatus })
+    body: JSON.stringify({
+      assigneeId: userId
+    })
   });
   
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
+    const errorData = await response.json();
+    throw new Error(`Failed to assign task: ${errorData.error.message}`);
   }
   
   return await response.json();
 }
 
-// Example: Start working on a task
-updateTaskStatus(1, 'IN_PROGRESS')
-  .then(task => console.log('Task updated:', task))
-  .catch(error => console.error('Failed to update task:', error));
+// Example usage
+const updatedTask = await assignTask('task123', 'user789');
+console.log(`Task assigned to user: ${updatedTask.assigneeId}`);
 ```
 
-## Stage 4: Handling obstacles
+## 3. Starting Work on a Task
 
-If you encounter an obstacle that prevents you from completing the task, update its status to `BLOCKED`.
+When the assigned user begins working on the task, update its status to "IN_PROGRESS".
 
 ### Request
 
 ```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
+PATCH /tasks/task123
 Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
 
 {
-  "taskStatus": "BLOCKED",
-  "taskDescription": "Gather data, create charts, write executive summary. BLOCKED: Waiting for financial data from accounting team."
+  "status": "IN_PROGRESS"
 }
 ```
 
@@ -5228,419 +6916,532 @@ Content-Type: application/json
 
 ```json
 {
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Prepare quarterly report",
-  "taskDescription": "Gather data, create charts, write executive summary. BLOCKED: Waiting for financial data from accounting team.",
-  "taskStatus": "BLOCKED",
-  "dueDate": "2025-06-30T17:00:00-05:00",
-  "warningOffset": 1440
+  "id": "task123",
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application",
+  "status": "IN_PROGRESS",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"],
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T11:00:00Z"
 }
 ```
 
-Notice how we also updated the task description to include the reason for the blocked status. This is a good practice to provide context about the blocker.
-
-### Code example
+### Code Example
 
 ```javascript
-async function blockTask(taskId, reason) {
-  // Get the current task first
-  const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN'
-    }
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
-  }
-  
-  const task = await response.json();
-  
-  // Update the description to include the reason for blocking
-  const updatedDescription = task.taskDescription + ` BLOCKED: ${reason}`;
-  
-  // Update the task
-  const updateResponse = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+async function updateTaskStatus(taskId, status) {
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
     method: 'PATCH',
     headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
+      'Authorization': `Bearer ${API_KEY}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      taskStatus: 'BLOCKED',
-      taskDescription: updatedDescription
+      status: status
+    })
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Failed to update task status: ${errorData.error.message}`);
+  }
+  
+  return await response.json();
+}
+
+// Example usage
+const inProgressTask = await updateTaskStatus('task123', 'IN_PROGRESS');
+console.log(`Task status updated to: ${inProgressTask.status}`);
+```
+
+## 4. Submitting a Task for Review
+
+When the work is complete, the task can be moved to the "REVIEW" status to indicate it's ready for review.
+
+### Request
+
+```http
+PATCH /tasks/task123
+Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
+
+{
+  "status": "REVIEW"
+}
+```
+
+### Response
+
+```json
+{
+  "id": "task123",
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application",
+  "status": "REVIEW",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"],
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T14:30:00Z"
+}
+```
+
+### Code Example
+
+```javascript
+// Using the updateTaskStatus function from the previous step
+const reviewTask = await updateTaskStatus('task123', 'REVIEW');
+console.log(`Task has been submitted for review`);
+```
+
+## 5. Completing a Task
+
+Once the review is successful, mark the task as "DONE".
+
+### Request
+
+```http
+PATCH /tasks/task123
+Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
+
+{
+  "status": "DONE"
+}
+```
+
+### Response
+
+```json
+{
+  "id": "task123",
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application",
+  "status": "DONE",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"],
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T15:00:00Z"
+}
+```
+
+### Code Example
+
+```javascript
+// Using the updateTaskStatus function from the previous steps
+const completedTask = await updateTaskStatus('task123', 'DONE');
+console.log(`Task has been completed`);
+```
+
+## 6. Handling Rejected Tasks
+
+If a task fails review, it can be moved back to "IN_PROGRESS" with feedback.
+
+### Request
+
+```http
+PATCH /tasks/task123
+Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
+
+{
+  "status": "IN_PROGRESS",
+  "description": "Add token-based authentication to the web application. Feedback: Please add unit tests and improve error handling."
+}
+```
+
+### Response
+
+```json
+{
+  "id": "task123",
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application. Feedback: Please add unit tests and improve error handling.",
+  "status": "IN_PROGRESS",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"],
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T14:45:00Z"
+}
+```
+
+### Code Example
+
+```javascript
+async function rejectTask(taskId, feedback) {
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      status: 'IN_PROGRESS',
+      description: `${feedback.originalDescription}\nFeedback: ${feedback.comments}`
+    })
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Failed to reject task: ${errorData.error.message}`);
+  }
+  
+  return await response.json();
+}
+
+// Example usage
+const rejectedTask = await rejectTask('task123', {
+  originalDescription: 'Add token-based authentication to the web application',
+  comments: 'Please add unit tests and improve error handling'
+});
+
+console.log(`Task rejected and moved back to ${rejectedTask.status}`);
+```
+
+## 7. Canceling a Task
+
+If a task is no longer needed, it can be canceled.
+
+### Request
+
+```http
+PATCH /tasks/task123
+Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
+
+{
+  "status": "CANCELED",
+  "description": "Add token-based authentication to the web application. Canceled: Authentication will be handled by a third-party service instead."
+}
+```
+
+### Response
+
+```json
+{
+  "id": "task123",
+  "title": "Implement user authentication",
+  "description": "Add token-based authentication to the web application. Canceled: Authentication will be handled by a third-party service instead.",
+  "status": "CANCELED",
+  "priority": "HIGH",
+  "createdBy": "user456",
+  "assigneeId": "user789",
+  "dueDate": "2025-06-01T17:00:00Z",
+  "tags": ["authentication", "security"],
+  "createdAt": "2025-05-13T10:30:00Z",
+  "updatedAt": "2025-05-13T16:00:00Z"
+}
+```
+
+### Code Example
+
+```javascript
+async function cancelTask(taskId, reason) {
+  // First, get the current task details
+  const getResponse = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`
+    }
+  });
+  
+  if (!getResponse.ok) {
+    const errorData = await getResponse.json();
+    throw new Error(`Failed to get task: ${errorData.error.message}`);
+  }
+  
+  const task = await getResponse.json();
+  
+  // Update the task with canceled status and reason
+  const updateResponse = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      status: 'CANCELED',
+      description: `${task.description}\nCanceled: ${reason}`
     })
   });
   
   if (!updateResponse.ok) {
-    const error = await updateResponse.json();
-    throw new Error(error.message);
+    const errorData = await updateResponse.json();
+    throw new Error(`Failed to cancel task: ${errorData.error.message}`);
   }
   
   return await updateResponse.json();
 }
 
-// Example: Block a task
-blockTask(1, 'Waiting for financial data from accounting team.')
-  .then(task => console.log('Task blocked:', task))
-  .catch(error => console.error('Failed to block task:', error));
+// Example usage
+const canceledTask = await cancelTask('task123', 'Authentication will be handled by a third-party service instead');
+console.log(`Task has been canceled`);
 ```
 
-Once the blocker is resolved, you can resume work by updating the status back to `IN_PROGRESS`:
+## 8. Task Reporting
 
-```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-
-{
-  "taskStatus": "IN_PROGRESS",
-  "taskDescription": "Gather data, create charts, write executive summary. Received financial data from accounting team."
-}
-```
-
-## Stage 5: Completing or cancelling tasks
-
-When a task is finished, update its status to `COMPLETED`.
+Let's build a simple report of task statuses for a team.
 
 ### Request
 
 ```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-
-{
-  "taskStatus": "COMPLETED"
-}
+GET /tasks?assigneeId=user789&sort=-updatedAt&limit=100
+Authorization: Bearer YOUR_API_KEY
 ```
 
-### Response
-
-```json
-{
-  "taskId": 1,
-  "userId": 1,
-  "taskTitle": "Prepare quarterly report",
-  "taskDescription": "Gather data, create charts, write executive summary. Received financial data from accounting team.",
-  "taskStatus": "COMPLETED",
-  "dueDate": "2025-06-30T17:00:00-05:00",
-  "warningOffset": 1440
-}
-```
-
-Alternatively, if a task is no longer relevant or needed, you can cancel it:
-
-```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-
-{
-  "taskStatus": "CANCELLED",
-  "taskDescription": "Gather data, create charts, write executive summary. CANCELLED: Report format changed, using new template instead."
-}
-```
-
-### Code example
+### Code Example
 
 ```javascript
-async function completeTask(taskId) {
-  const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-    method: 'PATCH',
+async function generateTaskReport(assigneeId) {
+  // Get all tasks for this assignee
+  const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks?assigneeId=${assigneeId}&limit=100`, {
     headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ taskStatus: 'COMPLETED' })
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
-  }
-  
-  return await response.json();
-}
-
-async function cancelTask(taskId, reason) {
-  // Get the current task first
-  const task = await getTaskById(taskId);
-  
-  // Update the description to include the cancellation reason
-  const updatedDescription = task.taskDescription + ` CANCELLED: ${reason}`;
-  
-  const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-    method: 'PATCH',
-    headers: {
-      'Authorization': 'Bearer YOUR_TOKEN',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      taskStatus: 'CANCELLED',
-      taskDescription: updatedDescription
-    })
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message);
-  }
-  
-  return await response.json();
-}
-```
-
-## Deferring tasks
-
-If a task needs to be postponed, update its status to `DEFERRED` and possibly adjust the due date:
-
-```http
-PATCH /tasks/1 HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-
-{
-  "taskStatus": "DEFERRED",
-  "dueDate": "2025-07-15T17:00:00-05:00",
-  "taskDescription": "Gather data, create charts, write executive summary. DEFERRED: Pushed to next month due to urgent project."
-}
-```
-
-## Complete workflow example
-
-Here's a complete example that demonstrates the entire task lifecycle:
-
-```javascript
-const API_BASE_URL = 'http://localhost:3000';
-const TOKEN = 'YOUR_TOKEN';
-
-// Helper function for API requests
-async function apiRequest(endpoint, method, data = null) {
-  const options = {
-    method: method,
-    headers: {
-      'Authorization': `Bearer ${TOKEN}`,
-      'Content-Type': 'application/json'
+      'Authorization': `Bearer ${API_KEY}`
     }
+  });
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`Failed to generate report: ${errorData.error.message}`);
+  }
+  
+  const result = await response.json();
+  const tasks = result.data;
+  
+  // Count tasks by status
+  const statusCounts = {
+    'TODO': 0,
+    'IN_PROGRESS': 0,
+    'REVIEW': 0,
+    'DONE': 0,
+    'CANCELED': 0
   };
   
-  if (data && (method === 'POST' || method === 'PATCH')) {
-    options.body = JSON.stringify(data);
-  }
-  
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(`API Error: ${error.message}`);
-  }
-  
-  return await response.json();
-}
-
-// Task management functions
-async function createTask(taskData) {
-  return apiRequest('/tasks', 'POST', taskData);
-}
-
-async function getTaskById(taskId) {
-  return apiRequest(`/tasks/${taskId}`, 'GET');
-}
-
-async function getTasks(status = null, sortBy = null) {
-  let endpoint = '/tasks';
-  const params = [];
-  
-  if (status) {
-    params.push(`taskStatus=${status}`);
-  }
-  
-  if (sortBy) {
-    params.push(`_sort=${sortBy}`);
-  }
-  
-  if (params.length > 0) {
-    endpoint += '?' + params.join('&');
-  }
-  
-  const result = await apiRequest(endpoint, 'GET');
-  return result.tasks;
-}
-
-async function updateTask(taskId, taskData) {
-  return apiRequest(`/tasks/${taskId}`, 'PATCH', taskData);
-}
-
-// Workflow functions
-async function startTask(taskId) {
-  return updateTask(taskId, { taskStatus: 'IN_PROGRESS' });
-}
-
-async function blockTask(taskId, reason) {
-  const task = await getTaskById(taskId);
-  const updatedDescription = task.taskDescription + ` BLOCKED: ${reason}`;
-  
-  return updateTask(taskId, {
-    taskStatus: 'BLOCKED',
-    taskDescription: updatedDescription
+  tasks.forEach(task => {
+    statusCounts[task.status]++;
   });
-}
-
-async function resumeTask(taskId) {
-  return updateTask(taskId, { taskStatus: 'IN_PROGRESS' });
-}
-
-async function completeTask(taskId) {
-  return updateTask(taskId, { taskStatus: 'COMPLETED' });
-}
-
-async function cancelTask(taskId, reason) {
-  const task = await getTaskById(taskId);
-  const updatedDescription = task.taskDescription + ` CANCELLED: ${reason}`;
   
-  return updateTask(taskId, {
-    taskStatus: 'CANCELLED',
-    taskDescription: updatedDescription
-  });
-}
-
-async function deferTask(taskId, newDueDate, reason) {
-  const task = await getTaskById(taskId);
-  const updatedDescription = task.taskDescription + ` DEFERRED: ${reason}`;
+  // Count tasks by priority
+  const priorityCounts = {
+    'LOW': 0,
+    'MEDIUM': 0,
+    'HIGH': 0,
+    'URGENT': 0
+  };
   
-  return updateTask(taskId, {
-    taskStatus: 'DEFERRED',
-    dueDate: newDueDate,
-    taskDescription: updatedDescription
+  tasks.forEach(task => {
+    priorityCounts[task.priority]++;
   });
+  
+  // Check for overdue tasks
+  const now = new Date();
+  const overdueTasks = tasks.filter(task => {
+    const dueDate = new Date(task.dueDate);
+    return dueDate < now && task.status !== 'DONE' && task.status !== 'CANCELED';
+  });
+  
+  // Generate the report
+  const report = {
+    totalTasks: tasks.length,
+    byStatus: statusCounts,
+    byPriority: priorityCounts,
+    overdueTasks: overdueTasks.map(task => ({
+      id: task.id,
+      title: task.title,
+      dueDate: task.dueDate,
+      status: task.status
+    })),
+    completionRate: tasks.length > 0 ? (statusCounts.DONE / tasks.length * 100).toFixed(2) + '%' : '0%'
+  };
+  
+  return report;
 }
 
 // Example usage
-async function taskWorkflowExample() {
+const report = await generateTaskReport('user789');
+console.log('Task Report:', report);
+```
+
+## 9. Implementing a Complete Workflow
+
+Now, let's put everything together to implement a complete task management workflow:
+
+```javascript
+async function completeTaskWorkflow() {
   try {
-    // Step 1: Create a new task
-    console.log('\nCreating a new task...');
-    const task = await createTask({
-      userId: 1,
-      taskTitle: "Write API documentation",
-      taskDescription: "Create comprehensive documentation for the Task Management API",
-      dueDate: "2025-06-01T17:00:00-05:00",
-      warningOffset: 1440
+    // 1. Create a new task
+    console.log('Creating a new task...');
+    const newTask = await createTask({
+      title: 'Implement user authentication',
+      description: 'Add token-based authentication to the web application',
+      priority: 'HIGH',
+      dueDate: '2025-06-01T17:00:00Z',
+      tags: ['authentication', 'security']
     });
-    console.log('New task created:', task);
     
-    // Step 2: Start working on the task
+    console.log(`Task created with ID: ${newTask.id}`);
+    
+    // 2. Assign the task to a user
+    console.log('\nAssigning the task...');
+    const assignedTask = await assignTask(newTask.id, 'user789');
+    console.log(`Task assigned to user: ${assignedTask.assigneeId}`);
+    
+    // 3. Start working on the task
     console.log('\nStarting work on the task...');
-    const inProgressTask = await startTask(task.taskId);
-    console.log('Task updated to IN_PROGRESS:', inProgressTask);
+    const inProgressTask = await updateTaskStatus(newTask.id, 'IN_PROGRESS');
+    console.log(`Task status updated to: ${inProgressTask.status}`);
     
-    // Step 3: Block the task due to an obstacle
-    console.log('\nBlocking the task...');
-    const blockedTask = await blockTask(task.taskId, "Waiting for API spec review");
-    console.log('Task blocked:', blockedTask);
+    // 4. Submit the task for review
+    console.log('\nSubmitting the task for review...');
+    const reviewTask = await updateTaskStatus(newTask.id, 'REVIEW');
+    console.log(`Task submitted for review`);
     
-    // Step 4: Resume work after obstacle is resolved
-    console.log('\nResuming work on the task...');
-    const resumedTask = await resumeTask(task.taskId);
-    console.log('Task resumed:', resumedTask);
+    // 5. Simulate a review process
+    console.log('\nSimulating review process...');
+    const reviewPassed = Math.random() > 0.3; // 70% chance of passing review
     
-    // Step 5: Complete the task
-    console.log('\nCompleting the task...');
-    const completedTask = await completeTask(task.taskId);
-    console.log('Task completed:', completedTask);
+    if (reviewPassed) {
+      // 6a. Mark the task as done
+      console.log('Review passed. Completing the task...');
+      const completedTask = await updateTaskStatus(newTask.id, 'DONE');
+      console.log(`Task completed!`);
+    } else {
+      // 6b. Reject the task with feedback
+      console.log('Review failed. Sending back with feedback...');
+      const rejectedTask = await rejectTask(newTask.id, {
+        originalDescription: newTask.description,
+        comments: 'Please add unit tests and improve error handling'
+      });
+      console.log(`Task rejected and moved back to ${rejectedTask.status}`);
+      
+      // 7. Make improvements and resubmit
+      console.log('\nMaking improvements and resubmitting...');
+      await updateTaskStatus(newTask.id, 'REVIEW');
+      console.log('Task resubmitted for review');
+      
+      // 8. Pass the review this time
+      console.log('\nReview passed on second attempt. Completing the task...');
+      const completedTask = await updateTaskStatus(newTask.id, 'DONE');
+      console.log(`Task completed!`);
+    }
     
-    // Alternative flow: Create a task that will be deferred
-    console.log('\nCreating another task...');
-    const anotherTask = await createTask({
-      userId: 1,
-      taskTitle: "Update user interface",
-      taskDescription: "Redesign the task management dashboard",
-      dueDate: "2025-05-15T17:00:00-05:00",
-      warningOffset: 1440
-    });
-    
-    // Defer the task
-    console.log('\nDeferring the task...');
-    const deferredTask = await deferTask(
-      anotherTask.taskId,
-      "2025-06-15T17:00:00-05:00",
-      "Priorities changed, pushing to next month"
-    );
-    console.log('Task deferred:', deferredTask);
-    
-    // Alternative flow: Create a task that will be cancelled
-    console.log('\nCreating a task that will be cancelled...');
-    const taskToCancel = await createTask({
-      userId: 1,
-      taskTitle: "Prepare old report format",
-      taskDescription: "Use the previous quarter's report format",
-      dueDate: "2025-05-20T17:00:00-05:00",
-      warningOffset: 1440
-    });
-    
-    // Cancel the task
-    console.log('\nCancelling the task...');
-    const cancelledTask = await cancelTask(
-      taskToCancel.taskId,
-      "Format requirement changed, no longer needed"
-    );
-    console.log('Task cancelled:', cancelledTask);
-    
-    // Get all completed tasks
-    console.log('\nGetting all completed tasks...');
-    const completedTasks = await getTasks('COMPLETED');
-    console.log('Completed tasks:', completedTasks);
+    // 9. Generate a report
+    console.log('\nGenerating task report for user...');
+    const report = await generateTaskReport('user789');
+    console.log('Task Report:', report);
     
   } catch (error) {
-    console.error('Error:', error.message);
+    console.error('Workflow failed:', error);
   }
 }
 
-// Run the example
-taskWorkflowExample();
+// Run the complete workflow
+completeTaskWorkflow();
 ```
 
-## Building user interfaces for task management
+## Best Practices for Task Management
 
-When building a user interface for task management, consider these views:
+Here are some best practices to consider when implementing a task management workflow:
 
-1. **Task inbox**: Show all `NOT_STARTED` tasks, sorted by due date
-2. **In progress**: Show all `IN_PROGRESS` tasks
-3. **Blocked**: Show all `BLOCKED` tasks that need attention
-4. **Deferred**: Show all `DEFERRED` tasks for future planning
-5. **Completed**: Show all `COMPLETED` tasks for reference
-6. **Cancelled**: Show all `CANCELLED` tasks (or hide them)
+### 1. Clear Task Descriptions
 
-## Best practices
+Write clear and detailed task descriptions that specify:
+- What needs to be done
+- Any specific requirements or constraints
+- The expected outcome or deliverables
+- Links to relevant resources or documentation
 
-- Use task status transitions to track progress accurately
-- Include reasons in task descriptions when blocking, deferring, or cancelling
-- Regularly check for `BLOCKED` tasks to prevent them from being forgotten
-- Set appropriate reminder offsets based on task importance
-- Use sorting by due date to prioritize work
+### 2. Appropriate Priority Levels
 
-## Next steps
+Use priority levels consistently:
+- **LOW**: Tasks that are not time-sensitive
+- **MEDIUM**: Standard tasks (default)
+- **HIGH**: Important tasks that should be prioritized
+- **URGENT**: Critical tasks that require immediate attention
 
-Now that you understand the complete task management workflow, you can:
+### 3. Realistic Due Dates
 
-1. Implement a task management UI in your application
-2. Create dashboards to visualize task status distribution
-3. Learn about [implementing reminders](implementing-reminders.html) based on due dates
-4. Explore [data consistency](../advanced/handling-data-consistency.html) for robust task management
+Set realistic due dates that:
+- Allow sufficient time for completion
+- Account for dependencies on other tasks
+- Consider the assignee's workload
+- Include buffer time for reviews and revisions
 
-## Related resources
+### 4. Regular Status Updates
 
-- [Task resource](../resources/task-resource.html) - Detailed information about the task resource
-- [Task status lifecycle](../core-concepts/task-status-lifecycle.html) - Understanding task statuses
-- [API reference](../api-reference/get-all-tasks.html) - Complete API reference for task endpoints
+Encourage regular status updates by:
+- Updating task status as soon as work begins or changes
+- Adding comments or updates to the description when relevant
+- Notifying stakeholders of significant changes
+
+### 5. Proper Task Transitions
+
+Follow the proper task status lifecycle:
+- Only use valid status transitions
+- Don't skip intermediate statuses
+- Provide feedback when rejecting tasks
+
+### 6. Task Categorization
+
+Use tags effectively to categorize tasks:
+- Create a consistent tagging system
+- Use meaningful, descriptive tags
+- Limit the number of tags per task
+- Create task views filtered by relevant tags
+
+### 7. Actionable Task Titles
+
+Write task titles that are:
+- Action-oriented (start with a verb)
+- Specific and descriptive
+- Concise but informative
+- Unique and easily identifiable
+
+## Common Challenges and Solutions
+
+### Challenge: Tasks Getting Stuck in Review
+
+**Solution**: Implement a notification system that alerts reviewers when tasks are in the REVIEW status, and set a maximum time for review before escalation.
+
+### Challenge: Overdue Tasks Not Being Addressed
+
+**Solution**: Create an "Overdue Tasks" view that prominently displays tasks past their due date, and implement a regular review process for these tasks.
+
+### Challenge: Unclear Task Requirements
+
+**Solution**: Use a standardized template for task descriptions that includes sections for requirements, acceptance criteria, and resources.
+
+### Challenge: Difficulty Tracking Task Progress
+
+**Solution**: Add custom fields or use the description to track percentage complete or milestone achievements throughout the IN_PROGRESS status.
+
+### Challenge: Too Many Tasks in TODO Status
+
+**Solution**: Implement a work-in-progress limit that restricts the number of tasks in TODO status, encouraging prioritization.
+
+## Conclusion
+
+In this tutorial, you've learned how to implement a complete task management workflow using the Task Management API. You now know how to create tasks, assign them to users, track their progress through the status lifecycle, and generate reports on task completion.
+
+By following the best practices outlined in this guide, you can build a robust task management system that helps your team stay organized, focused, and productive.
+
+## Next Steps
+
+- Learn more about [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md)
+- Explore [Implementing Reminders](/tutorials/implementing-reminders.md) for upcoming tasks
+- Discover advanced [Task Filtering](/api-reference/get-all-tasks.md) techniques
+- Check out [Optimizing API Usage](/advanced/optimizing-api-usage.md) for performance tips
 
 --- FILE: tutorials/implementing-reminders.md
 ---
@@ -5649,70 +7450,65 @@ description: "How to use the warningOffset property to implement a reminder syst
 tags: ["tutorial", "reminders"]
 categories: ["tutorials"]
 importance: 5
+parent: "tutorials"
+hasChildren: false
 ai-generated: false
-navOrder: 3
+navOrder: "3"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Implementing reminders
+# Implementing Reminders
 
-This document provides guidance on how to implement a reminder system using the Task Management API's `warningOffset` property. Learn how to notify users when their tasks are approaching due dates.
+## Overview
 
-## Understanding the warningOffset property
+This document outlines how to implement a reminder system using the Task Management API's `warningOffset` property to notify users about approaching task deadlines.
 
-<!-- This section should explain what warningOffset is and how it works -->
+## Content Outline
 
-- Define what `warningOffset` represents (minutes before due date)
-- Explain how it works with the `dueDate` property
-- Provide examples of different warning offset values and their practical implications
-- Show the calculation: Reminder time = dueDate - warningOffset minutes
+### 1. Understanding the warningOffset Property
+- Purpose and functionality
+- How the offset is calculated
+- Default behavior when not specified
 
-## Implementing a basic reminder system
+### 2. Setting Up Task Reminders
+- Creating tasks with reminders
+- Updating existing tasks to add reminders
+- Best practices for setting appropriate warning times
 
-<!-- This section should outline how to implement a basic reminder system -->
+### 3. Building a Reminder Detection System
+- Polling for upcoming deadlines
+- Calculating when reminders should be triggered
+- Handling timezone considerations
 
-- Client-side vs. server-side implementation considerations 
-- Polling strategy for checking upcoming reminders
-- Suggestions for storing reminder states
-- Code example of a reminder checking function
-- Example of reminder notification UI
+### 4. Implementing Notification Mechanisms
+- Email notifications
+- In-app notifications
+- Mobile push notifications
+- Integration with calendar systems
 
-## Advanced reminder patterns
+### 5. User Preferences for Reminders
+- Allowing users to customize reminder timing
+- Setting default reminder preferences
+- Managing notification channels
 
-<!-- This section should cover more complex reminder implementations -->
+### 6. Advanced Reminder Patterns
+- Escalating reminders (multiple reminders as deadline approaches)
+- Team-wide reminders for shared tasks
+- Reminder acknowledgment tracking
 
-- Multiple reminders for important tasks
-- Escalating reminders (increasing frequency as deadline approaches)
-- Team/manager notifications for overdue tasks
-- Reminder preferences and customization
-- Integration with external notification systems (email, SMS, etc.)
+## Suggested Content
 
-## Best practices
+- **Code Examples**: Sample implementations in JavaScript and Python
+- **Diagram**: Visual representation of the reminder timeline
+- **Table**: Recommended warning offsets for different task priorities
+- **Screenshots**: Example UI for reminder configuration
 
-<!-- This section should provide recommendations for effective reminder systems -->
-
-- Appropriate warning offset selection based on task importance
-- Handling timezone differences
-- Dealing with reminder acknowledgments
-- Reminder grouping to avoid notification fatigue
-- Handling overdue tasks
-
-## Example implementation
-
-<!-- This section should provide a complete code example -->
-
-```javascript
-// Example code for a reminder system
-```
-
-<!-- Consider adding a diagram showing the reminder calculation process -->
-
-## Related resources
-
-<!-- This section should link to related documentation -->
-
-- Reference to task resource documentation
-- Link to client notification libraries/frameworks
-- Other relevant resources
+## Related Topics
+- [Task Resource](/resources/task-resource.md)
+- [Task Management Workflow](/tutorials/task-management-workflow.md)
+- [Update a Task](/api-reference/update-task.md)
 
 --- FILE: tutorials/integration-patterns.md
 ---
@@ -5721,91 +7517,75 @@ description: "Common patterns for integrating the Task Management API with other
 tags: ["integration", "architecture"]
 categories: ["tutorials"]
 importance: 6
+parent: "tutorials"
+hasChildren: false
 ai-generated: false
-navOrder: 4
+navOrder: "4"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Integration patterns
+# Integration Patterns
 
-This document describes common patterns and best practices for integrating the Task Management API with other systems and services in your technology ecosystem.
+## Overview
 
-## Common integration scenarios
+This document presents common patterns, architectures, and best practices for integrating the Task Management API with other systems and services.
 
-<!-- This section should outline different integration scenarios -->
+## Content Outline
 
-- Integrating with authentication systems
-- Connecting with calendar applications
-- Incorporating into project management tools
-- Adding to communication platforms
-- Embedding in productivity suites
-- Mobile application integration
+### 1. Introduction to API Integration
+- Integration objectives and benefits
+- Common integration scenarios
+- Planning your integration strategy
 
-## Integration approaches
-
-<!-- This section should explain different integration approaches -->
-
-- Direct API integration
-- Webhook-based integration
-- Message queue integration
-- Backend-for-Frontend (BFF) pattern
-- Microservices architecture considerations
-
-## Authentication and security
-
-<!-- This section should cover authentication and security considerations -->
-
-- Token management and security
-- Credential handling
-- Role-based access control
-- API key rotation practices
-- Error handling for authentication issues
-
-## Data synchronization patterns
-
-<!-- This section should address data synchronization challenges -->
-
+### 2. Synchronization Patterns
 - One-way vs. two-way synchronization
-- Handling conflicts
-- Synchronization frequency
-- Offline-first considerations
-- Dealing with schema differences
+- Real-time vs. batch synchronization
+- Handling conflicts and data reconciliation
 
-## Performance considerations
+### 3. Integration with Project Management Tools
+- Synchronizing with JIRA, Trello, Asana, etc.
+- Mapping concepts between systems
+- Best practices for maintaining data consistency
 
-<!-- This section should provide performance recommendations -->
+### 4. Calendar Integrations
+- Adding tasks to calendar systems (Google Calendar, Outlook)
+- Handling due date and reminder synchronization
+- Event updates when task status changes
 
-- Caching strategies
-- Rate limiting awareness
-- Batch operations
-- Connection pooling
-- Request optimization
+### 5. Notification System Integrations
+- Integrating with Slack, Microsoft Teams, Discord
+- Email notification systems
+- Mobile push notification services
+- Webhook implementation patterns
 
-## Implementation examples
+### 6. Authentication Integration Patterns
+- Single Sign-On (SSO) implementation
+- OAuth flows with third-party services
+- Managing API keys securely
 
-<!-- This section should provide code examples for common integrations -->
+### 7. Data Warehouse and Reporting Integrations
+- Exporting task data to analytics platforms
+- Building custom dashboards
+- ETL processes for task data
 
-```javascript
-// Examples of integration code
-```
+### 8. Advanced Integration Architectures
+- Event-driven architectures using webhooks
+- Using message queues for reliable integrations
+- Microservices approaches for complex systems
 
-<!-- Consider adding a system architecture diagram showing integration points -->
+## Suggested Content
 
-## Case studies
+- **Diagrams**: System integration architecture diagrams for different scenarios
+- **Code Examples**: Sample integration code for popular tools and services
+- **Decision Tree**: Helping readers select the right integration pattern
+- **Case Studies**: Real-world examples of successful integrations
 
-<!-- This section could include brief case studies of integration examples -->
-
-- Calendar integration example
-- Project management tool integration
-- Mobile app integration
-
-## Related resources
-
-<!-- This section should link to related documentation -->
-
-- Authentication documentation
-- API reference
-- Error handling guidelines
-- Performance optimization resources
+## Related Topics
+- [Authentication](/getting-started/authentication.md)
+- [Optimizing API Usage](/advanced/optimizing-api-usage.md)
+- [Handling Data Consistency](/advanced/handling-data-consistency.md)
 
 --- FILE: advanced/optimizing-api-usage.md
 ---
@@ -5814,550 +7594,726 @@ description: "Best practices for efficient API usage, including caching, batch o
 tags: ["optimization", "performance"]
 categories: ["advanced"]
 importance: 5
+parent: "advanced"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 1
+ai-generated-date: "2025-05-13"
+navOrder: "1"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Optimizing API usage
+# Optimizing API Usage
 
-This document provides best practices for optimizing your use of the Task Management API, focusing on performance, efficiency, and cost considerations.
+This guide covers advanced techniques for optimizing your use of the Task Management API, focusing on performance, efficiency, and resource utilization. By following these best practices, you can reduce latency, minimize API calls, and improve the overall performance of your applications.
 
-## Understanding API limits
+## Understanding API Rate Limits
 
-While using the Task Management API, be aware of the following limitations:
+The Task Management API implements rate limiting to ensure fair usage and system stability. Understanding and working within these limits is essential for building reliable applications.
 
-- **Rate limits**: The API enforces rate limits to ensure fair usage
-- **Response size**: Large result sets are paginated
-- **Performance considerations**: Frequent polling may impact performance
+### Current Rate Limits
 
-Optimizing your API usage helps you stay within these limits while maintaining a responsive application.
+| Plan | Requests per Minute | Requests per Day |
+|------|---------------------|------------------|
+| Free | 60 | 10,000 |
+| Standard | 120 | 50,000 |
+| Professional | 300 | 150,000 |
+| Enterprise | Custom | Custom |
 
-## Caching strategies
+### Identifying Rate Limiting
 
-Implementing effective caching is one of the most important ways to optimize API usage.
+When you exceed rate limits, the API returns a `429 Too Many Requests` status code. The response includes headers that provide information about your current usage:
 
-### What to cache
+```
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 0
+X-RateLimit-Reset: 1715123456
+Retry-After: 30
+```
 
-Consider caching these resources:
+### Best Practices for Rate Limit Management
 
-- User data that changes infrequently
-- Task lists that don't need real-time updates
-- Reference data (e.g., available task statuses)
+1. **Monitor rate limit headers**: Track the `X-RateLimit-Remaining` header in each response to stay aware of your remaining quota.
 
-### Client-side caching
+2. **Implement exponential backoff**: When rate limited, use the `Retry-After` header to determine when to retry, with exponential backoff for repeated failures.
 
-Implement client-side caching in your application:
+3. **Distribute requests over time**: Avoid bursts of requests that might trigger rate limits. Space out non-urgent requests evenly.
+
+4. **Prioritize critical operations**: Ensure that essential operations have priority access to your rate limit quota.
+
+## Efficient Data Retrieval
+
+Optimizing how you retrieve data can significantly reduce the number of API calls required and improve application performance.
+
+### Use Pagination Effectively
+
+The API uses offset-based pagination for list endpoints. To retrieve large datasets efficiently:
+
+1. **Use appropriate page sizes**: Start with the default `limit` of 10 and adjust based on your needs. For UI displays, match the `limit` to your display size.
+
+2. **Implement infinite scrolling or "load more"**: Instead of loading all data at once, fetch additional pages as the user scrolls or requests more items.
+
+3. **Track total counts**: Use the `total` value in the pagination object to show progress indicators or determine when all data has been retrieved.
 
 ```javascript
-// Simple cache implementation
-class ApiCache {
-  constructor(ttlMs = 60000) { // Default TTL: 1 minute
-    this.cache = new Map();
-    this.ttlMs = ttlMs;
-  }
-
-  set(key, value) {
-    const expiresAt = Date.now() + this.ttlMs;
-    this.cache.set(key, { value, expiresAt });
-    return value;
-  }
-
-  get(key) {
-    const entry = this.cache.get(key);
-    if (!entry) return null;
+async function getAllPages(endpoint, queryParams = {}) {
+  let allData = [];
+  let hasMore = true;
+  let offset = 0;
+  const limit = 100; // Maximum page size for bulk operations
+  
+  while (hasMore) {
+    const params = new URLSearchParams({
+      ...queryParams,
+      limit,
+      offset
+    });
     
-    if (Date.now() > entry.expiresAt) {
+    const response = await fetch(`${API_BASE_URL}/${endpoint}?${params}`, {
+      headers: { 'Authorization': `Bearer ${API_KEY}` }
+    });
+    
+    const result = await response.json();
+    allData = [...allData, ...result.data];
+    
+    // Update pagination variables
+    offset += limit;
+    hasMore = result.pagination.hasMore;
+    
+    // Optional: Add a delay to avoid rate limiting
+    if (hasMore) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+  }
+  
+  return allData;
+}
+```
+
+### Filter Data on the Server
+
+Use query parameters to filter data on the server instead of retrieving all data and filtering client-side:
+
+```javascript
+// Inefficient: Retrieve all tasks and filter client-side
+const allTasks = await getAllTasks();
+const highPriorityTasks = allTasks.filter(task => task.priority === 'HIGH');
+
+// Efficient: Use server-side filtering
+const highPriorityTasks = await getTasks({ priority: 'HIGH' });
+```
+
+### Request Only What You Need
+
+Some endpoints may support field selection in the future to limit the fields returned in the response. When available, use this feature to reduce payload size:
+
+```
+GET /tasks?fields=id,title,status,dueDate
+```
+
+## Implementing Caching Strategies
+
+A well-designed caching strategy can dramatically reduce API calls and improve response times for your users.
+
+### Client-Side Caching
+
+1. **Cache frequently accessed data**: Store common lookups like user details and task status options in memory.
+
+2. **Implement time-based cache expiry**: Set appropriate TTL (Time To Live) values based on how frequently the data changes.
+
+3. **Use conditional requests with ETags**: When supported, use the `If-None-Match` header with ETags to validate if cached data is still current.
+
+```javascript
+class ApiCache {
+  constructor(ttlSeconds = 300) {
+    this.cache = new Map();
+    this.ttlSeconds = ttlSeconds;
+  }
+  
+  set(key, value) {
+    const item = {
+      value,
+      expiry: Date.now() + (this.ttlSeconds * 1000)
+    };
+    this.cache.set(key, item);
+  }
+  
+  get(key) {
+    const item = this.cache.get(key);
+    if (!item) return null;
+    
+    if (Date.now() > item.expiry) {
       this.cache.delete(key);
       return null;
     }
     
-    return entry.value;
+    return item.value;
   }
-
-  invalidate(key) {
+  
+  delete(key) {
     this.cache.delete(key);
   }
+  
+  clear() {
+    this.cache.clear();
+  }
 }
 
-// Usage example
-const cache = new ApiCache(300000); // 5-minute TTL
+// Example usage
+const apiCache = new ApiCache(60 * 5); // 5 minute cache
 
-async function getTasksWithCaching(status = null) {
-  const cacheKey = `tasks_${status || 'all'}`;
-  const cachedData = cache.get(cacheKey);
+async function getUserWithCache(userId) {
+  const cacheKey = `user:${userId}`;
+  const cachedUser = apiCache.get(cacheKey);
   
-  if (cachedData) {
-    console.log('Using cached task data');
-    return cachedData;
+  if (cachedUser) {
+    return cachedUser;
   }
   
-  console.log('Fetching fresh task data');
-  const tasks = await getTasks(status);
-  cache.set(cacheKey, tasks);
-  return tasks;
+  const user = await getUser(userId);
+  apiCache.set(cacheKey, user);
+  return user;
 }
 ```
 
-### Cache invalidation
+### Cache Invalidation Strategies
 
-Implement proper cache invalidation to maintain data consistency:
+1. **Time-based invalidation**: Set an expiry time appropriate to the data type:
+   - User profiles: 1 hour
+   - Task lists: 5 minutes
+   - Task details: 1 minute
 
-- Invalidate user cache when user details are updated
-- Invalidate task caches when tasks are created, updated, or deleted
-- Use time-based expiration for less critical data
+2. **Action-based invalidation**: Clear relevant cache entries when mutations occur:
 
 ```javascript
-// Invalidate cache when a task is updated
-async function updateTaskWithCacheInvalidation(taskId, taskData) {
-  const updatedTask = await updateTask(taskId, taskData);
+async function updateTask(taskId, updates) {
+  const result = await apiRequest(`/tasks/${taskId}`, 'PATCH', updates);
   
-  // Invalidate specific task cache
-  cache.invalidate(`task_${taskId}`);
+  // Invalidate affected cache entries
+  apiCache.delete(`task:${taskId}`);
+  apiCache.delete('tasks:list');
   
-  // Invalidate task list caches
-  cache.invalidate('tasks_all');
-  cache.invalidate(`tasks_${updatedTask.taskStatus}`);
-  
-  return updatedTask;
+  return result;
 }
 ```
 
-## Batch operations
-
-Minimize the number of API calls by utilizing batch operations when possible.
-
-### Pagination optimization
-
-When working with large data sets, use appropriate page sizes:
+3. **Selective invalidation**: Only invalidate cache for affected items:
 
 ```javascript
-// Fetch all tasks efficiently with pagination
-async function getAllTasksEfficiently(batchSize = 50) {
-  let page = 0;
-  let allTasks = [];
-  let hasMoreData = true;
+function invalidateUserTasks(userId) {
+  // Clear all cached data related to this user's tasks
+  apiCache.delete(`user:${userId}:tasks`);
   
-  while (hasMoreData) {
-    const response = await fetch(`http://localhost:3000/tasks?_page=${page}&_perPage=${batchSize}`, {
-      headers: { 'Authorization': 'Bearer YOUR_TOKEN' }
-    });
-    
-    const data = await response.json();
-    const tasks = data.tasks || [];
-    
-    allTasks = allTasks.concat(tasks);
-    hasMoreData = tasks.length === batchSize;
-    page++;
+  // Find and delete individual task cache entries for this user
+  for (const key of apiCache.cache.keys()) {
+    if (key.startsWith('task:') && cachedTaskBelongsToUser(key, userId)) {
+      apiCache.delete(key);
+    }
   }
-  
-  return allTasks;
 }
 ```
 
-### Process data in chunks
+## Batch Operations
 
-For operations that involve large sets of data, process them in chunks:
+Reducing the number of API calls through batching can significantly improve performance.
+
+### Client-Side Batching
+
+While the API may not support native batch operations, you can implement client-side batching:
 
 ```javascript
-// Update multiple tasks in chunks
-async function updateTasksInChunks(taskUpdates, chunkSize = 5) {
-  const chunks = [];
-  
-  // Split updates into chunks
-  for (let i = 0; i < taskUpdates.length; i += chunkSize) {
-    chunks.push(taskUpdates.slice(i, i + chunkSize));
-  }
-  
+async function batchCreateTasks(tasks, batchSize = 10) {
   const results = [];
   
-  // Process each chunk
-  for (const chunk of chunks) {
-    const chunkPromises = chunk.map(update => 
-      updateTask(update.taskId, update.data)
-    );
+  // Process in batches to avoid overwhelming the API
+  for (let i = 0; i < tasks.length; i += batchSize) {
+    const batch = tasks.slice(i, i + batchSize);
     
-    const chunkResults = await Promise.all(chunkPromises);
-    results.push(...chunkResults);
+    // Create tasks in parallel
+    const batchPromises = batch.map(task => createTask(task));
+    const batchResults = await Promise.all(batchPromises);
     
-    // Optional delay between chunks to avoid rate limits
-    await new Promise(resolve => setTimeout(resolve, 100));
+    results.push(...batchResults);
+    
+    // Add a small delay between batches to avoid rate limiting
+    if (i + batchSize < tasks.length) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
   }
   
   return results;
 }
 ```
 
-## Polling optimization
+### Optimizing Parallel Requests
 
-If your application needs to check for updates regularly, optimize your polling strategy.
-
-### Adaptive polling
-
-Implement adaptive polling intervals based on user activity:
+When making multiple independent requests, use `Promise.all()` to execute them in parallel:
 
 ```javascript
-class AdaptivePoller {
-  constructor(minInterval = 5000, maxInterval = 60000) {
-    this.minInterval = minInterval; // 5 seconds
-    this.maxInterval = maxInterval; // 1 minute
-    this.currentInterval = minInterval;
-    this.timerId = null;
-    this.lastActivity = Date.now();
-    this.callback = null;
-  }
-  
-  setCallback(callback) {
-    this.callback = callback;
-  }
-  
-  start() {
-    this.poll();
-    
-    // Reset interval on user interaction
-    document.addEventListener('click', () => this.userActivity());
-    document.addEventListener('keypress', () => this.userActivity());
-  }
-  
-  stop() {
-    if (this.timerId) {
-      clearTimeout(this.timerId);
-      this.timerId = null;
-    }
-  }
-  
-  userActivity() {
-    this.lastActivity = Date.now();
-    this.currentInterval = this.minInterval;
-  }
-  
-  poll() {
-    if (this.callback) {
-      this.callback();
-    }
-    
-    // Adjust polling interval based on inactivity
-    const inactiveTime = Date.now() - this.lastActivity;
-    if (inactiveTime > 30000) { // 30 seconds of inactivity
-      this.currentInterval = Math.min(this.maxInterval, this.currentInterval * 1.5);
-    }
-    
-    this.timerId = setTimeout(() => this.poll(), this.currentInterval);
-  }
-}
-
-// Usage example
-const taskPoller = new AdaptivePoller();
-
-taskPoller.setCallback(async () => {
-  try {
-    // Only fetch tasks that are relevant to current view
-    const status = getCurrentViewStatus(); // e.g., 'IN_PROGRESS'
-    const tasks = await getTasks(status);
-    updateTasksUI(tasks);
-  } catch (error) {
-    console.error('Polling error:', error);
-  }
-});
-
-taskPoller.start();
-```
-
-### Webhooks as an alternative
-
-For real-time updates, consider implementing a webhook-based approach instead of polling, if your infrastructure supports it.
-
-## Request optimization
-
-Optimize your API requests to minimize data transfer and processing time.
-
-### Use filtering
-
-Filter results on the server side rather than client side:
-
-```javascript
-// Efficient: Server-side filtering
-const inProgressTasks = await getTasks('IN_PROGRESS');
-
-// Less efficient: Client-side filtering
-const allTasks = await getTasks();
-const inProgressTasks = allTasks.filter(task => task.taskStatus === 'IN_PROGRESS');
-```
-
-### Select only needed fields
-
-If the API supports field selection, use it to retrieve only the data you need.
-
-### Combine related operations
-
-Combine related operations to reduce round trips:
-
-```javascript
-// Helper function to fetch task and user in parallel
-async function getTaskWithUserDetails(taskId) {
-  const task = await getTaskById(taskId);
-  const user = await getUserById(task.userId);
+async function loadDashboardData(userId) {
+  // Execute requests in parallel
+  const [
+    userDetails,
+    assignedTasks,
+    createdTasks,
+    teamMembers
+  ] = await Promise.all([
+    getUser(userId),
+    getTasks({ assigneeId: userId }),
+    getTasks({ createdBy: userId }),
+    getTeamMembers(userId)
+  ]);
   
   return {
-    ...task,
-    user
+    user: userDetails,
+    tasks: {
+      assigned: assignedTasks,
+      created: createdTasks
+    },
+    team: teamMembers
   };
 }
 ```
 
-## Connection management
+Be careful not to exceed rate limits when making many parallel requests. Limit the number of concurrent requests based on your rate limit constraints.
 
-Properly manage connections to the API to avoid overhead.
+## Optimizing Payload Size
 
-### Reuse HTTP connections
+Reducing the size of request and response payloads can improve network performance.
 
-Use connection pooling or HTTP keep-alive to reduce connection overhead:
+### Request Optimization
+
+1. **Only send changed fields**: When updating resources, only include the fields that have changed:
 
 ```javascript
-// Example with node-fetch
-const fetch = require('node-fetch');
-const HttpAgent = require('agentkeepalive');
-
-const agent = new HttpAgent({
-  keepAlive: true,
-  maxSockets: 10,
-  maxFreeSockets: 5,
-  timeout: 60000,
-  freeSocketTimeout: 30000
+// Inefficient: Sending all fields
+await updateTask(taskId, {
+  title: task.title,
+  description: task.description,
+  status: 'IN_PROGRESS',
+  priority: task.priority,
+  dueDate: task.dueDate,
+  tags: task.tags
 });
 
-async function fetchWithKeepalive(url, options = {}) {
-  return fetch(url, {
-    ...options,
-    agent
-  });
+// Efficient: Only sending the changed field
+await updateTask(taskId, { status: 'IN_PROGRESS' });
+```
+
+2. **Compress large requests**: For very large payloads, use compression when supported by the API:
+
+```javascript
+const compressedData = await compressPayload(largeData);
+
+fetch(url, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Content-Encoding': 'gzip'
+  },
+  body: compressedData
+});
+```
+
+### Response Optimization
+
+1. **Use pagination wisely**: Only request the number of items you need.
+
+2. **Filter server-side**: Use query parameters to reduce the amount of data returned.
+
+3. **Request specific fields**: If supported, specify only the fields you need.
+
+## Connection and Network Optimization
+
+Optimizing network usage can improve performance, especially for mobile or slow connections.
+
+### Connection Reuse
+
+Use a single instance of your HTTP client to benefit from connection pooling and keep-alive:
+
+```javascript
+// Create a reusable client
+const apiClient = axios.create({
+  baseURL: 'https://api.taskmanagement.example.com/v1',
+  headers: {
+    'Authorization': `Bearer ${API_KEY}`,
+    'Content-Type': 'application/json'
+  },
+  timeout: 10000
+});
+
+// Reuse the client for all requests
+function getTasks(params) {
+  return apiClient.get('/tasks', { params });
+}
+
+function createTask(task) {
+  return apiClient.post('/tasks', task);
 }
 ```
 
-### Handle timeouts and retries
+### Request Timeouts
 
-Implement proper timeout handling and retry logic:
+Implement appropriate timeouts for API requests to avoid hanging operations:
 
 ```javascript
-async function fetchWithRetry(url, options = {}, retries = 3, backoff = 300) {
+async function apiRequest(endpoint, method = 'GET', data = null, timeoutMs = 5000) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  
   try {
-    const response = await fetch(url, {
-      ...options,
-      timeout: 5000 // 5 second timeout
+    const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+      method,
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: data ? JSON.stringify(data) : undefined,
+      signal: controller.signal
     });
     
-    return response;
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+    
+    return await response.json();
   } catch (error) {
-    if (retries <= 0) throw error;
+    clearTimeout(timeoutId);
     
-    await new Promise(resolve => setTimeout(resolve, backoff));
-    return fetchWithRetry(url, options, retries - 1, backoff * 2);
+    if (error.name === 'AbortError') {
+      throw new Error(`Request timed out after ${timeoutMs}ms`);
+    }
+    
+    throw error;
   }
 }
 ```
 
-## Monitoring and analytics
+### Retry Strategies
 
-Implement monitoring to identify optimization opportunities.
-
-### Track API usage
-
-Monitor API calls to identify patterns and optimization opportunities:
+Implement robust retry logic for handling transient failures:
 
 ```javascript
-// Simple API call tracker
-class ApiMonitor {
-  constructor() {
-    this.callCounts = {};
-    this.responseTimesMs = {};
-  }
+async function fetchWithRetry(url, options, maxRetries = 3) {
+  let retries = 0;
   
-  recordCall(endpoint, responseTimeMs) {
-    this.callCounts[endpoint] = (this.callCounts[endpoint] || 0) + 1;
-    
-    if (!this.responseTimesMs[endpoint]) {
-      this.responseTimesMs[endpoint] = [];
-    }
-    this.responseTimesMs[endpoint].push(responseTimeMs);
-  }
-  
-  getStats() {
-    const stats = {};
-    
-    for (const endpoint in this.callCounts) {
-      const times = this.responseTimesMs[endpoint];
-      const avgTime = times.reduce((sum, time) => sum + time, 0) / times.length;
-      
-      stats[endpoint] = {
-        calls: this.callCounts[endpoint],
-        avgResponseTimeMs: avgTime,
-        minResponseTimeMs: Math.min(...times),
-        maxResponseTimeMs: Math.max(...times)
-      };
-    }
-    
-    return stats;
-  }
-  
-  logStats() {
-    console.table(this.getStats());
-  }
-}
-
-const apiMonitor = new ApiMonitor();
-
-// Wrap API calls with monitoring
-async function monitoredApiCall(endpoint, callFn) {
-  const startTime = performance.now();
-  try {
-    return await callFn();
-  } finally {
-    const endTime = performance.now();
-    apiMonitor.recordCall(endpoint, endTime - startTime);
-  }
-}
-
-// Usage example
-async function getTasksMonitored(status) {
-  return monitoredApiCall(`getTasks(${status || 'all'})`, () => getTasks(status));
-}
-```
-
-### Identify bottlenecks
-
-Use monitoring data to identify and address bottlenecks:
-
-- Endpoints with high response times
-- Frequently called endpoints that could benefit from caching
-- Patterns of bursts that could be smoothed out
-
-## Client-side optimization
-
-Optimize your client-side code for efficient API interaction.
-
-### State management
-
-Use efficient state management to minimize API calls:
-
-```javascript
-// Example with React and context API
-function TaskProvider({ children }) {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  
-  // Fetch tasks only once when component mounts
-  useEffect(() => {
-    const fetchTasks = async () => {
-      setLoading(true);
-      try {
-        const data = await getTasks();
-        setTasks(data);
-        setError(null);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    fetchTasks();
-  }, []);
-  
-  // Update tasks locally first, then in API
-  const updateTaskOptimistically = async (taskId, updates) => {
-    // Update locally first for responsiveness
-    setTasks(prevTasks => 
-      prevTasks.map(task => 
-        task.taskId === taskId ? { ...task, ...updates } : task
-      )
-    );
-    
-    // Then update in API
+  while (retries <= maxRetries) {
     try {
-      await updateTask(taskId, updates);
-    } catch (err) {
-      // Revert on error
-      setError(err.message);
-      setTasks(prevTasks => [...prevTasks]); // Trigger re-fetch
+      return await fetch(url, options);
+    } catch (error) {
+      retries++;
+      
+      if (retries > maxRetries || !isRetryableError(error)) {
+        throw error;
+      }
+      
+      // Exponential backoff with jitter
+      const delay = Math.min(
+        1000 * Math.pow(2, retries) + Math.random() * 1000,
+        30000 // Max 30 seconds
+      );
+      
+      console.warn(`Retry ${retries}/${maxRetries} after ${Math.round(delay)}ms`);
+      await new Promise(resolve => setTimeout(resolve, delay));
     }
-  };
-  
-  {% raw %}
-  return (
-    <TaskContext.Provider value={{ 
-      tasks, 
-      loading, 
-      error, 
-      updateTask: updateTaskOptimistically
-    }}>
-      {children}
-    </TaskContext.Provider>
-  );
-  {% endraw %}
+  }
+}
+
+function isRetryableError(error) {
+  // Retry network errors and server errors (500s)
+  return error.name === 'TypeError' || 
+         (error.response && error.response.status >= 500);
 }
 ```
 
-### Debouncing and throttling
+## Background Synchronization
 
-Implement debouncing for user input and throttling for frequent actions:
+For applications that need to work offline or in unreliable network conditions, implement background synchronization.
+
+### Offline Queue
+
+Implement a queue for operations performed offline:
 
 ```javascript
-// Debounce function for search inputs
-function debounce(func, wait) {
-  let timeout;
-  return function(...args) {
-    const context = this;
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(context, args), wait);
-  };
-}
-
-// Throttle function for scroll events
-function throttle(func, limit) {
-  let inThrottle;
-  return function(...args) {
-    const context = this;
-    if (!inThrottle) {
-      func.apply(context, args);
-      inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+class OfflineQueue {
+  constructor() {
+    this.queue = [];
+    this.isProcessing = false;
+    
+    // Attempt to process the queue when the app comes online
+    window.addEventListener('online', () => this.processQueue());
+  }
+  
+  addToQueue(operation) {
+    this.queue.push({
+      ...operation,
+      timestamp: Date.now()
+    });
+    
+    // Save queue to persistent storage
+    this.saveQueue();
+    
+    // Try to process the queue if we're online
+    if (navigator.onLine) {
+      this.processQueue();
     }
-  };
+  }
+  
+  async processQueue() {
+    if (this.isProcessing || !navigator.onLine || this.queue.length === 0) {
+      return;
+    }
+    
+    this.isProcessing = true;
+    
+    try {
+      while (this.queue.length > 0 && navigator.onLine) {
+        const operation = this.queue[0];
+        
+        try {
+          await this.executeOperation(operation);
+          
+          // Remove the successful operation from the queue
+          this.queue.shift();
+          this.saveQueue();
+        } catch (error) {
+          // If the operation failed but is retryable, keep it in the queue
+          if (isRetryableError(error)) {
+            console.warn(`Operation failed, will retry later:`, error);
+            break;
+          }
+          
+          // Otherwise, remove it from the queue
+          console.error(`Operation failed and won't be retried:`, error);
+          this.queue.shift();
+          this.saveQueue();
+        }
+      }
+    } finally {
+      this.isProcessing = false;
+    }
+  }
+  
+  async executeOperation(operation) {
+    // Execute the operation based on type
+    switch (operation.type) {
+      case 'CREATE_TASK':
+        return await createTask(operation.data);
+      case 'UPDATE_TASK':
+        return await updateTask(operation.id, operation.data);
+      case 'DELETE_TASK':
+        return await deleteTask(operation.id);
+      default:
+        throw new Error(`Unknown operation type: ${operation.type}`);
+    }
+  }
+  
+  saveQueue() {
+    localStorage.setItem('offlineQueue', JSON.stringify(this.queue));
+  }
+  
+  loadQueue() {
+    const saved = localStorage.getItem('offlineQueue');
+    this.queue = saved ? JSON.parse(saved) : [];
+  }
 }
 
 // Example usage
-const debouncedSearch = debounce(async (searchTerm) => {
-  // This will only be called after user stops typing for 300ms
-  const results = await searchTasks(searchTerm);
-  updateSearchResults(results);
-}, 300);
+const offlineQueue = new OfflineQueue();
+offlineQueue.loadQueue();
 
-// Usage in UI
-searchInput.addEventListener('input', (e) => {
-  debouncedSearch(e.target.value);
-});
+// When creating a task offline
+function createTaskOfflineSupport(taskData) {
+  if (navigator.onLine) {
+    return createTask(taskData);
+  }
+  
+  // Store in offline queue
+  offlineQueue.addToQueue({
+    type: 'CREATE_TASK',
+    data: taskData
+  });
+  
+  // Return a placeholder result for UI updates
+  return {
+    ...taskData,
+    id: `offline-${Date.now()}`, // Temporary ID
+    status: 'PENDING_SYNC',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  };
+}
 ```
 
-## Summary of best practices
+## Performance Monitoring
 
-- **Implement caching**: Cache responses to reduce API calls
-- **Use pagination efficiently**: Fetch data in appropriate page sizes
-- **Optimize polling**: Use adaptive polling or consider webhooks
-- **Batch operations**: Process data in chunks to reduce API calls
-- **Monitor performance**: Track API usage to identify optimization opportunities
-- **Implement error handling**: Add proper timeout handling and retries
-- **Use client-side optimizations**: Implement debouncing, throttling, and optimistic updates
+Implement monitoring to identify bottlenecks and opportunities for optimization.
 
-By following these best practices, you can optimize your use of the Task Management API, resulting in better performance, lower costs, and an improved user experience.
+### Track API Metrics
 
-## Related resources
+Monitor key performance indicators:
 
-- [Rate limiting](../getting-started/rate-limiting.html)
-- [Pagination](../core-concepts/pagination.html)
-- [Error handling](../core-concepts/error-handling.html)
-- [Data consistency](handling-data-consistency.html)
+```javascript
+class ApiMetrics {
+  constructor() {
+    this.metrics = {
+      totalRequests: 0,
+      successfulRequests: 0,
+      failedRequests: 0,
+      averageResponseTime: 0,
+      requestsByEndpoint: {}
+    };
+  }
+  
+  startRequest(endpoint) {
+    const startTime = performance.now();
+    this.metrics.totalRequests++;
+    
+    if (!this.metrics.requestsByEndpoint[endpoint]) {
+      this.metrics.requestsByEndpoint[endpoint] = {
+        count: 0,
+        totalTime: 0,
+        averageTime: 0,
+        failures: 0
+      };
+    }
+    
+    this.metrics.requestsByEndpoint[endpoint].count++;
+    
+    return startTime;
+  }
+  
+  endRequest(endpoint, startTime, success) {
+    const endTime = performance.now();
+    const duration = endTime - startTime;
+    
+    if (success) {
+      this.metrics.successfulRequests++;
+    } else {
+      this.metrics.failedRequests++;
+      this.metrics.requestsByEndpoint[endpoint].failures++;
+    }
+    
+    // Update average response time for this endpoint
+    const endpointMetrics = this.metrics.requestsByEndpoint[endpoint];
+    endpointMetrics.totalTime += duration;
+    endpointMetrics.averageTime = endpointMetrics.totalTime / endpointMetrics.count;
+    
+    // Update overall average response time
+    const totalTime = Object.values(this.metrics.requestsByEndpoint)
+      .reduce((sum, metrics) => sum + metrics.totalTime, 0);
+    this.metrics.averageResponseTime = totalTime / this.metrics.totalRequests;
+    
+    return duration;
+  }
+  
+  getMetrics() {
+    return { ...this.metrics };
+  }
+  
+  getEndpointPerformance() {
+    return Object.entries(this.metrics.requestsByEndpoint)
+      .map(([endpoint, metrics]) => ({
+        endpoint,
+        requests: metrics.count,
+        averageTime: metrics.averageTime.toFixed(2),
+        failures: metrics.failures,
+        successRate: ((metrics.count - metrics.failures) / metrics.count * 100).toFixed(1)
+      }))
+      .sort((a, b) => b.requests - a.requests);
+  }
+}
+
+// Create a global metrics instance
+const apiMetrics = new ApiMetrics();
+
+// Wrap API requests with metrics
+async function apiRequestWithMetrics(endpoint, method = 'GET', data = null) {
+  const startTime = apiMetrics.startRequest(endpoint);
+  let success = false;
+  
+  try {
+    const result = await apiRequest(endpoint, method, data);
+    success = true;
+    return result;
+  } finally {
+    const duration = apiMetrics.endRequest(endpoint, startTime, success);
+    console.debug(`${method} ${endpoint} took ${duration.toFixed(2)}ms`);
+  }
+}
+```
+
+### Log Slow Requests
+
+Identify and log unusually slow operations:
+
+```javascript
+function logSlowRequests(endpoint, method, duration, threshold = 1000) {
+  if (duration > threshold) {
+    console.warn(`Slow request: ${method} ${endpoint} took ${duration.toFixed(2)}ms`);
+    
+    // You could also send this to your monitoring system
+    if (typeof sendToMonitoring === 'function') {
+      sendToMonitoring('slow_request', {
+        endpoint,
+        method,
+        duration,
+        timestamp: new Date().toISOString()
+      });
+    }
+  }
+}
+```
+
+## Best Practices Summary
+
+1. **Respect rate limits**:
+   - Monitor limit headers
+   - Implement backoff strategies
+   - Distribute requests over time
+
+2. **Optimize data retrieval**:
+   - Use pagination appropriately
+   - Filter server-side
+   - Request only what you need
+
+3. **Implement caching**:
+   - Cache frequently accessed data
+   - Use appropriate cache invalidation strategies
+   - Consider data freshness requirements
+
+4. **Batch operations**:
+   - Group related operations
+   - Use parallel requests with Promise.all()
+   - Limit the number of concurrent requests
+
+5. **Optimize payload size**:
+   - Only send necessary fields
+   - Use compression for large payloads
+   - Filter responses on the server
+
+6. **Handle network issues gracefully**:
+   - Implement timeouts
+   - Use retry strategies
+   - Support offline operations when possible
+
+7. **Monitor performance**:
+   - Track API metrics
+   - Log slow requests
+   - Analyze patterns to identify optimization opportunities
+
+By applying these optimization techniques, you can build applications that use the Task Management API efficiently, providing better performance and reliability for your users.
+
+## See Also
+
+- [Rate Limiting](/getting-started/rate-limiting.md)
+- [Pagination](/core-concepts/pagination.md)
+- [Authentication](/getting-started/authentication.md)
+- [Error Handling](/core-concepts/error-handling.md)
 
 --- FILE: advanced/security-best-practices.md
 ---
@@ -6366,94 +8322,82 @@ description: "Advanced security considerations when working with the Task Manage
 tags: ["security", "best practices"]
 categories: ["advanced"]
 importance: 6
+parent: "advanced"
+hasChildren: false
 ai-generated: false
-navOrder: 2
+navOrder: "2"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Security best practices
+# Security Best Practices
 
-This document outlines security best practices and considerations when working with the Task Management API to help ensure the safety and privacy of your application and its data.
+## Overview
 
-## Authentication security
+This document describes advanced security considerations and best practices when working with the Task Management API to ensure your integration remains secure and protected.
 
-<!-- This section should cover authentication-related security practices -->
+## Content Outline
 
-- Secure storage of authentication tokens
-- Token lifecycle management
-- Token refresh strategies
-- Multi-factor authentication integration
-- Handling authentication failures
-- Detecting and responding to unauthorized access attempts
+### 1. API Key Management
+- Secure storage and rotation practices
+- Environment-specific API keys
+- Key exposure detection and remediation
+- Using API key scopes and least privilege
 
-## Data protection
+### 2. Authentication and Authorization
+- Token-based authentication best practices
+- Securely handling bearer tokens
+- Role-based access control implementation
+- Session management considerations
 
-<!-- This section should address data protection measures -->
+### 3. Secure Communication
+- Transport Layer Security (TLS)
+- Certificate validation
+- API request signing
+- Network security considerations
 
-- Protecting sensitive task information
-- User data privacy considerations
-- Data minimization principles
-- Client-side data storage security
-- Transport layer security requirements
-- Secure handling of personally identifiable information (PII)
+### 4. Protecting Sensitive Data
+- Data classification for task information
+- Handling personally identifiable information (PII)
+- Data minimization practices
+- Encryption strategies for sensitive fields
 
-## Access control
-
-<!-- This section should explain access control approaches -->
-
-- Implementing role-based access control (RBAC)
-- Principle of least privilege
-- User permission management
-- Team/organization-level permissions
-- Attribute-based access control considerations
-- Auditing access to resources
-
-## Client-side security
-
-<!-- This section should cover client-side security considerations -->
-
-- Cross-site scripting (XSS) prevention
-- Cross-site request forgery (CSRF) protection
-- Content security policy implementation
-- Secure UI practices
-- Input validation
+### 5. Input Validation and Sanitization
+- Preventing injection attacks
+- Content validation best practices
 - Output encoding
+- Handling user-generated content
 
-## Security monitoring
+### 6. Security in Distributed Systems
+- Microservices security patterns
+- Service-to-service authentication
+- API gateways and security
+- Container security considerations
 
-<!-- This section should address security monitoring approaches -->
-
+### 7. Monitoring and Incident Response
 - Security logging best practices
-- Monitoring for suspicious activities
-- Detecting brute force attempts
-- Abnormal usage pattern detection
-- Integration with security information and event management (SIEM) systems
+- Anomaly detection for API usage
 - Incident response procedures
+- Threat modeling for task management systems
 
-## Implementation examples
+### 8. Compliance Considerations
+- Regulatory requirements for task data
+- Audit trails and evidence collection
+- Privacy regulations impact
+- Security assessment procedures
 
-<!-- This section should provide code examples -->
+## Suggested Content
 
-```javascript
-// Examples of security implementations
-```
+- **Checklists**: Security review checklists for API integrations
+- **Code Examples**: Secure implementation patterns in various languages
+- **Flow Diagrams**: Secure authentication flows and threat mitigations
+- **Case Studies**: Security incident examples and lessons learned
 
-## Security checklist
-
-<!-- This section should provide a security checklist -->
-
-- Authentication implementation checklist
-- Data protection checklist 
-- Access control checklist
-- Client-side security checklist
-- Security monitoring checklist
-
-## Related resources
-
-<!-- This section should link to related resources -->
-
-- Authentication documentation
-- API security guides
-- OWASP resources
+## Related Topics
+- [Authentication](/getting-started/authentication.md)
+- [Rate Limiting](/getting-started/rate-limiting.md)
+- [Error Handling](/core-concepts/error-handling.md)
 
 --- FILE: advanced/handling-data-consistency.md
 ---
@@ -6462,256 +8406,76 @@ description: "Strategies for maintaining data consistency when working with the 
 tags: ["data consistency", "concurrency"]
 categories: ["advanced"]
 importance: 4
+parent: "advanced"
+hasChildren: false
 ai-generated: false
-navOrder: 3
+navOrder: "3"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Handling data consistency
-
-This document outlines strategies for maintaining data consistency when working with the Task Management API, with particular focus on handling race conditions and concurrency issues.
-
-## Understanding consistency challenges
-
-<!-- This section should explain the types of consistency challenges -->
-
-- Race conditions explained
-- Optimistic vs. pessimistic concurrency
-- Last-write-wins issues
-- Lost update problems
-- Data staleness considerations
-- Eventually consistent systems
-
-## Concurrency control strategies
-
-<!-- This section should outline concurrency control approaches -->
-
-- Optimistic concurrency control
-- Conditional updates
-- Version-based concurrency
-- Resource locking patterns
-- Conflict detection and resolution
-- Handling update conflicts
-
-## Client-side consistency patterns
-
-<!-- This section should explain client-side approaches -->
-
-- Local state management
-- Optimistic UI updates
-- Conflict resolution UI
-- Offline-first considerations
-- Synchronization strategies
-- Handling network partitions
-
-## Task-specific consistency challenges
-
-<!-- This section should address task-specific consistency issues -->
-
-- Task status transition race conditions
-- Simultaneous task updates
-- Task assignment conflicts
-- Due date modifications
-- Detecting and resolving task conflicts
-- Maintaining user-task relationship consistency
-
-## Implementation examples
-
-<!-- This section should provide code examples -->
-
-```javascript
-// Examples of consistency handling code
-```
-
-<!-- Consider adding a diagram showing race conditions and resolution approaches -->
-
-## Best practices checklist
-
-<!-- This section should provide a consistency checklist -->
-
-- Concurrency control implementation checklist
-- Client-side consistency checklist
-- Task-specific consistency checklist
-
-## Related resources
-
-<!-- This section should link to related resources -->
-
-- Error handling documentation
-- API reference for conditional operations
-- Conflict resolution patterns
-
---- FILE: developer-resources/api-changelog.md
----
-title: "API changelog"
-description: "History of changes to the Task Management API across versions."
-tags: ["changelog", "versions"]
-categories: ["developer-resources"]
-importance: 3
-ai-generated: false
-navOrder: 1
----
-
-# API changelog
-
-This document tracks the changes and evolution of the Task Management API across different versions. Use this changelog to understand what has changed between versions and to guide your migration efforts.
-
-## Version history
-
-<!-- This section should outline the version history of the API -->
-
-### v1.0.0 (Current)
-
-<!-- Include details of the current version -->
-
-- Initial release of the Task Management API
-- Core functionality including user and task management
-- Status lifecycle for tasks
-- Pagination and sorting support
-- Complete REST API for managing resources
-
-## Upcoming changes
-
-<!-- This section should include planned changes -->
-
-- Future enhancements and expected changes
-- Deprecation notices for future versions
-- Beta features being considered
-
-## Migration guides
-
-<!-- This section should provide migration guidance -->
-
-- Guidelines for adopting the current version
-- Best practices for version migration
-- Handling breaking changes
-
-## Versioning policy
-
-<!-- This section should explain versioning approach -->
-
-- Explanation of semantic versioning (SemVer) usage
-- What constitutes a breaking change
-- API stability guarantees
-- Version support lifecycle
-
-## Change request process
-
-<!-- This section should explain how to request changes -->
-
-- How to provide feedback on the API
-- Process for requesting new features or changes
-- Bug reporting procedures
-- Community involvement in API evolution
-
-## Related resources
-
-<!-- This section should link to related resources -->
-
-- API reference documentation
-- Release notes
-- Migration tooling
-- Support resources for version-specific issues
-
---- FILE: developer-resources/postman-collection.md
----
-title: "Postman collection"
-description: "How to use the Task Management API Postman collection for testing and development."
-tags: ["tools", "postman"]
-categories: ["developer-resources"]
-importance: 4
-ai-generated: false
-navOrder: 2
----
-
-# Postman collection
-
-This document explains how to use the Task Management API Postman collection to explore, test, and develop with the API.
-
-## Getting started with the Postman collection
-
-<!-- This section should explain how to get the collection -->
-
-- Downloading the Postman collection file
-- Importing the collection into Postman
-- Setting up environments (development, testing, production)
-- Configuring authentication
-- Collection structure overview
-
-## Using environment variables
-
-<!-- This section should explain environment variables usage -->
-
-- Pre-configured environment variables
-- Setting API base URL
-- Managing authentication tokens
-- Using dynamic variables
-- Variable scopes (collection vs environment)
-
-## Running API requests
-
-<!-- This section should cover making requests -->
-
-- Making your first request
-- Understanding request components
-- Using path and query parameters
-- Request body formatting
-- Viewing and interpreting responses
-
-## Testing with the collection
-
-<!-- This section should cover testing capabilities -->
-
-- Running pre-configured tests
-- Understanding test scripts
-- Creating your own tests
-- Using test assertions
-- Collection runner for batch testing
-
-## Workflow examples
-
-<!-- This section should provide example workflows -->
-
-- Complete user management workflow
-- Task lifecycle workflow
-- Authentication workflow
-- Error scenario testing
-
-## Customizing the collection
-
-<!-- This section should explain customization options -->
-
-- Adding your own requests
-- Modifying existing requests
-- Creating new test scripts
-- Adding pre-request scripts
-- Using collection variables
-
-## Sharing and collaboration
-
-<!-- This section should cover collaboration features -->
-
-- Exporting and sharing the collection
-- Team collaboration on API testing
-- Version control for collections
-- Documentation generation
-
-## Troubleshooting
-
-<!-- This section should address common issues -->
-
-- Common issues and solutions
-- Debugging requests
-- Console logging
-- Error handling tips
-
-## Related resources
-
-<!-- This section should link to related resources -->
-
-- Postman documentation
-- API reference documentation
-- Authentication documentation
-- Testing best practices
+# Handling Data Consistency
+
+## Overview
+
+This document outlines strategies and patterns for maintaining data consistency when working with the Task Management API, with a focus on concurrency control, handling race conditions, and ensuring data integrity.
+
+## Content Outline
+
+### 1. Understanding Consistency Challenges
+- Common data consistency issues in distributed systems
+- Race conditions in task management
+- Optimistic vs. pessimistic concurrency control
+- Idempotency and its importance
+
+### 2. Handling Concurrent Updates
+- Using ETags and conditional requests
+- Implementing optimistic locking
+- Conflict detection and resolution strategies
+- Last-write-wins vs. merge-based approaches
+
+### 3. Transactional Operations
+- Lack of true transactions in REST APIs
+- Implementing compensating transactions
+- Designing for eventual consistency
+- Saga pattern for distributed transactions
+
+### 4. Maintaining Cache Consistency
+- Cache invalidation strategies
+- Time-to-live (TTL) considerations
+- Write-through and write-behind caching
+- Cache coherence in distributed environments
+
+### 5. Managing Task State Transitions
+- Enforcing valid state transitions
+- Handling conflicting state changes
+- Implementing state machines for tasks
+- Audit trails for state changes
+
+### 6. Handling Partial Failures
+- Recovery strategies for incomplete operations
+- Implementing retry logic
+- Circuit breakers and fallback mechanisms
+- Monitoring and alerting for consistency issues
+
+### 7. Testing for Consistency Issues
+- Simulating race conditions in tests
+- Load testing for concurrency issues
+- Chaos testing for resilience
+- Data consistency verification techniques
+
+## Suggested Content
+
+- **Sequence Diagrams**: Illustrating race conditions and their resolution
+- **Code Examples**: Implementation patterns for handling concurrency
+- **Decision Trees**: Choosing appropriate consistency strategies
+- **Architectural Diagrams**: System designs that promote data consistency
+
+## Related Topics
+- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md)
+- [Error Handling](/core-concepts/error-handling.md)
+- [Optimizing API Usage](/advanced/optimizing-api-usage.md)
 
 --- FILE: developer-resources/code-examples.md
 ---
@@ -6720,1859 +8484,129 @@ description: "Example code for common operations in various programming language
 tags: ["code", "examples"]
 categories: ["developer-resources"]
 importance: 7
+parent: "developer-resources"
+hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 3
+ai-generated-date: "2025-05-13"
+navOrder: "3"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "2025-05-13"
 ---
 
-# Code examples
+# Code Examples
 
-This document provides ready-to-use code examples for common operations with the Task Management API in various programming languages. You can use these examples as a starting point for your own implementation.
+This page provides code examples for common operations with the Task Management API in different programming languages. Use these examples as a starting point for integrating the API into your applications.
 
-## JavaScript/TypeScript examples
+## JavaScript / Node.js
 
-### Authentication and setup
+### Setup
+
+First, create a client for interacting with the API:
 
 ```javascript
-// API client setup with authentication
-class TaskApiClient {
-  constructor(baseUrl, token) {
-    this.baseUrl = baseUrl;
-    this.token = token;
-  }
+const axios = require('axios');
 
-  async request(endpoint, method = 'GET', data = null) {
-    const url = `${this.baseUrl}${endpoint}`;
-    
-    const options = {
-      method,
+class TaskManagementClient {
+  constructor(apiKey, baseUrl = 'https://api.taskmanagement.example.com/v1') {
+    this.apiKey = apiKey;
+    this.baseUrl = baseUrl;
+    this.client = axios.create({
+      baseURL: this.baseUrl,
       headers: {
-        'Authorization': `Bearer ${this.token}`,
+        'Authorization': `Bearer ${this.apiKey}`,
         'Content-Type': 'application/json'
       }
-    };
-    
-    if (data && (method === 'POST' || method === 'PATCH')) {
-      options.body = JSON.stringify(data);
-    }
-    
-    try {
-      const response = await fetch(url, options);
-      
-      if (response.status === 204) {
-        return true; // No content but successful
-      }
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(`API Error (${response.status}): ${errorData.message}`);
-      }
-      
-      return await response.json();
-    } catch (error) {
-      console.error('API Request Failed:', error);
-      throw error;
-    }
+    });
   }
-  
-  // User endpoints
-  async getUsers(page = 0, perPage = 20, sort = null) {
-    let endpoint = `/users?_page=${page}&_perPage=${perPage}`;
-    if (sort) endpoint += `&_sort=${sort}`;
-    const result = await this.request(endpoint);
-    return result.users;
+
+  // User operations
+  async getUsers(params = {}) {
+    const response = await this.client.get('/users', { params });
+    return response.data;
   }
-  
-  async getUserById(userId) {
-    return this.request(`/users/${userId}`);
+
+  async getUser(userId) {
+    const response = await this.client.get(`/users/${userId}`);
+    return response.data;
   }
-  
+
   async createUser(userData) {
-    return this.request('/users', 'POST', userData);
+    const response = await this.client.post('/users', userData);
+    return response.data;
   }
-  
+
   async updateUser(userId, userData) {
-    return this.request(`/users/${userId}`, 'PATCH', userData);
+    const response = await this.client.patch(`/users/${userId}`, userData);
+    return response.data;
   }
-  
+
   async deleteUser(userId) {
-    return this.request(`/users/${userId}`, 'DELETE');
+    await this.client.delete(`/users/${userId}`);
+    return true;
   }
-  
-  // Task endpoints
-  async getTasks(page = 0, perPage = 20, sort = null, status = null) {
-    let endpoint = `/tasks?_page=${page}&_perPage=${perPage}`;
-    if (sort) endpoint += `&_sort=${sort}`;
-    if (status) endpoint += `&taskStatus=${status}`;
-    const result = await this.request(endpoint);
-    return result.tasks;
+
+  // Task operations
+  async getTasks(params = {}) {
+    const response = await this.client.get('/tasks', { params });
+    return response.data;
   }
-  
-  async getTaskById(taskId) {
-    return this.request(`/tasks/${taskId}`);
+
+  async getTask(taskId) {
+    const response = await this.client.get(`/tasks/${taskId}`);
+    return response.data;
   }
-  
+
   async createTask(taskData) {
-    return this.request('/tasks', 'POST', taskData);
+    const response = await this.client.post('/tasks', taskData);
+    return response.data;
   }
-  
+
   async updateTask(taskId, taskData) {
-    return this.request(`/tasks/${taskId}`, 'PATCH', taskData);
+    const response = await this.client.patch(`/tasks/${taskId}`, taskData);
+    return response.data;
   }
-  
+
   async deleteTask(taskId) {
-    return this.request(`/tasks/${taskId}`, 'DELETE');
+    await this.client.delete(`/tasks/${taskId}`);
+    return true;
   }
 }
 
-// Usage example
-const apiClient = new TaskApiClient('http://localhost:3000', 'YOUR_TOKEN');
-```
+// Example usage
+const client = new TaskManagementClient('YOUR_API_KEY');
 
-### User management example
-
-```javascript
-// User management examples
-async function userManagementExample() {
+(async () => {
   try {
     // Create a user
-    const newUser = await apiClient.createUser({
-      firstName: "Jane",
-      lastName: "Smith",
-      contactEmail: "jane.smith@example.com"
+    const user = await client.createUser({
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      role: 'member'
     });
-    console.log('User created:', newUser);
+    console.log('User created:', user);
     
-    // Get all users
-    const users = await apiClient.getUsers();
-    console.log('All users:', users);
-    
-    // Update user
-    const updatedUser = await apiClient.updateUser(newUser.userId, {
-      contactEmail: "jane.updated@example.com"
+    // Create a task
+    const task = await client.createTask({
+      title: 'Complete API integration',
+      description: 'Finish integrating with the Task Management API',
+      priority: 'HIGH',
+      assigneeId: user.id,
+      dueDate: '2025-06-01T17:00:00Z'
     });
-    console.log('Updated user:', updatedUser);
-    
-    // Get specific user
-    const user = await apiClient.getUserById(newUser.userId);
-    console.log('User details:', user);
-    
-    // Delete user
-    await apiClient.deleteUser(newUser.userId);
-    console.log('User deleted successfully');
-    
-  } catch (error) {
-    console.error('Error in user management example:', error);
-  }
-}
-```
-
-### Task management example
-
-```javascript
-// Task management examples
-async function taskManagementExample() {
-  try {
-    // First, ensure we have a user
-    const user = await apiClient.createUser({
-      firstName: "Task",
-      lastName: "Owner",
-      contactEmail: "task.owner@example.com"
-    });
-    
-    // Create a new task
-    const newTask = await apiClient.createTask({
-      userId: user.userId,
-      taskTitle: "Example Task",
-      taskDescription: "This is an example task for the code example",
-      dueDate: "2025-12-31T23:59:59Z",
-      warningOffset: 1440 // 24 hours before due date
-    });
-    console.log('Task created:', newTask);
-    
-    // Get all tasks
-    const tasks = await apiClient.getTasks();
-    console.log('All tasks:', tasks);
-    
-    // Get tasks by status
-    const inProgressTasks = await apiClient.getTasks(0, 20, 'dueDate', 'IN_PROGRESS');
-    console.log('In-progress tasks:', inProgressTasks);
+    console.log('Task created:', task);
     
     // Update task status
-    const updatedTask = await apiClient.updateTask(newTask.taskId, {
-      taskStatus: "IN_PROGRESS"
+    const updatedTask = await client.updateTask(task.id, {
+      status: 'IN_PROGRESS'
     });
-    console.log('Task updated:', updatedTask);
+    console.log('Task updated:', updatedTask.status);
     
-    // Complete task
-    const completedTask = await apiClient.updateTask(newTask.taskId, {
-      taskStatus: "COMPLETED"
-    });
-    console.log('Task completed:', completedTask);
-    
-    // Delete task
-    await apiClient.deleteTask(newTask.taskId);
-    console.log('Task deleted successfully');
-    
-    // Clean up - delete user
-    await apiClient.deleteUser(user.userId);
-    
+    // List all tasks assigned to the user
+    const tasks = await client.getTasks({ assigneeId: user.id });
+    console.log('User tasks:', tasks.data.length);
   } catch (error) {
-    console.error('Error in task management example:', error);
+    console.error('Error:', error.response ? error.response.data : error.message);
   }
-}
-```
-
-### React component example
-
-```jsx
-// React component example
-import React, { useState, useEffect } from 'react';
-
-// Task List Component
-function TaskList() {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  
-  useEffect(() => {
-    async function fetchTasks() {
-      try {
-        setLoading(true);
-        // Assuming apiClient is available in the context or imported
-        const taskData = await apiClient.getTasks(0, 50, 'dueDate');
-        setTasks(taskData);
-        setError(null);
-      } catch (err) {
-        setError('Failed to load tasks: ' + err.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-    
-    fetchTasks();
-  }, []);
-  
-  const updateTaskStatus = async (taskId, newStatus) => {
-    try {
-      setLoading(true);
-      await apiClient.updateTask(taskId, { taskStatus: newStatus });
-      
-      // Update local state with the new status
-      setTasks(prevTasks => 
-        prevTasks.map(task => 
-          task.taskId === taskId ? { ...task, taskStatus: newStatus } : task
-        )
-      );
-      
-    } catch (err) {
-      setError('Failed to update task: ' + err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-  
-  if (loading && tasks.length === 0) return <div>Loading tasks...</div>;
-  if (error) return <div className="error">{error}</div>;
-  if (tasks.length === 0) return <div>No tasks found</div>;
-  
-  return (
-    <div className="task-list">
-      <h2>Tasks</h2>
-      {loading && <div className="loading-overlay">Updating...</div>}
-      
-      <ul>
-        {tasks.map(task => (
-          <li key={task.taskId} className={`task-item status-${task.taskStatus.toLowerCase()}`}>
-            <h3>{task.taskTitle}</h3>
-            <p>{task.taskDescription}</p>
-            <div className="task-meta">
-              <span>Due: {new Date(task.dueDate).toLocaleString()}</span>
-              <span>Status: {task.taskStatus}</span>
-            </div>
-            
-            <div className="task-actions">
-              {task.taskStatus === 'NOT_STARTED' && (
-                <button 
-                  onClick={() => updateTaskStatus(task.taskId, 'IN_PROGRESS')}
-                >
-                  Start Task
-                </button>
-              )}
-              
-              {task.taskStatus === 'IN_PROGRESS' && (
-                <button 
-                  onClick={() => updateTaskStatus(task.taskId, 'COMPLETED')}
-                >
-                  Complete Task
-                </button>
-              )}
-              
-              {task.taskStatus === 'IN_PROGRESS' && (
-                <button 
-                  onClick={() => updateTaskStatus(task.taskId, 'BLOCKED')}
-                >
-                  Block Task
-                </button>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-export default TaskList;
-```
-
-## Python examples
-
-### Client setup
-
-```python
-import requests
-import json
-from datetime import datetime
-
-class TaskApiClient:
-    def __init__(self, base_url, token):
-        self.base_url = base_url
-        self.token = token
-        self.headers = {
-            'Authorization': f'Bearer {token}',
-            'Content-Type': 'application/json'
-        }
-    
-    def request(self, endpoint, method='GET', data=None, params=None):
-        url = f"{self.base_url}{endpoint}"
-        
-        try:
-            if method == 'GET':
-                response = requests.get(url, headers=self.headers, params=params)
-            elif method == 'POST':
-                response = requests.post(url, headers=self.headers, json=data)
-            elif method == 'PATCH':
-                response = requests.patch(url, headers=self.headers, json=data)
-            elif method == 'DELETE':
-                response = requests.delete(url, headers=self.headers)
-            else:
-                raise ValueError(f"Unsupported HTTP method: {method}")
-            
-            if response.status_code == 204:
-                return True  # No content but successful
-            
-            if not response.ok:
-                error_data = response.json()
-                raise Exception(f"API Error ({response.status_code}): {error_data.get('message', 'Unknown error')}")
-            
-            return response.json()
-        
-        except requests.exceptions.RequestException as e:
-            print(f"Request failed: {e}")
-            raise
-    
-    # User endpoints
-    def get_users(self, page=0, per_page=20, sort=None):
-        params = {
-            '_page': page,
-            '_perPage': per_page
-        }
-        
-        if sort:
-            params['_sort'] = sort
-        
-        result = self.request('/users', params=params)
-        return result.get('users', [])
-    
-    def get_user_by_id(self, user_id):
-        return self.request(f'/users/{user_id}')
-    
-    def create_user(self, user_data):
-        return self.request('/users', method='POST', data=user_data)
-    
-    def update_user(self, user_id, user_data):
-        return self.request(f'/users/{user_id}', method='PATCH', data=user_data)
-    
-    def delete_user(self, user_id):
-        return self.request(f'/users/{user_id}', method='DELETE')
-    
-    # Task endpoints
-    def get_tasks(self, page=0, per_page=20, sort=None, status=None):
-        params = {
-            '_page': page,
-            '_perPage': per_page
-        }
-        
-        if sort:
-            params['_sort'] = sort
-        
-        if status:
-            params['taskStatus'] = status
-        
-        result = self.request('/tasks', params=params)
-        return result.get('tasks', [])
-    
-    def get_task_by_id(self, task_id):
-        return self.request(f'/tasks/{task_id}')
-    
-    def create_task(self, task_data):
-        return self.request('/tasks', method='POST', data=task_data)
-    
-    def update_task(self, task_id, task_data):
-        return self.request(f'/tasks/{task_id}', method='PATCH', data=task_data)
-    
-    def delete_task(self, task_id):
-        return self.request(f'/tasks/{task_id}', method='DELETE')
-
-# Usage example
-api_client = TaskApiClient('http://localhost:3000', 'YOUR_TOKEN')
-```
-
-### User management example
-
-```python
-# User management example
-def user_management_example():
-    try:
-        # Create a user
-        new_user = api_client.create_user({
-            "firstName": "John",
-            "lastName": "Python",
-            "contactEmail": "john.python@example.com"
-        })
-        print("User created:", new_user)
-        
-        # Get all users
-        users = api_client.get_users()
-        print(f"Found {len(users)} users:")
-        for user in users:
-            print(f"- {user['firstName']} {user['lastName']} ({user['contactEmail']})")
-        
-        # Update user
-        updated_user = api_client.update_user(new_user['userId'], {
-            "contactEmail": "john.updated@example.com"
-        })
-        print("User updated:", updated_user)
-        
-        # Get specific user
-        user = api_client.get_user_by_id(new_user['userId'])
-        print("User details:", user)
-        
-        # Delete user
-        api_client.delete_user(new_user['userId'])
-        print("User deleted successfully")
-        
-    except Exception as e:
-        print(f"Error in user management example: {e}")
-
-# Run the example
-if __name__ == "__main__":
-    user_management_example()
-```
-
-### Task management example
-
-```python
-# Task management example
-def task_management_example():
-    try:
-        # First, ensure we have a user
-        user = api_client.create_user({
-            "firstName": "Task",
-            "lastName": "Owner",
-            "contactEmail": "task.python@example.com"
-        })
-        
-        # Create a new task
-        new_task = api_client.create_task({
-            "userId": user['userId'],
-            "taskTitle": "Python Example Task",
-            "taskDescription": "This is an example task created with Python",
-            "dueDate": "2025-12-31T23:59:59Z",
-            "warningOffset": 1440  # 24 hours before due date
-        })
-        print("Task created:", new_task)
-        
-        # Get all tasks
-        tasks = api_client.get_tasks()
-        print(f"Found {len(tasks)} tasks")
-        
-        # Update task status
-        updated_task = api_client.update_task(new_task['taskId'], {
-            "taskStatus": "IN_PROGRESS"
-        })
-        print("Task updated:", updated_task)
-        
-        # Get tasks by status
-        in_progress_tasks = api_client.get_tasks(status="IN_PROGRESS")
-        print(f"Found {len(in_progress_tasks)} tasks in progress")
-        
-        # Complete task
-        completed_task = api_client.update_task(new_task['taskId'], {
-            "taskStatus": "COMPLETED"
-        })
-        print("Task completed:", completed_task)
-        
-        # Delete task
-        api_client.delete_task(new_task['taskId'])
-        print("Task deleted successfully")
-        
-        # Clean up - delete user
-        api_client.delete_user(user['userId'])
-        
-    except Exception as e:
-        print(f"Error in task management example: {e}")
-
-# Run the example
-if __name__ == "__main__":
-    task_management_example()
-```
-
-### CLI tool example
-
-```python
-import argparse
-import json
-from datetime import datetime, timedelta
-
-def create_cli():
-    parser = argparse.ArgumentParser(description='Task Management CLI')
-    subparsers = parser.add_subparsers(dest='command', help='Commands')
-    
-    # User commands
-    user_parser = subparsers.add_parser('user', help='User management')
-    user_subparsers = user_parser.add_subparsers(dest='subcommand', help='User commands')
-    
-    # User list
-    user_list = user_subparsers.add_parser('list', help='List users')
-    user_list.add_argument('--page', type=int, default=0, help='Page number')
-    user_list.add_argument('--per-page', type=int, default=20, help='Items per page')
-    user_list.add_argument('--sort', help='Sort field')
-    
-    # User get
-    user_get = user_subparsers.add_parser('get', help='Get user by ID')
-    user_get.add_argument('id', type=int, help='User ID')
-    
-    # User create
-    user_create = user_subparsers.add_parser('create', help='Create user')
-    user_create.add_argument('--first-name', required=True, help='First name')
-    user_create.add_argument('--last-name', required=True, help='Last name')
-    user_create.add_argument('--email', required=True, help='Email address')
-    
-    # User update
-    user_update = user_subparsers.add_parser('update', help='Update user')
-    user_update.add_argument('id', type=int, help='User ID')
-    user_update.add_argument('--first-name', help='First name')
-    user_update.add_argument('--last-name', help='Last name')
-    user_update.add_argument('--email', help='Email address')
-    
-    # User delete
-    user_delete = user_subparsers.add_parser('delete', help='Delete user')
-    user_delete.add_argument('id', type=int, help='User ID')
-    
-    # Task commands
-    task_parser = subparsers.add_parser('task', help='Task management')
-    task_subparsers = task_parser.add_subparsers(dest='subcommand', help='Task commands')
-    
-    # Task list
-    task_list = task_subparsers.add_parser('list', help='List tasks')
-    task_list.add_argument('--page', type=int, default=0, help='Page number')
-    task_list.add_argument('--per-page', type=int, default=20, help='Items per page')
-    task_list.add_argument('--sort', help='Sort field')
-    task_list.add_argument('--status', help='Filter by status')
-    
-    # Task get
-    task_get = task_subparsers.add_parser('get', help='Get task by ID')
-    task_get.add_argument('id', type=int, help='Task ID')
-    
-    # Task create
-    task_create = task_subparsers.add_parser('create', help='Create task')
-    task_create.add_argument('--user-id', type=int, required=True, help='User ID')
-    task_create.add_argument('--title', required=True, help='Task title')
-    task_create.add_argument('--description', help='Task description')
-    task_create.add_argument('--status', default='NOT_STARTED', help='Task status')
-    task_create.add_argument('--due-days', type=int, default=7, help='Days until due')
-    task_create.add_argument('--warning-offset', type=int, default=60, help='Warning offset in minutes')
-    
-    # Task update
-    task_update = task_subparsers.add_parser('update', help='Update task')
-    task_update.add_argument('id', type=int, help='Task ID')
-    task_update.add_argument('--title', help='Task title')
-    task_update.add_argument('--description', help='Task description')
-    task_update.add_argument('--status', help='Task status')
-    task_update.add_argument('--due-days', type=int, help='Days until due')
-    task_update.add_argument('--warning-offset', type=int, help='Warning offset in minutes')
-    
-    # Task delete
-    task_delete = task_subparsers.add_parser('delete', help='Delete task')
-    task_delete.add_argument('id', type=int, help='Task ID')
-    
-    return parser
-
-def handle_command(args):
-    # Initialize the API client
-    api_client = TaskApiClient('http://localhost:3000', 'YOUR_TOKEN')
-    
-    if args.command == 'user':
-        handle_user_command(args, api_client)
-    elif args.command == 'task':
-        handle_task_command(args, api_client)
-    else:
-        print("Invalid command. Use --help for usage information.")
-
-def handle_user_command(args, api_client):
-    if args.subcommand == 'list':
-        users = api_client.get_users(page=args.page, per_page=args.per_page, sort=args.sort)
-        print(json.dumps(users, indent=2))
-    
-    elif args.subcommand == 'get':
-        user = api_client.get_user_by_id(args.id)
-        print(json.dumps(user, indent=2))
-    
-    elif args.subcommand == 'create':
-        user_data = {
-            "firstName": args.first_name,
-            "lastName": args.last_name,
-            "contactEmail": args.email
-        }
-        user = api_client.create_user(user_data)
-        print(json.dumps(user, indent=2))
-    
-    elif args.subcommand == 'update':
-        user_data = {}
-        if args.first_name:
-            user_data["firstName"] = args.first_name
-        if args.last_name:
-            user_data["lastName"] = args.last_name
-        if args.email:
-            user_data["contactEmail"] = args.email
-        
-        if user_data:
-            user = api_client.update_user(args.id, user_data)
-            print(json.dumps(user, indent=2))
-        else:
-            print("No update data provided")
-    
-    elif args.subcommand == 'delete':
-        result = api_client.delete_user(args.id)
-        print("User deleted successfully" if result else "Failed to delete user")
-    
-    else:
-        print("Invalid user subcommand. Use 'user --help' for usage information.")
-
-def handle_task_command(args, api_client):
-    if args.subcommand == 'list':
-        tasks = api_client.get_tasks(page=args.page, per_page=args.per_page, 
-                                     sort=args.sort, status=args.status)
-        print(json.dumps(tasks, indent=2))
-    
-    elif args.subcommand == 'get':
-        task = api_client.get_task_by_id(args.id)
-        print(json.dumps(task, indent=2))
-    
-    elif args.subcommand == 'create':
-        # Calculate due date
-        due_date = (datetime.now() + timedelta(days=args.due_days)).isoformat()
-        
-        task_data = {
-            "userId": args.user_id,
-            "taskTitle": args.title,
-            "taskStatus": args.status,
-            "dueDate": due_date,
-            "warningOffset": args.warning_offset
-        }
-        
-        if args.description:
-            task_data["taskDescription"] = args.description
-        
-        task = api_client.create_task(task_data)
-        print(json.dumps(task, indent=2))
-    
-    elif args.subcommand == 'update':
-        task_data = {}
-        
-        if args.title:
-            task_data["taskTitle"] = args.title
-        
-        if args.description:
-            task_data["taskDescription"] = args.description
-        
-        if args.status:
-            task_data["taskStatus"] = args.status
-        
-        if args.due_days is not None:
-            due_date = (datetime.now() + timedelta(days=args.due_days)).isoformat()
-            task_data["dueDate"] = due_date
-        
-        if args.warning_offset is not None:
-            task_data["warningOffset"] = args.warning_offset
-        
-        if task_data:
-            task = api_client.update_task(args.id, task_data)
-            print(json.dumps(task, indent=2))
-        else:
-            print("No update data provided")
-    
-    elif args.subcommand == 'delete':
-        result = api_client.delete_task(args.id)
-        print("Task deleted successfully" if result else "Failed to delete task")
-    
-    else:
-        print("Invalid task subcommand. Use 'task --help' for usage information.")
-
-# Run the CLI
-if __name__ == "__main__":
-    parser = create_cli()
-    args = parser.parse_args()
-    
-    if args.command:
-        handle_command(args)
-    else:
-        parser.print_help()
-```
-
-## Java examples
-
-### Client setup
-
-```java
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
-public class TaskApiClient {
-    private final String baseUrl;
-    private final String token;
-    private final HttpClient httpClient;
-    private final ObjectMapper objectMapper;
-    
-    public TaskApiClient(String baseUrl, String token) {
-        this.baseUrl = baseUrl;
-        this.token = token;
-        this.httpClient = HttpClient.newBuilder()
-                .version(HttpClient.Version.HTTP_2)
-                .connectTimeout(Duration.ofSeconds(10))
-                .build();
-        this.objectMapper = new ObjectMapper();
-    }
-    
-    private HttpResponse<String> request(String endpoint, String method, String jsonBody) 
-            throws IOException, InterruptedException {
-        String url = baseUrl + endpoint;
-        
-        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Authorization", "Bearer " + token)
-                .header("Content-Type", "application/json");
-        
-        if (method.equals("GET")) {
-            requestBuilder.GET();
-        } else if (method.equals("DELETE")) {
-            requestBuilder.DELETE();
-        } else if (method.equals("POST") || method.equals("PATCH")) {
-            requestBuilder.method(method, HttpRequest.BodyPublishers.ofString(
-                    jsonBody != null ? jsonBody : "{}"));
-        }
-        
-        HttpRequest request = requestBuilder.build();
-        
-        return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-    }
-    
-    // Helper method to handle responses
-    private JsonNode handleResponse(HttpResponse<String> response) throws IOException {
-        if (response.statusCode() == 204) {
-            // No content - success
-            return null;
-        }
-        
-        if (response.statusCode() < 200 || response.statusCode() >= 300) {
-            JsonNode errorNode = objectMapper.readTree(response.body());
-            String errorMessage = errorNode.has("message") 
-                ? errorNode.get("message").asText() 
-                : "Unknown error";
-            throw new IOException("API Error (" + response.statusCode() + "): " + errorMessage);
-        }
-        
-        if (response.body() == null || response.body().isEmpty()) {
-            return null;
-        }
-        
-        return objectMapper.readTree(response.body());
-    }
-    
-    // User endpoints
-    public List<JsonNode> getUsers(int page, int perPage, String sort) 
-            throws IOException, InterruptedException {
-        String endpoint = String.format("/users?_page=%d&_perPage=%d", page, perPage);
-        if (sort != null && !sort.isEmpty()) {
-            endpoint += "&_sort=" + sort;
-        }
-        
-        HttpResponse<String> response = request(endpoint, "GET", null);
-        JsonNode rootNode = handleResponse(response);
-        
-        List<JsonNode> users = new ArrayList<>();
-        if (rootNode != null && rootNode.has("users")) {
-            JsonNode usersNode = rootNode.get("users");
-            if (usersNode.isArray()) {
-                for (JsonNode user : usersNode) {
-                    users.add(user);
-                }
-            }
-        }
-        
-        return users;
-    }
-    
-    public JsonNode getUserById(int userId) throws IOException, InterruptedException {
-        String endpoint = "/users/" + userId;
-        HttpResponse<String> response = request(endpoint, "GET", null);
-        return handleResponse(response);
-    }
-    
-    public JsonNode createUser(String firstName, String lastName, String contactEmail) 
-            throws IOException, InterruptedException {
-        ObjectNode userNode = objectMapper.createObjectNode();
-        userNode.put("firstName", firstName);
-        userNode.put("lastName", lastName);
-        userNode.put("contactEmail", contactEmail);
-        
-        String jsonBody = objectMapper.writeValueAsString(userNode);
-        HttpResponse<String> response = request("/users", "POST", jsonBody);
-        return handleResponse(response);
-    }
-    
-    public JsonNode updateUser(int userId, Map<String, String> updates) 
-            throws IOException, InterruptedException {
-        ObjectNode updateNode = objectMapper.createObjectNode();
-        for (Map.Entry<String, String> entry : updates.entrySet()) {
-            updateNode.put(entry.getKey(), entry.getValue());
-        }
-        
-        String jsonBody = objectMapper.writeValueAsString(updateNode);
-        HttpResponse<String> response = request("/users/" + userId, "PATCH", jsonBody);
-        return handleResponse(response);
-    }
-    
-    public boolean deleteUser(int userId) throws IOException, InterruptedException {
-        HttpResponse<String> response = request("/users/" + userId, "DELETE", null);
-        return response.statusCode() == 204;
-    }
-    
-    // Task endpoints
-    public List<JsonNode> getTasks(int page, int perPage, String sort, String status) 
-            throws IOException, InterruptedException {
-        String endpoint = String.format("/tasks?_page=%d&_perPage=%d", page, perPage);
-        if (sort != null && !sort.isEmpty()) {
-            endpoint += "&_sort=" + sort;
-        }
-        if (status != null && !status.isEmpty()) {
-            endpoint += "&taskStatus=" + status;
-        }
-        
-        HttpResponse<String> response = request(endpoint, "GET", null);
-        JsonNode rootNode = handleResponse(response);
-        
-        List<JsonNode> tasks = new ArrayList<>();
-        if (rootNode != null && rootNode.has("tasks")) {
-            JsonNode tasksNode = rootNode.get("tasks");
-            if (tasksNode.isArray()) {
-                for (JsonNode task : tasksNode) {
-                    tasks.add(task);
-                }
-            }
-        }
-        
-        return tasks;
-    }
-    
-    public JsonNode getTaskById(int taskId) throws IOException, InterruptedException {
-        String endpoint = "/tasks/" + taskId;
-        HttpResponse<String> response = request(endpoint, "GET", null);
-        return handleResponse(response);
-    }
-    
-    public JsonNode createTask(int userId, String title, String description, 
-                              String status, String dueDate, int warningOffset) 
-            throws IOException, InterruptedException {
-        ObjectNode taskNode = objectMapper.createObjectNode();
-        taskNode.put("userId", userId);
-        taskNode.put("taskTitle", title);
-        
-        if (description != null && !description.isEmpty()) {
-            taskNode.put("taskDescription", description);
-        }
-        
-        if (status != null && !status.isEmpty()) {
-            taskNode.put("taskStatus", status);
-        }
-        
-        taskNode.put("dueDate", dueDate);
-        taskNode.put("warningOffset", warningOffset);
-        
-        String jsonBody = objectMapper.writeValueAsString(taskNode);
-        HttpResponse<String> response = request("/tasks", "POST", jsonBody);
-        return handleResponse(response);
-    }
-    
-    public JsonNode updateTask(int taskId, Map<String, Object> updates) 
-            throws IOException, InterruptedException {
-        ObjectNode updateNode = objectMapper.createObjectNode();
-        for (Map.Entry<String, Object> entry : updates.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-            
-            if (value instanceof String) {
-                updateNode.put(key, (String) value);
-            } else if (value instanceof Integer) {
-                updateNode.put(key, (Integer) value);
-            } else if (value instanceof Boolean) {
-                updateNode.put(key, (Boolean) value);
-            }
-        }
-        
-        String jsonBody = objectMapper.writeValueAsString(updateNode);
-        HttpResponse<String> response = request("/tasks/" + taskId, "PATCH", jsonBody);
-        return handleResponse(response);
-    }
-    
-    public boolean deleteTask(int taskId) throws IOException, InterruptedException {
-        HttpResponse<String> response = request("/tasks/" + taskId, "DELETE", null);
-        return response.statusCode() == 204;
-    }
-}
-```
-
-### Usage example
-
-```java
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.fasterxml.jackson.databind.JsonNode;
-
-public class TaskApiExample {
-    public static void main(String[] args) {
-        TaskApiClient apiClient = new TaskApiClient("http://localhost:3000", "YOUR_TOKEN");
-        
-        try {
-            // User example
-            userExample(apiClient);
-            
-            // Task example
-            taskExample(apiClient);
-            
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    
-    private static void userExample(TaskApiClient apiClient) throws IOException, InterruptedException {
-        System.out.println("===== User Management Example =====");
-        
-        // Create a user
-        System.out.println("\nCreating a user...");
-        JsonNode newUser = apiClient.createUser("John", "Java", "john.java@example.com");
-        System.out.println("User created: " + newUser);
-        
-        int userId = newUser.get("userId").asInt();
-        
-        // Get all users
-        System.out.println("\nGetting all users...");
-        List<JsonNode> users = apiClient.getUsers(0, 10, null);
-        System.out.println("Found " + users.size() + " users");
-        
-        // Update user
-        System.out.println("\nUpdating user...");
-        Map<String, String> updates = new HashMap<>();
-        updates.put("contactEmail", "john.updated@example.com");
-        
-        JsonNode updatedUser = apiClient.updateUser(userId, updates);
-        System.out.println("User updated: " + updatedUser);
-        
-        // Get user by ID
-        System.out.println("\nGetting user by ID...");
-        JsonNode user = apiClient.getUserById(userId);
-        System.out.println("User details: " + user);
-        
-        // We'll delete the user after the task example
-    }
-    
-    private static void taskExample(TaskApiClient apiClient) throws IOException, InterruptedException {
-        System.out.println("\n===== Task Management Example =====");
-        
-        // Create a user for tasks
-        JsonNode user = apiClient.createUser("Task", "Owner", "task.java@example.com");
-        int userId = user.get("userId").asInt();
-        
-        // Calculate due date (7 days from now)
-        LocalDateTime dueDate = LocalDateTime.now().plusDays(7);
-        String dueDateStr = dueDate.format(DateTimeFormatter.ISO_DATE_TIME);
-        
-        // Create a task
-        System.out.println("\nCreating a task...");
-        JsonNode newTask = apiClient.createTask(
-            userId,
-            "Java Example Task",
-            "This is an example task created with Java",
-            "NOT_STARTED",
-            dueDateStr,
-            60 // 1 hour warning
-        );
-        System.out.println("Task created: " + newTask);
-        
-        int taskId = newTask.get("taskId").asInt();
-        
-        // Get all tasks
-        System.out.println("\nGetting all tasks...");
-        List<JsonNode> tasks = apiClient.getTasks(0, 10, null, null);
-        System.out.println("Found " + tasks.size() + " tasks");
-        
-        // Update task status
-        System.out.println("\nUpdating task status...");
-        Map<String, Object> taskUpdates = new HashMap<>();
-        taskUpdates.put("taskStatus", "IN_PROGRESS");
-        
-        JsonNode updatedTask = apiClient.updateTask(taskId, taskUpdates);
-        System.out.println("Task updated: " + updatedTask);
-        
-        // Get tasks by status
-        System.out.println("\nGetting tasks by status...");
-        List<JsonNode> inProgressTasks = apiClient.getTasks(0, 10, null, "IN_PROGRESS");
-        System.out.println("Found " + inProgressTasks.size() + " in-progress tasks");
-        
-        // Complete the task
-        System.out.println("\nCompleting the task...");
-        taskUpdates.clear();
-        taskUpdates.put("taskStatus", "COMPLETED");
-        
-        JsonNode completedTask = apiClient.updateTask(taskId, taskUpdates);
-        System.out.println("Task completed: " + completedTask);
-        
-        // Delete the task
-        System.out.println("\nDeleting the task...");
-        boolean taskDeleted = apiClient.deleteTask(taskId);
-        System.out.println("Task deleted: " + taskDeleted);
-        
-        // Delete the user
-        System.out.println("\nDeleting the user...");
-        boolean userDeleted = apiClient.deleteUser(userId);
-        System.out.println("User deleted: " + userDeleted);
-    }
-}
-```
-
-## Additional examples and resources
-
-For more examples and language implementations, refer to:
-
-- [Getting started with users](../tutorials/getting-started-with-users.html)
-- [Task management workflow](../tutorials/task-management-workflow.html)
-- [GitHub repository](https://github.com/example/task-management-api-examples) with additional examples
-
-### Testing examples
-
-The examples provided are for illustration purposes. In a production environment, consider implementing:
-
-- Proper error handling
-- Logging
-- Test coverage
-- Configuration management
-- Security best practices
-
-For guidance on these topics, see the following documentation:
-
-- [Error handling](../core-concepts/error-handling.html)
-- [Security best practices](../advanced/security-best-practices.html)
-- [Optimizing API usage](../advanced/optimizing-api-usage.html)
-
---- FILE: support/faq.md
----
-title: "Frequently asked questions"
-description: "Common questions and answers about using the Task Management API."
-tags: ["faq", "help"]
-categories: ["support"]
-importance: 4
-ai-generated: true
-ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 1
----
-
-# Frequently asked questions
-
-This document addresses common questions about using the Task Management API.
-
-## General questions
-
-### What is the Task Management API?
-
-The Task Management API is a RESTful service that allows applications to create, retrieve, update, and delete tasks and users. It provides a complete solution for implementing task management functionality in your applications.
-
-### What can I build with the Task Management API?
-
-The API can be used to build a variety of applications, including:
-
-- Personal to-do list applications
-- Team task management tools
-- Project management systems
-- Reminder and calendar applications
-- Productivity trackers
-- Any application that needs task management functionality
-
-### What technologies does the API use?
-
-The Task Management API is built on REST principles using standard HTTP methods and JSON data formats. It can be accessed from any programming language or platform that supports HTTP requests.
-
-## Authentication and security
-
-### How do I authenticate with the API?
-
-The API uses bearer token authentication. Include the token in the `Authorization` header of your requests:
-
-```
-Authorization: Bearer YOUR_TOKEN
-```
-
-For more details, see the [Authentication](../getting-started/authentication.html) documentation.
-
-### How do I get an authentication token?
-
-Authentication tokens are managed externally to the API. Contact your API administrator or follow your organization's process for requesting API access.
-
-### How long are authentication tokens valid?
-
-Token lifetime depends on your organization's security policy. Contact your API administrator for information about token expiration and renewal.
-
-### Is the API secure?
-
-Yes, the API implements several security measures:
-
-- HTTPS encryption for all communication
-- Token-based authentication
-- Rate limiting to prevent abuse
-- Input validation to protect against malicious data
-
-For more information, see the [Security best practices](../advanced/security-best-practices.html) document.
-
-## Users and tasks
-
-### How do I create a user?
-
-Send a POST request to the `/users` endpoint with the required user information:
-
-```http
-POST /users HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-
-{
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactEmail": "john.doe@example.com"
-}
-```
-
-For more details, see the [Create a user](../api-reference/create-user.html) documentation.
-
-### How do I create a task?
-
-First, you need to have a user in the system. Then, send a POST request to the `/tasks` endpoint with the task details:
-
-```http
-POST /tasks HTTP/1.1
-Host: localhost:3000
-Authorization: Bearer YOUR_TOKEN
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "taskTitle": "Complete API documentation",
-  "taskDescription": "Finish the task management API documentation",
-  "dueDate": "2025-06-01T12:00:00-05:00",
-  "warningOffset": 60
-}
-```
-
-For more details, see the [Create a task](../api-reference/create-task.html) documentation.
-
-### What task statuses are available?
-
-The API supports the following task statuses:
-
-- `NOT_STARTED` - Default status for new tasks
-- `IN_PROGRESS` - Task is actively being worked on
-- `BLOCKED` - Task cannot proceed due to an obstacle
-- `DEFERRED` - Task is postponed until a later time
-- `COMPLETED` - Task has been finished successfully
-- `CANCELLED` - Task has been abandoned
-
-For more information, see the [Task status lifecycle](../core-concepts/task-status-lifecycle.html) document.
-
-### Can I assign a task to multiple users?
-
-No, each task can only be assigned to one user at a time. If you need to track tasks for multiple users, you would need to create separate tasks for each user.
-
-### How do task reminders work?
-
-Reminders are determined by the `dueDate` and `warningOffset` properties:
-
-- `dueDate`: When the task is due
-- `warningOffset`: Minutes before the due date to send a reminder
-
-The reminder time is calculated as: `Reminder time = dueDate - warningOffset minutes`
-
-The API does not send reminders directly; your application is responsible for checking tasks and generating notifications. For details, see the [Implementing reminders](../tutorials/implementing-reminders.html) tutorial.
-
-## API functionality
-
-### Does the API support filtering tasks?
-
-Yes, you can filter tasks by their status using the `taskStatus` query parameter:
-
-```
-GET /tasks?taskStatus=IN_PROGRESS
-```
-
-### Does the API support pagination?
-
-Yes, the API supports pagination with the `_page` and `_perPage` query parameters:
-
-```
-GET /tasks?_page=0&_perPage=10
-```
-
-The `_page` parameter is zero-indexed (the first page is 0), and `_perPage` specifies how many items to return per page (maximum 100).
-
-For more details, see the [Pagination](../core-concepts/pagination.html) documentation.
-
-### Can I sort the results?
-
-Yes, you can sort results using the `_sort` query parameter:
-
-```
-GET /tasks?_sort=dueDate
-```
-
-To sort in descending order, prefix the field name with a minus sign:
-
-```
-GET /tasks?_sort=-dueDate
-```
-
-For more details, see the [Sorting](../core-concepts/sorting.html) documentation.
-
-### Are there limits on API usage?
-
-Yes, the API implements rate limiting to ensure fair usage. For details, see the [Rate limiting](../getting-started/rate-limiting.html) documentation.
-
-### Does the API support bulk operations?
-
-The current version does not support bulk create, update, or delete operations. You need to make individual API calls for each resource.
-
-## Error handling
-
-### What HTTP status codes does the API use?
-
-The API uses standard HTTP status codes:
-
-- `200 OK`: Successful GET or PATCH request
-- `201 Created`: Successful POST request
-- `204 No Content`: Successful DELETE request
-- `400 Bad Request`: Invalid request format or validation error
-- `401 Unauthorized`: Missing or invalid authentication
-- `403 Forbidden`: Authentication succeeded but permission denied
-- `404 Not Found`: Resource not found
-- `429 Too Many Requests`: Rate limit exceeded
-- `500 Internal Server Error`: Server-side error
-
-### How do error responses look?
-
-Error responses include a standardized JSON structure:
-
-```json
-{
-  "code": "INVALID_FIELD",
-  "message": "The field `contactEmail` must be a valid email address",
-  "details": [
-    {
-      "field": "contactEmail",
-      "reason": "Invalid format",
-      "location": "body"
-    }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-For more details, see the [Error responses](../api-reference/error-responses.html) documentation.
-
-### How should I handle rate limiting?
-
-When you exceed the rate limit, the API returns a `429 Too Many Requests` status code with a `Retry-After` header indicating how many seconds to wait before retrying. Implement exponential backoff in your application to handle rate limits gracefully.
-
-## Integration and development
-
-### What programming languages can I use with the API?
-
-You can use any programming language that supports HTTP requests, including but not limited to:
-
-- JavaScript/TypeScript
-- Python
-- Java
-- C#
-- Ruby
-- Go
-- PHP
-
-For code examples in various languages, see the [Code examples](../developer-resources/code-examples.html) document.
-
-### Is there a client library for the API?
-
-The API does not provide official client libraries, but you can use standard HTTP client libraries in your preferred language. See the [Code examples](../developer-resources/code-examples.html) document for implementation examples.
-
-### How do I test the API?
-
-You can test the API using tools like:
-
-- Postman
-- cURL
-- API testing frameworks (e.g., REST Assured, Supertest)
-- Custom scripts in your preferred language
-
-We provide a [Postman collection](../developer-resources/postman-collection.html) to help you get started.
-
-### Is there a sandbox environment for testing?
-
-Contact your API administrator for information about testing environments.
-
-## Troubleshooting
-
-### Why am I getting authentication errors?
-
-Authentication errors (`401 Unauthorized`) can occur for several reasons:
-
-1. Missing the `Authorization` header
-2. Incorrect format of the authorization header
-3. Invalid or expired token
-4. Token not prefixed with "Bearer "
-
-Make sure you're including the token correctly:
-
-```
-Authorization: Bearer YOUR_TOKEN
-```
-
-### Why am I getting "Resource not found" errors?
-
-This error (`404 Not Found`) occurs when the requested resource doesn't exist. Common causes:
-
-1. Incorrect URL or endpoint
-2. Incorrect resource ID
-3. The resource has been deleted
-
-Double-check the resource ID and make sure it exists in the system.
-
-### How do I resolve validation errors?
-
-Validation errors (`400 Bad Request`) occur when the request data doesn't meet the API's requirements. The error response includes details about what's wrong:
-
-```json
-{
-  "code": "INVALID_FIELD",
-  "message": "The field `warningOffset` must be between 0 and 64000",
-  "details": [
-    {
-      "field": "warningOffset",
-      "reason": "Invalid range",
-      "location": "body"
-    }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-Check the error details and modify your request accordingly.
-
-For more troubleshooting help, see the [Troubleshooting](troubleshooting.html) document.
-
-## Additional help
-
-If you didn't find the answer to your question, please:
-
-1. Check the [API reference](../api-reference/error-responses.html) for detailed documentation
-2. Consult the [Troubleshooting](troubleshooting.html) guide
-3. Contact support using the resources listed in [Support resources](support-resources.html)
-
---- FILE: support/troubleshooting.md
----
-title: "Troubleshooting"
-description: "Solutions to common issues encountered when using the Task Management API."
-tags: ["troubleshooting", "errors"]
-categories: ["support"]
-importance: 5
-ai-generated: true
-ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "May 12, 2025"
-navOrder: 2
----
-
-# Troubleshooting
-
-This document provides solutions to common issues you might encounter when using the Task Management API. It includes step-by-step diagnostics and recommended actions for resolving problems.
-
-## Authentication issues
-
-### Issue: 401 Unauthorized responses
-
-**Symptom**: The API returns a `401 Unauthorized` status code with an error message like:
-
-```json
-{
-  "code": "UNAUTHORIZED",
-  "message": "Authentication is required to access this resource",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-**Possible causes and solutions**:
-
-1. **Missing authentication header**
-   - Ensure you're including the `Authorization` header in your request
-   - Example: `Authorization: Bearer YOUR_TOKEN`
-
-2. **Incorrect header format**
-   - Verify the header format includes "Bearer " followed by your token
-   - Check for typos in the word "Bearer" or extra spaces
-
-3. **Invalid or expired token**
-   - Request a new token if yours may have expired
-   - Verify the token is valid and correctly copied
-
-4. **Network issues**
-   - Check that the authentication header isn't being stripped by a proxy or middleware
-
-**Code example for correct authentication**:
-
-```javascript
-// JavaScript example
-fetch('http://localhost:3000/tasks', {
-  method: 'GET',
-  headers: {
-    'Authorization': 'Bearer YOUR_TOKEN'
-  }
-})
-.then(response => {
-  if (!response.ok) {
-    throw new Error(`Error ${response.status}: ${response.statusText}`);
-  }
-  return response.json();
-})
-.then(data => console.log(data))
-.catch(error => console.error('Error:', error));
-```
-
-## Resource not found errors
-
-### Issue: 404 Not Found responses
-
-**Symptom**: The API returns a `404 Not Found` status code with an error message like:
-
-```json
-{
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "User with ID 123 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-**Possible causes and solutions**:
-
-1. **Incorrect resource ID**
-   - Double-check the ID in your request URL
-   - Verify the resource exists using a GET request to the collection endpoint
-
-2. **Resource has been deleted**
-   - If the resource previously existed, it may have been deleted
-   - Check if your application has cached IDs that are no longer valid
-
-3. **Incorrect URL or endpoint**
-   - Verify the endpoint path is correct (e.g., `/users/{userId}` or `/tasks/{taskId}`)
-   - Check for typos in the URL
-
-4. **Base URL issues**
-   - Ensure the base URL is correct (e.g., `http://localhost:3000`)
-
-**Diagnostic steps**:
-
-1. Try retrieving all resources to see what's available:
-   ```
-   GET /users
-   GET /tasks
-   ```
-
-2. Check for appropriate IDs in the response and use them in your requests
-
-## Validation errors
-
-### Issue: 400 Bad Request responses
-
-**Symptom**: The API returns a `400 Bad Request` status code with an error message like:
-
-```json
-{
-  "code": "INVALID_FIELD",
-  "message": "The field `contactEmail` must be a valid email address",
-  "details": [
-    {
-      "field": "contactEmail",
-      "reason": "Invalid format",
-      "location": "body"
-    }
-  ],
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-**Possible causes and solutions**:
-
-1. **Invalid field values**
-   - Check the error details to identify which field has invalid values
-   - Correct the field value according to the validation requirements
-
-2. **Missing required fields**
-   - Ensure all required fields are included in your request
-   - Reference the API documentation for each endpoint's required fields
-
-3. **Incorrect data types**
-   - Verify the data types match the expected types (e.g., integer for `userId`)
-   - Check for string vs. number issues, especially in JSON formatting
-
-4. **Value range violations**
-   - Some fields have allowed ranges (e.g., `warningOffset` must be between 0 and 64000)
-   - Adjust values to fit within allowed ranges
-
-**Common validation requirements**:
-
-| Field | Validation Requirements |
-|-------|--------------------------|
-| `firstName`, `lastName` | 1-100 characters |
-| `contactEmail` | Valid email format, unique |
-| `taskTitle` | 1-80 characters |
-| `taskDescription` | 1-255 characters |
-| `taskStatus` | One of: `NOT_STARTED`, `IN_PROGRESS`, `BLOCKED`, `DEFERRED`, `COMPLETED`, `CANCELLED` |
-| `dueDate` | ISO 8601 format (e.g., `2025-05-15T17:00:00-05:00`) |
-| `warningOffset` | Integer between 0 and 64000 |
-
-## Rate limiting issues
-
-### Issue: 429 Too Many Requests responses
-
-**Symptom**: The API returns a `429 Too Many Requests` status code with an error message like:
-
-```json
-{
-  "code": "RATE_LIMIT_EXCEEDED",
-  "message": "Rate limit exceeded. Try again in 30 seconds",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-**Possible causes and solutions**:
-
-1. **Exceeded request limit**
-   - Reduce the frequency of requests to the API
-   - Implement caching to avoid unnecessary requests
-
-2. **Inefficient implementation**
-   - Review your code for loops or patterns that might cause excessive API calls
-   - Batch operations where possible
-
-3. **Missing exponential backoff**
-   - Implement exponential backoff when retrying requests
-   - Use the `Retry-After` header to determine wait time
-
-**Sample implementation with exponential backoff**:
-
-```javascript
-async function fetchWithBackoff(url, options, maxRetries = 3) {
-  let retries = 0;
-  
-  while (true) {
-    try {
-      const response = await fetch(url, options);
-      
-      if (response.status !== 429) {
-        return response;
-      }
-      
-      if (retries >= maxRetries) {
-        return response; // Give up after max retries
-      }
-      
-      // Get retry-after header or use exponential backoff
-      const retryAfter = response.headers.get('Retry-After') || 
-                         Math.pow(2, retries) * 1000;
-                         
-      console.log(`Rate limited. Retrying in ${retryAfter} ms...`);
-      
-      // Wait before retrying
-      await new Promise(resolve => setTimeout(resolve, retryAfter));
-      
-      retries++;
-    } catch (error) {
-      throw error;
-    }
-  }
-}
-```
-
-## Data consistency issues
-
-### Issue: Unexpected task or user data
-
-**Symptom**: Resource data doesn't match expectations or appears inconsistent.
-
-**Possible causes and solutions**:
-
-1. **Race conditions**
-   - Implement proper concurrency handling for updates
-   - Consider implementing optimistic concurrency control
-
-2. **Cached data**
-   - Ensure your application is not using outdated cached data
-   - Implement proper cache invalidation when resources change
-
-3. **Multiple clients updating same resource**
-   - Consider implementing a locking mechanism
-   - Use optimistic updates with proper error handling
-
-**Best practices**:
-
-- Always fetch the latest resource before updating it
-- Implement retry logic for failed updates
-- Use proper error handling to recover from conflicts
-
-For more information, see [Handling data consistency](../advanced/handling-data-consistency.html).
-
-## Connection and timeout issues
-
-### Issue: Request timeouts or connection errors
-
-**Symptom**: Requests fail with network timeouts or connection errors.
-
-**Possible causes and solutions**:
-
-1. **Server is unavailable**
-   - Check if the API server is running
-   - Verify network connectivity to the server
-
-2. **Request timeout too short**
-   - Increase the timeout for your HTTP client
-   - Implement retry logic for timeout errors
-
-3. **Network issues**
-   - Check for firewall or proxy settings that might block requests
-   - Verify VPN connections if using a private network
-
-4. **Server overload**
-   - Implement exponential backoff and retry logic
-   - Consider reducing request frequency
-
-**Sample implementation with timeout and retry**:
-
-```javascript
-async function fetchWithTimeout(url, options, timeout = 10000) {
-  // Create abort controller for timeout
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeout);
-  
-  try {
-    const response = await fetch(url, {
-      ...options,
-      signal: controller.signal
-    });
-    
-    clearTimeout(timeoutId);
-    return response;
-  } catch (error) {
-    clearTimeout(timeoutId);
-    if (error.name === 'AbortError') {
-      throw new Error('Request timed out');
-    }
-    throw error;
-  }
-}
-```
-
-## Common error codes and solutions
-
-| Error Code | Description | Common Solutions |
-|------------|-------------|------------------|
-| `UNAUTHORIZED` | Authentication required | Provide or refresh authentication token |
-| `FORBIDDEN` | Permission denied | Check user permissions and access rights |
-| `RESOURCE_NOT_FOUND` | Resource doesn't exist | Verify resource ID and existence |
-| `INVALID_FIELD` | Field validation failed | Fix the specified field according to validation rules |
-| `MISSING_REQUIRED_FIELD` | Required field is missing | Add the missing field to the request |
-| `DUPLICATE_EMAIL` | Email already in use | Use a different email address |
-| `INVALID_USER_ID` | Referenced user doesn't exist | Create the user first or use a valid user ID |
-| `RATE_LIMIT_EXCEEDED` | Too many requests | Implement rate limiting handling and backoff |
-| `SERVER_ERROR` | Server-side error | Try again later or contact support |
-
-## Debugging techniques
-
-### Request and response logging
-
-Implement logging for API requests and responses to help diagnose issues:
-
-```javascript
-async function loggedFetch(url, options) {
-  console.log(`API Request: ${options.method} ${url}`, {
-    headers: options.headers,
-    body: options.body
-  });
-  
-  try {
-    const startTime = Date.now();
-    const response = await fetch(url, options);
-    const duration = Date.now() - startTime;
-    
-    const responseData = response.status !== 204 ? 
-                         await response.clone().json() : 
-                         null;
-    
-    console.log(`API Response (${duration}ms): ${response.status}`, responseData);
-    
-    return response;
-  } catch (error) {
-    console.error(`API Error: ${error.message}`);
-    throw error;
-  }
-}
-```
-
-### Using request IDs for support
-
-Every error response includes a `requestId` that can help with troubleshooting:
-
-```json
-{
-  "code": "RESOURCE_NOT_FOUND",
-  "message": "User with ID 123 could not be found",
-  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
-}
-```
-
-When contacting support, always include:
-- The complete error response, including the `requestId`
-- The request details (endpoint, method, headers, body)
-- Steps to reproduce the issue
-
-## Still having issues?
-
-If you're still experiencing problems after trying the troubleshooting steps above:
-
-1. Check the [API reference](../api-reference/error-responses.html) for detailed documentation on error responses
-2. Review the [FAQ](faq.html) for answers to common questions
-3. Refer to [Support resources](support-resources.html) for additional help options
-
---- FILE: support/support-resources.md
----
-title: "Support resources"
-description: "How to get help with using the Task Management API, including contact information and community resources."
-tags: ["support", "help"]
-categories: ["support"]
-importance: 3
-ai-generated: false
-navOrder: 3
----
-
-# Support resources
-
-This document provides information on how to get help with the Task Management API, including contact information, community resources, and self-service options.
-
-## Getting help
-
-<!-- This section should outline how to get help with the API -->
-
-- Support contact information
-- Available support channels 
-- Support hours and response times
-- Support request process
-- Issue escalation procedures
-- Severity level definitions
-
-## Community resources
-
-<!-- This section should list community resources -->
-
-- Community forums
-- Developer communities
-- Social media channels
-- User groups
-- Open source contributions
-- Community events
-
-## Self-service resources
-
-<!-- This section should cover self-service options -->
-
-- Documentation overview
-- API reference
-- Tutorials and guides
-- Knowledge base
-- Video tutorials
-- Sample applications
-- Frequently asked questions
-
-## Reporting issues
-
-<!-- This section should explain how to report issues -->
-
-- Bug reporting process
-- Feature request submission
-- Security vulnerability reporting
-- Issue tracking system
-- Required information for bug reports
-- Issue statuses and lifecycle
-
-## Service status
-
-<!-- This section should cover service status information -->
-
-- Status page
-- Scheduled maintenance
-- Incident reports
-- Service level agreements
-- Uptime guarantees
-- Notification options for service interruptions
-
-## Related resources
-
-<!-- This section should link to related documentation -->
-
-- API changelog
-- Release notes
-- Roadmap
-- Terms of service
-- Support policies
+})();
