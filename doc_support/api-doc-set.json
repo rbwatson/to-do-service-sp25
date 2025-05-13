@@ -119,17 +119,12 @@
                             "type": "string",
                             "default": "$sectionTopic"
                         },
-                        "hasChildren": {
-                            "$comment": "Set to true if the topic has child topics.", 
+                        "has_toc": {
+                            "$comment": "Set to true if the topic has child topics that you want to display in a TOC.", 
                             "type": "boolean",
                             "default": false
                         },
-                        "hasToc": {
-                            "$comment": "Set to true if the topic has child topics.", 
-                            "type": "boolean",
-                            "default": false
-                        },
-                        "navOrder": {
+                        "nav_order": {
                             "$comment": "When generating definitions, replace a value of $pos with the current position in the array, starting from 1.", 
                             "type": "string",
                             "default": "$pos"

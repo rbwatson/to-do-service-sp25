@@ -29,7 +29,7 @@ global:
 
     Formatting requirements:
     - Place topics from content:topics: in the root documentation directory.
-    - Replace navOrder: "$pos" with the 1-based index in the array.
+    - Replace nav_order: "$pos" with the 1-based index in the array.
     - Replace $today with the current date.
 
   aiModel: "Claude 3.7 Sonnet"
@@ -115,7 +115,7 @@ content:
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "1"
+        nav_order: "1"
 
     - filename: "getting-started.md"
       frontMatter:
@@ -124,12 +124,11 @@ content:
         tags: ["introduction", "overview", "getting-started"]
         categories: ["getting-started"]
         importance: 10
-        hasChildren: true
-        hasToc: false
+        has_toc: false
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "2"
+        nav_order: "2"
         
     - filename: "core-concepts.md"
       frontMatter:
@@ -138,12 +137,11 @@ content:
         tags: ["concepts", "overview"]
         categories: ["core-concepts"]
         importance: 9
-        hasChildren: true
-        hasToc: false
+        has_toc: false
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "3"
+        nav_order: "3"
         
     - filename: "resources.md"
       frontMatter:
@@ -152,12 +150,11 @@ content:
         tags: ["resources", "overview"]
         categories: ["resources"]
         importance: 9
-        hasChildren: true
-        hasToc: false
+        has_toc: false
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "4"
+        nav_order: "4"
         
     - filename: "api-reference.md"
       frontMatter:
@@ -166,12 +163,11 @@ content:
         tags: ["reference", "endpoints", "api"]
         categories: ["api-reference"]
         importance: 8
-        hasChildren: true
-        hasToc: false
+        has_toc: false
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "5"
+        nav_order: "5"
         
     - filename: "tutorials.md"
       frontMatter:
@@ -180,12 +176,11 @@ content:
         tags: ["tutorials", "guides", "how-to"]
         categories: ["tutorials"]
         importance: 7
-        hasChildren: true
-        hasToc: false
+        has_toc: false
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "6"
+        nav_order: "6"
         
     - filename: "advanced.md"
       frontMatter:
@@ -194,12 +189,11 @@ content:
         tags: ["advanced", "optimization", "security"]
         categories: ["advanced"]
         importance: 6
-        hasChildren: true
-        hasToc: false
+        has_toc: false
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "7"
+        nav_order: "7"
         
     - filename: "developer-resources.md"
       frontMatter:
@@ -208,12 +202,11 @@ content:
         tags: ["resources", "developers", "tools"]
         categories: ["developer-resources"]
         importance: 5
-        hasChildren: true
-        hasToc: false
+        has_toc: false
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "8"
+        nav_order: "8"
         
     - filename: "support.md"
       frontMatter:
@@ -222,12 +215,11 @@ content:
         tags: ["support", "faq", "help", "troubleshooting"]
         categories: ["support"]
         importance: 4
-        hasChildren: true
-        hasToc: false
+        has_toc: false
         ai-generated: true
         ai-generated-by: "Claude 3.7 Sonnet"
         ai-generated-date: "$today"
-        navOrder: "9"
+        nav_order: "9"
 
   sections:
     - title: "Getting started"
@@ -244,11 +236,10 @@ content:
             categories: ["getting-started"]
             importance: 10
             parent: "getting-started"
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "quickstart.md"
           frontMatter:
@@ -258,11 +249,10 @@ content:
             categories: ["getting-started"]
             importance: 9
             parent: "getting-started"
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "authentication.md"
           frontMatter:
@@ -272,11 +262,10 @@ content:
             categories: ["getting-started"]
             importance: 8
             parent: "getting-started"
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "rate-limiting.md"
           frontMatter:
@@ -286,9 +275,8 @@ content:
             categories: ["getting-started"]
             importance: 7
             parent: "getting-started"
-            hasChildren: false
             ai-generated: false
-            navOrder: "$pos"
+            nav_order: "$pos"
             
     - title: "Core concepts"
       directory: "core-concepts"
@@ -304,11 +292,10 @@ content:
             categories: ["core-concepts"]
             importance: 9
             parent: "core-concepts"
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "pagination.md"
           frontMatter:
@@ -318,11 +305,10 @@ content:
             categories: ["core-concepts"]
             importance: 7
             parent: "core-concepts"
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "sorting.md"
           frontMatter:
@@ -332,11 +318,10 @@ content:
             categories: ["core-concepts"]
             importance: 6
             parent: "core-concepts"
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "error-handling.md"
           frontMatter:
@@ -346,11 +331,10 @@ content:
             categories: ["core-concepts"]
             importance: 8
             parent: "core-concepts"
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "task-status-lifecycle.md"
           frontMatter:
@@ -360,11 +344,10 @@ content:
             categories: ["core-concepts"]
             importance: 7
             parent: "core-concepts"
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
     
     - title: "Resources"
       directory: "resources"
@@ -380,13 +363,12 @@ content:
             categories: ["resources"]
             importance: 9
             parent: "resources"
-            hasChildren: false
             related_pages: ["get-all-users", "create-user", "get-user-by-id", "update-user", "delete-user"]
             api_endpoints: ["/users", "/users/{userId}"]
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "task-resource.md"
           frontMatter:
@@ -396,13 +378,12 @@ content:
             categories: ["resources"]
             importance: 9
             parent: "resources"
-            hasChildren: false
             related_pages: ["get-all-tasks", "create-task", "get-task-by-id", "update-task", "delete-task"]
             api_endpoints: ["/tasks", "/tasks/{taskId}"]
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
     - title: "API reference"
       directory: "api-reference"
@@ -431,11 +412,10 @@ content:
             categories: ["api-reference"]
             importance: 8
             parent: "api-reference" 
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "get-all-users.md"
           frontMatter:
@@ -447,11 +427,10 @@ content:
             api_endpoints: ["/users"]
             related_pages: ["user-resource", "pagination", "sorting"]
             parent: "api-reference" 
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "create-user.md"
           frontMatter:
@@ -463,11 +442,10 @@ content:
             api_endpoints: ["/users"]
             related_pages: ["user-resource"]
             parent: "api-reference" 
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "get-user-by-id.md"
           frontMatter:
@@ -479,11 +457,10 @@ content:
             api_endpoints: ["/users/{userId}"]
             related_pages: ["user-resource"]
             parent: "api-reference" 
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "update-user.md"
           frontMatter:
@@ -495,11 +472,10 @@ content:
             api_endpoints: ["/users/{userId}"]
             related_pages: ["user-resource"]
             parent: "api-reference" 
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "delete-user.md"
           frontMatter:
@@ -511,11 +487,10 @@ content:
             api_endpoints: ["/users/{userId}"]
             related_pages: ["user-resource"]
             parent: "api-reference" 
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "get-all-tasks.md"
           frontMatter:
@@ -527,11 +502,10 @@ content:
             api_endpoints: ["/tasks"]
             related_pages: ["task-resource", "pagination", "sorting", "task-status-lifecycle"]
             parent: "api-reference" 
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "create-task.md"
           frontMatter:
@@ -543,11 +517,10 @@ content:
             api_endpoints: ["/tasks"]
             related_pages: ["task-resource", "task-status-lifecycle"]
             parent: "api-reference" 
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "get-task-by-id.md"
           frontMatter:
@@ -559,11 +532,10 @@ content:
             api_endpoints: ["/tasks/{taskId}"]
             related_pages: ["task-resource"]
             parent: "api-reference" 
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "update-task.md"
           frontMatter:
@@ -575,11 +547,10 @@ content:
             api_endpoints: ["/tasks/{taskId}"]
             related_pages: ["task-resource", "task-status-lifecycle"]
             parent: "api-reference" 
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "delete-task.md"
           frontMatter:
@@ -591,11 +562,10 @@ content:
             api_endpoints: ["/tasks/{taskId}"]
             related_pages: ["task-resource"]
             parent: "api-reference" 
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
     - title: "Tutorials & guides"
       directory: "tutorials"
@@ -611,11 +581,10 @@ content:
             categories: ["tutorials"]
             importance: 6
             parent: "tutorials" 
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "task-management-workflow.md"
           frontMatter:
@@ -625,11 +594,10 @@ content:
             categories: ["tutorials"]
             importance: 6
             parent: "tutorials" 
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "implementing-reminders.md"
           frontMatter:
@@ -639,9 +607,8 @@ content:
             categories: ["tutorials"]
             importance: 5
             parent: "tutorials" 
-            hasChildren: false
             ai-generated: false
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "integration-patterns.md"
           frontMatter:
@@ -651,9 +618,8 @@ content:
             categories: ["tutorials"]
             importance: 6
             parent: "tutorials" 
-            hasChildren: false
             ai-generated: false
-            navOrder: "$pos"
+            nav_order: "$pos"
             
     - title: "Advanced topics"
       directory: "advanced"
@@ -669,11 +635,10 @@ content:
             categories: ["advanced"]
             importance: 5
             parent: "advanced" 
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "security-best-practices.md"
           frontMatter:
@@ -683,9 +648,8 @@ content:
             categories: ["advanced"]
             importance: 6
             parent: "advanced" 
-            hasChildren: false
             ai-generated: false
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "handling-data-consistency.md"
           frontMatter:
@@ -695,9 +659,8 @@ content:
             categories: ["advanced"]
             importance: 4
             parent: "advanced" 
-            hasChildren: false
             ai-generated: false
-            navOrder: "$pos"
+            nav_order: "$pos"
             
     - title: "Developer resources"
       directory: "developer-resources"
@@ -713,9 +676,8 @@ content:
             categories: ["developer-resources"]
             importance: 3
             parent: "developer-resources"
-            hasChildren: false
             ai-generated: false
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "postman-collection.md"
           frontMatter:
@@ -725,9 +687,8 @@ content:
             categories: ["developer-resources"]
             importance: 4
             parent: "developer-resources"
-            hasChildren: false
             ai-generated: false
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "code-examples.md"
           frontMatter:
@@ -737,11 +698,10 @@ content:
             categories: ["developer-resources"]
             importance: 7
             parent: "developer-resources"
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
     - title: "Support & FAQ"
       directory: "support"
@@ -757,11 +717,10 @@ content:
             categories: ["support"]
             importance: 4
             parent: "support"
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "troubleshooting.md"
           frontMatter:
@@ -771,11 +730,10 @@ content:
             categories: ["support"]
             importance: 5
             parent: "support"
-            hasChildren: false
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
-            navOrder: "$pos"
+            nav_order: "$pos"
             
         - filename: "support-resources.md"
           frontMatter:
@@ -785,6 +743,5 @@ content:
             categories: ["support"]
             importance: 3
             parent: "support"
-            hasChildren: false
             ai-generated: false
-            navOrder: "$pos"
+            nav_order: "$pos"

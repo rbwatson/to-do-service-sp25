@@ -8,7 +8,7 @@ importance: 10
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "1"
+nav_order: "1"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -65,12 +65,11 @@ description: "Introduction to getting started with the Task Management API, incl
 tags: ["introduction", "overview", "getting-started"]
 categories: ["getting-started"]
 importance: 10
-hasChildren: true
-hasToc: false
+has_toc: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "2"
+nav_order: "2"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -126,12 +125,11 @@ description: "Overview of fundamental concepts in the Task Management API, inclu
 tags: ["concepts", "overview"]
 categories: ["core-concepts"]
 importance: 9
-hasChildren: true
-hasToc: false
+has_toc: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "3"
+nav_order: "3"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -187,12 +185,11 @@ description: "Detailed information about the core resources available in the Tas
 tags: ["resources", "overview"]
 categories: ["resources"]
 importance: 9
-hasChildren: true
-hasToc: false
+has_toc: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "4"
+nav_order: "4"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -251,12 +248,11 @@ description: "Comprehensive reference documentation for all endpoints in the Tas
 tags: ["reference", "endpoints", "api"]
 categories: ["api-reference"]
 importance: 8
-hasChildren: true
-hasToc: false
+has_toc: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "5"
+nav_order: "5"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -319,12 +315,11 @@ description: "Step-by-step tutorials and practical guides for working with the T
 tags: ["tutorials", "guides", "how-to"]
 categories: ["tutorials"]
 importance: 7
-hasChildren: true
-hasToc: false
+has_toc: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "6"
+nav_order: "6"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -380,12 +375,11 @@ description: "Advanced considerations for working with the Task Management API, 
 tags: ["advanced", "optimization", "security"]
 categories: ["advanced"]
 importance: 6
-hasChildren: true
-hasToc: false
+has_toc: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "7"
+nav_order: "7"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -439,12 +433,11 @@ description: "Additional resources for developers working with the Task Manageme
 tags: ["resources", "developers", "tools"]
 categories: ["developer-resources"]
 importance: 5
-hasChildren: true
-hasToc: false
+has_toc: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "8"
+nav_order: "8"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -506,12 +499,11 @@ description: "Support resources, frequently asked questions, and troubleshooting
 tags: ["support", "faq", "help", "troubleshooting"]
 categories: ["support"]
 importance: 4
-hasChildren: true
-hasToc: false
+has_toc: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "9"
+nav_order: "9"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -569,11 +561,10 @@ tags: ["introduction", "overview"]
 categories: ["getting-started"]
 importance: 10
 parent: "getting-started"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "1"
+nav_order: "1"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -646,11 +637,10 @@ tags: ["quick start", "tutorial"]
 categories: ["getting-started"]
 importance: 9
 parent: "getting-started"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "2"
+nav_order: "2"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -900,11 +890,10 @@ tags: ["authentication", "security", "bearer token"]
 categories: ["getting-started"]
 importance: 8
 parent: "getting-started"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "3"
+nav_order: "3"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -1046,9 +1035,8 @@ tags: ["rate limiting", "throttling"]
 categories: ["getting-started"]
 importance: 7
 parent: "getting-started"
-hasChildren: false
 ai-generated: false
-navOrder: "4"
+nav_order: "4"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -1112,11 +1100,10 @@ tags: ["data model", "resources", "schema"]
 categories: ["core-concepts"]
 importance: 9
 parent: "core-concepts"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "1"
+nav_order: "1"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -1243,11 +1230,10 @@ tags: ["pagination", "collection"]
 categories: ["core-concepts"]
 importance: 7
 parent: "core-concepts"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "2"
+nav_order: "2"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -1406,11 +1392,10 @@ tags: ["sorting", "collection"]
 categories: ["core-concepts"]
 importance: 6
 parent: "core-concepts"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "3"
+nav_order: "3"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -1611,11 +1596,10 @@ tags: ["errors", "troubleshooting"]
 categories: ["core-concepts"]
 importance: 8
 parent: "core-concepts"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "4"
+nav_order: "4"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -1875,11 +1859,10 @@ tags: ["task status", "workflow"]
 categories: ["core-concepts"]
 importance: 7
 parent: "core-concepts"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "5"
+nav_order: "5"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -2105,13 +2088,12 @@ tags: ["user", "resource"]
 categories: ["resources"]
 importance: 9
 parent: "resources"
-hasChildren: false
 related_pages: ["get-all-users", "create-user", "get-user-by-id", "update-user", "delete-user"]
 api_endpoints: ["/users", "/users/{userId}"]
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "1"
+nav_order: "1"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -2345,13 +2327,12 @@ tags: ["task", "resource"]
 categories: ["resources"]
 importance: 9
 parent: "resources"
-hasChildren: false
 related_pages: ["get-all-tasks", "create-task", "get-task-by-id", "update-task", "delete-task"]
 api_endpoints: ["/tasks", "/tasks/{taskId}"]
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "2"
+nav_order: "2"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -2662,11 +2643,10 @@ tags: ["errors", "reference"]
 categories: ["api-reference"]
 importance: 8
 parent: "api-reference"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "1"
+nav_order: "1"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -2966,11 +2946,10 @@ importance: 7
 api_endpoints: ["/users"]
 related_pages: ["user-resource", "pagination", "sorting"]
 parent: "api-reference"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "2"
+nav_order: "2"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -3245,11 +3224,10 @@ importance: 7
 api_endpoints: ["/users"]
 related_pages: ["user-resource"]
 parent: "api-reference"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "3"
+nav_order: "3"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -3526,11 +3504,10 @@ importance: 7
 api_endpoints: ["/users/{userId}"]
 related_pages: ["user-resource"]
 parent: "api-reference"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "4"
+nav_order: "4"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -3762,11 +3739,10 @@ importance: 7
 api_endpoints: ["/users/{userId}"]
 related_pages: ["user-resource"]
 parent: "api-reference"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "5"
+nav_order: "5"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -4065,11 +4041,10 @@ importance: 7
 api_endpoints: ["/users/{userId}"]
 related_pages: ["user-resource"]
 parent: "api-reference"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "6"
+nav_order: "6"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -4334,11 +4309,10 @@ importance: 7
 api_endpoints: ["/tasks"]
 related_pages: ["task-resource", "pagination", "sorting", "task-status-lifecycle"]
 parent: "api-reference"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "7"
+nav_order: "7"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -4691,11 +4665,10 @@ importance: 7
 api_endpoints: ["/tasks"]
 related_pages: ["task-resource", "task-status-lifecycle"]
 parent: "api-reference"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "8"
+nav_order: "8"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -5047,11 +5020,10 @@ importance: 7
 api_endpoints: ["/tasks/{taskId}"]
 related_pages: ["task-resource"]
 parent: "api-reference"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "9"
+nav_order: "9"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -5318,11 +5290,10 @@ importance: 7
 api_endpoints: ["/tasks/{taskId}"]
 related_pages: ["task-resource", "task-status-lifecycle"]
 parent: "api-reference"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "10"
+nav_order: "10"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -5638,11 +5609,10 @@ importance: 7
 api_endpoints: ["/tasks/{taskId}"]
 related_pages: ["task-resource"]
 parent: "api-reference"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "11"
+nav_order: "11"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -5876,11 +5846,10 @@ tags: ["tutorial", "users"]
 categories: ["tutorials"]
 importance: 6
 parent: "tutorials"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "1"
+nav_order: "1"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -6729,11 +6698,10 @@ tags: ["tutorial", "tasks", "workflow"]
 categories: ["tutorials"]
 importance: 6
 parent: "tutorials"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "2"
+nav_order: "2"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -7451,9 +7419,8 @@ tags: ["tutorial", "reminders"]
 categories: ["tutorials"]
 importance: 5
 parent: "tutorials"
-hasChildren: false
 ai-generated: false
-navOrder: "3"
+nav_order: "3"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -7518,9 +7485,8 @@ tags: ["integration", "architecture"]
 categories: ["tutorials"]
 importance: 6
 parent: "tutorials"
-hasChildren: false
 ai-generated: false
-navOrder: "4"
+nav_order: "4"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -7595,11 +7561,10 @@ tags: ["optimization", "performance"]
 categories: ["advanced"]
 importance: 5
 parent: "advanced"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "1"
+nav_order: "1"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -8323,9 +8288,8 @@ tags: ["security", "best practices"]
 categories: ["advanced"]
 importance: 6
 parent: "advanced"
-hasChildren: false
 ai-generated: false
-navOrder: "2"
+nav_order: "2"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -8407,9 +8371,8 @@ tags: ["data consistency", "concurrency"]
 categories: ["advanced"]
 importance: 4
 parent: "advanced"
-hasChildren: false
 ai-generated: false
-navOrder: "3"
+nav_order: "3"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
@@ -8485,11 +8448,10 @@ tags: ["code", "examples"]
 categories: ["developer-resources"]
 importance: 7
 parent: "developer-resources"
-hasChildren: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"
-navOrder: "3"
+nav_order: "3"
 layout: "default"
 version: "v1.0.0"
 lastUpdated: "2025-05-13"
