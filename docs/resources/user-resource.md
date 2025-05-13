@@ -4,7 +4,7 @@ description: "Detailed information about the User resource, its properties, and 
 tags: ["user", "resource"]
 categories: ["resources"]
 importance: 9
-parent: "resources"
+parent: "API Resources"
 related_pages: ["get-all-users", "create-user", "get-user-by-id", "update-user", "delete-user"]
 api_endpoints: ["/users", "/users/{userId}"]
 ai-generated: true

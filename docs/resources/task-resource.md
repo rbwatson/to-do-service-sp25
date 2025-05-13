@@ -4,7 +4,7 @@ description: "Detailed information about the Task resource, its properties, and 
 tags: ["task", "resource"]
 categories: ["resources"]
 importance: 9
-parent: "resources"
+parent: "API Resources"
 related_pages: ["get-all-tasks", "create-task", "get-task-by-id", "update-task", "delete-task"]
 api_endpoints: ["/tasks", "/tasks/{taskId}"]
 ai-generated: true

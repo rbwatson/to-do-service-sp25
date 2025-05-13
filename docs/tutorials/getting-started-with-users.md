@@ -4,7 +4,7 @@ description: "A practical guide to creating, listing, updating, and deleting use
 tags: ["tutorial", "users"]
 categories: ["tutorials"]
 importance: 6
-parent: "tutorials"
+parent: "Tutorials & Guides"
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"

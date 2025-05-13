@@ -4,7 +4,7 @@ description: "A guide to implementing a complete task management workflow using 
 tags: ["tutorial", "tasks", "workflow"]
 categories: ["tutorials"]
 importance: 6
-parent: "tutorials"
+parent: "Tutorials & Guides"
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
 ai-generated-date: "2025-05-13"

@@ -4,7 +4,7 @@ description: "How to use the warningOffset property to implement a reminder syst
 tags: ["tutorial", "reminders"]
 categories: ["tutorials"]
 importance: 5
-parent: "tutorials"
+parent: "Tutorials & Guides"
 ai-generated: false
 nav_order: "3"
 layout: "default"

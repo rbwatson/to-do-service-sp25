@@ -4,7 +4,7 @@ description: "Common patterns for integrating the Task Management API with other
 tags: ["integration", "architecture"]
 categories: ["tutorials"]
 importance: 6
-parent: "tutorials"
+parent: "Tutorials & Guides"
 ai-generated: false
 nav_order: "4"
 layout: "default"
