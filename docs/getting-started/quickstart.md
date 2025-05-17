@@ -245,9 +245,7 @@ except requests.exceptions.RequestException as e:
 
 Now that you've made your first API requests, you can:
 
-1. Learn more about [Authentication](/getting-started/authentication.md)
-2. Explore the [User Resource](/resources/user-resource.md) and [Task Resource](/resources/task-resource.md)
-3. Check out [API Reference](/api-reference.md) for all available endpoints
-4. Try the [Task Management Workflow](/tutorials/task-management-workflow.md) tutorial
-
-
+1. Learn more about [Authentication](../getting-started/authentication.md)
+2. Explore the [User Resource](../resources/user-resource.md) and [Task Resource](../resources/task-resource.md)
+3. Check out [API Reference](../api-reference.md) for all available endpoints
+4. Try the [Task Management Workflow](../tutorials/task-management-workflow.md) tutorial

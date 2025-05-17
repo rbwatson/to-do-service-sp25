@@ -103,7 +103,7 @@ Authorization: Bearer YOUR_API_KEY
 }
 ```
 
-For details on error responses, see [Error Responses](/api-reference/error-responses.md).
+For details on error responses, see [Error Responses](../api-reference/error-responses.md).
 
 ## Authentication
 
@@ -267,14 +267,14 @@ curl -X POST "https://api.taskmanagement.example.com/v1/users" \
 
 ## Related Resources
 
-- [User Resource](/resources/user-resource.md) - Detailed information about the User resource
-- [Get All Users](/api-reference/get-all-users.md) - Retrieve a list of all users
-- [Get User by ID](/api-reference/get-user-by-id.md) - Retrieve a specific user by ID
+- [User Resource](../resources/user-resource.md) - Detailed information about the User resource
+- [Get All Users](../api-reference/get-all-users.md) - Retrieve a list of all users
+- [Get User by ID](../api-reference/get-user-by-id.md) - Retrieve a specific user by ID
 
 ## See Also
 
-- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
-- [Authentication](/getting-started/authentication.md) - How to authenticate your API requests
-- [Getting Started with Users](/tutorials/getting-started-with-users.md) - Guide to working with users
+- [Data Model](../core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Authentication](../getting-started/authentication.md) - How to authenticate your API requests
+- [Getting Started with Users](../tutorials/getting-started-with-users.md) - Guide to working with users
 
 

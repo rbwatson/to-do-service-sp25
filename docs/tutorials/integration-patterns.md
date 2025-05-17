@@ -69,8 +69,6 @@ This document presents common patterns, architectures, and best practices for in
 - **Case Studies**: Real-world examples of successful integrations
 
 ## Related Topics
-- [Authentication](/getting-started/authentication.md)
-- [Optimizing API Usage](/advanced/optimizing-api-usage.md)
-- [Handling Data Consistency](/advanced/handling-data-consistency.md)
-
-
+- [Authentication](../getting-started/authentication.md)
+- [Optimizing API Usage](../advanced/optimizing-api-usage.md)
+- [Handling Data Consistency](../advanced/handling-data-consistency.md)

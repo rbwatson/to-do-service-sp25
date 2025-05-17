@@ -60,17 +60,17 @@ The API follows these design principles:
 To start working with the API:
 
 1. [Create an account](https://taskmanagement.example.com/signup) to get your API credentials
-2. Follow our [Quick Start Guide](/getting-started/quickstart.md) to make your first API request
-3. Learn about [Authentication](/getting-started/authentication.md) to secure your API calls
-4. Explore the [API Reference](/api-reference.md) for detailed endpoint information
+2. Follow our [Quick Start Guide](../getting-started/quickstart.md) to make your first API request
+3. Learn about [Authentication](../getting-started/authentication.md) to secure your API calls
+4. Explore the [API Reference](../api-reference.md) for detailed endpoint information
 
 ## Next Steps
 
 After understanding the basics of the Task Management API, you can:
 
-- Check out the [Quick Start Guide](/getting-started/quickstart.md) to make your first API call
-- Learn about [Core Concepts](/core-concepts.md) to understand the API's foundations
-- Explore the [Resources](/resources.md) to understand the data model
-- Try our [Tutorials](/tutorials.md) for practical examples
+- Check out the [Quick Start Guide](../getting-started/quickstart.md) to make your first API call
+- Learn about [Core Concepts](../core-concepts.md) to understand the API's foundations
+- Explore the [Resources](../resources.md) to understand the data model
+- Try our [Tutorials](../tutorials.md) for practical examples
 
 

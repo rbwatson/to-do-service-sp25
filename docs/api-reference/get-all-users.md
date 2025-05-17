@@ -113,7 +113,7 @@ This request will return users:
 | 401 | Unauthorized (missing or invalid authentication) |
 | 403 | Forbidden (insufficient permissions) |
 
-For details on error responses, see [Error Responses](/api-reference/error-responses.md).
+For details on error responses, see [Error Responses](./api-reference/error-responses.md).
 
 ## Authentication
 
@@ -265,14 +265,14 @@ curl -X GET "https://api.taskmanagement.example.com/v1/users?limit=5&offset=10&s
 
 ## Related Resources
 
-- [User Resource](/resources/user-resource.md) - Detailed information about the User resource
-- [Create a User](/api-reference/create-user.md) - Create a new user
-- [Get User by ID](/api-reference/get-user-by-id.md) - Retrieve a specific user by ID
+- [User Resource](../resources/user-resource.md) - Detailed information about the User resource
+- [Create a User](../api-reference/create-user.md) - Create a new user
+- [Get User by ID](../api-reference/get-user-by-id.md) - Retrieve a specific user by ID
 
 ## See Also
 
-- [Pagination](/core-concepts/pagination.md) - How to navigate through large collections of resources
-- [Sorting](/core-concepts/sorting.md) - How to sort API results using sort parameters
-- [Authentication](/getting-started/authentication.md) - How to authenticate your API requests
+- [Pagination](../core-concepts/pagination.md) - How to navigate through large collections of resources
+- [Sorting](../core-concepts/sorting.md) - How to sort API results using sort parameters
+- [Authentication](../getting-started/authentication.md) - How to authenticate your API requests
 
 

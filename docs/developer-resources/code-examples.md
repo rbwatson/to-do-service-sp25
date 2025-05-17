@@ -833,9 +833,7 @@ if __name__ == "__main__":
 
 ## See Also
 
-- [Getting Started with the Task Management API](/getting-started.md)
-- [API Reference](/api-reference.md)
-- [User Resource](/resources/user-resource.md)
-- [Task Resource](/resources/task-resource.md)
-
-
+- [Getting Started with the Task Management API](../getting-started.md)
+- [API Reference](../api-reference.md)
+- [User Resource](../resources/user-resource.md)
+- [Task Resource](../resources/task-resource.md)

@@ -840,10 +840,10 @@ If you try to retrieve, update, or delete a non-existent user:
 
 Now that you understand the basics of user management, you can:
 
-1. Explore how to [assign tasks to users](/tutorials/task-management-workflow.md)
-2. Learn about [task status transitions](/core-concepts/task-status-lifecycle.md)
-3. Implement more advanced [user filtering and sorting](/api-reference/get-all-users.md)
-4. Explore [security best practices](/advanced/security-best-practices.md) for your application
+1. Explore how to [assign tasks to users](../tutorials/task-management-workflow.md)
+2. Learn about [task status transitions](../core-concepts/task-status-lifecycle.md)
+3. Implement more advanced [user filtering and sorting](../api-reference/get-all-users.md)
+4. Explore [security best practices](../advanced/security-best-practices.md) for your application
 
 ## Conclusion
 

@@ -719,9 +719,9 @@ By applying these optimization techniques, you can build applications that use t
 
 ## See Also
 
-- [Rate Limiting](/getting-started/rate-limiting.md)
-- [Pagination](/core-concepts/pagination.md)
-- [Authentication](/getting-started/authentication.md)
-- [Error Handling](/core-concepts/error-handling.md)
+- [Rate Limiting](../getting-started/rate-limiting.md)
+- [Pagination](../core-concepts/pagination.md)
+- [Authentication](../getting-started/authentication.md)
+- [Error Handling](../core-concepts/error-handling.md)
 
 

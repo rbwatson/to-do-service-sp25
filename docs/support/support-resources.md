@@ -151,6 +151,6 @@ This document provides information about the available support resources for the
 - **Screenshots**: Images showing the support portal interface and ticket creation process
 
 ## Related Topics
-- [Frequently Asked Questions](/support/faq.md)
-- [Troubleshooting](/support/troubleshooting.md)
+- [Frequently Asked Questions](../support/faq.md)
+- [Troubleshooting](../support/troubleshooting.md)
 

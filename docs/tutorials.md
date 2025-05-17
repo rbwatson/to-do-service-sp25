@@ -22,10 +22,10 @@ This section provides practical, step-by-step tutorials and guides to help you i
 
 | Tutorial | Description |
 |----------|-------------|
-| [Getting Started with Users](/tutorials/getting-started-with-users.md) | Learn how to create, list, update, and delete users |
-| [Task Management Workflow](/tutorials/task-management-workflow.md) | Implement a complete task management workflow |
-| [Implementing Reminders](/tutorials/implementing-reminders.md) | Use the warningOffset property to set up task reminders |
-| [Integration Patterns](/tutorials/integration-patterns.md) | Common patterns for integrating with other systems |
+| [Getting Started with Users](./tutorials/getting-started-with-users.md) | Learn how to create, list, update, and delete users |
+| [Task Management Workflow](./tutorials/task-management-workflow.md) | Implement a complete task management workflow |
+| [Implementing Reminders](./tutorials/implementing-reminders.md) | Use the warningOffset property to set up task reminders |
+| [Integration Patterns](./tutorials/integration-patterns.md) | Common patterns for integrating with other systems |
 
 ## Use Case Examples
 
@@ -39,7 +39,7 @@ These tutorials cover common use cases that you might encounter when working wit
 
 ## Skill Level
 
-The tutorials in this section are primarily designed for developers who are new to the Task Management API but have some experience with REST APIs in general. More advanced topics are covered in the [Advanced Topics](/advanced.md) section.
+The tutorials in this section are primarily designed for developers who are new to the Task Management API but have some experience with REST APIs in general. More advanced topics are covered in the [Advanced Topics](./advanced.md) section.
 
 ## Tools Used
 
@@ -53,8 +53,8 @@ The tutorials use standard tools for working with REST APIs:
 
 After working through these tutorials, you can:
 
-- Explore the [API Reference](/api-reference.md) for detailed endpoint documentation
-- Check out [Advanced Topics](/advanced.md) for more complex use cases
-- Review [Developer Resources](/developer-resources.md) for additional tools and code examples
+- Explore the [API Reference](./api-reference.md) for detailed endpoint documentation
+- Check out [Advanced Topics](./advanced.md) for more complex use cases
+- Review [Developer Resources](./developer-resources.md) for additional tools and code examples
 
 

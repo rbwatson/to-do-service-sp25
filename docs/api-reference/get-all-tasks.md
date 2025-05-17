@@ -131,7 +131,7 @@ This request will return tasks:
 | 401 | Unauthorized (missing or invalid authentication) |
 | 403 | Forbidden (insufficient permissions) |
 
-For details on error responses, see [Error Responses](/api-reference/error-responses.md).
+For details on error responses, see [Error Responses](./api-reference/error-responses.md).
 
 ## Authentication
 

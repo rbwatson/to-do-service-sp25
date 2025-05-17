@@ -24,9 +24,9 @@ The Advanced Topics section covers the following areas:
 
 | Topic | Description |
 |-------|-------------|
-| [Optimizing API Usage](/advanced/optimizing-api-usage.md) | Best practices for efficient API usage |
-| [Security Best Practices](/advanced/security-best-practices.md) | Advanced security considerations |
-| [Handling Data Consistency](/advanced/handling-data-consistency.md) | Strategies for maintaining data consistency |
+| [Optimizing API Usage](./advanced/optimizing-api-usage.md) | Best practices for efficient API usage |
+| [Security Best Practices](./advanced/security-best-practices.md) | Advanced security considerations |
+| [Handling Data Consistency](./advanced/handling-data-consistency.md) | Strategies for maintaining data consistency |
 
 ## When to Use These Advanced Topics
 

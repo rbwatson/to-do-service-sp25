@@ -59,8 +59,5 @@ Official client libraries for common programming languages:
 
 After exploring these developer resources, you might want to:
 
-- Check the [API Reference](/api-reference.md) for detailed endpoint specifications
-- Review [Advanced Topics](/advanced.md) for optimization and security best practices
-- Visit the [Support & FAQ](/support.md) section if you need assistance
-
-
+- Review [Advanced Topics](./advanced.md) for optimization and security best practices
+- Visit the [Support & FAQ](./support.md) section if you need assistance

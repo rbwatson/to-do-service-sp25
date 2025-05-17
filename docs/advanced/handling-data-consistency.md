@@ -70,8 +70,9 @@ This document outlines strategies and patterns for maintaining data consistency 
 - **Architectural Diagrams**: System designs that promote data consistency
 
 ## Related Topics
-- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md)
-- [Error Handling](/core-concepts/error-handling.md)
-- [Optimizing API Usage](/advanced/optimizing-api-usage.md)
+
+- [Task Status Lifecycle](../core-concepts/task-status-lifecycle.md)
+- [Error Handling](../core-concepts/error-handling.md)
+- [Optimizing API Usage](../advanced/optimizing-api-usage.md)
 
 

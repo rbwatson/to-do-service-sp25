@@ -79,7 +79,7 @@ Authorization: Bearer YOUR_API_KEY
 }
 ```
 
-For details on error responses, see [Error Responses](/api-reference/error-responses.md).
+For details on error responses, see [Error Responses](./api-reference/error-responses.md).
 
 ## Authentication
 

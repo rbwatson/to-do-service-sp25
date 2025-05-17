@@ -293,9 +293,9 @@ def handle_api_request(url, method="GET", data=None, headers=None):
 
 ## See Also
 
-- [Core Concepts - Error Handling](/core-concepts/error-handling.md)
-- [Getting Started - Authentication](/getting-started/authentication.md)
-- [Rate Limiting](/getting-started/rate-limiting.md)
-- [Troubleshooting](/support/troubleshooting.md)
+- [Core Concepts - Error Handling](../core-concepts/error-handling.md)
+- [Getting Started - Authentication](../getting-started/authentication.md)
+- [Rate Limiting](../getting-started/rate-limiting.md)
+- [Troubleshooting](../support/troubleshooting.md)
 
 

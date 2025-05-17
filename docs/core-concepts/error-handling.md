@@ -256,8 +256,6 @@ fi
 
 ## See Also
 
-- [API Reference - Error Responses](/api-reference/error-responses.md)
-- [Rate Limiting](/getting-started/rate-limiting.md)
-- [Troubleshooting](/support/troubleshooting.md)
-
-
+- [API Reference - Error Responses](../api-reference/error-responses.md)
+- [Rate Limiting](../getting-started/rate-limiting.md)
+- [Troubleshooting](../support/troubleshooting.md)

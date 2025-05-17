@@ -60,11 +60,11 @@ The User resource supports the following roles:
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/users` | GET | [Get all users](/api-reference/get-all-users.md) |
-| `/users` | POST | [Create a user](/api-reference/create-user.md) |
-| `/users/{userId}` | GET | [Get user by ID](/api-reference/get-user-by-id.md) |
-| `/users/{userId}` | PATCH | [Update a user](/api-reference/update-user.md) |
-| `/users/{userId}` | DELETE | [Delete a user](/api-reference/delete-user.md) |
+| `/users` | GET | [Get all users](../api-reference/get-all-users.md) |
+| `/users` | POST | [Create a user](../api-reference/create-user.md) |
+| `/users/{userId}` | GET | [Get user by ID](../api-reference/get-user-by-id.md) |
+| `/users/{userId}` | PATCH | [Update a user](../api-reference/update-user.md) |
+| `/users/{userId}` | DELETE | [Delete a user](../api-reference/delete-user.md) |
 
 ## Creating a User
 
@@ -232,8 +232,8 @@ curl -X GET "https://api.taskmanagement.example.com/v1/tasks?assigneeId=user123"
 
 ## See Also
 
-- [Task Resource](/resources/task-resource.md)
-- [Data Model](/core-concepts/data-model.md)
-- [Getting Started with Users](/tutorials/getting-started-with-users.md)
+- [Task Resource](../resources/task-resource.md)
+- [Data Model](../core-concepts/data-model.md)
+- [Getting Started with Users](../tutorials/getting-started-with-users.md)
 
 

@@ -42,7 +42,7 @@ The API uses JSON (JavaScript Object Notation) for both request bodies and respo
 
 ### Is there a rate limit for the API?
 
-Yes, the API has rate limits to ensure fair usage. The specific limits depend on your account tier. If you exceed the rate limit, the API will return a `429 Too Many Requests` status code. You can find more details in the [Rate Limiting](/getting-started/rate-limiting.md) documentation.
+Yes, the API has rate limits to ensure fair usage. The specific limits depend on your account tier. If you exceed the rate limit, the API will return a `429 Too Many Requests` status code. You can find more details in the [Rate Limiting](../getting-started/rate-limiting.md) documentation.
 
 ## Authentication
 
@@ -99,7 +99,7 @@ Yes, there are rules for valid status transitions:
 - From `DONE`: Can move to `CANCELED`
 - From `CANCELED`: Cannot transition to any other status
 
-See the [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md) page for details.
+See the [Task Status Lifecycle](../core-concepts/task-status-lifecycle.md) page for details.
 
 ### Can a task be assigned to multiple users?
 
@@ -241,17 +241,18 @@ async function fetchWithBackoff(url, options, maxRetries = 3) {
 ### Where can I get help if I'm having issues?
 
 If you're having trouble with the API, you can:
-1. Check the [Troubleshooting](/support/troubleshooting.md) guide for common issues
+
+1. Check the [Troubleshooting](../support/troubleshooting.md) guide for common issues
 2. Visit our [developer forum](https://community.taskmanagement.example.com) to connect with other developers
 3. Contact our support team at [support@taskmanagement.example.com](mailto:support@taskmanagement.example.com)
 
 ### Is there any sample code available?
 
-Yes, we provide code examples in several languages. See the [Code Examples](/developer-resources/code-examples.md) page for ready-to-use snippets.
+Yes, we provide code examples in several languages. See the [Code Examples](../developer-resources/code-examples.md) page for ready-to-use snippets.
 
 ### Do you offer client libraries for the API?
 
-We don't currently provide official client libraries, but the [Code Examples](/developer-resources/code-examples.md) page includes full client implementations in JavaScript and Python that you can use as a starting point.
+We don't currently provide official client libraries, but the [Code Examples](../developer-resources/code-examples.md) page includes full client implementations in JavaScript and Python that you can use as a starting point.
 
 ### How do I report a bug or request a feature?
 
@@ -282,6 +283,6 @@ If you consistently hit your limits, we recommend upgrading to a higher-tier pla
 
 ## Still Have Questions?
 
-If your question isn't answered here, please check our [Troubleshooting](/support/troubleshooting.md) guide or contact our [support team](/support/support-resources.md) for assistance.
+If your question isn't answered here, please check our [Troubleshooting](../support/troubleshooting.md) guide or contact our [support team](../support/support-resources.md) for assistance.
 
 

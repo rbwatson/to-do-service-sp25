@@ -58,8 +58,8 @@ This document outlines the rate limiting policies for the Task Management API, h
 - **Table**: Comparison of rate limits across different account tiers
 
 ## Related Topics
-- [Error Handling](/core-concepts/error-handling.md)
-- [Authentication](/getting-started/authentication.md)
-- [Optimizing API Usage](/advanced/optimizing-api-usage.md)
+- [Error Handling](../core-concepts/error-handling.md)
+- [Authentication](../getting-started/authentication.md)
+- [Optimizing API Usage](../advanced/optimizing-api-usage.md)
 
 

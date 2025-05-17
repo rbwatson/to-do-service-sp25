@@ -73,7 +73,7 @@ Authorization: Bearer YOUR_API_KEY
 }
 ```
 
-For details on error responses, see [Error Responses](/api-reference/error-responses.md).
+For details on error responses, see [Error Responses](./api-reference/error-responses.md).
 
 ## Authentication
 
@@ -228,8 +228,6 @@ curl -X GET "https://api.taskmanagement.example.com/v1/users/user123" \
 
 ## See Also
 
-- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
-- [Authentication](/getting-started/authentication.md) - How to authenticate your API requests
-- [Getting Started with Users](/tutorials/getting-started-with-users.md) - Guide to working with users
-
-
+- [Data Model](../core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Authentication](../getting-started/authentication.md) - How to authenticate your API requests
+- [Getting Started with Users](../tutorials/getting-started-with-users.md) - Guide to working with users

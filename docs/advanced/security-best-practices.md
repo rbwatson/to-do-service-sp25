@@ -76,8 +76,8 @@ This document describes advanced security considerations and best practices when
 - **Case Studies**: Security incident examples and lessons learned
 
 ## Related Topics
-- [Authentication](/getting-started/authentication.md)
-- [Rate Limiting](/getting-started/rate-limiting.md)
-- [Error Handling](/core-concepts/error-handling.md)
+- [Authentication](../getting-started/authentication.md)
+- [Rate Limiting](../getting-started/rate-limiting.md)
+- [Error Handling](../core-concepts/error-handling.md)
 
 

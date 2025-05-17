@@ -126,7 +126,7 @@ Authorization: Bearer YOUR_API_KEY
 }
 ```
 
-For details on error responses, see [Error Responses](/api-reference/error-responses.md).
+For details on error responses, see [Error Responses](../api-reference/error-responses.md).
 
 ## Authentication
 
@@ -342,14 +342,14 @@ curl -X POST "https://api.taskmanagement.example.com/v1/tasks" \
 
 ## Related Resources
 
-- [Task Resource](/resources/task-resource.md) - Detailed information about the Task resource
-- [Get All Tasks](/api-reference/get-all-tasks.md) - Retrieve a list of all tasks
-- [Get Task by ID](/api-reference/get-task-by-id.md) - Retrieve a specific task by ID
+- [Task Resource](../resources/task-resource.md) - Detailed information about the Task resource
+- [Get All Tasks](../api-reference/get-all-tasks.md) - Retrieve a list of all tasks
+- [Get Task by ID](../api-reference/get-task-by-id.md) - Retrieve a specific task by ID
 
 ## See Also
 
-- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md) - Understanding task statuses and transitions
-- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
-- [Task Management Workflow](/tutorials/task-management-workflow.md) - Guide to implementing a task management workflow
+- [Task Status Lifecycle](../core-concepts/task-status-lifecycle.md) - Understanding task statuses and transitions
+- [Data Model](../core-concepts/data-model.md) - Overview of the core resources and their relationships
+- [Task Management Workflow](../tutorials/task-management-workflow.md) - Guide to implementing a task management workflow
 
 

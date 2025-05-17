@@ -132,14 +132,12 @@ The Task Management platform provides several features for managing your API key
 
 Now that you understand authentication, you can:
 
-- Continue to [Rate Limiting](/getting-started/rate-limiting.md) to learn about API request limits
-- Explore the [API Reference](/api-reference.md) for details on available endpoints
-- Check out [Security Best Practices](/advanced/security-best-practices.md) for more advanced security considerations
+- Continue to [Rate Limiting](../getting-started/rate-limiting.md) to learn about API request limits
+- Explore the [API Reference](../api-reference.md) for details on available endpoints
+- Check out [Security Best Practices](../advanced/security-best-practices.md) for more advanced security considerations
 
 ## See Also
 
-- [Quick Start Guide](/getting-started/quickstart.md)
-- [Error Handling](/core-concepts/error-handling.md)
-- [Security Best Practices](/advanced/security-best-practices.md)
-
-
+- [Quick Start Guide](../getting-started/quickstart.md)
+- [Error Handling](../core-concepts/error-handling.md)
+- [Security Best Practices](../advanced/security-best-practices.md)

@@ -49,7 +49,7 @@ A: Please send details to api-support@taskmanagement.example.com or use the supp
 If you're experiencing issues with the API, we recommend the following steps:
 
 1. Check the [Troubleshooting](/support/troubleshooting.md) guide for common issues
-2. Review the [API Reference](/api-reference.md) to ensure you're using the endpoints correctly
+2. Review the [API Reference](./api-reference.md) to ensure you're using the endpoints correctly
 3. Search the [FAQ](/support/faq.md) for answers to common questions
 4. Contact support using the information in [Support Resources](/support/support-resources.md)
 

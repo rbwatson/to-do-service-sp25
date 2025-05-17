@@ -64,7 +64,7 @@ A successful deletion returns a `204 No Content` status code with no response bo
 }
 ```
 
-For details on error responses, see [Error Responses](/api-reference/error-responses.md).
+For details on error responses, see [Error Responses](./api-reference/error-responses.md).
 
 ## Authentication
 

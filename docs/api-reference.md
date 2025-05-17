@@ -54,7 +54,7 @@ For information about error responses, see the [Error Responses](/api-reference/
 
 ## Authentication
 
-All API endpoints require authentication using a bearer token. For more information, see the [Authentication](/getting-started/authentication.md) guide.
+All API endpoints require authentication using a bearer token. For more information, see the [Authentication](./getting-started/authentication.md) guide.
 
 ## Request Format
 

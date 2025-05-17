@@ -16,7 +16,7 @@ lastUpdated: "2025-05-13"
 
 # Troubleshooting
 
-This guide helps you diagnose and resolve common issues when working with the Task Management API. If you encounter problems not covered here, please check our [FAQ](/support/faq.md) or contact our [support team](/support/support-resources.md).
+This guide helps you diagnose and resolve common issues when working with the Task Management API. If you encounter problems not covered here, please check our [FAQ](../support/faq.md) or contact our [support team](../support/support-resources.md).
 
 ## Authentication Issues
 
@@ -704,7 +704,7 @@ If you're still experiencing problems after trying these solutions:
 
 2. **Get detailed logs**: Enable detailed logging in your application to gather more information about the issue.
 
-3. **Contact support**: Reach out to our [support team](/support/support-resources.md) with:
+3. **Contact support**: Reach out to our [support team](../support/support-resources.md) with:
    - A description of the issue
    - Steps to reproduce the problem
    - Any error messages or codes

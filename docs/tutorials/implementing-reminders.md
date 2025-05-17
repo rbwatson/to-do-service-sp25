@@ -59,8 +59,8 @@ This document outlines how to implement a reminder system using the Task Managem
 - **Screenshots**: Example UI for reminder configuration
 
 ## Related Topics
-- [Task Resource](/resources/task-resource.md)
-- [Task Management Workflow](/tutorials/task-management-workflow.md)
-- [Update a Task](/api-reference/update-task.md)
+- [Task Resource](../resources/task-resource.md)
+- [Task Management Workflow](../tutorials/task-management-workflow.md)
+- [Update a Task](../api-reference/update-task.md)
 
 

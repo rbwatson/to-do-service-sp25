@@ -70,7 +70,7 @@ The Task resource supports the following status values:
 | `DONE` | Task has been completed and approved |
 | `CANCELED` | Task has been canceled and won't be completed |
 
-For more details on task status transitions, see [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md).
+For more details on task status transitions, see [Task Status Lifecycle](../core-concepts/task-status-lifecycle.md).
 
 ## Task Priority Levels
 
@@ -87,11 +87,11 @@ The Task resource supports the following priority levels:
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/tasks` | GET | [Get all tasks](/api-reference/get-all-tasks.md) |
-| `/tasks` | POST | [Create a task](/api-reference/create-task.md) |
-| `/tasks/{taskId}` | GET | [Get task by ID](/api-reference/get-task-by-id.md) |
-| `/tasks/{taskId}` | PATCH | [Update a task](/api-reference/update-task.md) |
-| `/tasks/{taskId}` | DELETE | [Delete a task](/api-reference/delete-task.md) |
+| `/tasks` | GET | [Get all tasks](../api-reference/get-all-tasks.md) |
+| `/tasks` | POST | [Create a task](../api-reference/create-task.md) |
+| `/tasks/{taskId}` | GET | [Get task by ID](../api-reference/get-task-by-id.md) |
+| `/tasks/{taskId}` | PATCH | [Update a task](../api-reference/update-task.md) |
+| `/tasks/{taskId}` | DELETE | [Delete a task](../api-reference/delete-task.md) |
 
 ## Creating a Task
 
@@ -309,8 +309,6 @@ curl -X PATCH "https://api.taskmanagement.example.com/v1/tasks/task123" \
 
 ## See Also
 
-- [User Resource](/resources/user-resource.md)
-- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md)
-- [Task Management Workflow](/tutorials/task-management-workflow.md)
-
-
+- [User Resource](../resources/user-resource.md)
+- [Task Status Lifecycle](../core-concepts/task-status-lifecycle.md)
+- [Task Management Workflow](../tutorials/task-management-workflow.md)

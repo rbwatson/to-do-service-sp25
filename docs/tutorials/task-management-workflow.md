@@ -36,7 +36,7 @@ Before you begin, make sure you have:
 
 - An API key for the Task Management API
 - Appropriate permissions to work with tasks
-- A basic understanding of the [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md)
+- A basic understanding of the [Task Status Lifecycle](../core-concepts/task-status-lifecycle.md)
 
 ## 1. Task Creation
 
@@ -713,9 +713,9 @@ By following the best practices outlined in this guide, you can build a robust t
 
 ## Next Steps
 
-- Learn more about [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md)
-- Explore [Implementing Reminders](/tutorials/implementing-reminders.md) for upcoming tasks
-- Discover advanced [Task Filtering](/api-reference/get-all-tasks.md) techniques
-- Check out [Optimizing API Usage](/advanced/optimizing-api-usage.md) for performance tips
+- Learn more about [Task Status Lifecycle](../core-concepts/task-status-lifecycle.md)
+- Explore [Implementing Reminders](../tutorials/implementing-reminders.md) for upcoming tasks
+- Discover advanced [Task Filtering](../api-reference/get-all-tasks.md) techniques
+- Check out [Optimizing API Usage](../advanced/optimizing-api-usage.md) for performance tips
 
 
