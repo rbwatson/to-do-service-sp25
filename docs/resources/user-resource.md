@@ -9,231 +9,145 @@ related_pages: ["get-all-users", "create-user", "get-user-by-id", "update-user",
 api_endpoints: ["/users", "/users/{userId}"]
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "2025-05-13"
+ai-generated-date: "May 20, 2025"
 nav_order: "1"
 layout: "default"
 version: "v1.0.0"
-lastUpdated: "2025-05-13"
+lastUpdated: "May 20, 2025"
 ---
 
-# User Resource
+# User resource
 
-The User resource represents individuals who can create and be assigned to tasks in the Task Management API. This page provides detailed information about the User resource, its properties, and related endpoints.
+The User resource represents an individual who can create and manage tasks in the Task Management API. Users must be created before tasks can be associated with them.
 
-## Resource Properties
+## Properties
 
-| Property | Type | Description | Required |
-|----------|------|-------------|----------|
-| `id` | String | Unique identifier for the user | Auto-generated |
-| `name` | String | Full name of the user | Yes |
-| `email` | String | Email address of the user (must be unique) | Yes |
-| `role` | String | Role of the user (admin, manager, member) | No (default: "member") |
-| `createdAt` | Date | When the user was created | Auto-generated |
-| `updatedAt` | Date | When the user was last updated | Auto-generated |
+| Property | Type | Description | Required | Constraints |
+|----------|------|-------------|----------|------------|
+| `userId` | integer | The unique identifier for the user | Yes (generated) | System-generated, read-only |
+| `firstName` | string | The user's first name | Yes | 1-100 characters |
+| `lastName` | string | The user's last name | Yes | 1-100 characters |
+| `contactEmail` | string | The user's email address | Yes | Valid email format, 3-255 characters |
 
-## Resource Representation
+## User representation
 
-### JSON Format
+A User resource is represented in JSON format:
 
 ```json
 {
-  "id": "user123",
-  "name": "John Doe",
-  "email": "john.doe@example.com",
-  "role": "member",
-  "createdAt": "2025-05-01T10:30:00Z",
-  "updatedAt": "2025-05-13T14:25:00Z"
+  "userId": 1,
+  "firstName": "John",
+  "lastName": "Doe",
+  "contactEmail": "john.doe@example.com"
 }
 ```
 
-## User Roles
+## Creating a user
 
-The User resource supports the following roles:
+To create a user, send a POST request to the `/users` endpoint with the required user information:
 
-| Role | Description | Permissions |
-|------|-------------|-------------|
-| `admin` | Administrator with full access | Can perform all operations |
-| `manager` | Manager with elevated permissions | Can manage tasks and assign them to users |
-| `member` | Regular team member | Can create and update their own tasks |
-
-## Related Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/users` | GET | [Get all users](../api-reference/get-all-users.md) |
-| `/users` | POST | [Create a user](../api-reference/create-user.md) |
-| `/users/{userId}` | GET | [Get user by ID](../api-reference/get-user-by-id.md) |
-| `/users/{userId}` | PATCH | [Update a user](../api-reference/update-user.md) |
-| `/users/{userId}` | DELETE | [Delete a user](../api-reference/delete-user.md) |
-
-## Creating a User
-
-To create a new user, send a `POST` request to the `/users` endpoint:
-
-### Request
-
-```http
-POST /users
-Content-Type: application/json
-
+```json
 {
-  "name": "Jane Smith",
-  "email": "jane.smith@example.com",
-  "role": "manager"
+  "firstName": "John",
+  "lastName": "Doe",
+  "contactEmail": "john.doe@example.com"
 }
 ```
 
-### Response
+The API will generate a unique `userId` for the new user.
 
-```http
-HTTP/1.1 201 Created
-Content-Type: application/json
+For detailed information, see the [Create a user](../api-reference/create-user.md) endpoint documentation.
 
+## Retrieving users
+
+### Get all users
+
+To retrieve all users, send a GET request to the `/users` endpoint. The response will include an array of user objects:
+
+```json
 {
-  "id": "user456",
-  "name": "Jane Smith",
-  "email": "jane.smith@example.com",
-  "role": "manager",
-  "createdAt": "2025-05-13T15:30:00Z",
-  "updatedAt": "2025-05-13T15:30:00Z"
-}
-```
-
-## Updating a User
-
-To update an existing user, send a `PATCH` request to the `/users/{userId}` endpoint:
-
-### Request
-
-```http
-PATCH /users/user456
-Content-Type: application/json
-
-{
-  "name": "Jane Williams",
-  "role": "admin"
-}
-```
-
-### Response
-
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-{
-  "id": "user456",
-  "name": "Jane Williams",
-  "email": "jane.smith@example.com",
-  "role": "admin",
-  "createdAt": "2025-05-13T15:30:00Z",
-  "updatedAt": "2025-05-13T15:45:00Z"
-}
-```
-
-## Deleting a User
-
-To delete a user, send a `DELETE` request to the `/users/{userId}` endpoint:
-
-### Request
-
-```http
-DELETE /users/user456
-```
-
-### Response
-
-```http
-HTTP/1.1 204 No Content
-```
-
-## User and Task Relationships
-
-Users are related to tasks in two ways:
-
-1. **As creators**: A user can create multiple tasks. The `createdBy` field on the Task resource references the user who created it.
-
-2. **As assignees**: A user can be assigned to multiple tasks. The `assigneeId` field on the Task resource references the assigned user.
-
-## Code Examples
-
-### Get a User by ID - JavaScript
-
-```javascript
-async function getUser(userId) {
-  try {
-    const response = await fetch(`https://api.taskmanagement.example.com/v1/users/${userId}`, {
-      headers: {
-        'Authorization': `Bearer ${API_KEY}`
-      }
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Failed to fetch user: ${response.status}`);
+  "users": [
+    {
+      "userId": 1,
+      "firstName": "John",
+      "lastName": "Doe",
+      "contactEmail": "john.doe@example.com"
+    },
+    {
+      "userId": 2,
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "contactEmail": "jane.smith@example.com"
     }
-    
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching user:', error);
-    return null;
-  }
+  ]
 }
 ```
 
-### Create a User - Python
+This endpoint supports pagination and sorting. For detailed information, see the [Get all users](../api-reference/get-all-users.md) endpoint documentation.
 
-```python
-import requests
+### Get a specific user
 
-def create_user(api_key, name, email, role="member"):
-    try:
-        response = requests.post(
-            "https://api.taskmanagement.example.com/v1/users",
-            headers={
-                "Authorization": f"Bearer {api_key}",
-                "Content-Type": "application/json"
-            },
-            json={
-                "name": name,
-                "email": email,
-                "role": role
-            }
-        )
-        
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        print(f"Error creating user: {e}")
-        return None
+To retrieve a specific user, send a GET request to the `/users/{userId}` endpoint, where `{userId}` is the unique identifier of the user:
+
+```
+GET /users/1
 ```
 
-### Get All Users Assigned to Tasks - cURL
+For detailed information, see the [Get user by ID](../api-reference/get-user-by-id.md) endpoint documentation.
 
-```bash
-curl -X GET "https://api.taskmanagement.example.com/v1/tasks?assigneeId=user123" \
-  -H "Authorization: Bearer YOUR_API_KEY"
+## Updating a user
+
+To update a user, send a PATCH request to the `/users/{userId}` endpoint with the fields you want to update:
+
+```json
+{
+  "contactEmail": "new.email@example.com"
+}
 ```
 
-## Common Use Cases
+The API supports partial updates, so you only need to include the fields you want to change.
 
-- **User Management**: Creating and managing users in a task management system
-- **Team Organization**: Organizing users by roles and permissions
-- **User Profile**: Displaying user information in a profile page
-- **Task Assignment**: Assigning tasks to specific users based on their skills or availability
-- **Access Control**: Restricting access to certain features based on user roles
+For detailed information, see the [Update a user](../api-reference/update-user.md) endpoint documentation.
 
-## Best Practices
+## Deleting a user
 
-1. **Email Uniqueness**: Ensure email addresses are unique across all users
-2. **Role-Based Access Control**: Implement proper access controls based on user roles
-3. **Data Validation**: Validate user data before sending it to the API
-4. **User Privacy**: Handle user data in compliance with relevant privacy regulations
-5. **Secure Storage**: Store API keys and user credentials securely
+To delete a user, send a DELETE request to the `/users/{userId}` endpoint:
 
-## See Also
+```
+DELETE /users/1
+```
 
-- [Task Resource](../resources/task-resource.md)
-- [Data Model](../core-concepts/data-model.md)
-- [Getting Started with Users](../tutorials/getting-started-with-users.md)
+For detailed information, see the [Delete a user](../api-reference/delete-user.md) endpoint documentation.
+
+## Related resources
+
+The User resource is related to the Task resource. A user can have multiple tasks associated with them through the `userId` field on the Task resource.
+
+To retrieve all tasks for a user, you can filter the tasks endpoint by the user ID:
+
+```
+GET /tasks?userId=1
+```
+
+## Important considerations
+
+- The `contactEmail` must be unique across all users in the system.
+- When a user is deleted, all associated tasks should be deleted as well (cascade delete).
+- The `userId` is generated by the system and cannot be specified when creating a user.
+
+## Best practices
+
+1. **Validate email addresses**: Although the API validates email format, it's good practice to validate email addresses in your client application before sending requests.
+2. **Handle unique email constraints**: Be prepared to handle errors if you try to create a user with an email that already exists.
+3. **Implement proper authentication**: Ensure that users can only access and modify their own data by implementing proper authentication and authorization in your application.
+
+## See also
+
+- [Task resource](task-resource.md)
+- [Get all users](../api-reference/get-all-users.md)
+- [Create a user](../api-reference/create-user.md)
+- [Get user by ID](../api-reference/get-user-by-id.md)
+- [Update a user](../api-reference/update-user.md)
+- [Delete a user](../api-reference/delete-user.md)
 
 

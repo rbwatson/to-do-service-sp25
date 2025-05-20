@@ -6,55 +6,51 @@ categories: ["overview"]
 importance: 10
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "2025-05-13"
+ai-generated-date: "May 20, 2025"
 nav_exclude: true
 layout: "default"
 version: "v1.0.0"
-lastUpdated: "2025-05-13"
+lastUpdated: "May 20, 2025"
 ---
 
 # Task Management API Documentation
 
-Welcome to the Task Management API documentation. This comprehensive guide provides all the information you need to integrate and work with our Task Management service.
+Welcome to the Task Management API documentation. This API provides a comprehensive solution for managing to-do tasks and users in your applications.
 
-## Overview
+## What is the Task Management API?
 
-The Task Management API allows you to create, read, update, and delete tasks and users in a task management system. With this API, you can:
+The Task Management API is a RESTful service that enables you to create, read, update, and delete tasks and users. It's designed to help you build task management features into your applications with minimal effort.
 
-- Manage users who can create and be assigned to tasks
-- Create and manage tasks with various properties including title, description, status, and due dates
-- Track task status throughout its lifecycle
-- Set reminders for upcoming tasks
+## Key features
 
-## Key Features
+- **User management**: Create and manage user accounts
+- **Task management**: Create and manage to-do tasks with due dates and reminders
+- **Task statuses**: Track task progress with predefined status values
+- **Pagination**: Navigate through large collections of resources
+- **Sorting**: Order resources based on specific fields
+- **Filtering**: Filter tasks by status
 
-- **RESTful API Design**: Consistent and predictable resource-oriented URLs
-- **JSON Format**: All requests and responses use JSON format
-- **Authentication**: Secure your API access with bearer token authentication
-- **Pagination**: Navigate through large collections of resources efficiently
-- **Sorting**: Order resources by various properties
-- **Error Handling**: Comprehensive error responses with clear messages
+## Getting started
 
-## Getting Started
+If you're new to the Task Management API, we recommend starting with the following resources:
 
-To get started with the Task Management API:
+- [Getting started guide](getting-started.md): Learn how to set up and make your first API request
+- [Core concepts](core-concepts.md): Understand the fundamental concepts of the API
+- [API reference](api-reference.md): Explore the complete API reference documentation
 
-1. Check out the [Getting Started Guide](getting-started.md) for a quick introduction
-2. Understand the [Core Concepts](core-concepts.md) behind the API
-3. Explore the available [API Resources](resources.md)
-4. Reference the [API Endpoints](api-reference.md) for detailed implementation
-5. Follow our [Tutorials & Guides](tutorials.md) for common use cases
+## Resource overview
 
-## API Base URL
+The API provides access to two main resources:
 
-All API requests should be made to: `https://api.taskmanagement.example.com/v1`
+- **Users**: Represent individuals who can create and manage tasks
+- **Tasks**: Represent to-do items with titles, descriptions, due dates, and statuses
 
-## API Support
+## Authentication
 
-If you need assistance with the API:
+All API requests require authentication using bearer tokens. Learn more in the [authentication guide](getting-started/authentication.md).
 
-- Check our [Support & FAQ](support.md) section
-- Review [Troubleshooting](support/troubleshooting.md) for common issues
-- Contact our support team through the [Support Resources](support/support-resources.md)
+## Support
+
+If you need help using the API, check out the [support resources](support.md) or visit the [FAQ](support/faq.md).
 
 

@@ -7,57 +7,67 @@ importance: 5
 has_toc: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "2025-05-13"
+ai-generated-date: "May 20, 2025"
 nav_order: "8"
 layout: "default"
 version: "v1.0.0"
-lastUpdated: "2025-05-13"
+lastUpdated: "May 20, 2025"
 ---
 
 # Developer Resources
 
-This section provides additional resources to help developers working with the Task Management API, including developer tools, code examples, and version information.
+This page provides additional resources to help you develop with the Task Management API more effectively.
 
-## In This Section
+## Code examples
 
-The Developer Resources section includes the following topics:
-
-| Resource | Description |
-|----------|-------------|
-| [API Changelog](/developer-resources/api-changelog.md) | History of changes to the API across versions |
-| [Postman Collection](/developer-resources/postman-collection.md) | How to use the Postman collection for testing |
-| [Code Examples](/developer-resources/code-examples.md) | Example code in various programming languages |
-
-## Development Tools
-
-The following tools can help you develop and test with the Task Management API:
-
-- **API Key Management Console**: Manage your API keys and access
-- **Request Logs**: View logs of your recent API requests
-- **API Status Dashboard**: Check the current status of the API
-- **OpenAPI Specification**: Download the OpenAPI spec for use in code generation tools
-
-## Community Resources
-
-Connect with other developers working with the Task Management API:
-
-- **Developer Forum**: Discuss implementation approaches and ask questions
-- **GitHub Repository**: Find open source tools and libraries
-- **Stack Overflow**: Find answers to common questions (tagged with 'task-management-api')
-
-## SDK Libraries
-
-Official client libraries for common programming languages:
+The [Code examples](developer-resources/code-examples.md) page contains reusable code snippets and examples for common operations in multiple programming languages:
 
 - JavaScript/Node.js
 - Python
-- Java
-- Ruby
-- PHP
+- cURL
 
-## Next Steps
+These examples cover everything from authentication to advanced API usage patterns.
 
-After exploring these developer resources, you might want to:
+## API changelog
 
-- Review [Advanced Topics](./advanced.md) for optimization and security best practices
-- Visit the [Support & FAQ](./support.md) section if you need assistance
+Stay updated on API changes by checking the [API changelog](developer-resources/api-changelog.md). This page documents:
+
+- New features
+- Bug fixes
+- Breaking changes
+- Deprecation notices
+
+## Postman collection
+
+For testing and exploring the API, use our [Postman collection](developer-resources/postman-collection.md). This resource provides:
+
+- Ready-to-use API requests
+- Environment variables for easy configuration
+- Request examples with sample data
+- Testing scripts
+
+## Available resources
+
+| Resource | Description | Format |
+|----------|-------------|--------|
+| [Code examples](developer-resources/code-examples.md) | Reusable code in multiple languages | Markdown, code snippets |
+| [API changelog](developer-resources/api-changelog.md) | History of API changes | Markdown |
+| [Postman collection](developer-resources/postman-collection.md) | Collection for API testing | Postman JSON |
+
+## Community resources
+
+While not officially supported, these community resources might be helpful:
+
+- GitHub repositories with client libraries
+- Blog posts about API integration
+- Community forums
+
+## Support resources
+
+If you need additional help, check out the [Support & FAQ](support.md) section for:
+
+- Frequently asked questions
+- Troubleshooting guides
+- Support contact information
+
+

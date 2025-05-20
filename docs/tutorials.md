@@ -7,54 +7,52 @@ importance: 7
 has_toc: false
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "2025-05-13"
+ai-generated-date: "May 20, 2025"
 nav_order: "6"
 layout: "default"
 version: "v1.0.0"
-lastUpdated: "2025-05-13"
+lastUpdated: "May 20, 2025"
 ---
 
 # Tutorials & Guides
 
-This section provides practical, step-by-step tutorials and guides to help you implement common use cases with the Task Management API.
+This section provides step-by-step tutorials and practical guides to help you quickly start using the Task Management API in common scenarios.
 
-## Available Tutorials
+## Getting started tutorials
 
-| Tutorial | Description |
-|----------|-------------|
-| [Getting Started with Users](./tutorials/getting-started-with-users.md) | Learn how to create, list, update, and delete users |
-| [Task Management Workflow](./tutorials/task-management-workflow.md) | Implement a complete task management workflow |
-| [Implementing Reminders](./tutorials/implementing-reminders.md) | Use the warningOffset property to set up task reminders |
-| [Integration Patterns](./tutorials/integration-patterns.md) | Common patterns for integrating with other systems |
+These tutorials guide you through basic operations with the API:
 
-## Use Case Examples
+- [Getting started with users](tutorials/getting-started-with-users.md): Learn how to create, list, update, and delete users
+- [Task management workflow](tutorials/task-management-workflow.md): Implement a complete task management workflow from creation to completion
 
-These tutorials cover common use cases that you might encounter when working with the Task Management API:
+## Implementation guides
 
-- Setting up a new user account
-- Creating and assigning tasks to users
-- Tracking task progress through status updates
-- Implementing deadline reminders for approaching tasks
-- Integrating task management with calendars or project management tools
+These guides help you implement specific features using the API:
 
-## Skill Level
+- [Implementing reminders](tutorials/implementing-reminders.md): Use the `warningOffset` property to implement a reminder system
+- [Integration patterns](tutorials/integration-patterns.md): Common patterns for integrating the API with other systems
 
-The tutorials in this section are primarily designed for developers who are new to the Task Management API but have some experience with REST APIs in general. More advanced topics are covered in the [Advanced Topics](./advanced.md) section.
+## Available tutorials
 
-## Tools Used
+| Tutorial | Description | Level |
+|----------|-------------|-------|
+| [Getting started with users](tutorials/getting-started-with-users.md) | Create, list, update, and delete users | Beginner |
+| [Task management workflow](tutorials/task-management-workflow.md) | Implement a complete task management workflow | Beginner |
+| [Implementing reminders](tutorials/implementing-reminders.md) | Create a reminder system using warningOffset | Intermediate |
+| [Integration patterns](tutorials/integration-patterns.md) | Integrate the API with other systems | Advanced |
 
-The tutorials use standard tools for working with REST APIs:
+## Tips for success
 
-- Command-line examples using cURL
-- Code examples in JavaScript and Python
-- Tool-specific examples using Postman
+- Start with the [Getting started guide](getting-started.md) before diving into specific tutorials
+- Understand the [core concepts](core-concepts.md) to make the most of the API
+- Reference the [API documentation](api-reference.md) for detailed endpoint information
+- Check the [Support & FAQ](support.md) section if you encounter any issues
 
-## Next Steps
+## Next steps
 
-After working through these tutorials, you can:
+After working through these tutorials, you might want to explore:
 
-- Explore the [API Reference](./api-reference.md) for detailed endpoint documentation
-- Check out [Advanced Topics](./advanced.md) for more complex use cases
-- Review [Developer Resources](./developer-resources.md) for additional tools and code examples
+- [Advanced topics](advanced.md): Learn about optimization, security, and data consistency
+- [Developer resources](developer-resources.md): Find additional resources like changelogs and tools
 
 

@@ -7,255 +7,198 @@ importance: 8
 parent: "Core Concepts"
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "2025-05-13"
+ai-generated-date: "May 20, 2025"
 nav_order: "4"
 layout: "default"
 version: "v1.0.0"
-lastUpdated: "2025-05-13"
+lastUpdated: "May 20, 2025"
 ---
 
-# Error Handling
+# Error handling
 
-The Task Management API uses conventional HTTP response codes and a consistent error response format to indicate the success or failure of API requests. This page explains how errors are structured and provides best practices for handling them in your code.
+The Task Management API uses consistent error formats to help you understand and resolve issues. This page explains the API's error handling approach and provides guidance on best practices.
 
-## HTTP Status Codes
+## Error response format
 
-The API uses the following HTTP status codes to indicate the result of a request:
+All API errors follow a consistent JSON format:
 
-| Status Code | Description |
+```json
+{
+  "code": "ERROR_CODE",
+  "message": "Human-readable error message",
+  "details": [
+    {
+      "field": "fieldName",
+      "reason": "Specific reason for the error",
+      "location": "body"
+    }
+  ],
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+}
+```
+
+### Error properties
+
+| Property | Description | Always included |
+|----------|-------------|----------------|
+| `code` | Error code that identifies the type of error | Yes |
+| `message` | Human-readable error message | Yes |
+| `details` | Array of objects with field-specific error information | No |
+| `requestId` | Unique identifier for the request, useful for troubleshooting | No |
+
+## HTTP status codes
+
+The API uses standard HTTP status codes to indicate the success or failure of requests:
+
+| Status code | Description |
 |-------------|-------------|
-| 200 - OK | The request was successful |
-| 201 - Created | The resource was successfully created |
-| 400 - Bad Request | The request was invalid or improperly formatted |
-| 401 - Unauthorized | Authentication is required or failed |
-| 403 - Forbidden | The authenticated user lacks permission for the requested operation |
-| 404 - Not Found | The requested resource does not exist |
-| 409 - Conflict | The request conflicts with the current state of the resource |
-| 422 - Unprocessable Entity | The request is properly formatted but contains semantic errors |
-| 429 - Too Many Requests | The client has exceeded rate limits |
-| 500 - Internal Server Error | Something went wrong on the server |
+| 200 OK | The request succeeded |
+| 201 Created | The request succeeded and a new resource was created |
+| 204 No Content | The request succeeded but there is no content to return |
+| 400 Bad Request | The request contains invalid parameters or fields |
+| 401 Unauthorized | Authentication is required or the provided credentials are invalid |
+| 403 Forbidden | The authenticated user does not have permission to access the resource |
+| 404 Not Found | The requested resource was not found |
+| 429 Too Many Requests | The client has sent too many requests in a given amount of time |
+| 500 Server Error | An unexpected server error occurred |
 
-## Error Response Format
+## Common error codes
 
-All error responses follow a consistent format:
+| Error code | Description |
+|------------|-------------|
+| `INVALID_FIELD` | A field value is invalid |
+| `MISSING_REQUIRED_FIELD` | A required field is missing |
+| `RESOURCE_NOT_FOUND` | The requested resource could not be found |
+| `UNAUTHORIZED` | Authentication is required |
+| `FORBIDDEN` | Permission denied |
+| `RATE_LIMIT_EXCEEDED` | Too many requests |
+| `SERVER_ERROR` | An unexpected server error occurred |
 
-```json
-{
-  "error": {
-    "code": "error_code",
-    "message": "A human-readable error message",
-    "details": {
-      // Additional error details if available
-    }
-  }
-}
-```
+## Error handling examples
 
-The `details` field is optional and may contain additional information about the error, such as specific validation errors for each field.
-
-## Common Error Codes
-
-| Error Code | HTTP Status | Description |
-|------------|-------------|-------------|
-| `invalid_request` | 400 | The request is malformed or missing required fields |
-| `unauthorized` | 401 | Invalid or missing authentication |
-| `forbidden` | 403 | The user doesn't have permission for this action |
-| `not_found` | 404 | The requested resource doesn't exist |
-| `conflict` | 409 | The request conflicts with the current state |
-| `validation_error` | 422 | The request contains invalid data |
-| `rate_limit_exceeded` | 429 | The client has sent too many requests |
-| `server_error` | 500 | An unexpected error occurred on the server |
-
-## Validation Error Example
-
-When a request fails validation, the response includes details about each invalid field:
+### Invalid field value
 
 ```json
 {
-  "error": {
-    "code": "validation_error",
-    "message": "The request contains invalid data",
-    "details": {
-      "title": "Title is required",
-      "dueDate": "Due date must be in the future",
-      "status": "Status must be one of: TODO, IN_PROGRESS, REVIEW, DONE, CANCELED"
+  "code": "INVALID_FIELD",
+  "message": "The field `contactEmail` must be a valid email address",
+  "details": [
+    {
+      "field": "contactEmail",
+      "reason": "Invalid format",
+      "location": "body"
     }
-  }
+  ],
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
 }
 ```
 
-## Error Handling Best Practices
+### Missing required field
 
-### 1. Check HTTP Status Codes
-
-Always check the HTTP status code before processing the response body:
-
-```javascript
-// JavaScript example
-if (response.status >= 200 && response.status < 300) {
-  // Success - process the response
-} else {
-  // Error - handle according to status code
+```json
+{
+  "code": "MISSING_REQUIRED_FIELD",
+  "message": "The `lastName` field is required.",
+  "details": [
+    {
+      "field": "lastName",
+      "reason": "Is required",
+      "location": "body"
+    }
+  ],
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
 }
 ```
 
-### 2. Extract Error Information
+### Resource not found
 
-Parse the error response to get detailed information:
+```json
+{
+  "code": "RESOURCE_NOT_FOUND",
+  "message": "The requested resource could not be found",
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+}
+```
+
+## Best practices for error handling
+
+1. **Check HTTP status codes first**: The HTTP status code provides the first indication of what went wrong.
+
+2. **Examine the error code**: The `code` field provides a specific error type that you can use to handle different errors in your application.
+
+3. **Display error messages to users**: The `message` field contains a human-readable error message that you can display to your users.
+
+4. **Check field-specific errors**: The `details` array provides field-level validation errors that you can use to highlight specific form fields.
+
+5. **Log the request ID**: The `requestId` field is useful for troubleshooting and should be included in any error logs.
+
+6. **Implement retry logic for 429 errors**: When you receive a 429 Too Many Requests response, use the Retry-After header to determine when to retry the request.
+
+7. **Handle authentication errors gracefully**: Redirect users to a login page or prompt them to re-authenticate when you receive 401 Unauthorized errors.
+
+## Client-side error handling example
 
 ```javascript
 // JavaScript example
-async function handleApiError(response) {
+async function makeApiRequest(endpoint, options) {
   try {
-    const errorData = await response.json();
-    console.error(`API Error (${response.status}): ${errorData.error.message}`);
+    const response = await fetch(`http://localhost:3000${endpoint}`, {
+      ...options,
+      headers: {
+        'Authorization': 'Bearer your-token-here',
+        'Content-Type': 'application/json',
+        ...options.headers
+      }
+    });
     
-    // Handle specific error codes
-    if (errorData.error.code === 'validation_error') {
-      handleValidationErrors(errorData.error.details);
+    // If the response is not OK, parse the error
+    if (!response.ok) {
+      const errorData = await response.json();
+      
+      // Handle specific error codes
+      switch (errorData.code) {
+        case 'UNAUTHORIZED':
+          // Redirect to login page
+          redirectToLogin();
+          break;
+        case 'RATE_LIMIT_EXCEEDED':
+          // Implement retry with exponential backoff
+          const retryAfter = response.headers.get('Retry-After') || 5;
+          return await retryRequest(endpoint, options, retryAfter);
+        case 'INVALID_FIELD':
+        case 'MISSING_REQUIRED_FIELD':
+          // Display field-specific errors
+          displayFieldErrors(errorData.details);
+          break;
+        default:
+          // Display generic error message
+          displayErrorMessage(errorData.message);
+      }
+      
+      // Log the error with request ID
+      console.error(`API Error (${errorData.requestId}):`, errorData);
+      
+      throw errorData;
     }
     
-    return errorData.error;
-  } catch (e) {
-    console.error(`Failed to parse error response: ${e}`);
-    return { code: 'unknown_error', message: 'An unknown error occurred' };
-  }
-}
-```
-
-### 3. Implement Retry Logic for Certain Errors
-
-For transient errors like rate limiting (429), implement retry logic with exponential backoff:
-
-```javascript
-// JavaScript example
-async function fetchWithRetry(url, options, maxRetries = 3) {
-  let retries = 0;
-  
-  while (retries < maxRetries) {
-    const response = await fetch(url, options);
-    
-    if (response.status !== 429) {
-      return response;
+    // If the response is OK but there's no content, return null
+    if (response.status === 204) {
+      return null;
     }
     
-    // Get retry-after header or use exponential backoff
-    const retryAfter = response.headers.get('Retry-After') || Math.pow(2, retries);
-    const delay = parseInt(retryAfter, 10) * 1000;
-    
-    console.log(`Rate limited, retrying after ${delay}ms (retry ${retries + 1}/${maxRetries})`);
-    await new Promise(resolve => setTimeout(resolve, delay));
-    
-    retries++;
+    // Otherwise, parse and return the JSON response
+    return await response.json();
+  } catch (error) {
+    // Handle network errors or JSON parsing errors
+    console.error('API Request Failed:', error);
+    throw error;
   }
-  
-  // If we've exhausted all retries
-  const response = await fetch(url, options);
-  return response;
 }
 ```
 
-### 4. Gracefully Handle 404 Errors
+## For more information
 
-Handle 404 errors gracefully, especially for `GET` requests:
+- [API reference](../api-reference.md): Detailed endpoint documentation including possible error responses
+- [Error responses reference](../api-reference/error-responses.md): Comprehensive list of all possible error responses
 
-```javascript
-// JavaScript example
-async function getTask(taskId) {
-  const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
-    headers: { 'Authorization': `Bearer ${API_KEY}` }
-  });
-  
-  if (response.status === 404) {
-    console.warn(`Task ${taskId} not found`);
-    return null;
-  } else if (!response.ok) {
-    throw await handleApiError(response);
-  }
-  
-  return response.json();
-}
-```
 
-### 5. Validate Input Before Sending
-
-Validate user input client-side before sending requests to reduce validation errors:
-
-```javascript
-// JavaScript example
-function validateTask(task) {
-  const errors = {};
-  
-  if (!task.title || task.title.trim() === '') {
-    errors.title = 'Title is required';
-  }
-  
-  if (task.dueDate && new Date(task.dueDate) <= new Date()) {
-    errors.dueDate = 'Due date must be in the future';
-  }
-  
-  const validStatuses = ['TODO', 'IN_PROGRESS', 'REVIEW', 'DONE', 'CANCELED'];
-  if (task.status && !validStatuses.includes(task.status)) {
-    errors.status = `Status must be one of: ${validStatuses.join(', ')}`;
-  }
-  
-  return Object.keys(errors).length > 0 ? errors : null;
-}
-```
-
-## Language-Specific Examples
-
-### Python
-
-```python
-import requests
-
-def handle_api_error(response):
-    try:
-        error_data = response.json()
-        print(f"API Error ({response.status_code}): {error_data['error']['message']}")
-        return error_data['error']
-    except Exception as e:
-        print(f"Failed to parse error response: {e}")
-        return {"code": "unknown_error", "message": "An unknown error occurred"}
-
-def get_task(api_key, task_id):
-    response = requests.get(
-        f"https://api.taskmanagement.example.com/v1/tasks/{task_id}",
-        headers={"Authorization": f"Bearer {api_key}"}
-    )
-    
-    if response.status_code == 404:
-        print(f"Task {task_id} not found")
-        return None
-    elif not response.ok:
-        raise Exception(handle_api_error(response))
-    
-    return response.json()
-```
-
-### cURL
-
-When using cURL, you'll need to handle errors manually by checking the response:
-
-```bash
-response=$(curl -s -w "\n%{http_code}" https://api.taskmanagement.example.com/v1/tasks/non-existent-id \
-  -H "Authorization: Bearer YOUR_API_KEY")
-
-http_code=$(echo "$response" | tail -n1)
-body=$(echo "$response" | sed '$d')
-
-if [ "$http_code" -ge 400 ]; then
-  echo "Error (HTTP $http_code):"
-  echo "$body" | jq .
-else
-  echo "Success:"
-  echo "$body" | jq .
-fi
-```
-
-## See Also
-
-- [API Reference - Error Responses](../api-reference/error-responses.md)
-- [Rate Limiting](../getting-started/rate-limiting.md)
-- [Troubleshooting](../support/troubleshooting.md)

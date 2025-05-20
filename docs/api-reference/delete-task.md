@@ -6,17 +6,19 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/tasks/{taskId}"]
 related_pages: ["task-resource"]
-parent: "API Reference"
+parent: "API Reference" 
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "2025-05-13"
+ai-generated-date: "May 20, 2025"
 nav_order: "11"
 layout: "default"
 version: "v1.0.0"
-lastUpdated: "2025-05-13"
+lastUpdated: "May 20, 2025"
 ---
 
-# Delete a Task
+# Delete a task
+
+Removes a task from the system. This operation is irreversible.
 
 ## Endpoint
 
@@ -24,216 +26,239 @@ lastUpdated: "2025-05-13"
 DELETE /tasks/{taskId}
 ```
 
-This endpoint deletes a specific task from the system. Once deleted, the task cannot be recovered.
+## Path parameters
 
-## Path Parameters
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| `taskId` | integer | The unique identifier of the task to delete | Yes |
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `taskId` | String | Unique identifier of the task to delete |
+## Request example
 
-## Request Example
+```bash
+# cURL example
+curl -X DELETE http://localhost:3000/tasks/1 \
+  -H "Authorization: Bearer your-token-here"
+```
 
-```http
-DELETE /tasks/task123
-Authorization: Bearer YOUR_API_KEY
+```python
+# Python example
+import requests
+
+url = "http://localhost:3000/tasks/1"
+headers = {
+    "Authorization": "Bearer your-token-here"
+}
+
+response = requests.delete(url, headers=headers)
+print(response.status_code)
+```
+
+```javascript
+// JavaScript example
+fetch('http://localhost:3000/tasks/1', {
+  method: 'DELETE',
+  headers: {
+    'Authorization': 'Bearer your-token-here'
+  }
+})
+.then(response => {
+  if (response.ok) {
+    console.log('Task deleted successfully');
+  } else {
+    throw new Error('Failed to delete task');
+  }
+})
+.catch(error => console.error(error));
 ```
 
 ## Response
 
-### Success Response (204 No Content)
+### Success response (204 No Content)
 
-A successful deletion returns a `204 No Content` status code with no response body, indicating that the task has been successfully deleted.
+A successful response returns an HTTP 204 status code with no content in the response body.
 
-### Error Responses
+### Error responses
 
-| Status Code | Description |
-|-------------|-------------|
-| 401 | Unauthorized (missing or invalid authentication) |
-| 403 | Forbidden (insufficient permissions to delete this task) |
-| 404 | Not Found (task with the specified ID does not exist) |
+| Status code | Description | Error code |
+|-------------|-------------|------------|
+| 400 Bad Request | Invalid task ID format | `INVALID_FIELD` |
+| 401 Unauthorized | Missing or invalid authentication | `UNAUTHORIZED` |
+| 403 Forbidden | Insufficient permissions | `FORBIDDEN` |
+| 404 Not Found | Task not found | `RESOURCE_NOT_FOUND` |
+| 429 Too Many Requests | Rate limit exceeded | `RATE_LIMIT_EXCEEDED` |
+| 500 Server Error | Unexpected server error | `SERVER_ERROR` |
 
-#### Example Error Response (403 Forbidden)
-
-```json
-{
-  "error": {
-    "code": "permission_denied",
-    "message": "You don't have permission to delete this task"
-  }
-}
-```
-
-For details on error responses, see [Error Responses](./api-reference/error-responses.md).
+See [Error responses](error-responses.md) for details on error response format.
 
 ## Authentication
 
-This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
+This endpoint requires authentication using a bearer token:
 
 ```
-Authorization: Bearer YOUR_API_KEY
+Authorization: Bearer your-token-here
 ```
 
-The authenticated user must have appropriate permissions to delete the requested task:
-- `admin` users can delete any task
-- `manager` users can delete any task
-- `member` users can only delete tasks they created (and possibly tasks assigned to them, depending on system configuration)
+## Important considerations
 
-## Important Considerations
+- This operation is irreversible. Once a task is deleted, it cannot be recovered.
+- The `taskId` must be a valid integer that corresponds to an existing task. If the specified task does not exist, the API will return a 404 Not Found response.
+- The API will not return a response body on success, only an HTTP 204 status code.
+- Only the user who owns the task or a user with appropriate permissions can delete a task.
 
-- **Permanent Operation**: Deletion is permanent and cannot be undone. Consider updating the task status to "CANCELED" instead if you might need to reference the task later.
+## Best practices
 
-- **Related Records**: When a task is deleted, any records that directly reference it may also be affected. For example, if you have a comments system linked to tasks, comments on the deleted task might be deleted as well.
+- Implement a confirmation step in your application before sending the delete request to prevent accidental deletions.
+- Consider implementing a soft delete mechanism in your application if you need the ability to recover deleted tasks.
+- As an alternative to deletion, you might want to update the task status to `CANCELLED` to maintain a history of tasks.
+- Update your application's state after a successful deletion to reflect the change.
+- Handle the 404 Not Found response gracefully if the task has already been deleted.
 
-- **Alternative to Deletion**: If you need to keep a record of all tasks for audit or reporting purposes, consider implementing a "soft delete" in your application by changing the task status to "CANCELED" instead of using this endpoint.
+## Code examples
 
-- **Bulk Operations**: This endpoint only deletes a single task. For bulk deletions, you'll need to make multiple API calls.
-
-## Best Practices
-
-- Confirm deletion with the user before making the API request
-- Consider using status updates instead of deletion for maintaining historical records
-- Implement proper error handling in your application
-- Keep track of deleted tasks in your application if needed for audit purposes
-- Check task ownership and permissions in your application before attempting deletion
-
-## Code Examples
-
-### JavaScript
+### Delete a task with error handling
 
 ```javascript
+// JavaScript example: Delete a task with error handling
 async function deleteTask(taskId) {
   try {
-    const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${API_KEY}`
+        'Authorization': 'Bearer your-token-here'
       }
     });
     
-    if (response.status === 204) {
-      return true; // Successfully deleted
-    }
-    
-    if (response.status === 404) {
-      console.warn(`Task with ID ${taskId} not found`);
-      return false;
-    }
-    
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`Failed to delete task: ${errorData.error.message}`);
+      let errorMessage = `Failed to delete task with ID ${taskId}`;
+      
+      if (response.status === 404) {
+        errorMessage = `Task with ID ${taskId} not found`;
+      }
+      
+      // Try to get more detailed error information if available
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.message || errorMessage;
+      } catch (parseError) {
+        // Unable to parse error response as JSON, use default message
+      }
+      
+      throw new Error(errorMessage);
     }
     
-    return false; // Should not reach here if properly handled above
+    return true; // Successful deletion
   } catch (error) {
-    console.error(`Error deleting task ${taskId}:`, error);
+    console.error(`Error deleting task with ID ${taskId}:`, error);
     throw error;
   }
 }
 
-// Example usage
+// Usage example
 try {
-  // Confirm with the user before deletion
-  const confirmDelete = confirm(`Are you sure you want to delete this task? This action cannot be undone.`);
-  
-  if (confirmDelete) {
-    const result = await deleteTask('task123');
-    
-    if (result) {
-      console.log('Task successfully deleted');
-      // Update your UI to remove the task
-      document.getElementById('task-123').remove();
-    } else {
-      console.log('Task was not deleted');
-    }
-  } else {
-    console.log('Deletion canceled by user');
+  const success = await deleteTask(1);
+  if (success) {
+    console.log('Task deleted successfully');
+    // Update application state to reflect deletion
+    // E.g., remove the task from the tasks list in the UI
   }
 } catch (error) {
-  console.error('Failed to delete task:', error);
+  console.error('Failed to delete task:', error.message);
   // Show error message to the user
-  displayErrorMessage(`Failed to delete task: ${error.message}`);
 }
 ```
 
-### Python
-
 ```python
-import requests
-
-def delete_task(api_key, task_id):
-    """
-    Delete a task from the system.
-    
-    Args:
-        api_key (str): API key for authentication
-        task_id (str): The unique identifier of the task to delete
-    
-    Returns:
-        bool: True if task was successfully deleted
+# Python example: Delete a task with error handling
+def delete_task(token, task_id):
+    try:
+        url = f"http://localhost:3000/tasks/{task_id}"
+        headers = {
+            "Authorization": f"Bearer {token}"
+        }
         
-    Raises:
-        Exception: If the API request fails
-    """
-    url = f'https://api.taskmanagement.example.com/v1/tasks/{task_id}'
-    headers = {
-        'Authorization': f'Bearer {api_key}'
+        response = requests.delete(url, headers=headers)
+        
+        if response.status_code == 204:
+            return True  # Successful deletion
+        
+        if response.status_code == 404:
+            print(f"Task with ID {task_id} not found")
+            return False
+            
+        # Handle other error responses
+        try:
+            error_data = response.json()
+            print(f"API error: {error_data.get('message', f'Status code: {response.status_code}')}")
+        except ValueError:
+            # Could not parse error response as JSON
+            print(f"Error deleting task. Status code: {response.status_code}")
+        
+        return False
+    except Exception as e:
+        print(f"Error deleting task: {str(e)}")
+        return False
+
+# Usage example
+success = delete_task("your-token-here", 1)
+
+if success:
+    print("Task deleted successfully")
+    # Update application state to reflect deletion
+    # E.g., remove the task from the tasks list in the UI
+else:
+    print("Failed to delete task")
+    # Show error message to the user
+```
+
+## Alternative approach: Cancel instead of delete
+
+In some cases, you might want to maintain a history of tasks rather than deleting them. Here's an example of marking a task as cancelled instead of deleting it:
+
+```javascript
+// JavaScript example: Mark a task as cancelled instead of deleting
+async function cancelTask(taskId) {
+  try {
+    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': 'Bearer your-token-here',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        taskStatus: 'CANCELLED'
+      })
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || `Failed to cancel task with ID ${taskId}`);
     }
     
-    response = requests.delete(url, headers=headers)
-    
-    if response.status_code == 204:
-        return True
-    elif response.status_code == 404:
-        print(f"Task with ID {task_id} not found")
-        return False
-    elif response.status_code == 403:
-        raise Exception(f"You don't have permission to delete this task")
-    else:
-        error_data = response.json()
-        raise Exception(f"API error: {error_data['error']['message']}")
+    return await response.json();
+  } catch (error) {
+    console.error(`Error cancelling task with ID ${taskId}:`, error);
+    throw error;
+  }
+}
 
-# Example usage
-try:
-    # Prompt for confirmation
-    task_id = 'task123'
-    confirm = input(f"Are you sure you want to delete task {task_id}? (yes/no): ")
-    
-    if confirm.lower() == 'yes':
-        success = delete_task('YOUR_API_KEY', task_id)
-        
-        if success:
-            print(f"Task {task_id} was successfully deleted")
-            # Update your application state
-        else:
-            print(f"Task was not deleted")
-    else:
-        print("Deletion cancelled")
-        
-except Exception as e:
-    print(f"Error deleting task: {e}")
+// Usage example
+try {
+  const cancelledTask = await cancelTask(1);
+  console.log(`Task "${cancelledTask.taskTitle}" cancelled successfully`);
+} catch (error) {
+  console.error('Failed to cancel task:', error.message);
+}
 ```
 
-### cURL
+## Related resources
 
-```bash
-# Delete a task
-curl -X DELETE "https://api.taskmanagement.example.com/v1/tasks/task123" \
-  -H "Authorization: Bearer YOUR_API_KEY"
-```
+- [Task resource](../resources/task-resource.md)
 
-## Related Resources
+## See also
 
-- [Task Resource](/resources/task-resource.md) - Detailed information about the Task resource
-- [Get All Tasks](/api-reference/get-all-tasks.md) - Retrieve a list of all tasks
-- [Get Task by ID](/api-reference/get-task-by-id.md) - Retrieve a specific task by ID
-- [Update a Task](/api-reference/update-task.md) - Update an existing task's information
-
-## See Also
-
-- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
-- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md) - Understanding task statuses and transitions
-- [Task Management Workflow](/tutorials/task-management-workflow.md) - Guide to implementing a task management workflow
+- [Get all tasks](get-all-tasks.md)
+- [Create a task](create-task.md)
+- [Get task by ID](get-task-by-id.md)
+- [Update a task](update-task.md)
 
 

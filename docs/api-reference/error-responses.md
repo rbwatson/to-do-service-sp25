@@ -4,298 +4,302 @@ description: "Reference documentation for all error responses returned by the AP
 tags: ["errors", "reference"]
 categories: ["api-reference"]
 importance: 8
-parent: "API Reference"
+parent: "API Reference" 
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "2025-05-13"
+ai-generated-date: "May 20, 2025"
 nav_order: "1"
 layout: "default"
 version: "v1.0.0"
-lastUpdated: "2025-05-13"
+lastUpdated: "May 20, 2025"
 ---
 
-# Error Responses
+# Error responses
 
-The Task Management API returns consistent error responses across all endpoints. This page documents the error response format, common error codes, and provides examples for each type of error.
+The Task Management API returns standardized error responses for all endpoints. This page documents the standard error format and common error codes you might encounter.
 
-## Error Response Format
+## Error response format
 
-All error responses follow this standard format:
+All error responses follow a consistent JSON format:
 
 ```json
 {
-  "error": {
-    "code": "error_code",
-    "message": "A human-readable error message",
-    "details": {
-      // Additional error details (optional)
+  "code": "ERROR_CODE",
+  "message": "Human-readable error message",
+  "details": [
+    {
+      "field": "fieldName",
+      "reason": "Specific reason for the error",
+      "location": "body"
     }
-  }
+  ],
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
 }
 ```
 
-* `code`: A string identifier for the type of error
-* `message`: A human-readable description of the error
-* `details`: An optional object with additional information about the error
+## Error response properties
 
-## HTTP Status Codes
+| Property | Description | Always included |
+|----------|-------------|----------------|
+| `code` | Error code identifying the type of error | Yes |
+| `message` | Human-readable error message | Yes |
+| `details` | Array of objects with field-specific error information | No |
+| `requestId` | Unique identifier for the request, useful for troubleshooting | No |
 
-The API uses standard HTTP status codes to indicate the general category of error:
+## HTTP status codes
 
-| Status Code | Category | Description |
-|-------------|----------|-------------|
-| 400 | Bad Request | The request is malformed or contains invalid parameters |
-| 401 | Unauthorized | Authentication is missing or invalid |
-| 403 | Forbidden | The authenticated user lacks permission for this operation |
-| 404 | Not Found | The requested resource does not exist |
-| 409 | Conflict | The request conflicts with the current state of the resource |
-| 422 | Unprocessable Entity | The request is well-formed but contains semantic errors |
-| 429 | Too Many Requests | The client has sent too many requests in a given time |
-| 500 | Internal Server Error | An unexpected error occurred on the server |
+The API uses standard HTTP status codes to indicate the success or failure of requests:
 
-## Common Error Codes
+| Status code | Description | Example error codes |
+|-------------|-------------|---------------------|
+| 400 Bad Request | The request contains invalid parameters or fields | `INVALID_FIELD`, `MISSING_REQUIRED_FIELD` |
+| 401 Unauthorized | Authentication is required or the provided credentials are invalid | `UNAUTHORIZED` |
+| 403 Forbidden | The authenticated user does not have permission to access the resource | `FORBIDDEN` |
+| 404 Not Found | The requested resource was not found | `RESOURCE_NOT_FOUND` |
+| 429 Too Many Requests | The client has sent too many requests in a given amount of time | `RATE_LIMIT_EXCEEDED` |
+| 500 Server Error | An unexpected server error occurred | `SERVER_ERROR` |
 
-### Authentication Errors
+## Common error codes
 
-| Error Code | HTTP Status | Description |
-|------------|-------------|-------------|
-| `missing_authentication` | 401 | No authentication credentials were provided |
-| `invalid_authentication` | 401 | The provided authentication credentials are invalid |
-| `expired_token` | 401 | The authentication token has expired |
+### INVALID_FIELD
 
-### Permission Errors
+Returned when a field value is invalid. The `details` array will contain information about which field failed validation and why.
 
-| Error Code | HTTP Status | Description |
-|------------|-------------|-------------|
-| `permission_denied` | 403 | The authenticated user does not have permission for this action |
-| `insufficient_scope` | 403 | The token does not have the required scope for this action |
-
-### Resource Errors
-
-| Error Code | HTTP Status | Description |
-|------------|-------------|-------------|
-| `resource_not_found` | 404 | The requested resource does not exist |
-| `resource_conflict` | 409 | The request conflicts with the current state of the resource |
-| `resource_gone` | 410 | The resource existed previously but has been removed |
-
-### Validation Errors
-
-| Error Code | HTTP Status | Description |
-|------------|-------------|-------------|
-| `validation_error` | 422 | The request contains invalid data |
-| `invalid_parameters` | 400 | One or more query parameters are invalid |
-| `invalid_format` | 400 | The request body format is invalid (e.g., malformed JSON) |
-| `missing_required_field` | 422 | A required field is missing from the request |
-| `invalid_field_value` | 422 | A field value is invalid (e.g., wrong type or out of range) |
-| `invalid_status_transition` | 422 | The requested status transition is not allowed |
-
-### Rate Limiting Errors
-
-| Error Code | HTTP Status | Description |
-|------------|-------------|-------------|
-| `rate_limit_exceeded` | 429 | The client has exceeded their rate limit |
-| `daily_limit_exceeded` | 429 | The client has exceeded their daily request limit |
-
-### Server Errors
-
-| Error Code | HTTP Status | Description |
-|------------|-------------|-------------|
-| `server_error` | 500 | An unexpected error occurred on the server |
-| `service_unavailable` | 503 | The service is temporarily unavailable |
-| `database_error` | 500 | An error occurred while accessing the database |
-
-## Error Examples
-
-### Authentication Error
-
-```http
-HTTP/1.1 401 Unauthorized
-Content-Type: application/json
-
+```json
 {
-  "error": {
-    "code": "invalid_authentication",
-    "message": "The provided API key is invalid or has been revoked"
-  }
-}
-```
-
-### Resource Not Found Error
-
-```http
-HTTP/1.1 404 Not Found
-Content-Type: application/json
-
-{
-  "error": {
-    "code": "resource_not_found",
-    "message": "The requested task with ID 'task123' does not exist"
-  }
-}
-```
-
-### Validation Error
-
-```http
-HTTP/1.1 422 Unprocessable Entity
-Content-Type: application/json
-
-{
-  "error": {
-    "code": "validation_error",
-    "message": "The request contains invalid data",
-    "details": {
-      "title": "Title is required",
-      "dueDate": "Due date must be in the future",
-      "status": "Status must be one of: TODO, IN_PROGRESS, REVIEW, DONE, CANCELED"
+  "code": "INVALID_FIELD",
+  "message": "The field `contactEmail` must be a valid email address",
+  "details": [
+    {
+      "field": "contactEmail",
+      "reason": "Invalid format",
+      "location": "body"
     }
-  }
+  ],
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
 }
 ```
 
-### Rate Limit Error
+### MISSING_REQUIRED_FIELD
 
-```http
-HTTP/1.1 429 Too Many Requests
-Content-Type: application/json
-Retry-After: 60
+Returned when a required field is missing from the request. The `details` array will contain information about which required field is missing.
 
+```json
 {
-  "error": {
-    "code": "rate_limit_exceeded",
-    "message": "You have exceeded the rate limit of 100 requests per minute",
-    "details": {
-      "limit": 100,
-      "remaining": 0,
-      "resetAt": "2025-05-13T15:45:00Z"
+  "code": "MISSING_REQUIRED_FIELD",
+  "message": "The `lastName` field is required.",
+  "details": [
+    {
+      "field": "lastName",
+      "reason": "Is required",
+      "location": "body"
     }
-  }
+  ],
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
 }
 ```
 
-## Common Error Scenarios
+### RESOURCE_NOT_FOUND
 
-### Missing or Invalid Authentication
+Returned when the requested resource could not be found.
 
-If you receive a `401 Unauthorized` error, check that:
-- You are including the `Authorization` header with your requests
-- The format is correct: `Authorization: Bearer YOUR_API_KEY`
-- Your API key is valid and has not expired
+```json
+{
+  "code": "RESOURCE_NOT_FOUND",
+  "message": "The requested resource could not be found",
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+}
+```
 
-### Permission Denied
+### UNAUTHORIZED
 
-If you receive a `403 Forbidden` error, check that:
-- The authenticated user has the necessary permissions for the action
-- The user's role has access to the requested resource
-- For task operations, the user may need to be the creator or assignee of the task
+Returned when authentication is required or the provided credentials are invalid.
 
-### Resource Not Found
+```json
+{
+  "code": "UNAUTHORIZED",
+  "message": "Authentication is required to access this resource",
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+}
+```
 
-If you receive a `404 Not Found` error, check that:
-- The resource ID is correct
-- The resource has not been deleted
-- You are using the correct endpoint URL
+### FORBIDDEN
 
-### Validation Errors
+Returned when the authenticated user does not have permission to access the requested resource.
 
-If you receive a `422 Unprocessable Entity` error:
-- Check the `details` field for specific validation errors
-- Ensure all required fields are provided
-- Verify that field values match the expected format and constraints
-- For status updates, ensure the transition is valid (see [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md))
+```json
+{
+  "code": "FORBIDDEN",
+  "message": "You do not have permission to access this resource",
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+}
+```
 
-## Handling Errors in Code
+### RATE_LIMIT_EXCEEDED
 
-### JavaScript Example
+Returned when the client has sent too many requests in a given amount of time. The response will include a `Retry-After` header indicating how long to wait before making a new request.
+
+```json
+{
+  "code": "RATE_LIMIT_EXCEEDED",
+  "message": "Rate limit exceeded. Try again in 30 seconds",
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+}
+```
+
+### SERVER_ERROR
+
+Returned when an unexpected server error occurs.
+
+```json
+{
+  "code": "SERVER_ERROR",
+  "message": "An unexpected error occurred. Please try again later",
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+}
+```
+
+## Field-specific error patterns
+
+### Invalid email format
+
+```json
+{
+  "code": "INVALID_FIELD",
+  "message": "The field `contactEmail` must be a valid email address",
+  "details": [
+    {
+      "field": "contactEmail",
+      "reason": "Invalid format",
+      "location": "body"
+    }
+  ],
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+}
+```
+
+### Invalid task status
+
+```json
+{
+  "code": "INVALID_FIELD",
+  "message": "The `taskStatus` value 'DONE' is not valid.",
+  "details": [
+    {
+      "field": "taskStatus",
+      "reason": "Invalid value",
+      "location": "body"
+    }
+  ],
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+}
+```
+
+### String length constraints
+
+```json
+{
+  "code": "INVALID_FIELD",
+  "message": "The field `taskTitle` must be between 1 and 80 characters",
+  "details": [
+    {
+      "field": "taskTitle",
+      "reason": "String too long",
+      "location": "body"
+    }
+  ],
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+}
+```
+
+### Numeric constraints
+
+```json
+{
+  "code": "INVALID_FIELD",
+  "message": "The field `warningOffset` must be between 0 and 64000",
+  "details": [
+    {
+      "field": "warningOffset",
+      "reason": "Value too large",
+      "location": "body"
+    }
+  ],
+  "requestId": "req-f8d31a62-e789-4856-9452-5efa50223c7a"
+}
+```
+
+## Handling errors in your application
+
+Here's an example of how to handle errors in a JavaScript application:
 
 ```javascript
-async function handleApiRequest(url, options) {
+async function makeApiRequest(endpoint, options) {
   try {
-    const response = await fetch(url, options);
+    const response = await fetch(`http://localhost:3000${endpoint}`, {
+      ...options,
+      headers: {
+        'Authorization': 'Bearer your-token-here',
+        'Content-Type': 'application/json',
+        ...options.headers
+      }
+    });
     
     if (!response.ok) {
       const errorData = await response.json();
       
-      // Handle specific error types
-      switch (errorData.error.code) {
-        case 'rate_limit_exceeded':
-          console.error('Rate limit exceeded. Try again later.');
-          // Maybe implement retry with backoff
+      // Handle specific error codes
+      switch (errorData.code) {
+        case 'UNAUTHORIZED':
+          // Redirect to login page
+          window.location.href = '/login';
           break;
-        case 'validation_error':
-          console.error('Validation error:', errorData.error.details);
-          // Maybe highlight form fields with errors
+        case 'RATE_LIMIT_EXCEEDED':
+          // Wait and retry
+          const retryAfter = response.headers.get('Retry-After') || 5;
+          console.log(`Rate limited. Retrying in ${retryAfter} seconds.`);
+          setTimeout(() => makeApiRequest(endpoint, options), retryAfter * 1000);
+          return;
+        case 'INVALID_FIELD':
+        case 'MISSING_REQUIRED_FIELD':
+          // Display field-specific errors
+          if (errorData.details) {
+            errorData.details.forEach(detail => {
+              console.error(`Field error: ${detail.field} - ${detail.reason}`);
+              // Update UI to show error next to field
+            });
+          }
           break;
         default:
-          console.error(`API Error (${response.status}):`, errorData.error.message);
+          // Display generic error message
+          console.error(`API Error: ${errorData.message}`);
       }
       
-      throw new Error(errorData.error.message);
+      // Log the error with request ID
+      console.error(`Request ID: ${errorData.requestId}`);
+      
+      throw errorData;
     }
     
     return await response.json();
   } catch (error) {
-    // Handle network errors or other exceptions
-    console.error('Request failed:', error);
+    console.error('API Request Failed:', error);
     throw error;
   }
 }
 ```
 
-### Python Example
+## Best practices
 
-```python
-import requests
+1. **Always check HTTP status codes**: The HTTP status code provides the first indication of what went wrong.
+2. **Parse error responses**: Extract the error code, message, and details to provide useful feedback to users.
+3. **Log request IDs**: The `requestId` field is valuable for troubleshooting and should be included in error logs.
+4. **Handle field-specific errors**: Use the `details` array to highlight specific form fields that need correction.
+5. **Implement retry logic for rate limiting**: When you receive a 429 status code, use the Retry-After header to determine when to retry.
 
-def handle_api_request(url, method="GET", data=None, headers=None):
-    try:
-        if method == "GET":
-            response = requests.get(url, headers=headers)
-        elif method == "POST":
-            response = requests.post(url, json=data, headers=headers)
-        elif method == "PATCH":
-            response = requests.patch(url, json=data, headers=headers)
-        elif method == "DELETE":
-            response = requests.delete(url, headers=headers)
-        else:
-            raise ValueError(f"Unsupported method: {method}")
-        
-        # Check if the request was successful
-        response.raise_for_status()
-        
-        # For non-204 responses, return the JSON data
-        if response.status_code != 204:
-            return response.json()
-        return None
-        
-    except requests.exceptions.HTTPError as e:
-        # Handle API errors
-        error_data = e.response.json()
-        error_code = error_data.get("error", {}).get("code", "unknown_error")
-        error_message = error_data.get("error", {}).get("message", "Unknown error")
-        error_details = error_data.get("error", {}).get("details", {})
-        
-        print(f"API Error ({e.response.status_code}): {error_message}")
-        
-        if error_code == "validation_error" and error_details:
-            print("Validation errors:")
-            for field, error in error_details.items():
-                print(f"  {field}: {error}")
-        
-        # Re-raise the exception with more context
-        raise Exception(f"{error_code}: {error_message}") from e
-        
-    except requests.exceptions.RequestException as e:
-        # Handle network errors
-        print(f"Request failed: {e}")
-        raise
-```
+## See also
 
-## See Also
-
-- [Core Concepts - Error Handling](../core-concepts/error-handling.md)
-- [Getting Started - Authentication](../getting-started/authentication.md)
-- [Rate Limiting](../getting-started/rate-limiting.md)
-- [Troubleshooting](../support/troubleshooting.md)
+- [Core concepts: Error handling](../core-concepts/error-handling.md)
+- [Getting started: Authentication](../getting-started/authentication.md)
 
 

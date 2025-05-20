@@ -6,17 +6,19 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/tasks/{taskId}"]
 related_pages: ["task-resource"]
-parent: "API Reference"
+parent: "API Reference" 
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "2025-05-13"
+ai-generated-date: "May 20, 2025"
 nav_order: "9"
 layout: "default"
 version: "v1.0.0"
-lastUpdated: "2025-05-13"
+lastUpdated: "May 20, 2025"
 ---
 
-# Get Task by ID
+# Get task by ID
+
+Retrieves a specific task by its unique identifier.
 
 ## Endpoint
 
@@ -24,247 +26,204 @@ lastUpdated: "2025-05-13"
 GET /tasks/{taskId}
 ```
 
-This endpoint retrieves a specific task by its unique identifier.
+## Path parameters
 
-## Path Parameters
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| `taskId` | integer | The unique identifier of the task to retrieve | Yes |
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `taskId` | String | Unique identifier of the task to retrieve |
+## Request example
 
-## Request Example
+```bash
+# cURL example
+curl -X GET http://localhost:3000/tasks/1 \
+  -H "Authorization: Bearer your-token-here"
+```
 
-```http
-GET /tasks/task123
-Authorization: Bearer YOUR_API_KEY
+```python
+# Python example
+import requests
+
+url = "http://localhost:3000/tasks/1"
+headers = {
+    "Authorization": "Bearer your-token-here"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())
+```
+
+```javascript
+// JavaScript example
+fetch('http://localhost:3000/tasks/1', {
+  headers: {
+    'Authorization': 'Bearer your-token-here'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data));
 ```
 
 ## Response
 
-### Success Response (200 OK)
+### Success response (200 OK)
 
 ```json
 {
-  "id": "task123",
-  "title": "Implement authentication",
-  "description": "Add token-based authentication to the application",
-  "status": "IN_PROGRESS",
-  "priority": "HIGH",
-  "createdBy": "user456",
-  "assigneeId": "user789",
-  "dueDate": "2025-06-01T17:00:00Z",
-  "warningOffset": 24,
-  "tags": ["authentication", "security", "api"],
-  "createdAt": "2025-05-01T10:30:00Z",
-  "updatedAt": "2025-05-13T14:25:00Z"
+  "taskId": 1,
+  "userId": 1,
+  "taskTitle": "Complete project proposal",
+  "taskDescription": "Finish the proposal for the new client project",
+  "taskStatus": "IN_PROGRESS",
+  "dueDate": "2025-06-15T17:00:00-05:00",
+  "warningOffset": 120
 }
 ```
 
-### Error Responses
+### Error responses
 
-| Status Code | Description |
-|-------------|-------------|
-| 401 | Unauthorized (missing or invalid authentication) |
-| 403 | Forbidden (insufficient permissions to view this task) |
-| 404 | Not Found (task with the specified ID does not exist) |
+| Status code | Description | Error code |
+|-------------|-------------|------------|
+| 400 Bad Request | Invalid task ID format | `INVALID_FIELD` |
+| 401 Unauthorized | Missing or invalid authentication | `UNAUTHORIZED` |
+| 403 Forbidden | Insufficient permissions | `FORBIDDEN` |
+| 404 Not Found | Task not found | `RESOURCE_NOT_FOUND` |
+| 429 Too Many Requests | Rate limit exceeded | `RATE_LIMIT_EXCEEDED` |
+| 500 Server Error | Unexpected server error | `SERVER_ERROR` |
 
-#### Example Error Response (404 Not Found)
-
-```json
-{
-  "error": {
-    "code": "resource_not_found",
-    "message": "Task with ID 'task123' not found"
-  }
-}
-```
-
-For details on error responses, see [Error Responses](./api-reference/error-responses.md).
+See [Error responses](error-responses.md) for details on error response format.
 
 ## Authentication
 
-This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
+This endpoint requires authentication using a bearer token:
 
 ```
-Authorization: Bearer YOUR_API_KEY
+Authorization: Bearer your-token-here
 ```
 
-The authenticated user must have appropriate permissions to view the requested task:
-- `admin` and `manager` users can view any task
-- `member` users can only view tasks they created or are assigned to
+## Important considerations
 
-## Important Considerations
+- The `taskId` must be a valid integer that corresponds to an existing task.
+- If the specified task does not exist, the API will return a 404 Not Found response.
+- This endpoint returns a single task object, not an array.
 
-- **Task ID Format**: Task IDs are auto-generated strings assigned by the system when the task is created.
+## Best practices
 
-- **Permission Restrictions**: If a user attempts to access a task they don't have permission to view, a `403 Forbidden` error will be returned rather than a `404 Not Found`, for security reasons.
+- Cache task details when appropriate to reduce API calls.
+- Implement proper error handling to deal with cases where the task does not exist.
+- Use this endpoint when you need detailed information about a specific task rather than filtering the GET /tasks endpoint.
 
-- **Date Format**: The `dueDate` and timestamp fields (`createdAt`, `updatedAt`) are returned in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ).
+## Code examples
 
-- **Referenced Users**: The `createdBy` and `assigneeId` fields contain user IDs. To get the full user details, you'll need to make additional API calls to the user endpoints.
-
-## Best Practices
-
-- Cache task data when appropriate to reduce API calls, especially for frequently accessed tasks.
-
-- Handle 404 errors gracefully in your application, providing a user-friendly message when a task is not found.
-
-- Use the task information to build detailed task views in your application, showing all relevant properties.
-
-- Check the task's status and due date to highlight tasks that need attention, such as overdue tasks or tasks in specific statuses.
-
-## Code Examples
-
-### JavaScript
+### Retrieve a task by ID with error handling
 
 ```javascript
+// JavaScript example: Retrieve a task by ID with error handling
 async function getTaskById(taskId) {
   try {
-    const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
       headers: {
-        'Authorization': `Bearer ${API_KEY}`
+        'Authorization': 'Bearer your-token-here'
       }
     });
     
-    if (response.status === 404) {
-      console.warn(`Task with ID ${taskId} not found`);
-      return null;
-    }
-    
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(`Error retrieving task: ${errorData.error.message}`);
+      
+      if (response.status === 404) {
+        throw new Error(`Task with ID ${taskId} not found`);
+      }
+      
+      throw new Error(errorData.message || `Failed to retrieve task with ID ${taskId}`);
     }
     
     return await response.json();
   } catch (error) {
-    console.error(`Failed to get task ${taskId}:`, error);
+    console.error(`Error retrieving task with ID ${taskId}:`, error);
     throw error;
   }
 }
 
-// Example usage
+// Usage example
 try {
-  const task = await getTaskById('task123');
+  const task = await getTaskById(1);
+  console.log('Task details:', task);
   
-  if (task) {
-    console.log(`Task: ${task.title}`);
-    console.log(`Status: ${task.status}`);
-    console.log(`Priority: ${task.priority}`);
-    
-    if (task.dueDate) {
-      const dueDate = new Date(task.dueDate);
-      const now = new Date();
-      
-      // Check if task is overdue
-      if (task.status !== 'DONE' && task.status !== 'CANCELED' && dueDate < now) {
-        console.log(`⚠️ OVERDUE by ${Math.floor((now - dueDate) / (1000 * 60 * 60 * 24))} days`);
-      } else {
-        console.log(`Due: ${dueDate.toLocaleDateString()}`);
-      }
-    }
-    
-    if (task.tags && task.tags.length > 0) {
-      console.log(`Tags: ${task.tags.join(', ')}`);
-    }
-  } else {
-    console.log('Task not found');
+  // Check if task is due soon
+  const dueDate = new Date(task.dueDate);
+  const now = new Date();
+  const timeUntilDue = dueDate - now;
+  const hoursUntilDue = timeUntilDue / (1000 * 60 * 60);
+  
+  if (hoursUntilDue < 24) {
+    console.log(`Task "${task.taskTitle}" is due in less than 24 hours!`);
   }
 } catch (error) {
-  console.error('Error fetching task:', error);
+  console.error('Failed to retrieve task:', error.message);
 }
 ```
 
-### Python
-
 ```python
-import requests
+# Python example: Retrieve a task by ID with error handling
 from datetime import datetime
+import requests
 
-def get_task_by_id(api_key, task_id):
-    """
-    Retrieve a specific task by its ID.
-    
-    Args:
-        api_key (str): API key for authentication
-        task_id (str): The unique identifier of the task
-    
-    Returns:
-        dict: Task data if found, None if not found
+def get_task_by_id(token, task_id):
+    try:
+        url = f"http://localhost:3000/tasks/{task_id}"
+        headers = {
+            "Authorization": f"Bearer {token}"
+        }
         
-    Raises:
-        Exception: For API errors other than 404 Not Found
-    """
-    url = f'https://api.taskmanagement.example.com/v1/tasks/{task_id}'
-    headers = {
-        'Authorization': f'Bearer {api_key}'
-    }
-    
-    response = requests.get(url, headers=headers)
-    
-    if response.status_code == 200:
+        response = requests.get(url, headers=headers)
+        
+        if response.status_code == 404:
+            print(f"Task with ID {task_id} not found")
+            return None
+            
+        response.raise_for_status()  # Raise exception for other 4XX/5XX status codes
+        
         return response.json()
-    elif response.status_code == 404:
-        print(f"Task with ID {task_id} not found")
+    except requests.exceptions.HTTPError as e:
+        # Handle API errors
+        try:
+            error_data = e.response.json()
+            print(f"API error: {error_data.get('message', str(e))}")
+        except ValueError:
+            # Could not parse error response as JSON
+            print(f"Error retrieving task: {str(e)}")
         return None
-    elif response.status_code == 403:
-        print(f"You don't have permission to view this task")
+    except Exception as e:
+        print(f"Error retrieving task: {str(e)}")
         return None
-    else:
-        error_data = response.json()
-        raise Exception(f"API error: {error_data['error']['message']}")
 
-# Example usage
-try:
-    task = get_task_by_id('YOUR_API_KEY', 'task123')
+# Usage example
+task = get_task_by_id("your-token-here", 1)
+
+if task:
+    print(f"Task details: {task}")
     
-    if task:
-        print(f"Task: {task['title']}")
-        print(f"Status: {task['status']}")
-        print(f"Priority: {task['priority']}")
-        
-        if 'dueDate' in task and task['dueDate']:
-            # Parse the ISO date string
-            due_date = datetime.fromisoformat(task['dueDate'].replace('Z', '+00:00'))
-            now = datetime.now()
-            
-            # Check if task is overdue
-            if task['status'] not in ['DONE', 'CANCELED'] and due_date < now:
-                days_overdue = (now - due_date).days
-                print(f"⚠️ OVERDUE by {days_overdue} days")
-            else:
-                print(f"Due: {due_date.strftime('%Y-%m-%d')}")
-        
-        if 'assigneeId' in task and task['assigneeId']:
-            print(f"Assigned to: {task['assigneeId']}")
-            
-        if 'tags' in task and task['tags']:
-            print(f"Tags: {', '.join(task['tags'])}")
-    else:
-        print("Task could not be retrieved")
-        
-except Exception as e:
-    print(f"Error: {e}")
+    # Check if task is due soon
+    due_date = datetime.fromisoformat(task["dueDate"].replace("Z", "+00:00"))
+    now = datetime.now()
+    time_until_due = due_date - now
+    hours_until_due = time_until_due.total_seconds() / 3600
+    
+    if hours_until_due < 24:
+        print(f"Task \"{task['taskTitle']}\" is due in less than 24 hours!")
+else:
+    print("Failed to retrieve task")
 ```
 
-### cURL
+## Related resources
 
-```bash
-curl -X GET "https://api.taskmanagement.example.com/v1/tasks/task123" \
-  -H "Authorization: Bearer YOUR_API_KEY"
-```
+- [Task resource](../resources/task-resource.md)
 
-## Related Resources
+## See also
 
-- [Task Resource](/resources/task-resource.md) - Detailed information about the Task resource
-- [Get All Tasks](/api-reference/get-all-tasks.md) - Retrieve a list of all tasks
-- [Update a Task](/api-reference/update-task.md) - Update an existing task's information
-- [Delete a Task](/api-reference/delete-task.md) - Remove a task from the system
-
-## See Also
-
-- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
-- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md) - Understanding task statuses and transitions
-- [Task Management Workflow](/tutorials/task-management-workflow.md) - Guide to implementing a task management workflow
+- [Get all tasks](get-all-tasks.md)
+- [Create a task](create-task.md)
+- [Update a task](update-task.md)
+- [Delete a task](delete-task.md)
 
 

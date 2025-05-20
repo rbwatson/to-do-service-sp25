@@ -6,17 +6,19 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/tasks"]
 related_pages: ["task-resource", "task-status-lifecycle"]
-parent: "API Reference"
+parent: "API Reference" 
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "2025-05-13"
+ai-generated-date: "May 20, 2025"
 nav_order: "8"
 layout: "default"
 version: "v1.0.0"
-lastUpdated: "2025-05-13"
+lastUpdated: "May 20, 2025"
 ---
 
-# Create a Task
+# Create a task
+
+Creates a new task in the system. The API generates a unique identifier for the new task.
 
 ## Endpoint
 
@@ -24,158 +26,157 @@ lastUpdated: "2025-05-13"
 POST /tasks
 ```
 
-This endpoint creates a new task in the system. The task can include a title, description, priority, assignment to a user, due date, and other properties.
-
-## Path Parameters
+## Path parameters
 
 None.
 
-## Request Body
+## Request body
 
-The request body should be a JSON object with the following properties:
+| Property | Type | Description | Required | Constraints |
+|----------|------|-------------|----------|------------|
+| `userId` | integer | ID of the user who owns the task | Yes | Must reference a valid user |
+| `taskTitle` | string | Short description of the task | Yes | 1-80 characters |
+| `taskDescription` | string | Detailed description of the task | No | 1-255 characters |
+| `taskStatus` | string | Current status of the task | No | Must be one of the predefined status values |
+| `dueDate` | string (date-time) | When the task is due | Yes | ISO 8601 format |
+| `warningOffset` | integer | Minutes before due date to send reminder | Yes | 0-64000 |
 
-| Property | Type | Required | Description |
-|----------|------|----------|-------------|
-| `title` | String | Yes | Title of the task |
-| `description` | String | No | Detailed description of the task |
-| `status` | String | No | Initial status of the task (default: "TODO") |
-| `priority` | String | No | Priority level: "LOW", "MEDIUM", "HIGH", "URGENT" (default: "MEDIUM") |
-| `assigneeId` | String | No | ID of the user assigned to the task |
-| `dueDate` | String | No | When the task is due (ISO 8601 format) |
-| `warningOffset` | Number | No | Hours before due date to send a reminder |
-| `tags` | Array | No | Array of string tags associated with the task |
-
-### Example Request Body
+Example request body:
 
 ```json
 {
-  "title": "Implement authentication",
-  "description": "Add token-based authentication to the application",
-  "status": "TODO",
-  "priority": "HIGH",
-  "assigneeId": "user123",
-  "dueDate": "2025-06-01T17:00:00Z",
-  "warningOffset": 24,
-  "tags": ["authentication", "security", "api"]
+  "userId": 1,
+  "taskTitle": "Complete project proposal",
+  "taskDescription": "Finish the proposal for the new client project",
+  "dueDate": "2025-06-15T17:00:00-05:00",
+  "warningOffset": 120
 }
 ```
 
-## Request Example
+## Request example
 
-```http
-POST /tasks
-Content-Type: application/json
-Authorization: Bearer YOUR_API_KEY
+```bash
+# cURL example
+curl -X POST http://localhost:3000/tasks \
+  -H "Authorization: Bearer your-token-here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "userId": 1,
+    "taskTitle": "Complete project proposal",
+    "taskDescription": "Finish the proposal for the new client project",
+    "dueDate": "2025-06-15T17:00:00-05:00",
+    "warningOffset": 120
+  }'
+```
 
-{
-  "title": "Implement authentication",
-  "description": "Add token-based authentication to the application",
-  "status": "TODO",
-  "priority": "HIGH",
-  "assigneeId": "user123",
-  "dueDate": "2025-06-01T17:00:00Z",
-  "warningOffset": 24,
-  "tags": ["authentication", "security", "api"]
+```python
+# Python example
+import requests
+
+url = "http://localhost:3000/tasks"
+headers = {
+    "Authorization": "Bearer your-token-here",
+    "Content-Type": "application/json"
 }
+data = {
+    "userId": 1,
+    "taskTitle": "Complete project proposal",
+    "taskDescription": "Finish the proposal for the new client project",
+    "dueDate": "2025-06-15T17:00:00-05:00",
+    "warningOffset": 120
+}
+
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+```
+
+```javascript
+// JavaScript example
+fetch('http://localhost:3000/tasks', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer your-token-here',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    userId: 1,
+    taskTitle: 'Complete project proposal',
+    taskDescription: 'Finish the proposal for the new client project',
+    dueDate: '2025-06-15T17:00:00-05:00',
+    warningOffset: 120
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data));
 ```
 
 ## Response
 
-### Success Response (201 Created)
+### Success response (201 Created)
 
 ```json
 {
-  "id": "task789",
-  "title": "Implement authentication",
-  "description": "Add token-based authentication to the application",
-  "status": "TODO",
-  "priority": "HIGH",
-  "createdBy": "user456",
-  "assigneeId": "user123",
-  "dueDate": "2025-06-01T17:00:00Z",
-  "warningOffset": 24,
-  "tags": ["authentication", "security", "api"],
-  "createdAt": "2025-05-13T15:30:00Z",
-  "updatedAt": "2025-05-13T15:30:00Z"
+  "taskId": 1,
+  "userId": 1,
+  "taskTitle": "Complete project proposal",
+  "taskDescription": "Finish the proposal for the new client project",
+  "taskStatus": "NOT_STARTED",
+  "dueDate": "2025-06-15T17:00:00-05:00",
+  "warningOffset": 120
 }
 ```
 
-### Error Responses
+### Error responses
 
-| Status Code | Description |
-|-------------|-------------|
-| 400 | Bad request (e.g., malformed request body) |
-| 401 | Unauthorized (missing or invalid authentication) |
-| 403 | Forbidden (insufficient permissions to create tasks) |
-| 404 | Not Found (e.g., referenced assignee does not exist) |
-| 422 | Unprocessable entity (e.g., validation errors) |
+| Status code | Description | Error code |
+|-------------|-------------|------------|
+| 400 Bad Request | Invalid request body | `INVALID_FIELD`, `MISSING_REQUIRED_FIELD` |
+| 401 Unauthorized | Missing or invalid authentication | `UNAUTHORIZED` |
+| 403 Forbidden | Insufficient permissions | `FORBIDDEN` |
+| 429 Too Many Requests | Rate limit exceeded | `RATE_LIMIT_EXCEEDED` |
+| 500 Server Error | Unexpected server error | `SERVER_ERROR` |
 
-#### Example Error Response
-
-```json
-{
-  "error": {
-    "code": "validation_error",
-    "message": "The request contains invalid data",
-    "details": {
-      "title": "Title is required",
-      "dueDate": "Due date must be in the future",
-      "assigneeId": "Assignee with ID 'user123' does not exist"
-    }
-  }
-}
-```
-
-For details on error responses, see [Error Responses](../api-reference/error-responses.md).
+See [Error responses](error-responses.md) for details on error response format.
 
 ## Authentication
 
-This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
+This endpoint requires authentication using a bearer token:
 
 ```
-Authorization: Bearer YOUR_API_KEY
+Authorization: Bearer your-token-here
 ```
 
-All authenticated users can create tasks, but there may be restrictions on certain fields:
-- Only `admin` and `manager` users can assign tasks to any user
-- `member` users can only assign tasks to themselves
+## Important considerations
 
-## Important Considerations
+- The `userId` must reference an existing user in the system. If the user doesn't exist, the API will return a 400 Bad Request response.
+- The `taskId` is generated by the system and cannot be specified in the request.
+- If `taskStatus` is not provided, it defaults to `NOT_STARTED`.
+- The `dueDate` should be in the future when creating a task.
+- The `dueDate` must be in ISO 8601 format (e.g., `2025-06-15T17:00:00-05:00`).
+- The `warningOffset` is used to calculate when reminders should be sent (e.g., 120 minutes before the due date).
+- All required fields must be included in the request. If any required field is missing, the API will return a 400 Bad Request response with a `MISSING_REQUIRED_FIELD` error code.
+- String fields have minimum and maximum length constraints. If a field value is too short or too long, the API will return a 400 Bad Request response with an `INVALID_FIELD` error code.
 
-- **Auto-Generated Fields**: The `id`, `createdBy`, `createdAt`, and `updatedAt` fields are automatically generated and cannot be specified in the request.
+## Best practices
 
-- **CreatedBy Field**: The `createdBy` field is automatically set to the ID of the authenticated user who creates the task.
+- Validate user input on the client side before sending the request to reduce unnecessary API calls.
+- Use appropriate task titles that clearly describe the task.
+- Set realistic due dates to help users manage their time effectively.
+- Choose appropriate warning offsets based on the nature and urgency of the task.
+- Handle errors gracefully and provide meaningful feedback to users.
 
-- **Status Restrictions**: If `status` is specified, it must be a valid task status. If omitted, "TODO" is used as the default initial status.
+## Code examples
 
-- **Priority Levels**: Valid priority values are "LOW", "MEDIUM", "HIGH", and "URGENT". If omitted, "MEDIUM" is used as the default.
-
-- **Date Format**: The `dueDate` must be specified in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ) and should be in the future.
-
-- **Warning Offset**: If `warningOffset` is specified, it defines the number of hours before the due date when a reminder should be sent. This requires a valid `dueDate` to be set.
-
-- **Tags Limitations**: Each tag must be a string. The maximum number of tags per task is 10, and each tag can be at most 50 characters long.
-
-## Best Practices
-
-- Provide clear, descriptive titles and detailed descriptions to make tasks easy to understand
-- Set appropriate priority levels to help team members prioritize their work
-- Assign due dates that allow sufficient time for task completion
-- Use consistent tags to categorize and filter tasks effectively
-- Consider setting warning offsets for important tasks to provide timely reminders
-- Validate input client-side before sending to reduce validation errors
-
-## Code Examples
-
-### JavaScript
+### Create a new task with error handling
 
 ```javascript
+// JavaScript example: Create a new task with error handling
 async function createTask(taskData) {
   try {
-    const response = await fetch('https://api.taskmanagement.example.com/v1/tasks', {
+    const response = await fetch('http://localhost:3000/tasks', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${API_KEY}`,
+        'Authorization': 'Bearer your-token-here',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(taskData)
@@ -183,7 +184,24 @@ async function createTask(taskData) {
     
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(`Failed to create task: ${errorData.error.message}`);
+      
+      // Handle specific error cases
+      if (errorData.code === 'INVALID_FIELD' || errorData.code === 'MISSING_REQUIRED_FIELD') {
+        const fieldErrors = {};
+        
+        if (errorData.details) {
+          errorData.details.forEach(detail => {
+            fieldErrors[detail.field] = detail.reason;
+          });
+        }
+        
+        throw {
+          message: errorData.message,
+          fieldErrors
+        };
+      }
+      
+      throw new Error(errorData.message || 'Failed to create task');
     }
     
     return await response.json();
@@ -193,163 +211,117 @@ async function createTask(taskData) {
   }
 }
 
-// Example usage
+// Helper function to format date in ISO 8601 format
+function formatDate(date) {
+  return date.toISOString();
+}
+
+// Usage example
 try {
-  // Set the due date to 2 weeks from now
+  // Create a due date 2 days from now
   const dueDate = new Date();
-  dueDate.setDate(dueDate.getDate() + 14);
+  dueDate.setDate(dueDate.getDate() + 2);
   
   const newTask = await createTask({
-    title: 'Create API documentation',
-    description: 'Write comprehensive API documentation for developers',
-    priority: 'HIGH',
-    assigneeId: 'user123',
-    dueDate: dueDate.toISOString(),
-    warningOffset: 24, // Reminder 24 hours before due date
-    tags: ['documentation', 'api']
+    userId: 1,
+    taskTitle: 'Complete project proposal',
+    taskDescription: 'Finish the proposal for the new client project',
+    dueDate: formatDate(dueDate),
+    warningOffset: 120
   });
   
-  console.log(`Task created with ID: ${newTask.id}`);
-  console.log(`Due date: ${new Date(newTask.dueDate).toLocaleDateString()}`);
+  console.log('Task created:', newTask);
 } catch (error) {
-  // Handle validation errors specifically
-  if (error.message.includes('validation_error')) {
-    console.error('Please correct the following errors:');
-    // Extract and display specific validation errors
-    const errorDetails = JSON.parse(error.message.split(': ')[1]);
-    Object.entries(errorDetails).forEach(([field, message]) => {
-      console.error(`- ${field}: ${message}`);
+  if (error.fieldErrors) {
+    // Handle field-specific errors
+    Object.entries(error.fieldErrors).forEach(([field, reason]) => {
+      console.error(`Error in ${field}: ${reason}`);
+      // Update UI to show error for this field
     });
   } else {
-    console.error('Failed to create task:', error);
+    // Handle general error
+    console.error('Failed to create task:', error.message);
   }
 }
 ```
 
-### Python
-
 ```python
-import requests
+# Python example: Create a new task with error handling
 from datetime import datetime, timedelta
+import requests
 
-def create_task(api_key, title, description=None, status='TODO', priority='MEDIUM', assignee_id=None, due_date=None, warning_offset=None, tags=None):
-    """
-    Create a new task in the system.
-    
-    Args:
-        api_key (str): API key for authentication
-        title (str): Title of the task
-        description (str, optional): Detailed description of the task
-        status (str, optional): Initial status of the task. Defaults to 'TODO'.
-        priority (str, optional): Priority level. Defaults to 'MEDIUM'.
-        assignee_id (str, optional): ID of the user assigned to the task
-        due_date (datetime or str, optional): When the task is due
-        warning_offset (int, optional): Hours before due date to send a reminder
-        tags (list, optional): List of tags associated with the task
+def create_task(token, task_data):
+    try:
+        url = "http://localhost:3000/tasks"
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json"
+        }
         
-    Returns:
-        dict: Created task object
+        response = requests.post(url, headers=headers, json=task_data)
+        response.raise_for_status()  # Raise exception for 4XX/5XX status codes
         
-    Raises:
-        Exception: If the API request fails
-    """
-    url = 'https://api.taskmanagement.example.com/v1/tasks'
-    headers = {
-        'Authorization': f'Bearer {api_key}',
-        'Content-Type': 'application/json'
-    }
-    
-    # Build request data
-    data = {
-        'title': title,
-        'status': status,
-        'priority': priority
-    }
-    
-    if description:
-        data['description'] = description
-        
-    if assignee_id:
-        data['assigneeId'] = assignee_id
-        
-    if due_date:
-        # Convert datetime to ISO string if needed
-        if isinstance(due_date, datetime):
-            data['dueDate'] = due_date.isoformat()
-        else:
-            data['dueDate'] = due_date
-            
-    if warning_offset is not None:
-        data['warningOffset'] = warning_offset
-        
-    if tags:
-        data['tags'] = tags
-    
-    response = requests.post(url, json=data, headers=headers)
-    
-    if response.status_code == 201:
         return response.json()
-    else:
-        error_data = response.json()
-        
-        if response.status_code == 422 and 'details' in error_data['error']:
-            error_details = error_data['error']['details']
-            raise Exception(f"Validation error: {error_details}")
-        else:
-            raise Exception(f"Task creation failed: {error_data['error']['message']}")
+    except requests.exceptions.HTTPError as e:
+        # Handle API errors
+        try:
+            error_data = e.response.json()
+            
+            # Handle field-specific errors
+            if error_data.get("code") in ["INVALID_FIELD", "MISSING_REQUIRED_FIELD"]:
+                field_errors = {}
+                
+                if "details" in error_data:
+                    for detail in error_data["details"]:
+                        field_errors[detail["field"]] = detail["reason"]
+                
+                print(f"Validation error: {error_data['message']}")
+                for field, reason in field_errors.items():
+                    print(f"  - {field}: {reason}")
+            else:
+                print(f"API error: {error_data.get('message', str(e))}")
+                
+            return None
+        except ValueError:
+            # Could not parse error response as JSON
+            print(f"Error creating task: {str(e)}")
+            return None
+    except Exception as e:
+        print(f"Error creating task: {str(e)}")
+        return None
 
-# Example usage
-try:
-    # Set due date to 1 week from now
-    due_date = datetime.now() + timedelta(days=7)
-    
-    task = create_task(
-        api_key='YOUR_API_KEY',
-        title='Prepare quarterly report',
-        description='Compile and analyze Q2 2025 financial data',
-        priority='HIGH',
-        assignee_id='user456',
-        due_date=due_date,
-        warning_offset=48,  # 2 days before deadline
-        tags=['finance', 'reporting', 'quarterly']
-    )
-    
-    print(f"Task created successfully:")
-    print(f"ID: {task['id']}")
-    print(f"Title: {task['title']}")
-    print(f"Assigned to: {task['assigneeId']}")
-    print(f"Due date: {task['dueDate']}")
-    
-except Exception as e:
-    print(f"Error: {e}")
+# Helper function to format date in ISO 8601 format
+def format_date(date):
+    return date.isoformat()
+
+# Usage example
+# Create a due date 2 days from now
+due_date = datetime.now() + timedelta(days=2)
+
+new_task = create_task("your-token-here", {
+    "userId": 1,
+    "taskTitle": "Complete project proposal",
+    "taskDescription": "Finish the proposal for the new client project",
+    "dueDate": format_date(due_date),
+    "warningOffset": 120
+})
+
+if new_task:
+    print(f"Task created: {new_task}")
+else:
+    print("Failed to create task")
 ```
 
-### cURL
+## Related resources
 
-```bash
-curl -X POST "https://api.taskmanagement.example.com/v1/tasks" \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Implement authentication",
-    "description": "Add token-based authentication to the application",
-    "priority": "HIGH",
-    "assigneeId": "user123",
-    "dueDate": "2025-06-01T17:00:00Z",
-    "tags": ["authentication", "security", "api"]
-  }'
-```
+- [Task resource](../resources/task-resource.md)
+- [Task status lifecycle](../core-concepts/task-status-lifecycle.md)
 
-## Related Resources
+## See also
 
-- [Task Resource](../resources/task-resource.md) - Detailed information about the Task resource
-- [Get All Tasks](../api-reference/get-all-tasks.md) - Retrieve a list of all tasks
-- [Get Task by ID](../api-reference/get-task-by-id.md) - Retrieve a specific task by ID
-
-## See Also
-
-- [Task Status Lifecycle](../core-concepts/task-status-lifecycle.md) - Understanding task statuses and transitions
-- [Data Model](../core-concepts/data-model.md) - Overview of the core resources and their relationships
-- [Task Management Workflow](../tutorials/task-management-workflow.md) - Guide to implementing a task management workflow
+- [Get all tasks](get-all-tasks.md)
+- [Get task by ID](get-task-by-id.md)
+- [Update a task](update-task.md)
+- [Delete a task](delete-task.md)
 
 

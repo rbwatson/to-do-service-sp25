@@ -9,148 +9,160 @@ ai-generated: false
 nav_order: "3"
 layout: "default"
 version: "v1.0.0"
-lastUpdated: "2025-05-13"
+lastUpdated: "May 20, 2025"
 ---
 
-# Support Resources
+# Support resources
 
-## Overview
+This page outlines the available support resources for the Task Management API. When you encounter issues or have questions, these resources can help you find the answers you need.
 
-This document provides information about the available support resources for the Task Management API, including how to contact our support team, self-service resources, community forums, and more.
+## Documentation resources
 
-## Content Outline
+Before reaching out for direct support, please check the following documentation resources:
 
-### 1. Support Channels
-- **Direct Support Contact Methods**
-  - Email support: support@taskmanagement.example.com
-  - Support ticket system: https://support.taskmanagement.example.com
-  - Live chat support (Enterprise customers only)
-  - Phone support (Enterprise customers only)
+- [Getting started guide](../getting-started.md): Basic information to help you start using the API
+- [API reference](../api-reference.md): Detailed endpoint documentation
+- [Troubleshooting guide](troubleshooting.md): Solutions to common issues
+- [FAQ](faq.md): Answers to frequently asked questions
 
-- **Support Hours and Response Times**
-  - Standard support hours: Monday to Friday, 9 AM to 6 PM EST
-  - Expected response times by plan tier
-  - After-hours emergency support policy
+## Community resources
 
-- **Support Tiers by Account Level**
-  - Free tier: Community support only
-  - Standard tier: Email support with 24-hour response time
-  - Professional tier: Priority email support with 8-hour response time
-  - Enterprise tier: Dedicated support manager with 2-hour response time
+Connect with other developers using the Task Management API:
 
-- **Escalation Procedures**
-  - How to escalate urgent issues
-  - Escalation contact information
-  - SLA guarantees by support tier
+- Community forums
+- Developer discussion groups
+- Social media channels
 
-### 2. Self-Service Resources
-- **Knowledge Base and Documentation**
-  - Complete API documentation
-  - Getting started guides
-  - Best practices documentation
-  - Implementation examples
+## Contact support
 
-- **Status Page**
-  - Real-time service status: https://status.taskmanagement.example.com
-  - Historical uptime data
-  - Incident reports and post-mortems
-  - Scheduled maintenance notifications
+If you can't find the answer in our documentation or community resources, you can contact our support team:
 
-- **Troubleshooting Guides**
-  - Common error resolution
-  - Debugging tips and techniques
-  - Performance optimization guides
-  - Integration troubleshooting
+- Email: support@example.com
+- Support portal: [https://support.example.com](https://support.example.com)
+- Live chat: Available during business hours (9 AM - 5 PM EST)
 
-- **Video Tutorials and Webinars**
-  - Onboarding tutorials
-  - Advanced feature demonstrations
-  - Recorded webinars
-  - How-to video series
+## Reporting bugs
 
-### 3. Developer Community
-- **Developer Forum**
-  - Community Q&A: https://community.taskmanagement.example.com
-  - Feature discussions
-  - Integration showcases
-  - Best practices sharing
+If you believe you've found a bug in the API, please report it with the following information:
 
-- **Community Slack Channel**
-  - Real-time developer chat
-  - How to join the Slack workspace
-  - Channel guidelines and etiquette
-  - Direct contact with API engineers (office hours)
+1. Detailed description of the issue
+2. Steps to reproduce the problem
+3. Expected behavior
+4. Actual behavior
+5. API endpoint and HTTP method
+6. Request headers and body
+7. Response status code and body
+8. Any error messages or codes
+9. Your environment details (client language, libraries, versions)
 
-- **Stack Overflow Tag**
-  - Official tag: `task-management-api`
-  - How to properly tag questions
-  - Guidelines for good questions
-  - Response time expectations
+## Feature requests
 
-- **Contributing to Documentation**
-  - GitHub repository for documentation
-  - How to submit corrections or improvements
-  - Style guide for contributions
-  - Recognition program for contributors
+Have an idea for improving the API? Submit a feature request with:
 
-### 4. Account Management
-- **Account Manager Contact**
-  - How to contact your account manager
-  - When to involve your account manager
-  - Account review meetings
-  - Escalation through account management
+1. Description of the proposed feature
+2. Use cases and benefits
+3. How you're currently working around the lack of this feature
+4. Any relevant examples or mockups
 
-- **Enterprise Support Options**
-  - Dedicated support engineer
-  - On-site integration assistance
-  - Custom SLAs
-  - Technical account management
+## Getting help
 
-- **Customer Success Program**
-  - Onboarding process
-  - Implementation reviews
-  - Usage optimization consultations
-  - Best practices workshops
+When contacting support, please provide as much detail as possible to help us address your issue quickly. Include:
 
-- **Quarterly Business Reviews**
-  - Usage statistics and trends
-  - Performance metrics
-  - Upcoming feature previews
-  - Optimization recommendations
+- Your API client ID (if applicable)
+- The specific endpoint you're having trouble with
+- Complete request and response details
+- Any error messages you're receiving
+- Steps you've already taken to troubleshoot
 
-### 5. Feature Requests & Bug Reports
-- **Feature Request Submission**
-  - How to submit feature requests
-  - Feature request voting system
-  - Roadmap influence process
-  - Feature request status tracking
+## Support SLA
 
-- **Bug Reporting Procedures**
-  - Critical vs. non-critical bug criteria
-  - Required information for bug reports
-  - Reproduction steps guidelines
-  - Bug tracking and resolution process
+Our support team aims to respond to all inquiries within:
 
-- **Security Vulnerability Reporting**
-  - Responsible disclosure policy
-  - Security contact: security@taskmanagement.example.com
-  - Bug bounty program
-  - Encryption options for sensitive reports
+- Critical issues: 2 business hours
+- High priority issues: 4 business hours
+- Medium priority issues: 1 business day
+- Low priority issues: 2 business days
 
-- **Roadmap and Feedback Process**
-  - Public roadmap access
-  - How customer feedback influences development
-  - Beta program participation
-  - Early access program details
+## Training and consulting
 
-## Suggested Content
+For additional help with implementing the API, we offer:
 
-- **Contact Form**: A direct support request form should be embedded on this page for easy access
-- **Support SLA Table**: A detailed comparison of response times and support options by account tier
-- **Support Process Flowchart**: Visual representation of the support process from initial contact to resolution
-- **Screenshots**: Images showing the support portal interface and ticket creation process
+- Training sessions
+- Implementation consulting
+- Code reviews
+- Integration assistance
 
-## Related Topics
-- [Frequently Asked Questions](../support/faq.md)
-- [Troubleshooting](../support/troubleshooting.md)
+Contact our sales team for pricing and availability.--- FILE: developer-resources.md ---
+---
+title: "Developer Resources"
+description: "Additional resources for developers working with the Task Management API, including changelogs, tooling, and code examples."
+tags: ["resources", "developers", "tools"]
+categories: ["developer-resources"]
+importance: 5
+has_toc: false
+ai-generated: true
+ai-generated-by: "Claude 3.7 Sonnet"
+ai-generated-date: "May 20, 2025"
+nav_order: "8"
+layout: "default"
+version: "v1.0.0"
+lastUpdated: "May 20, 2025"
+---
+
+# Developer Resources
+
+This page provides additional resources to help you develop with the Task Management API more effectively.
+
+## Code examples
+
+The [Code examples](developer-resources/code-examples.md) page contains reusable code snippets and examples for common operations in multiple programming languages:
+
+- JavaScript/Node.js
+- Python
+- cURL
+
+These examples cover everything from authentication to advanced API usage patterns.
+
+## API changelog
+
+Stay updated on API changes by checking the [API changelog](developer-resources/api-changelog.md). This page documents:
+
+- New features
+- Bug fixes
+- Breaking changes
+- Deprecation notices
+
+## Postman collection
+
+For testing and exploring the API, use our [Postman collection](developer-resources/postman-collection.md). This resource provides:
+
+- Ready-to-use API requests
+- Environment variables for easy configuration
+- Request examples with sample data
+- Testing scripts
+
+## Available resources
+
+| Resource | Description | Format |
+|----------|-------------|--------|
+| [Code examples](developer-resources/code-examples.md) | Reusable code in multiple languages | Markdown, code snippets |
+| [API changelog](developer-resources/api-changelog.md) | History of API changes | Markdown |
+| [Postman collection](developer-resources/postman-collection.md) | Collection for API testing | Postman JSON |
+
+## Community resources
+
+While not officially supported, these community resources might be helpful:
+
+- GitHub repositories with client libraries
+- Blog posts about API integration
+- Community forums
+
+## Support resources
+
+If you need additional help, check out the [Support & FAQ](support.md) section for:
+
+- Frequently asked questions
+- Troubleshooting guides
+- Support contact information
+
 

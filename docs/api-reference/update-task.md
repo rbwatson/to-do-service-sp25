@@ -6,17 +6,19 @@ categories: ["api-reference"]
 importance: 7
 api_endpoints: ["/tasks/{taskId}"]
 related_pages: ["task-resource", "task-status-lifecycle"]
-parent: "API Reference"
+parent: "API Reference" 
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "2025-05-13"
+ai-generated-date: "May 20, 2025"
 nav_order: "10"
 layout: "default"
 version: "v1.0.0"
-lastUpdated: "2025-05-13"
+lastUpdated: "May 20, 2025"
 ---
 
-# Update a Task
+# Update a task
+
+Updates one or more properties of an existing task. The API supports partial updates, so you only need to include the fields you want to change.
 
 ## Endpoint
 
@@ -24,296 +26,281 @@ lastUpdated: "2025-05-13"
 PATCH /tasks/{taskId}
 ```
 
-This endpoint updates an existing task's information. You can update one or more properties of the task resource, including its status, priority, assignee, and other fields.
+## Path parameters
 
-## Path Parameters
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| `taskId` | integer | The unique identifier of the task to update | Yes |
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `taskId` | String | Unique identifier of the task to update |
+## Request body
 
-## Request Body
+| Property | Type | Description | Required | Constraints |
+|----------|------|-------------|----------|------------|
+| `userId` | integer | ID of the user who owns the task | No | Must reference a valid user |
+| `taskTitle` | string | Short description of the task | No | 1-80 characters |
+| `taskDescription` | string | Detailed description of the task | No | 1-255 characters |
+| `taskStatus` | string | Current status of the task | No | Must be one of the predefined status values |
+| `dueDate` | string (date-time) | When the task is due | No | ISO 8601 format |
+| `warningOffset` | integer | Minutes before due date to send reminder | No | 0-64000 |
 
-The request body should be a JSON object containing the properties you want to update. You can include one or more of the following properties:
+You must include at least one property in the request body.
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `title` | String | Title of the task |
-| `description` | String | Detailed description of the task |
-| `status` | String | Status of the task: "TODO", "IN_PROGRESS", "REVIEW", "DONE", "CANCELED" |
-| `priority` | String | Priority level: "LOW", "MEDIUM", "HIGH", "URGENT" |
-| `assigneeId` | String | ID of the user assigned to the task |
-| `dueDate` | String | When the task is due (ISO 8601 format) |
-| `warningOffset` | Number | Hours before due date to send a reminder |
-| `tags` | Array | Array of string tags associated with the task |
-
-### Example Request Body
+Example request body:
 
 ```json
 {
-  "status": "IN_PROGRESS",
-  "description": "Add token-based authentication to the application. Use JWT for stateless authentication.",
-  "priority": "HIGH"
+  "taskStatus": "COMPLETED"
 }
 ```
 
-## Request Example
+## Request example
 
-```http
-PATCH /tasks/task123
-Content-Type: application/json
-Authorization: Bearer YOUR_API_KEY
+```bash
+# cURL example
+curl -X PATCH http://localhost:3000/tasks/1 \
+  -H "Authorization: Bearer your-token-here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "taskStatus": "COMPLETED"
+  }'
+```
 
-{
-  "status": "IN_PROGRESS",
-  "description": "Add token-based authentication to the application. Use JWT for stateless authentication.",
-  "priority": "HIGH"
+```python
+# Python example
+import requests
+
+url = "http://localhost:3000/tasks/1"
+headers = {
+    "Authorization": "Bearer your-token-here",
+    "Content-Type": "application/json"
 }
+data = {
+    "taskStatus": "COMPLETED"
+}
+
+response = requests.patch(url, headers=headers, json=data)
+print(response.json())
+```
+
+```javascript
+// JavaScript example
+fetch('http://localhost:3000/tasks/1', {
+  method: 'PATCH',
+  headers: {
+    'Authorization': 'Bearer your-token-here',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    taskStatus: 'COMPLETED'
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data));
 ```
 
 ## Response
 
-### Success Response (200 OK)
+### Success response (200 OK)
 
 ```json
 {
-  "id": "task123",
-  "title": "Implement authentication",
-  "description": "Add token-based authentication to the application. Use JWT for stateless authentication.",
-  "status": "IN_PROGRESS",
-  "priority": "HIGH",
-  "createdBy": "user456",
-  "assigneeId": "user789",
-  "dueDate": "2025-06-01T17:00:00Z",
-  "warningOffset": 24,
-  "tags": ["authentication", "security", "api"],
-  "createdAt": "2025-05-01T10:30:00Z",
-  "updatedAt": "2025-05-13T15:45:00Z"
+  "taskId": 1,
+  "userId": 1,
+  "taskTitle": "Complete project proposal",
+  "taskDescription": "Finish the proposal for the new client project",
+  "taskStatus": "COMPLETED",
+  "dueDate": "2025-06-15T17:00:00-05:00",
+  "warningOffset": 120
 }
 ```
 
-### Error Responses
+### Error responses
 
-| Status Code | Description |
-|-------------|-------------|
-| 400 | Bad request (e.g., malformed request body) |
-| 401 | Unauthorized (missing or invalid authentication) |
-| 403 | Forbidden (insufficient permissions to update this task) |
-| 404 | Not Found (task with the specified ID does not exist) |
-| 409 | Conflict (e.g., invalid status transition) |
-| 422 | Unprocessable entity (e.g., validation errors) |
+| Status code | Description | Error code |
+|-------------|-------------|------------|
+| 400 Bad Request | Invalid request body or task ID | `INVALID_FIELD` |
+| 401 Unauthorized | Missing or invalid authentication | `UNAUTHORIZED` |
+| 403 Forbidden | Insufficient permissions | `FORBIDDEN` |
+| 404 Not Found | Task not found | `RESOURCE_NOT_FOUND` |
+| 429 Too Many Requests | Rate limit exceeded | `RATE_LIMIT_EXCEEDED` |
+| 500 Server Error | Unexpected server error | `SERVER_ERROR` |
 
-#### Example Error Response (422 Unprocessable Entity)
-
-```json
-{
-  "error": {
-    "code": "invalid_status_transition",
-    "message": "Cannot transition from status 'DONE' to 'IN_PROGRESS'",
-    "details": {
-      "currentStatus": "DONE",
-      "requestedStatus": "IN_PROGRESS",
-      "allowedTransitions": ["CANCELED"]
-    }
-  }
-}
-```
-
-For details on error responses, see [Error Responses](./api-reference/error-responses.md).
+See [Error responses](error-responses.md) for details on error response format.
 
 ## Authentication
 
-This endpoint requires authentication using a bearer token. Include your API key in the `Authorization` header:
+This endpoint requires authentication using a bearer token:
 
 ```
-Authorization: Bearer YOUR_API_KEY
+Authorization: Bearer your-token-here
 ```
 
-The authenticated user must have appropriate permissions to update the requested task:
-- `admin` users can update any task
-- `manager` users can update any task
-- `member` users can only update tasks they created or are assigned to
+## Important considerations
 
-## Important Considerations
+- You must include at least one property in the request body. If the request body is empty or doesn't contain any valid properties, the API will return a 400 Bad Request response.
+- The `taskId` must be a valid integer that corresponds to an existing task. If the specified task does not exist, the API will return a 404 Not Found response.
+- The `userId` must reference an existing user in the system if provided.
+- The `taskStatus` must be one of the predefined status values if provided.
+- The `dueDate` must be in ISO 8601 format if provided.
+- String fields have minimum and maximum length constraints. If a field value is too short or too long, the API will return a 400 Bad Request response with an `INVALID_FIELD` error code.
+- The response includes the complete task object with all properties, including those that weren't updated.
 
-- **Partial Updates**: This endpoint supports partial updates. You only need to include the properties you want to change in the request body.
+## Best practices
 
-- **Status Transitions**: When updating the task status, only certain transitions are allowed based on the current status. See [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md) for valid transitions.
+- Only include the fields you want to update in the request body to minimize payload size.
+- When updating a task's status, follow the typical status transitions described in the [Task status lifecycle](../core-concepts/task-status-lifecycle.md) documentation.
+- Validate user input on the client side before sending the request to reduce unnecessary API calls.
+- Use this endpoint to mark tasks as completed by updating the `taskStatus` field to `COMPLETED`.
+- Consider implementing optimistic updates in your UI to improve perceived performance.
 
-- **Assignment Restrictions**: There may be restrictions on who can be assigned to a task:
-  - `admin` and `manager` users can assign tasks to any user
-  - `member` users may only be able to assign tasks to themselves
+## Code examples
 
-- **Read-Only Fields**: The `id`, `createdBy`, `createdAt`, and `updatedAt` fields are read-only and cannot be updated. If included in the request, they will be ignored.
-
-- **Due Date Format**: When updating the `dueDate`, it must be specified in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ) and should be in the future.
-
-- **Setting Fields to Null**: To remove an optional field, set its value to `null` in the request body.
-
-## Best Practices
-
-- Only include the fields you want to update in the request body
-- Verify that status transitions are valid before attempting to update the status
-- Validate due dates to ensure they are in the future
-- Implement proper error handling for invalid status transitions
-- Consider the impact of status changes on task workflows and notifications
-
-## Code Examples
-
-### JavaScript
+### Update a task status with error handling
 
 ```javascript
-async function updateTask(taskId, updates) {
+// JavaScript example: Update a task status with error handling
+async function updateTaskStatus(taskId, newStatus) {
   try {
-    const response = await fetch(`https://api.taskmanagement.example.com/v1/tasks/${taskId}`, {
+    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
       method: 'PATCH',
       headers: {
-        'Authorization': `Bearer ${API_KEY}`,
+        'Authorization': 'Bearer your-token-here',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(updates)
+      body: JSON.stringify({
+        taskStatus: newStatus
+      })
     });
     
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(`Failed to update task: ${errorData.error.message}`);
+      
+      // Handle specific error cases
+      if (errorData.code === 'RESOURCE_NOT_FOUND') {
+        throw new Error(`Task with ID ${taskId} not found`);
+      }
+      
+      if (errorData.code === 'INVALID_FIELD') {
+        const fieldErrors = {};
+        
+        if (errorData.details) {
+          errorData.details.forEach(detail => {
+            fieldErrors[detail.field] = detail.reason;
+          });
+        }
+        
+        throw {
+          message: errorData.message,
+          fieldErrors
+        };
+      }
+      
+      throw new Error(errorData.message || `Failed to update task with ID ${taskId}`);
     }
     
     return await response.json();
   } catch (error) {
-    console.error(`Error updating task ${taskId}:`, error);
+    console.error(`Error updating task with ID ${taskId}:`, error);
     throw error;
   }
 }
 
-// Example usage: Update task status and assignee
+// Usage example
 try {
-  const updatedTask = await updateTask('task123', {
-    status: 'IN_PROGRESS',
-    assigneeId: 'user456'
-  });
+  const updatedTask = await updateTaskStatus(1, 'COMPLETED');
+  console.log('Task updated:', updatedTask);
   
-  console.log(`Task updated: ${updatedTask.title}`);
-  console.log(`New status: ${updatedTask.status}`);
-  console.log(`Assigned to: ${updatedTask.assigneeId}`);
-  
-  // You can check if the response matches the requested updates
-  if (updatedTask.status !== 'IN_PROGRESS') {
-    console.warn('Status was not updated as requested');
+  // Show success message based on the update
+  if (updatedTask.taskStatus === 'COMPLETED') {
+    console.log(`Task "${updatedTask.taskTitle}" marked as completed!`);
   }
 } catch (error) {
-  if (error.message.includes('invalid_status_transition')) {
-    console.error('Cannot transition to the requested status. Check the task status lifecycle.');
+  if (error.fieldErrors) {
+    // Handle field-specific errors
+    Object.entries(error.fieldErrors).forEach(([field, reason]) => {
+      console.error(`Error in ${field}: ${reason}`);
+      // Update UI to show error for this field
+    });
   } else {
-    console.error('Failed to update task:', error);
+    // Handle general error
+    console.error('Failed to update task:', error.message);
   }
 }
 ```
 
-### Python
-
 ```python
-import requests
-
-def update_task(api_key, task_id, **updates):
-    """
-    Update an existing task's information.
-    
-    Args:
-        api_key (str): API key for authentication
-        task_id (str): The unique identifier of the task to update
-        **updates: Keyword arguments for fields to update
-    
-    Returns:
-        dict: Updated task data if successful
+# Python example: Update a task status with error handling
+def update_task_status(token, task_id, new_status):
+    try:
+        url = f"http://localhost:3000/tasks/{task_id}"
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json"
+        }
+        data = {
+            "taskStatus": new_status
+        }
         
-    Raises:
-        Exception: If the API request fails
-    """
-    url = f'https://api.taskmanagement.example.com/v1/tasks/{task_id}'
-    headers = {
-        'Authorization': f'Bearer {api_key}',
-        'Content-Type': 'application/json'
-    }
-    
-    # Filter out None values
-    update_data = {k: v for k, v in updates.items() if v is not None}
-    
-    if not update_data:
-        return None  # No updates to make
-    
-    response = requests.patch(url, json=update_data, headers=headers)
-    
-    if response.status_code == 200:
+        response = requests.patch(url, headers=headers, json=data)
+        
+        if response.status_code == 404:
+            print(f"Task with ID {task_id} not found")
+            return None
+            
+        response.raise_for_status()  # Raise exception for other 4XX/5XX status codes
+        
         return response.json()
-    elif response.status_code == 404:
-        raise Exception(f"Task with ID {task_id} not found")
-    elif response.status_code == 422:
-        error_data = response.json()
-        if error_data['error']['code'] == 'invalid_status_transition':
-            current = error_data['error']['details']['currentStatus']
-            requested = error_data['error']['details']['requestedStatus']
-            allowed = error_data['error']['details']['allowedTransitions']
-            raise Exception(f"Cannot change status from '{current}' to '{requested}'. Allowed transitions: {', '.join(allowed)}")
-        else:
-            raise Exception(f"Validation error: {error_data['error']['message']}")
-    else:
-        error_data = response.json()
-        raise Exception(f"API error: {error_data['error']['message']}")
+    except requests.exceptions.HTTPError as e:
+        # Handle API errors
+        try:
+            error_data = e.response.json()
+            
+            # Handle field-specific errors
+            if error_data.get("code") == "INVALID_FIELD":
+                field_errors = {}
+                
+                if "details" in error_data:
+                    for detail in error_data["details"]:
+                        field_errors[detail["field"]] = detail["reason"]
+                
+                print(f"Validation error: {error_data['message']}")
+                for field, reason in field_errors.items():
+                    print(f"  - {field}: {reason}")
+            else:
+                print(f"API error: {error_data.get('message', str(e))}")
+                
+            return None
+        except ValueError:
+            # Could not parse error response as JSON
+            print(f"Error updating task: {str(e)}")
+            return None
+    except Exception as e:
+        print(f"Error updating task: {str(e)}")
+        return None
 
-# Example usage: Update task status and priority
-try:
-    task = update_task(
-        api_key='YOUR_API_KEY',
-        task_id='task123',
-        status='REVIEW',
-        priority='HIGH',
-        description='Updated task description with additional details'
-    )
+# Usage example
+updated_task = update_task_status("your-token-here", 1, "COMPLETED")
+
+if updated_task:
+    print(f"Task updated: {updated_task}")
     
-    if task:
-        print(f"Task '{task['title']}' updated successfully")
-        print(f"Status: {task['status']}")
-        print(f"Priority: {task['priority']}")
-        print(f"Last updated: {task['updatedAt']}")
-        
-except Exception as e:
-    print(f"Error updating task: {e}")
+    # Show success message based on the update
+    if updated_task["taskStatus"] == "COMPLETED":
+        print(f"Task \"{updated_task['taskTitle']}\" marked as completed!")
+else:
+    print("Failed to update task")
 ```
 
-### cURL
+## Related resources
 
-```bash
-# Update task status and priority
-curl -X PATCH "https://api.taskmanagement.example.com/v1/tasks/task123" \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "status": "IN_PROGRESS",
-    "priority": "HIGH"
-  }'
+- [Task resource](../resources/task-resource.md)
+- [Task status lifecycle](../core-concepts/task-status-lifecycle.md)
 
-# Update task due date and assignee
-curl -X PATCH "https://api.taskmanagement.example.com/v1/tasks/task123" \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "dueDate": "2025-06-15T17:00:00Z",
-    "assigneeId": "user456"
-  }'
-```
+## See also
 
-## Related Resources
-
-- [Task Resource](/resources/task-resource.md) - Detailed information about the Task resource
-- [Get Task by ID](/api-reference/get-task-by-id.md) - Retrieve a specific task by ID
-- [Get All Tasks](/api-reference/get-all-tasks.md) - Retrieve a list of all tasks
-- [Delete a Task](/api-reference/delete-task.md) - Remove a task from the system
-
-## See Also
-
-- [Task Status Lifecycle](/core-concepts/task-status-lifecycle.md) - Understanding valid status transitions
-- [Data Model](/core-concepts/data-model.md) - Overview of the core resources and their relationships
-- [Task Management Workflow](/tutorials/task-management-workflow.md) - Guide to implementing a task management workflow
+- [Get all tasks](get-all-tasks.md)
+- [Create a task](create-task.md)
+- [Get task by ID](get-task-by-id.md)
+- [Delete a task](delete-task.md)
 
 

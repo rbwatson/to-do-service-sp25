@@ -4,73 +4,90 @@ description: "Overview of the Task Management API capabilities, features, and us
 tags: ["introduction", "overview"]
 categories: ["getting-started"]
 importance: 10
-parent: "Getting Started with the Task Management API"
+parent: "Getting Started"
 ai-generated: true
 ai-generated-by: "Claude 3.7 Sonnet"
-ai-generated-date: "2025-05-13"
+ai-generated-date: "May 20, 2025"
 nav_order: "1"
 layout: "default"
 version: "v1.0.0"
-lastUpdated: "2025-05-13"
+lastUpdated: "May 20, 2025"
 ---
 
 # Introduction to the Task Management API
 
-The Task Management API provides a powerful, flexible interface for creating and managing tasks and users in your applications. This introduction will help you understand what the API offers and how it can be used.
+The Task Management API provides a comprehensive set of endpoints for creating and managing to-do tasks and users. This API enables developers to build task management features into their applications with minimal effort.
 
-## What is the Task Management API?
+## Capabilities
 
-The Task Management API is a RESTful service that allows you to programmatically create, read, update, and delete tasks and users. It's designed to be simple to integrate with while providing robust features for task management workflows.
+The Task Management API offers the following capabilities:
 
-## Key Features
+- **User management**: Create, retrieve, update, and delete user accounts
+- **Task management**: Create, retrieve, update, and delete to-do tasks
+- **Task lifecycle**: Track task progress through various statuses
+- **Reminders**: Set warning offsets to trigger reminders before due dates
+- **Pagination**: Navigate through large collections of resources
+- **Sorting**: Order resources based on specific fields
+- **Filtering**: Filter tasks by status
 
-- **User Management**: Create and manage users who can create and be assigned to tasks
-- **Task Creation and Management**: Create tasks with titles, descriptions, due dates, and other properties
-- **Status Tracking**: Track task progress through defined status stages
-- **Assignment**: Assign tasks to specific users
-- **Deadlines and Reminders**: Set due dates and configure reminder notifications
-- **Filtering and Sorting**: Find tasks based on various criteria including status, assignee, and due date
-- **Pagination**: Handle large collections of tasks and users efficiently
-- **Secure Access**: Protect your data with bearer token authentication
+## Key features
 
-## Common Use Cases
+### User management
 
-The Task Management API is well-suited for a variety of applications, including:
+The API provides endpoints for managing user accounts, including:
 
+- Creating new users with first name, last name, and contact email
+- Retrieving user information by ID
+- Updating user information
+- Deleting user accounts
+
+### Task management
+
+The API provides endpoints for managing tasks, including:
+
+- Creating new tasks with titles, descriptions, due dates, and warning offsets
+- Retrieving task information by ID
+- Updating task information, including status changes
+- Deleting tasks
+
+### Task lifecycle
+
+Tasks can have one of the following statuses:
+
+- NOT_STARTED: The task has not been started yet
+- IN_PROGRESS: The task is currently being worked on
+- BLOCKED: The task cannot proceed due to an external factor
+- DEFERRED: The task has been postponed to a later time
+- COMPLETED: The task has been finished
+- CANCELLED: The task has been cancelled and will not be completed
+
+### Reminders
+
+The API supports setting a warning offset (in minutes) before a task's due date. This can be used to implement reminder functionality in your application.
+
+## Use cases
+
+The Task Management API can be used for a variety of applications, including:
+
+- Personal to-do list applications
+- Team task management systems
 - Project management tools
-- Team collaboration software
-- Personal productivity applications
-- Workflow automation systems
-- Customer support ticket systems
-- Event planning applications
-- Educational platforms with assignment tracking
+- Calendar and scheduling applications
+- Reminder and notification systems
 
-## API Design Principles
+## API structure
 
-The API follows these design principles:
+The API is organized around two primary resources:
 
-- **RESTful Architecture**: Resources are accessed via standard HTTP methods
-- **JSON Formatting**: All requests and responses use JSON
-- **Consistent Patterns**: Similar patterns across endpoints for ease of use
-- **Clear Documentation**: Comprehensive documentation with examples
-- **Robust Error Handling**: Detailed error messages to help troubleshoot issues
+- **Users**: Individuals who can create and manage tasks
+- **Tasks**: To-do items with titles, descriptions, due dates, and statuses
 
-## Getting Started
+Each resource supports standard CRUD operations (Create, Read, Update, Delete) via RESTful endpoints.
 
-To start working with the API:
+## Next steps
 
-1. [Create an account](https://taskmanagement.example.com/signup) to get your API credentials
-2. Follow our [Quick Start Guide](../getting-started/quickstart.md) to make your first API request
-3. Learn about [Authentication](../getting-started/authentication.md) to secure your API calls
-4. Explore the [API Reference](../api-reference.md) for detailed endpoint information
-
-## Next Steps
-
-After understanding the basics of the Task Management API, you can:
-
-- Check out the [Quick Start Guide](../getting-started/quickstart.md) to make your first API call
-- Learn about [Core Concepts](../core-concepts.md) to understand the API's foundations
-- Explore the [Resources](../resources.md) to understand the data model
-- Try our [Tutorials](../tutorials.md) for practical examples
+- [Quick start guide](quickstart.md): Get up and running in minutes
+- [Authentication](authentication.md): Learn how to authenticate your API requests
+- [Core concepts](../core-concepts.md): Understand the fundamental concepts of the API
 
 
