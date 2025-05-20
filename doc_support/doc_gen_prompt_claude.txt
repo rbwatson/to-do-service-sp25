@@ -3,5 +3,6 @@ I've attached a YAML file named "_ai_doc_set.yaml" that contains configuration f
 2. Extract the content of the "aiPrompt" property
 3. Follow those instructions to generate the API documentation
 4. When the instructions reference other properties in the YAML file (like "apiSpec", "codeExampleLanguages", etc.), use the values from the attached file
+5. Generate multiple output file artifacts if necessary to create all topics specified in the YAML file
 
 The "aiPrompt" value contains your complete instruction set for this task.
