@@ -4,17 +4,33 @@ global:
   apiSpec: "https://raw.githubusercontent.com/rbwatson/to-do-service-sp25/refs/heads/AI-test/api/to-do-service-spec.yaml"
   # AI-HINT apiPrompt contains the prompt to use to generate the API documentation.
   aiPrompt: |
-    You are a technical writer for the Task Management API.
+    You are a technical writer who is tasked with documenting the Task Management API.
+
+    FIRST STEP - OAS ANALYSIS:
+    1. Parse and analyze the OpenAPI specification at the URL in 'apiSpec'.
+    2. Create an inventory of all endpoints, methods, parameters, request bodies, response schemas, and error codes EXPLICITLY defined in the OAS.
+    3. Note any API features like pagination, filtering, or sorting that are EXPLICITLY defined, including their exact implementation details.
+    4. You may ONLY document API elements that appear in this inventory - no exceptions.
 
     For content creation:
-    - For topics with "ai-generated: true": Create comprehensive documentation including
-      usage instructions, endpoint references, and best practices.
-    - For topics with "ai-generated: false": Create the correct front-matter and a detailed
-      outline with suggestions for content, images, or tables that would be helpful.
+    - For topics with "ai-generated: true": Create comprehensive documentation including usage instructions, endpoint references, and best practices - strictly limited to what's in the OAS.
+    - For topics with "ai-generated: false": Create the correct front-matter and a detailed outline with suggestions for content, images, or tables that would be helpful.
 
     Sources and style:
-    - Use the OpenAPI specification in 'apiSpec' as the authoritative source for all API details.
+    - Use ONLY the OpenAPI specification in 'apiSpec' as the authoritative source for all API details.
     - Write at approximately 8th grade reading level following style guidelines in 'styleGuideFiles'.
+    - If you are uncertain whether a feature or parameter exists in the OAS, exclude it rather than assuming its existence.
+
+      
+    Link formatting requirements:
+    - All internal documentation links MUST be relative to the current file, not absolute.
+    - DO NOT use links that start with a forward slash (/).
+    - For links to other documentation pages:
+      * Use relative paths (e.g., "pagination.md" for a file in the same directory)
+      * Use parent directory notation when needed (e.g., "../resources/user-resource.md" when linking from an api-reference file to a resources file)
+      * NEVER use absolute paths like "/resources/user-resource.md"
+    - Correct example: To link from "api-reference/get-all-users.md" to "resources/user-resource.md", use "../resources/user-resource.md"
+    - Incorrect example: "/resources/user-resource.md" (starts with slash, making it absolute)
 
     Structure and relationships:
     - Follow the section structure in 'topicSections' for API reference topics.
@@ -22,14 +38,24 @@ global:
     - Adjust content depth based on 'importance', 'audience', and 'readerLevel' properties.
     - Use 'codeExampleScope' and 'errorExampleScope' to determine appropriate detail level for examples.
 
+    Documentation constraints:
+    - All endpoint paths, HTTP methods, parameters, request bodies, response fields, and status codes MUST be exactly as defined in the OAS.
+    - Do not document API features, filtering capabilities, or parameters that are not explicitly defined in the OAS.
+    - Code examples must use only the parameters and fields defined in the OAS.
+    - Error examples must use only the error codes and formats defined in the OAS.
+
+    Verification requirement:
+    - After drafting each section, verify all API elements mentioned against your OAS inventory.
+    - Remove any content that references API elements not found in the OAS.
+
     File output requirements:
     - Write all content in one file named "all-docs.md".
-    - Start each topic with "--- FILE: directory/filename.md ---".
+    - Start each topic with "--- FILE: directory/filename.md".
     - Use markdown for content and YAML for Jekyll front matter.
 
     Formatting requirements:
     - Place topics from content:topics: in the root documentation directory.
-    - Replace nav_order: "$pos" with the 1-based index in the array.
+    - Replace $pos in nav_order with the 1-based index in the array.
     - Replace $today with the current date.
 
   aiModel: "Claude 3.7 Sonnet"
@@ -235,7 +261,7 @@ content:
             tags: ["introduction", "overview"]
             categories: ["getting-started"]
             importance: 10
-            parent: "getting-started"
+            parent: "Getting Started"
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -248,7 +274,7 @@ content:
             tags: ["quick start", "tutorial"]
             categories: ["getting-started"]
             importance: 9
-            parent: "getting-started"
+            parent: "Getting Started"
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -261,7 +287,7 @@ content:
             tags: ["authentication", "security", "bearer token"]
             categories: ["getting-started"]
             importance: 8
-            parent: "getting-started"
+            parent: "Getting Started"
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -274,7 +300,7 @@ content:
             tags: ["rate limiting", "throttling"]
             categories: ["getting-started"]
             importance: 7
-            parent: "getting-started"
+            parent: "Getting Started"
             ai-generated: false
             nav_order: "$pos"
             
@@ -291,7 +317,7 @@ content:
             tags: ["data model", "resources", "schema"]
             categories: ["core-concepts"]
             importance: 9
-            parent: "core-concepts"
+            parent: "Core Concepts"
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -304,7 +330,7 @@ content:
             tags: ["pagination", "collection"]
             categories: ["core-concepts"]
             importance: 7
-            parent: "core-concepts"
+            parent: "Core Concepts"
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -317,7 +343,7 @@ content:
             tags: ["sorting", "collection"]
             categories: ["core-concepts"]
             importance: 6
-            parent: "core-concepts"
+            parent: "Core Concepts"
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -330,7 +356,7 @@ content:
             tags: ["errors", "troubleshooting"]
             categories: ["core-concepts"]
             importance: 8
-            parent: "core-concepts"
+            parent: "Core Concepts"
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -343,13 +369,13 @@ content:
             tags: ["task status", "workflow"]
             categories: ["core-concepts"]
             importance: 7
-            parent: "core-concepts"
+            parent: "Core Concepts"
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
             nav_order: "$pos"
     
-    - title: "Resources"
+    - title: "API Resources"
       directory: "resources"
       purpose: "An overview of the core resources available in the Task Management API."
       audience: "Developers and technical users who want to use the resources available in the API."
@@ -634,7 +660,7 @@ content:
             tags: ["optimization", "performance"]
             categories: ["advanced"]
             importance: 5
-            parent: "advanced" 
+            parent: "Advanced Topics" 
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -647,7 +673,7 @@ content:
             tags: ["security", "best practices"]
             categories: ["advanced"]
             importance: 6
-            parent: "advanced" 
+            parent: "Advanced Topics" 
             ai-generated: false
             nav_order: "$pos"
             
@@ -658,7 +684,7 @@ content:
             tags: ["data consistency", "concurrency"]
             categories: ["advanced"]
             importance: 4
-            parent: "advanced" 
+            parent: "Advanced Topics" 
             ai-generated: false
             nav_order: "$pos"
             
@@ -716,7 +742,7 @@ content:
             tags: ["faq", "help"]
             categories: ["support"]
             importance: 4
-            parent: "support"
+            parent: "Support & FAQ"
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -729,7 +755,7 @@ content:
             tags: ["troubleshooting", "errors"]
             categories: ["support"]
             importance: 5
-            parent: "support"
+            parent: "Support & FAQ"
             ai-generated: true
             ai-generated-by: "Claude 3.7 Sonnet"
             ai-generated-date: "$today"
@@ -742,6 +768,6 @@ content:
             tags: ["support", "help"]
             categories: ["support"]
             importance: 3
-            parent: "support"
+            parent: "Support & FAQ"
             ai-generated: false
             nav_order: "$pos"
