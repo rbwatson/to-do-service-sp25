@@ -49,6 +49,7 @@ After your system is ready, these tutorials show you how to perform common tasks
 * [Delete a user](tutorials/delete-a-user-Kusuma.md)
 * [Update a task](tutorials/update-a-task.md)
 * [Delete a task _(coming soon)_](#tutorials)
+* [Retrieve a list of users](tutorials/get-users.md)
 
 ## API reference docs
 
