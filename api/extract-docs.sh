@@ -54,7 +54,7 @@ BEGIN {
     }
     
     # Extract the new filename
-    match($0, /^--- FILE: (.+)$/, arr)
+    match($0, /^--- FILE: (.+) ---$/, arr)
     current_file = BASE_DIR "/" arr[1]
     in_file = 1
     next

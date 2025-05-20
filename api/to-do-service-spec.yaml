@@ -604,7 +604,15 @@ components:
       maxLength: 255
 
     TaskStatus:
-      description: The current status of the task in its lifecycle.
+      description: |
+        The current status of the task in its lifecycle.
+        The status can be one of the following:
+        - NOT_STARTED: The task has not been started yet.
+        - IN_PROGRESS: The task is currently being worked on.
+        - BLOCKED: The task cannot proceed due to an external factor.
+        - DEFERRED: The task has been postponed to a later time.
+        - COMPLETED: The task has been finished.
+        - CANCELLED: The task has been cancelled and will not be completed.
       type: string
       enum:
         - NOT_STARTED

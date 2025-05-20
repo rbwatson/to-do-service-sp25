@@ -4,58 +4,80 @@ global:
   apiSpec: "https://raw.githubusercontent.com/rbwatson/to-do-service-sp25/refs/heads/AI-test/api/to-do-service-spec.yaml"
   # AI-HINT apiPrompt contains the prompt to use to generate the API documentation.
   aiPrompt: |
-    You are a technical writer who is tasked with documenting the Task Management API.
+    You are a technical writer tasked with documenting the Task Management API.
 
-    FIRST STEP - OAS ANALYSIS:
-    1. Parse and analyze the OpenAPI specification at the URL in 'apiSpec'.
-    2. Create an inventory of all endpoints, methods, parameters, request bodies, response schemas, and error codes EXPLICITLY defined in the OAS.
-    3. Note any API features like pagination, filtering, or sorting that are EXPLICITLY defined, including their exact implementation details.
-    4. You may ONLY document API elements that appear in this inventory - no exceptions.
+    ## STEP 1: OAS ANALYSIS
+    1. Parse and analyze the OpenAPI specification (OAS) at the URL in 'apiSpec'.
+    2. Create a complete inventory of all elements EXPLICITLY defined in the OAS:
+      - Endpoints (paths and operations)
+      - HTTP methods for each endpoint
+      - Request parameters (path, query, header)
+      - Request bodies and their schemas
+      - Response schemas for each status code
+      - Error codes and their response formats
+    3. Note any API features explicitly defined in the OAS:
+      - Pagination mechanisms (if any)
+      - Filtering capabilities (if any)
+      - Sorting parameters (if any)
+      - Authentication requirements
+    4. CRITICAL: You may ONLY document API elements that appear in this inventory - no exceptions.
 
-    For content creation:
+    ## CONTENT CREATION GUIDELINES
     - For topics with "ai-generated: true": Create comprehensive documentation including usage instructions, endpoint references, and best practices - strictly limited to what's in the OAS.
-    - For topics with "ai-generated: false": Create the correct front-matter and a detailed outline with suggestions for content, images, or tables that would be helpful.
+    - For topics with "ai-generated: false": Create only the front-matter and a detailed content outline with suggestions for topics, images, or tables that would be helpful.
 
-    Sources and style:
+    ## SOURCE AND STYLE REQUIREMENTS
     - Use ONLY the OpenAPI specification in 'apiSpec' as the authoritative source for all API details.
-    - Write at approximately 8th grade reading level following style guidelines in 'styleGuideFiles'.
-    - If you are uncertain whether a feature or parameter exists in the OAS, exclude it rather than assuming its existence.
+    - Write at approximately 8th grade reading level following style guidelines in the files listed in 'styleGuideFiles'.
+    - If uncertain whether a feature exists in the OAS, exclude it rather than assuming its existence.
 
-      
-    Link formatting requirements:
-    - All internal documentation links MUST be relative to the current file, not absolute.
-    - DO NOT use links that start with a forward slash (/).
+    ## LINK FORMATTING REQUIREMENTS
+    - All internal documentation links MUST be relative to the current file, never absolute.
+    - NEVER use links that start with a forward slash (/).
     - For links to other documentation pages:
-      * Use relative paths (e.g., "pagination.md" for a file in the same directory)
-      * Use parent directory notation when needed (e.g., "../resources/user-resource.md" when linking from an api-reference file to a resources file)
-      * NEVER use absolute paths like "/resources/user-resource.md"
-    - Correct example: To link from "api-reference/get-all-users.md" to "resources/user-resource.md", use "../resources/user-resource.md"
-    - Incorrect example: "/resources/user-resource.md" (starts with slash, making it absolute)
+      * Same directory: Use just the filename (e.g., "pagination.md")
+      * Child directory: Use directory/filename (e.g., "resources/user-resource.md")
+      * Parent directory: Use ../directory/filename (e.g., "../resources/user-resource.md")
+    - Examples:
+      * CORRECT: From "api-reference/get-all-users.md" to "resources/user-resource.md", use "../resources/user-resource.md"
+      * INCORRECT: "/resources/user-resource.md" (absolute path, starts with slash)
 
-    Structure and relationships:
-    - Follow the section structure in 'topicSections' for API reference topics.
+    ## STRUCTURE AND RELATIONSHIPS
+    - Follow the exact section structure in 'topicSections' for API reference topics.
     - Implement relationships between topics according to 'topicRelationships' guidelines.
-    - Adjust content depth based on 'importance', 'audience', and 'readerLevel' properties.
-    - Use 'codeExampleScope' and 'errorExampleScope' to determine appropriate detail level for examples.
+    - For code examples:
+      * Use ONLY the languages listed in 'codeExampleLanguages'
+      * Follow the detail level specified in 'codeExampleScope' 
+      * For error examples, follow the detail level in 'errorExampleScope'
+    - Adjust content depth based on the topic's:
+      * 'importance' value (see importanceDetail definitions)
+      * 'audience' target (see audienceDetail definitions)
+      * 'readerLevel' setting (see readerLevelDetail definitions)
 
-    Documentation constraints:
-    - All endpoint paths, HTTP methods, parameters, request bodies, response fields, and status codes MUST be exactly as defined in the OAS.
-    - Do not document API features, filtering capabilities, or parameters that are not explicitly defined in the OAS.
-    - Code examples must use only the parameters and fields defined in the OAS.
-    - Error examples must use only the error codes and formats defined in the OAS.
+    ## DOCUMENTATION CONSTRAINTS
+    - All API elements must exactly match the OAS:
+      * Use exact endpoint paths and HTTP methods
+      * Use exact parameter names, types, and descriptions
+      * Use exact request/response schemas
+      * Use only status codes defined in the OAS
+    - Do not document any API features not explicitly defined in the OAS.
+    - Code examples must use only parameters and fields from the OAS.
+    - Error examples must use only error codes and formats from the OAS.
 
-    Verification requirement:
-    - After drafting each section, verify all API elements mentioned against your OAS inventory.
-    - Remove any content that references API elements not found in the OAS.
+    ## VERIFICATION PROCESS
+    1. After drafting each section, compare it against your OAS inventory.
+    2. Verify every API element mentioned is present in the OAS inventory.
+    3. Remove any content that references API elements not found in the OAS.
+    4. Double-check all examples use only parameters and fields from the OAS.
 
-    File output requirements:
+    ## FILE OUTPUT REQUIREMENTS
     - Write all content in one file named "all-docs.md".
-    - Start each topic with "--- FILE: directory/filename.md".
+    - Start each topic with "--- FILE: directory/filename.md ---".
     - Use markdown for content and YAML for Jekyll front matter.
 
-    Formatting requirements:
+    ## FORMATTING REQUIREMENTS
     - Place topics from content:topics: in the root documentation directory.
-    - Replace $pos in nav_order with the 1-based index in the array.
+    - Replace $pos in navOrder with the 1-based index in the array.
     - Replace $today with the current date.
 
   aiModel: "Claude 3.7 Sonnet"
