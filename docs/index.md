@@ -4,7 +4,7 @@ layout: page
 
 # To-Do Service API
 
-This is a mock API to simulate the REST interface of an
+This mock API simulates the REST interface of an
 imaginary service.
 
 The To-Do Service provides a cloud-hosted task list through which
@@ -25,6 +25,7 @@ the To-Do Service, try one of these overview topics.
 * [To-Do: API documentation for a lightweight task reminder service](./overviews/to-do-overview_arielleang.md)
 * [Juan Carlos' Overview](./overviews/to-do-overview_rgmejiagroup.md)
 * [Overview: To-Do Service API](./overviews/to-do-overview_mettedata.md)
+* [Rachael's Overview](./overviews/to-do-overview_rachaelallen91.md)
 
 ## Quickstart
 
