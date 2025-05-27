@@ -1,0 +1,61 @@
+---
+layout: page
+---
+
+# GET tasks with full-text search
+
+Returns an array of [`task`](task.md) objects containing a search term in any field. Use the `q` parameter to specify the search term.
+
+## URL
+
+```bash
+{server_url}/tasks?q={searchTerm}
+```
+
+## Parameters
+
+| Parameter name | Type   | Description                                                                 |
+|----------------|--------|-----------------------------------------------------------------------------|
+| `q`            | string | A full-text search string. Returns all tasks whose fields contain it.  |
+
+## Request headers
+
+None
+
+## Request body
+
+None
+
+## Request example
+
+```shell
+curl {server_url}/tasks?q=shots
+```
+
+## Response body
+
+```json
+[
+   {
+    "user_id": 3,
+    "title": "Get shots for dog",
+    "description": "Annual vaccinations for poochy",
+    "due_date": "2025-05-11T14:00",
+    "warning": "-20",
+    "id": 4
+  }
+]
+```
+
+## Return status
+
+| Status value   | Return status | Description                                      |
+|----------------|----------------|--------------------------------------------------|
+| 200            | Success         | Requested data returned successfully             |
+| 404            | Error | Specified task record not found |
+| ECONNREFUSED   | N/A             | Service is offline. Start the service and try again. |
+
+## Related
+
+[Get all users](users-get-all-users.md)  
+[Get user by id](users-get-user-by-id.md)
