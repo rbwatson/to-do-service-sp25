@@ -31,6 +31,12 @@
 <replace with the request used for this example>
 ```
 
+### Postman command
+
+```shell
+<replace with command line used>
+```
+
 ### Postman response
 
 ```shell
