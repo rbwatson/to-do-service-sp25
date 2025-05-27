@@ -46,6 +46,10 @@ Sample `user` resource
 * [Get users by ID](users-get-user-by-id.md)
 * [Get user by last name](./users-get-user-by-last-name.md)
 
+## Create operations
+
+* [Post users](users-post-users.md)
+
 ## Delete operations
 
 * [Delete user by ID](Ref_DELETE_User.md)
