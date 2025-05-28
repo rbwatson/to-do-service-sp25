@@ -4,49 +4,62 @@
 
 ## cURL example
 
-The following cURL example gets data for the 2024 Ford Raptor (R)  with the id of 1.
+Lists user information, including first and last name, email, and user ID.
 
 ### cURL command
 
 ```shell
-curl http://localhost:3000/ford/1 
+curl http://localhost:3000/users
 ```
 
 ### cURL response
 
-```shell
+``` shell
 {
-  "make": "Ford",
-  "model": "F-150 Raptor R",
-  "year": 2024,
-  "engine": "Supercharged V8",
-  "horsepower": 700,
-  "torque_lb_ft": 640,
+  "last_name": "Smith",
+  "first_name": "Ferdinad",
+  "email": "f.smith@example.com",
   "id": 1
-  }
+  },
+{
+  "last_name": "Jones",
+  "first_name": "Jill",
+  "email": "j.jones@example.com",
+  "id": 2
+},
+{
+  "last_name": "Martinez",
+  "first_name": "Marty",
+  "email": "m.martinez@example.com",
+  "id": 3
+},
+{
+  "last_name": "baile",
+  "first_name": "Bill",
+  "email": "b.bailey@example.com",
+  "id": 4
+}
 ```
 
 ## Postman example
 
-The following cURL example gets data for the 2024 Dodge TRX with the id of 2.
+Add a task for Marty Martinez (User 3) to pick up the groceries at 3:30 PM on May 28.
 
 ## Postman command
 
 ```shell
-curl HTTP://localhost:3000/dodge/2
+http://localhost:3000/tasks
 ```
 
 ## Postman response
 
 ```shell
 {
-  "make": "Ram",
-  "model": "1500 TRX",
-  "year": 2024,
-  "engine": "Supercharged V8",
-  "horsepower": 702,
-  "torque_lb_ft": 650,
-  "id": 2
+  
+ "user_id": 3,
+ "title": "Pick up groceries",
+ "description": "Pick up groceries from store",
+ "date_time": "2025-05-28T15:30",
 }
 ```
 
