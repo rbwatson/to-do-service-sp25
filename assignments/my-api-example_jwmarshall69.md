@@ -9,7 +9,7 @@ The following cURL example gets data for the 2024 Ford Raptor (R)  with the id o
 ### cURL command
 
 ```shell
-curl http://localhost:3000/ford/1 
+curl http://localhost:3000/turck/1 
 ```
 
 ### cURL response
@@ -35,7 +35,7 @@ The following cURL example gets data for the 2024 Dodge TRX with the id of 2.
 ## Method
 
 ```shell
-HTTP://localhost:3000/dodge/2
+HTTP://localhost:3000/truck/2
 ```
 
 ### Postman response
