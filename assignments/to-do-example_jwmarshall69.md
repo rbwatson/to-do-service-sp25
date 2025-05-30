@@ -9,70 +9,45 @@ Lists user information, including first and last name, email, and user ID.
 ### cURL command
 
 ```shell
-curl http://localhost:3000/users
+curl http://localhost:3000/users/3 
 ```
 
 ### cURL response
 
-``` shell
-{
-  "last_name": "Smith",
-  "first_name": "Ferdinad",
-  "email": "f.smith@example.com",
-  "id": 1
-  },
-{
-  "last_name": "Jones",
-  "first_name": "Jill",
-  "email": "j.jones@example.com",
-  "id": 2
-},
+```shell
+ 
 {
   "last_name": "Martinez",
   "first_name": "Marty",
   "email": "m.martinez@example.com",
   "id": 3
-},
-{
-  "last_name": "baile",
-  "first_name": "Bill",
-  "email": "b.bailey@example.com",
-  "id": 4
+
 }
 ```
 
 ## Postman example
 
-Add a task for Marty Martinez (User 3) to pick up the groceries at 3:30 PM on May 28.
+Add a task for Marty Martinez (User 3) to attend Daughter's Piano recital a 2025-04-2T15:00, with a 30 minute warning. 
 
-## Postman command
+### Request
+
+### Method
 
 ```shell
-http://localhost:3000/tasks
+http://localhost:3000/tasks/2
 ```
 
 ## Postman response
 
 ```shell
-{
-  
- "user_id": 3,
- "title": "Pick up groceries",
- "description": "Pick up groceries from store",
- "date_time": "2025-05-28T15:30",
-}
-```
-
-### Request
-
-**Method**:
-
-```shell
-<replace with the request used for this example>
-```
-
-### Postman response
-
-```shell
-<replace with the response>
+ 
+    {
+      "user_id": 1,
+      "title": "Piano recital",
+      "description": "Daughter's first concert appearance",
+      "due_date": "2025-04-02T15:00",
+      "warning": "-30",
+      "id": 2
+    }
+    
 ```
