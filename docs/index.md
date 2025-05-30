@@ -15,14 +15,17 @@ subscribers can post tasks and receive reminders of those tasks.
 If this topic doesn't tell you what you want to know about
 the To-Do Service, try one of these overview topics.
 
-* [_Placeholder_](./overviews/placeholder.md)
+* [Lyle's To-do Overview](./overviews/to-do-overview_lyerdev.md)
 * [To-Do Service API: Effortless to-do list integration](./overviews/to-do-overview_juliebro.md)
 * [Allena's To-Do Service Overview](./overviews/to-do-overview_allenaavila.md)
 * [Kusuma's Overview](./overviews/to-do-overview_KusumaKrish15.md)
+* [To-Do Overview Cristinalom](./overviews/to-do-overview_cristinalom.md)
+* [To-Do Overview](./overviews/to-do-overview_Marmelodov.md)
+* [Overview](./overviews/to-do-overview_Naem-J.md) - Jeff Naemura
 
 ## Quickstart
 
-[Post your first task _(coming soon)_](#quickstart) with the To-Do Service to see how easy it is to use.
+[Post your first task _(coming soon)_](#quickstart) with the To-Do Service to see how easy it is to use
 
 ## Tutorials
 

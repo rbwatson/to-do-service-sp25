@@ -4,7 +4,7 @@ layout: page
 
 # Tutorials
 
-These tutorials are available to help you start using the **To-Do service API**.
+These tutorials are available to help you start using the **To-Do Service API**.
 
 Be sure to review [Before you start a tutorial](before-you-start-a-tutorial.md)
 before you start your first tutorial.
