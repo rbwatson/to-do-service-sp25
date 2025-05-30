@@ -4,25 +4,23 @@
 
 ## cURL example
 
-The following cURL example gets data for the 2024 Ford Raptor (R)  with the id of 1.
+Lists information on cats.
 
 ### cURL command
 
 ```shell
-curl http://localhost:3000/turck/1 
+curl http://localhost:3000/cats/1 
 ```
 
 ### cURL response
 
 ```shell
 {
-  "make": "Ford",
-  "model": "F-150 Raptor R",
-  "year": 2024,
-  "engine": "Supercharged V8",
-  "horsepower": 700,
-  "torque_lb_ft": 640,
-  "id": 1
+    "Breed": "Main Coon",
+    "Life Span": "9-15 years",
+    "Coat": "Dense double coat",
+    "Color": "black",
+    "id": 1
   }
 ```
 
@@ -35,19 +33,17 @@ The following cURL example gets data for the 2024 Dodge TRX with the id of 2.
 ## Method
 
 ```shell
-HTTP://localhost:3000/truck/2
+http://localhost:3000/dogs/1
 ```
 
 ### Postman response
 
 ```shell
 {
-  "make": "Ram",
-  "model": "1500 TRX",
-  "year": 2024,
-  "engine": "Supercharged V8",
-  "horsepower": 702,
-  "torque_lb_ft": 650,
-  "id": 2
-}
+    "Breed": "Belgian Malinois",
+    "Life Span": "12-16 years",
+    "Coat": "short double coat",
+    "Color": "Mahoganny with black mask",
+    "id": 1
+  }
 ```
