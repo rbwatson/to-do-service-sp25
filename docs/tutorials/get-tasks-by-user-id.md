@@ -33,8 +33,18 @@ To receive details of a specified task:
 1. In the Postman app, choose **Send** to make the request.
 1. Watch for the response body, which should look something like this. Note that the id should be the same as you used in your **URL** as `{userId}`.
 
-    ```js
-    {
+``` js
+[
+     {
+        "user_id": 1,
+        "title": "Grocery Shopping",
+        "description": "eggs, bacon, gummy bears",
+        "due_date": "2025-02-20T17:00",
+        "warning": "-10",
+        "id": 2
+    },
+
+{
         "user_id": 1,
         "title": "Piano recital",
         "description": "Daughter's first concert appearance",
@@ -42,7 +52,8 @@ To receive details of a specified task:
         "warning": "-30",
         "id": 2
     }
-    ```
+]
+```
 
 After doing this tutorial in Postman, you might like to repeat it in
 your favorite programming language. To do this, adapt the values from
