@@ -1,59 +1,50 @@
----
-layout: page
----
+#  To-Do Service API Overview
+The To-Do Service API is a RESTful interface that allows you to manage a cloud-hosted to-do list. It enables developers to create, update, retrieve, and delete tasks programmatically, as well as manage user accounts and send reminders.
 
-# To-Do Service API
+This mock API simulates the behavior of a real-world task management service, making it ideal for development, testing, or demonstration purposes.
 
-This is a mock API to simulate the REST interface of an
-imaginary service.
+# What You Can Do with This API
+Create and manage user accounts
 
-The To-Do Service provides a cloud-hosted task list through which
-subscribers can post tasks and receive reminders of those tasks.
+- Add, update, retrieve, and delete tasks
 
-## Overviews
+- Set due dates and receive task reminders
 
-If this topic doesn't tell you what you want to know about
-the To-Do Service, try one of these overview topics.
+- Retrieve task lists by user
 
-* [Lyle's To-do Overview](./overviews/to-do-overview_lyerdev.md)
-* [To-Do Service API: Effortless to-do list integration](./overviews/to-do-overview_juliebro.md)
-* [Allena's To-Do Service Overview](./overviews/to-do-overview_allenaavila.md)
-* [Kusuma's Overview](./overviews/to-do-overview_KusumaKrish15.md)
-* [To-Do Overview Cristinalom](./overviews/to-do-overview_cristinalom.md)
-* [To-Do Overview](./overviews/to-do-overview_Marmelodov.md)
-* [Overview](./overviews/to-do-overview_Naem-J.md) - Jeff Naemura
+- Filter or sort tasks based on properties (e.g., due date, completion status)
 
-## Quickstart
+# Quickstart
+Try the API with minimal setup:
 
-[Post your first task _(coming soon)_](#quickstart) with the To-Do Service to see how easy it is to use
+- Post your first task (Coming Soon): See how easy it is to interact with the To-Do API by posting your first task in just a few steps.
 
-## Tutorials
+# Tutorials
+Begin by following the setup tutorial to configure your development environment. Then follow these step-by-step guides to complete everyday tasks:
 
-Learn how to do common tasks with in the To-Do Service.
+- [Set up your environment](https://uwc2-apidoc.github.io/to-do-service-sp25/before-you-start-a-tutorial.html)
 
-First, do this tutorial to set up your development system for these tutorials. You only have to do this one time per development system.
+- [Enroll a new user](https://uwc2-apidoc.github.io/to-do-service-sp25/tutorials/enroll-a-new-user.html)
 
-* [Before you start a tutorial](before-you-start-a-tutorial.md)
+- [Add a new task](https://uwc2-apidoc.github.io/to-do-service-sp25/tutorials/add-a-new-task.html)
 
-After your system is ready, these tutorials show you how to perform common tasks.
+- [Get all tasks](https://uwc2-apidoc.github.io/to-do-service-sp25/tutorials/get-all-tasks.html)
 
-* [Enroll a new user](tutorials/enroll-a-new-user.md)
-* [Add a new task](tutorials/add-a-new-task.md)
-* [Get all tasks](tutorials/get-all-tasks.md)
-* [Get a user by last name](tutorials/get-a-user-by-last-name.md)
-* [Change the due-date of a task _(coming soon)_](#tutorials)
-* [Delete a task _(coming soon)_](#tutorials)
+- [Get a user by last name](https://uwc2-apidoc.github.io/to-do-service-sp25/tutorials/get-a-user-by-last-name.html)
 
-## API reference docs
+- [Change the due-date of a task (coming soon)](https://uwc2-apidoc.github.io/to-do-service-sp25/#tutorials)
 
-Detailed descriptions of the service's resources.
+- [Delete a task (coming soon)](https://uwc2-apidoc.github.io/to-do-service-sp25/#tutorials)
 
-The API reference docs refer to a `{base_url}` when they
-refer to the URL of a resource. The `{base_url}` value depends
-on the installation of the service.
+# API Reference
+For in-depth information on available endpoints and schemas, visit the API Reference documentation.
 
-When run locally for testing, the `{base_url}` is
-generally `http://localhost:3000`.
+Note: API documentation uses {base_url} to indicate the root URL for the service.
+Example for local development: http://localhost:3000
 
-* [user resource](api/user.md)
-* [task resource](api/task.md)
+## Resources
+- [User resource](https://uwc2-apidoc.github.io/to-do-service-sp25/api/user.html) Endpoints for managing users
+
+- [Task resource](https://uwc2-apidoc.github.io/to-do-service-sp25/api/task.html) Endpoints for managing tasks
+
+ 
