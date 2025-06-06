@@ -43,7 +43,7 @@ http://localhost:3000/dogs/1
     "Breed": "Belgian Malinois",
     "Life Span": "12-16 years",
     "Coat": "short double coat",
-    "Color": "Mahoganny with black mask",
+    "Color": "Mahogany with black mask",
     "id": 1
   }
 ```
