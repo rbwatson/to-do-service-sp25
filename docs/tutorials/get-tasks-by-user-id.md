@@ -34,6 +34,15 @@ To receive details of a specified task:
 1. Watch for the response body, which should look something like this. Note that the id should be the same as you used in your **URL** as `{userId}`.
 
     ```js
+[
+    {
+        "user_id": 1,
+        "title": "Grocery shopping",
+        "description": "eggs, bacon, gummy bears",
+        "due_date": "2025-02-20T17:00",
+        "warning": "-10",
+        "id": 1
+    },
     {
         "user_id": 1,
         "title": "Piano recital",
@@ -42,6 +51,7 @@ To receive details of a specified task:
         "warning": "-30",
         "id": 2
     }
+]
     ```
 
 After doing this tutorial in Postman, you might like to repeat it in
