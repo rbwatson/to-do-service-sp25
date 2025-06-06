@@ -9,19 +9,35 @@ Lists user information, including first and last name, email, and user ID.
 ### cURL command
 
 ```shell
-curl http://localhost:3000/users/3 
+curl http://localhost:3000/users 
 ```
 
 ### cURL response
 
-```shell
- 
+``` shell
+{
+    "last_name": "Smith",
+    "first_name": "Ferdinand",
+    "email": "f.smith@example.com",
+    "id": 1
+  },
+{
+  "last_name": "Jones",
+  "first_name": "Jill",
+  "email": "j.jones@example.com",
+  "id": 2
+},
 {
   "last_name": "Martinez",
   "first_name": "Marty",
   "email": "m.martinez@example.com",
   "id": 3
-
+},
+{
+  "last_name": "Baile",
+  "first_name": "Bill",
+  "email": "b.bailey@example.com",
+  "id": 4
 }
 ```
 
@@ -29,18 +45,23 @@ curl http://localhost:3000/users/3
 
 Add a task for Marty Martinez (User 3) to attend Daughter's Piano recital a 2025-04-2T15:00, with a 30 minute warning. 
 
-### Request
-
-### Method
+## Postman command
 
 ```shell
-http://localhost:3000/tasks/2
+http://localhost:3000/tasks
 ```
 
 ## Postman response
 
 ```shell
- 
+{
+    "user_id": 1,
+    "title": "Grocery shopping",
+    "description": "eggs, bacon, gummy bears",
+    "due_date": "2025-02-20T17:00",
+    "warning": "-10",
+    "id": 1
+},
     {
       "user_id": 1,
       "title": "Piano recital",
@@ -48,6 +69,52 @@ http://localhost:3000/tasks/2
       "due_date": "2025-04-02T15:00",
       "warning": "-30",
       "id": 2
+    },
+    {
+      "user_id": 2,
+      "title": "Oil change",
+      "description": "5K auto service",
+      "due_date": "2025-03-10T09:00",
+      "warning": "-60",
+      "id": 3
+    },
+    {
+      "user_id": 3,
+      "title": "Get shots for dog",
+      "description": "Annual vaccinations for poochy",
+      "due_date": "2025-05-11T14:00",
+      "warning": "-20",
+      "id": 4
     }
-    
+```
+
+### Request data
+
+```shell
+{
+    "user_id": 1,
+    "title": "Piano recital",
+    "description": "Daughter's first concert appearance",
+    "due_date": "2025-04-02T15:00",
+    "warning": "-30",
+}
+   ```
+
+**Method**: POST
+
+```shell
+<replace with the request used for this example>
+```
+
+### Postman response
+
+```shell
+{
+   "user_id": 3,
+    "title": "Piano recital",
+    "description": "Daughter's first concert appearance",
+    "due_date": "2025-04-02T15:00",
+    "warning": "-30",
+    "id": 2
+}
 ```
