@@ -1,4 +1,5 @@
 ---
+Title: To-Do-Tutorial
 layout: page
 ---
 
@@ -18,7 +19,7 @@ Adding a new task to the service requires that you use the `GET` method to recei
 
 To receive details of a specified task:
 
-1. Make sure your local service is running, or start it by using this command, if it's not.
+1. Make sure your local service is running, or start it by using this command if it's not.
 
     ```shell
     cd <your-github-workspace>/to-do-service/api
